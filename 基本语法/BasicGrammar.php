@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>php格式</title>
+	</head>
+<body>
+
+	<!--第一种默认格式 -->
+	<?php
+        echo "this is a php<br/>";
+    ?>
+    
+    
+    <!--第二种脚本格式	 -->
+	<script language="php">	
+        echo "this is a php";
+    </script>
+
+</body>
+</html>
