@@ -40,7 +40,7 @@ foo 将被解析为 currentnamespace\foo。如果使用 foo 的代码是全局�
 8.__NAMESPACE__常量,当前命名空间名称的字符串,在全局的，不包括在任何命名空间中的代码，它包含一
 个空的字符串。
 
-9.使用命名空间：别名/导入,为类名称使用别名、为接口使用别名或为命名空间名称使用别名。(导入的名称必须是完全限定的)
+9.使用命名空间：别名/导入,为类名称使用别名、为接口使用别名或为命名空间名称使用别名。
 		use My\Full\Classname as Another;
 		$obj = new Another; // My\Full\Classname
 		$obj = new \Another; // 全局Another
