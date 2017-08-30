@@ -1,0 +1,377 @@
+					View
+
+
+
+1.视图
+	默认视图目录：
+	view/[模板主题/]控制器名/操作名+模板后缀
+	
+	(1)设置主题
+		
+		//在config中设置默认主题
+		'DEFAULT_THEME'    =>    'default'
+
+		//在Controller中更改主题
+		$this->theme('主题名')->display();
+	
+	(2)赋值
+
+		a.在Controller中
+		
+		//直接使用assign
+		$this->assign('变量名','变量值');
+		$this->display();
+
+		//使用对象
+		$obj=new stdClass();
+		$obj->变量名='变量值';
+		$this->assign($obj);
+		$this->display();
+
+		//使用数组
+		$arr['变量名']='变量值';
+		$this->assign($arr);
+		$this->display();
+
+		b.在html中
+
+		//直接使用assign
+		{$变量名}
+		
+		//使用对象
+		{$obj->变量名}		{$obj:变量名}
+
+		//使用数组
+		{$arr.变量名}		{$arr[变量名]}	
+
+		c.设置config
+		
+		//设值html变量的定界符
+		'TMPL_L_DELIM'=>'<{',
+		'TMPL_R_DELIM'=>'}>',
+
+		
+
+	(3)指定操作名
+
+		$this->display('操作名');		//默认为当前方法名
+		$this->display('父目录/操作名');
+		$this->display('./Application/Home/View/default/User/index.html');
+	
+	(4)获取模板地址
+		T([模块@][主题/][控制器/]操作)
+	
+		T();				./Application/Home/View/default/User/index.html
+		T('bule/User/index');		./Application/Home/View/bule/User/index.html
+		T('Admin@default/User/index');	./Application/Admin/View/default/User/index.html
+		
+		结合display
+		$this->display(T());
+
+	(5)获取内容
+
+		$con=$this->fetch(); 	//获取源代码
+		$this->show($con);	//将源代码展现
+
+	(6)使用函数
+
+		{:md5($name)}
+		{$name|defautl="这是默认值"}	//当没有传递name值
+
+	(7)系统变量
+
+		{$Think.server.script_name} // 输出$_SERVER['SCRIPT_NAME']变量
+		{$Think.session.user_id} // 输出$_SESSION['user_id']变量
+		{$Think.get.pageNumber} // 输出$_GET['pageNumber']变量
+		{$Think.cookie.name}  // 输出$_COOKIE['name']变量
+		
+	支持输出 $_SERVER、$_ENV、 $_POST、 $_GET、 $_REQUEST、$_SESSION和 $_COOKIE变量。
+			
+	(8)使用运算符
+
+		运算符	使用示例
+		+	{$a+$b}
+		-	{$a-$b}
+		*	{$a*$b}
+		/	{$a/$b}
+		%	{$a%$b}
+		++	{$a++} 或 {++$a}
+		–	{$a–} 或 {–$a}
+
+		在使用运算符的时候，不再支持点语法和常规的函数用法
+		
+		{$user.score+10} //错误的
+		{$user['score']+10} //正确的
+
+		{$user['score']|myFun*10} //错误的
+		{$user['score']+myFun($user['level'])} //正确的
+
+
+		三元运算符
+		
+		{$变量名 ? '有值' : '无值'}
+
+2.模板标签	在View中使用标签		(ThinkPHP/Library/Think/Template/Taglib/Cx.class.php 与 html.class.php)
+
+	(1)文件包含<include />
+		
+		<include file="模块@主题/控制器/操作">
+		<include file="User/head"/>
+		<include file="User/foot"/>
+		
+		//也可以使用绝对路径
+		<include file="./Application/Home/View/default/User/head.html">
+		
+
+	(2)注释
+
+	{//单行注释}
+	
+	{/*
+		多行注释
+	*/}
+
+	(3)模板继承 <extend /> <block />
+		
+		<block name="区块名">区块内容</block>
+		<extend name="模块@主题/控制器/操作">
+
+		base.html
+		
+		============================================================
+		<html>
+		<head>
+			<title><block name="title">base页面</block></title>
+			<meta charset='utf8'/>
+		</head>
+		<body>
+		<block name="body">base主体</block>
+		</body>
+		</html>	
+		============================================================
+
+		index.html
+
+		============================================================
+		<extend name="User/base" />
+		<block name="title">这是index</block>
+		<block name="body">index主体</block>
+		============================================================	
+
+
+	(4)模板布局
+
+		a.全局配置
+			
+			在config中配置
+		
+			'LAYOUT_ON'=>true,
+			'LAYOUT_NAME'=>'User/layout',	
+			'TMPL_LAYOUT_ITEM'=>'{__REPLACE__}' 	//替换默认的{_CONTENT_}至{__REPLACE__}
+
+			在layout.html
+			
+			<include file="User/head"/>
+			{_CONTENT_}
+			<include file="User/foot">
+		
+			在index.html
+			
+			<p>这是index内容，将要替换{_CONTENT_}</p>
+
+		b.标签配置	<layout />
+			
+			<layout name="模块@主题/控制器/操作" replace="{__REPLACE__}" />
+			
+			在index.html中
+		
+			<layout name="User/layout" />
+			<p>这是index内容，将要替换{_CONTENT_}</p>
+
+
+		c.在控制器中
+
+			layout("User/layout");
+		        $this->display();
+
+
+	
+	(5)内置标签
+
+		a.if
+
+			<if condition="($name eq 1) OR ($name gt 100)">
+				 value1
+			<elseif condition="$name eq 2"/>
+				 value2
+			<else /> 
+				 value3
+			</if>
+
+			1.在condition属性中可以支持eq等判断表达式，同上面的比较标签，但是不支持带有”>”、”<”等符号的用法，因为会混淆模板解析
+			
+			2.condition属性可以支持点语法和对象语法，例如： 自动判断user变量是数组还是对象
+				
+				condition="$user.name eq 'ThinkPHP'"
+			
+			3.condition中可以使用php函数
+			
+			4.condition中可以使用ThinkPHP系统变量
+				
+				condition="$Think.get.name eq 'zhangsan'"
+
+
+		b.switch
+
+			<switch name="变量" >
+				<case value="值1" break="0或1">输出内容1</case>
+				<case value="值2">输出内容2</case>
+				<default />默认情况
+			</switch>
+			
+			1.Case标签还有一个break属性，表示是否需要break，默认是会自动添加break(1)
+
+		c.比较标签
+
+			eq 或者 equal		等于
+			neq 或者 notequal	不等于
+			gt			大于
+			egt			大于等于
+			lt			小于
+			elt			小于等于
+			heq			恒等于
+			nheq			不恒等于
+
+			//要求name变量的值等于value就输出
+			<eq name="name" value="value">value</eq>
+
+			//统一标签
+			<compare name="name" value="5" type="eq">value</compare>
+		
+		d.范围标签
+
+			in 或者 notin		是否在某个范围
+			between 或者 notbetween 是否在某个区间范围内
+
+			<in name="id" value="1,2,3">
+			id在范围内
+			<else/>
+			id不在范围内
+			</in>
+			
+			//统一标签
+			<range name="id" value="1,2,3" type="in">
+			输出内容1
+			</range>
+
+
+		e.其他标签
+			
+			（1）	present/notpresent		判断某个变量是否已经定义
+
+					<present name="name">
+					name已经赋值
+					</present>
+
+
+			（2）	empty/notempty			判断某个变量是否为空
+
+					<empty name="name">		
+					name为空值
+					</empty>
+
+			（3）	defined/notdefined		判断某个常量是否有定义
+
+					<defined name="NAME">
+					NAME常量已经定义
+					</defined>
+
+			（4）	assign				在模板文件中赋值变量
+
+					<assign name="var" value="123" />
+
+			（5）	define				用于中模板中定义常量
+
+					<define name="PI" value="3.14" />
+
+
+		f.volist遍历
+			
+			name :assign传来的变量名
+			id ：volist内部的别名(等同于name)
+			offset：数组开始位置
+			length：读取几条数据
+			empty : 当数据为空时，显示的信息，接受变量
+			mod：模2操作
+			key：前序
+		
+			<ul>
+				<volist name="data" id="arr" key="k">
+					<li>${k}--{$arr.name}---{$arr.id}----{$arr.class}</li>	
+				</volist>
+			</ul>
+
+			//显示偶数行
+			<ul>
+				<volist name="data" id="arr" mod="2">
+					<eq name="mod" value="0">
+					<li>{$arr.name}---{$arr.id}----{$arr.class}</li>	
+					</eq>
+				</volist>
+			</ul>
+			
+			//前序支持{$i}（从1开始，与属性key相同）与{$key}(从0开始)
+			<ul>
+				<volist name="data" id="arr">
+					<li>{$k}----{$arr.name}---{$arr.id}----{$arr.class}</li>	
+				</volist>
+			</ul>
+			
+		g.foreach遍历
+			
+			name：表示数据源 
+			item：表示循环变量
+			key：前序，它支持{$key}，不支持{$i}
+		
+			<foreach name="list" item="vo">
+			    {$vo.id}:{$vo.name}
+			</foreach>
+
+
+		h.for循环
+			
+			comparison：默认是小于(lt)	
+			step：步进值
+			
+			<for start="开始值" end="结束值" name="循环变量名" >
+				
+			</for>
+
+
+		i.literal标签 	原样输出
+		
+			<literal>
+				<?php 
+					echo "hello"
+				?>
+			</literal>
+
+	       j.导入标签
+
+			(1)import
+				
+				表示/Public/Js/index.js
+				<import type='js' file="Js.index" />
+				
+				表示/Public/Css/index.css
+				<import type='css' file="Css.index" />
+				
+				表示 /day6/Application/Common/Common/index.css
+				<import type='css' file="index"  basepath="/Application/Common/Common"/>
+		
+			(2)load
+
+				<load href="/Public/Js/Common.js" />
+				<load href="/Public/Css/common.css" />
+				<load href="/Application/Common/Common/index.css" />
+

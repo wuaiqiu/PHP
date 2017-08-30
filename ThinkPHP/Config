@@ -1,0 +1,236 @@
+						Config
+
+
+1.目录解析
+
+	www  WEB部署目录（或者子目录）
+	├─index.php       入口文件
+	├─Application     应用目录
+	├─Public          资源文件目录
+	└─ThinkPHP        框架目录
+
+
+	
+	├─ThinkPHP 框架系统目录
+	│  ├─Common       核心公共函数目录
+	│  ├─Conf         核心配置目录 (一级配置文件)
+	│  ├─Lang         核心语言包目录
+	│  ├─Library      框架类库目录
+	│  │  ├─Think     核心Think类库包目录
+	│  │  ├─Behavior  行为类库目录
+	│  │  ├─Org       Org类库包目录
+	│  │  ├─Vendor    第三方类库目录
+	│  │  ├─ ...      更多类库目录
+	│  ├─Mode         框架应用模式目录
+	│  ├─Tpl          系统模板目录
+	│  └─ThinkPHP.php    框架入口文件
+
+2.index.php入口文件
+
+	(1)自定义项目目录
+
+	define('APP_PATH','./Application/');
+
+	-----如改成 define('APP_PATH','./Application/');
+
+	(2)禁止安全文件自动生成（Application中的index.html）
+
+	define('BUILD_DIR_SECURE', false);
+
+	(3)设置安全目录文件的内容
+	
+	define('DIR_SECURE_CONTENT',"禁止访问");
+
+	(4)默认加载指定页面
+	
+	$_GET['m']='Admin';
+	$_GET['c']='User';
+	$_GET['a']='test';
+
+	
+	
+
+3.Application自动生成（第一次访问index.php会生成）
+	
+	Application
+	├─Common         应用公共模块
+	│  ├─Common      应用公共函数目录
+	│  └─Conf        应用公共配置文件目录（二级配置文件）
+	|  └─index.html	  安全主文件，防止浏览Runtime目录结构
+	├─Home           默认生成的Home模块
+	│  ├─Conf        模块配置文件目录（三级配置文件）
+	│  ├─Common      模块函数公共目录
+	│  ├─Controller  模块控制器目录
+	│  ├─Model       模块模型目录
+	│  └─View        模块视图文件目录
+	|  └─index.html	  安全主文件，防止浏览Runtime目录结构
+	├─Runtime        运行时目录
+	│  ├─Cache       模版缓存目录
+	│  ├─Data        数据目录
+	│  ├─Logs        日志目录
+	│  └─Temp        缓存目录
+	|  └─index.html	  安全主文件，防止浏览Runtime目录结构
+	|─index.html	  安全主文件，防止浏览Runtime目录结构
+
+4.Application/Common/Conf/config.php(配置文件,二级配置文件)
+	
+	禁止模块访问
+	'MODULE_DENY_LIST' => array('Common','Runtime')
+	
+	允许模块访问
+	'MODULE_ALLOW_LIST'=>array('HOME')
+	
+	设置默认加载模块
+	'DEFAULT_MODULE'=>'HOME'		
+
+	设置PATHINFO参数分隔符
+	'URL_PATHINFO_DEPR'=>'-'
+
+	设置普通模式的参数名
+	'VAR_MODULE'            =>  'module'
+	'VAR_CONTROLLER'        =>  'controller'
+	'VAR_ACTION'            =>  'action'
+
+
+
+5.URL模式(用于访问指定模块)
+
+	(1)PATHINFO模式，默认
+		
+		
+		http://localhost/index.php/模块/控制器/操作
+
+		http://localhost/day6/index.php/Admin/User/user/name/wu
+
+
+	(2)普通模式
+
+		http://localhost/day6/index.php?m=Admin&c=User&a=user&name=wu
+
+		m参数表示模块，c参数表示控制器，a参数表示操作
+
+
+	(3)REWRITE模式（伪静态）
+
+		需要开始httpd.conf的.htacess
+		加载mod_rewrite.so
+
+		http://localhost/day6/Admin/User/user/name/wu
+
+
+
+6.路由
+
+	用于简化URL
+		http://localhost/day6/Home/User/index?id=3
+		http://localhost/day6/Home/User/index/id/3	(pathinfo模式)
+	
+
+	(1)设置默认模块
+		
+		//配置全局	
+		'MODULE_ALLOW_LIST'    =>    array('Home','Admin'),
+		'DEFAULT_MODULE'       =>    'Home',  
+
+
+	==>	http://localhost/day6/User/index/id/3
+
+	(2)配置路由
+
+		'URL_ROUTER_ON'   => true, //开启路由
+		
+		'URL_ROUTE_RULES'=>array(
+	    		//配置路由规则
+		),
+
+	(3)路由规则
+
+		a.静态路由
+	
+		'u'=>'User/index'
+
+	===>	http://localhost/day6/u/id/3
+
+
+		b.静态与动态路由
+
+		 'u/:id'=>'User/index'
+
+	===>	http://localhost/day6/u/3
+
+
+		c.静态路由与多个动态路由结合
+
+		'u/:id/:name'=>'User/index'
+	
+	===>	http://localhost/day6/u/4/zhangsan
+
+		d.数字约束
+
+		'u/:id\d'=>'User/index'
+
+	===>	http://localhost/day6/u/4
+
+		e.可选参数
+		
+		'u/[:id]'=>'User/index'
+		
+	===>	http://localhost/day6/u
+
+
+		f.参数后面不在有数据
+
+		'u/:id$'=>'User/index'
+
+	===>	http://localhost/day6/u/d/
+
+
+
+7.URL操作
+	
+	(1)	url不区分大小写
+		
+		'URL_CASE_INSENSITIVE'=>true
+
+	(2)	设置伪静态,默认为html,空则为任意后缀
+
+		'URL_HTML_SUFFIX'=>'shtml|html|xml'
+
+	===>	http://localhost/day6/Home/User/index.shtml
+
+	(3)	获取URL
+		
+		U('地址表达式');
+		
+		地址表达式:
+		
+			[模块/控制器/操作#锚点@域名]?参数1=值1&...
+
+		U()	//获取当前url
+
+	===>	/day6/index.php/Home/User/index.shtml
+
+		U('User/user')
+
+	===>	/day6/index.php/Home/User/user.shtml
+
+		U('User/user?id=5')
+
+	===>	/day6/index.php/Home/User/user/id/5.shtml
+	
+
+	(4)设置URL模式
+
+		a.普通模式	'URL_MODEL'=>0
+
+	===>	/day6/index.php?m=Home&c=User&a=user&id=5	
+
+
+		b.pathinfo模式	'URL_MODLE'=>1	默认
+	
+	===>	/day6/index.php/Home/User/user/id/5.shtml
+		
+		c.rewrite模式	'URL_MODLE'=>2
+		
+	===>	/day6/Home/User/user/id/5.shtml
+
