@@ -1,0 +1,254 @@
+					bootstrap
+
+
+一.按钮组组件
+	
+	（1）基本格式
+
+		<div class="btn-group">
+			<button class="btn btn-default">左</button>
+			...
+		</div>
+
+	（2）将多个按钮组整合起来
+
+		<div class="btn-toolbar">
+			<div class="btn-group">
+			</div>
+			...
+		</div>
+
+
+二.按钮式下拉菜单
+
+	这个下拉菜单与前面一样，不过，不需要<div>声明class="dropdown"
+	
+	//群组按钮下拉菜单
+	与前面一样
+
+	//分裂式按钮下拉菜单
+	<div class="btn-group">
+		<button type="button" class="btn btn-default">下拉菜单</button>
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+			<li>..</li>
+		</ul>
+	</div>
+		
+	
+三.输入框组价
+	
+	//在左侧添加元素
+	<div class="input-group">
+		<span class="input-group-addon">@</span>
+		<input type="text" class="form-control"/>
+	</div>
+
+	//在左侧使用复选框与单选框
+	<div class="input-group">
+		<span class="input-group-addon">
+			<input type="checkbox">
+		</span>
+		<input type="text" class="form-control"/>
+	</div>
+		
+
+四.导航组件
+
+	（1）基本导航标签
+
+		<ul class="nav nav-tabs">
+			<li><a>..</a></li>
+			...
+		</ul>
+
+	（2）胶囊式导航
+		
+		<ul class="nav nav-pills">
+
+	（3）垂直胶囊式导航
+		
+		<ul class="nav nav-pills nav-stacked">
+
+	（4）两端对齐
+
+		<ul class="nav nav-tabs nav-justified">
+
+	
+五.导航条组件
+
+	（1）基本格式
+	
+		<nav class="navbar navbar-default">
+		..
+		</nav>
+		
+		//反向	.navbar-inverse
+
+	（2）基本导航条，包含标题和列表
+
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">标题</div>
+				<ul class="nav navbar-nav">
+					<li>...</li>
+					...
+				</ul>
+			</div>
+		</nav>	
+
+
+	（3）在导航条中使用表单
+
+		<form action="" class="navbar-form navbar-left">
+			<div class="input-group">
+				<input type="text" class="form-control">
+				<span class="input-group-btn">
+					<button type="submit" class="btn btn-default">提交</button>
+
+				</span>
+			</div>
+		</form>
+
+
+	（4）导航条对齐方式
+
+		<button class="btn btn-default navbar-btn navbar-right">按钮</button>
+
+	（5）导航条使用文本
+
+		<p class="navbar-text">...</p>
+
+	（6）导航条使用链接
+
+		<a href="#" class="navbar-link">...</a>
+
+	（7）导航条固定在顶部
+
+		<nav class="navbar navbar-default navbar-fixed-top">
+
+	（8）静态导航和页面等宽的导航条，去掉圆角
+
+		<nav class="navbar navbar-default navbar-static-top">
+
+
+
+
+
+六.路径组件（面包屑导航）
+
+	<ol class="breadcrumb">
+		<li><a herf="#">...</a></li>
+		...
+	</ol>
+
+
+七.分页组件
+
+	（1）默认分页
+
+		<ul class="pagination">
+			<li><a href="#">...</a></li>
+			....
+		</ul>
+
+
+	（2）首选项和禁用
+		
+		<li class="active|disabled"><a href="#">...</a></li>
+
+	（3）设置尺寸
+
+		.pagination-lg	.pagination-sm	.pagination-xs
+
+	（4）翻页效果
+
+		<ul class="pager">
+			<li>...</li>
+			<li>...</li>
+		</ul>
+
+
+	（5）对齐翻页链接
+
+		<ul class="pager">
+			<li class="previous">...</li>
+			<li class="next">...</li>
+		</ul>
+
+	（6）翻页禁用项
+
+		<li class="previous disabled">...</li>
+
+
+
+八.标签
+
+	//在文本后面添加标签
+	<h3>标签<span class="label label-default">...</span></h3>
+
+	//不同色调的标签
+	.label-success	.label-warning	.label-info	.label-danger
+
+
+九.徽章
+
+	//未读信息数量徽章
+	<a href="#">信息<span class="badge">10</span></a>
+
+	//在按钮中使用徽章
+	<button class="btn btn-success">提交<span class="badge">10</span></button>
+
+
+十.巨幕组件，主要展示网站的关键性区域
+
+	//在固定的范围内有圆角
+	<div class="container">
+		<div class="jumboxtron">
+		<h2>网站标题</h2>
+		<p>...</p>
+		</div>
+	</div>
+
+	//100%全屏，没有圆角
+	<div class="jumboxtron">
+		<div class="container">
+		<h2>网站标题</h2>
+		<p>...</p>
+		</div>
+	</div>
+
+
+十一.缩略图组件
+
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="thumbnail">
+					<img />
+					<div class="caption">
+						<h3>...</h3>
+						<p>...</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+十二.警告框组件
+
+	（1）基本格式
+		
+		<div class="alert alert-success">...</div>
+
+	（2）带关闭的警告
+
+		<div class="alert alert-sucess">bootstrap	
+			<button type="button" class="close" data-dismiss="alert">
+			<span>&times;</span>
+		</div>
+

@@ -1,0 +1,98 @@
+						bootstrap
+
+一.well组件
+
+	//实现简单的嵌入效果,.well-lg .well-sm .well-xs
+	<div class="well">
+		...	
+	<div>
+
+
+二.进度条组件
+
+	（1）基本格式
+
+		<div class="progress">
+			<div class="progress-bar" style="width:60%">60%</div>
+		</div>
+
+	（2）一些属性
+
+		.progress-bar-success	//结合情景
+		.progress-bar-striped	//条状
+		.active			//动画效果
+	
+	（3）堆叠效果
+
+		<div class="progress">
+			<div class="progress-bar progress-success"></div>
+			....
+		</div>
+
+
+三.媒体组件
+
+	（1）基本格式
+
+	<div class="media">
+		<div class="media-left">
+			<img />
+		</div>
+		<div class="media-body">
+		....
+		</div>
+	</div>
+
+
+	（2）媒体列表
+
+	<ul class="media-list">
+		<li class="media">
+			//将每一个media放在media-body中
+		</li>
+	</ul>
+
+
+
+四.列表组件
+
+	<ul class="list-group">
+		<li class="list-group-item list-group-item-success">...</li>
+		...
+	</ul>
+
+五.弹窗组件
+
+	
+
+	<div class="model show" id="myModel">		//模态声明层,fade淡出效果
+		<div class="model-dialog model-md">		//窗口对话层
+			<div class="model-content">	//内容层
+				<div class="model-header">...</div>
+				<div class="model-boby">...</div>
+				<div class="model-footer">...</div>
+			</div>
+		</div>
+	</div>
+	
+	<button class="btn btn-primary" data-toggle="model" data-target="#myModel">
+	
+
+六.轮播插件
+
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+		<ol class="carousel-indicators">
+			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			 <li data-target="#myCarousel" data-slide-to="1"></li>
+			....
+		</ol>
+		<div class="carousel-inner">
+			<div class="item active">
+				<img />
+			</div>
+			...
+		</div>
+		<a href="#myCarousel" data-slide="prev" class="carousel-control-left">...</a>
+		<a href="#myCarousel" data-slide="next" class="carousel-control-left">...</a>
+	
+ 	</div>
