@@ -1,0 +1,84 @@
+					DQL
+					
+					
+1.简介
+
+	Data Query Language: 数据查询语言,【查询记录】(不修改记录)
+	
+	
+==================================================================================
+
+	(1)基本查询
+	
+		SELECT * FROM student;						#全表查询
+		
+		SELECT name FROM student;					#指定列查询
+		
+		SELECT DISTINCT data FROM student;			#去重复指定列查询
+		
+	(2)列运算
+	
+		SELECT id*5	FROM student;					#指定列乘5后返回
+		
+		SELECT CONCAT('$',id) FROM student;			#连接字符并返回
+		
+		SELECT IFNULL(id,0)*12 FROM student;		#空字段转0后乘12并返回
+		
+		SELECT id (AS) ids FROM student;			#列别名返回
+		
+		
+	(3)条件控制
+	
+		SELECT id,name  FROM student WHERE id>10;	
+		
+	(4)模糊查询（'_'表示单个字符,'%'表示多个字符）
+	
+		SELECT * FROM student WHERE name LIKE 'zhang_';
+		
+		SELECT * FROM student WHERE name LIKE 'zhang%';
+		
+	(5)排序（ASC:默认,表示从小到大排序;DESC:表示从大到小排序）
+	
+		SELECT * FROM WHERE id>1 ORDER BY id ASC;
+		
+		SELECT * FROM WHERE id>1 ORDER BY id ASC, data DESC;
+		
+	(6)聚合函数
+	
+		1)COUNT记录数总个数
+		
+			SELECT COUNT(id) FROM student;
+							#计算student表的id字段【不为NULL的记录数】
+							
+		2)MAX,MIN,SUM,AVG
+		
+			SELECT AVG(id) FROM student;
+							#计算student表的【id字段值的平均值】
+							
+	(7)分组查询
+	
+		SELECT data,COUNT(*) FROM student GROUP BY data;
+				
+							#以data分组，计算各组的记录数
+							
+	(8)LIMIT限定行数
+	
+		SELECT * FROM student LIMIT 4,3;
+				
+							#截取5,6,7行记录
+							
+
+							
+=================================================================================================
+
+	SQL语句排序
+	
+		SELECT --> FROM --> WHERE --> GROUP BY --> HAVING --> ORDER BY
+							
+		
+=================================================================================================
+
+	
+		
+	
+		

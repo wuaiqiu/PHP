@@ -1,0 +1,60 @@
+						DDL
+						
+						
+1.简介
+
+	Data Definition Language ,数据定义语言,【创建】【查看】【删除】【修改】---【数据库】【表】
+	
+	
+===============================================================================
+
+	CREATE DATABASE mydb1;						#创建数据库
+	
+	SHOW DATABASES;								#显示所有数据库
+
+	DROP DATABASE mydb1;						#删除数据库
+	
+	ALTER DATABASE mydb1 CHARACTRER SET utf8;	#修改数据库
+	
+	USE mydb1;									#转换数据库
+	
+================================================================================
+
+	CREATE TABLE [IF NOT EXISTS] student (
+	
+		name	char(10),
+		id 		int
+	
+	);											#创建数据表
+	
+	SHOW TABLES;								#显示所有的数据表
+	
+	DESC student;								#显示数据表结构
+	
+	SHOW CREATE TABLE student;					#显示创建表过程
+	
+	DROP TABLE student;							#删除表
+	
+	TRUNCATE TABLE student;					    #删除数据表,并返回一张空表
+	
+	ALTER TABLE student RENAME TO students;		#修改表(重命名表)
+	
+	ALTER TABLE student ADD (
+	
+		brith data
+	
+	);											#修改表结构(添加列)
+	
+	ALTER TABLE student MODIFY name char(11); 	#修改表结构(修改列类型)
+	
+	ALTER TABLE student CHANGE name  newName char(11);
+												#修改表结构(修改列名,列类型)
+												
+	ALTER TABLE student DROP name;				#修改表结构(删除列)
+	
+	
+=================================================================================
+	
+	
+	
+	

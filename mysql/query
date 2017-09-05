@@ -1,0 +1,46 @@
+							query
+							
+							
+							
+1.合并查询（要求被合并的表中，列的类型与列数相同）
+
+======================================================================
+	SELECT * FROM student		#不去除重复行
+	UNION ALL
+	SELECT * FROM teacher;
+	
+	
+
+	
+	SELECT * FROM student		#去除重复行
+	UNION
+	SELECT * FROM teacher;		
+=========================================================================	
+	
+
+2.内连接
+
+========================================================================
+
+	SELECT * FROM student stu,teacher tea WHERE stu.id=tea.id;
+
+
+	
+	SELECT * FROM student stu INNER JOIN teacher tea ON stu.id=tea.id;
+========================================================================
+
+	
+3.外连接
+
+============================================================================
+
+	SELECT * FROM student stu LEFT OUTER JOIN teacher tea ON stu.id=tea.id;
+											#右外连接
+	
+
+	
+	SELECT * FROM student stu RIGHT OUTER JOIN teacher tea ON stu.id=tea.id;
+											#左外连接
+=============================================================================										
+	
+	
