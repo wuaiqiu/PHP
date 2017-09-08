@@ -1,98 +1,270 @@
 						bootstrap
 
-一.well组件
-
-	//实现简单的嵌入效果,.well-lg .well-sm .well-xs
-	<div class="well">
-		...	
-	<div>
+				
+							-----插件
 
 
-二.进度条组件
+一.模态框（Modal）插件,弹出框
 
-	（1）基本格式
 
-		<div class="progress">
-			<div class="progress-bar" style="width:60%">60%</div>
+	(1)data属性
+
+		data-toggle="modal" 
+		data-target="#myModal"
+
+		====================================================================
+
+			
+		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">模态框</button>
+		<div class="modal fade" id="myModal">
+    				<div class="modal-dialog">  	//模态对话框
+					<div class="modal-content">	//模态内容
+            					
+						<div class="modal-header">//内容头
+                					<button type="button" class="close" data-dismiss="modal">&times;</button>
+                					<h4 class="modal-title">标题</h4>
+            					</div>
+            				
+						<div class="modal-body">	//内容体
+							在这里添加一些文本
+						</div>
+            				
+						<div class="modal-footer">	//内容尾
+                					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                					<button type="button" class="btn btn-primary">提交更改</button>
+            					</div>
+        
+					</div>
+    				</div>
 		</div>
+		====================================================================
 
-	（2）一些属性
+		选项
 
-		.progress-bar-success	//结合情景
-		.progress-bar-striped	//条状
-		.active			//动画效果
+			backdrop	boolean		默认值：true	指定一个静态的背景，当用户点击模态框外部时不会关闭模态框。
+			keyboard	boolean		默认值：true	当按下 escape 键时关闭模态框，设置为 false 时则按键无效。
+			show		boolean		默认值：true	当初始化时显示模态框。
+			remote		path		默认值：false	为模态框的主体注入内容。如果添加了一个带有有效 URL 的 href，则会加载其中的内容
+
+
+
+
+		=========================================================================
+
+
+		
+
+
+
+二.滚动监听（Scrollspy）插件，自动更新导航栏
+
+
+	（1）.data属性
 	
-	（3）堆叠效果
-
-		<div class="progress">
-			<div class="progress-bar progress-success"></div>
-			....
+		data-spy="scroll" 
+		data-target="#navbar-example" 
+		data-offset="0"(初始偏移距离)
+	=================================================================================
+		
+		<nav id="navbar-example" class="navbar navbar-default">
+    			<div class="container"> 
+    				<div class="navbar-header">
+        				<a class="navbar-brand" href="#">教程名称</a>
+    				</div>
+   				<ul class="nav navbar-nav">
+            				<li><a href="#ios">iOS</a></li>
+           				<li><a href="#svn">SVN</a></li>
+            			</ul>
+   
+    			</div> 
+		</nav>
+		
+		<div data-spy="scroll" data-target="#navbar-example" data-offset="0"  style="height:200px;overflow:auto; position: relative;">
+    			<h4 id="ios">iOS</h4>
+    				<p>
+				iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple
+        			TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。
+    				</p>
+    			<h4 id="svn">SVN</h4>
+    				<p>
+				Apache Subversion，通常缩写为 SVN，是一款开源的版本控制系统软件。Subversion 由 CollabNet 公司在 2000
+				 年创建。但是现在它已经发展为 Apache Software Foundation 的一个项目，因此拥有丰富的开发人员和用户社区。
+			    	</p>
 		</div>
 
 
-三.媒体组件
+	=================================================================================
 
-	（1）基本格式
 
-	<div class="media">
-		<div class="media-left">
-			<img />
+
+
+
+	
+三.标签页（Tab）插件,导航组件
+
+	（1）data属性
+
+	data-toggle="tab"
+	===============================================================================
+
+		<ul id="myTab" class="nav nav-tabs">
+    			<li class="active">
+        			<a href="#home" data-toggle="tab">菜鸟教程</a>
+    			</li>
+    			<li>
+				<a href="#ios" data-toggle="tab">iOS</a>
+			</li>
+		</ul>
+		
+
+		<div  class="tab-content">
+    			<div class="tab-pane fade active in" id="home"> //第一个标签页必须添加in 类，以便淡入显示初始内容，id与a的href对应
+        			<p>
+				菜鸟教程是一个提供最新的web技术站点，本站免费提供了建站相关的技术文档，帮助广大web技术爱好者快速入门并建立自己的网站。
+				菜鸟先飞早入行——学的不仅是技术，更是梦想。
+				</p>
+	       		</div>
+	      		<div class="tab-pane fade" id="ios">
+			        <p>
+				iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple
+            			TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。
+				</p>
+		    	</div>
 		</div>
-		<div class="media-body">
-		....
-		</div>
+	==============================================================================
+
+
+				
+
+四.提示工具（Tooltip）插件
+
+	
+	（1）data属性
+
+	data-toggle="tooltip"
+	data-placement="right"	显示位置
+	===============================================================================
+	
+		<a href="#" data-toggle="tooltip" data-placement="right" title="右侧的 Tooltip">右侧的 Tooltip</a>
+
+		//提示工具（Tooltip）插件不像之前所讨论的下拉菜单及其他插件那样，它不是纯 CSS 插件。
+		//如需使用该插件，您必须使用 jquery 激活它（读取 javascript）。
+		<script>	
+    			$(function () { $("[data-toggle='tooltip']").tooltip(); });
+		</script>
+	===============================================================================
+	
+
+
+
+
+五.弹出框（Popover）插件
+
+	(1)data属性
+
+	data-toggle="popover" 
+	data-placement="left"
+        data-content="左侧的 Popover 中的一些内容"
+	============================================================================
+		
+		 <button type="button" class="btn btn-default" title="Popover title"
+            	data-container="body" data-toggle="popover" data-placement="left"
+            	data-content="左侧的 Popover 中的一些内容">
+        		左侧的 Popover
+		  </button>
+
+
+		<script>
+			$(function (){
+			    $("[data-toggle='popover']").popover();
+			});
+		</script>
+		
+	============================================================================
+
+
+
+
+
+六.折叠（Collapse）插件，面板折叠
+
+	（1）data属性
+
+	data-toggle="collapse" 
+	data-target="#collapseOne"
+	==============================================================================
+		
+		<div class="panel panel-default">
+        		<div class="panel-heading">
+           		 	<h4 class="panel-title">
+                			<a data-toggle="collapse" data-target="#collapseOne">
+                			点击我进行展开，再次点击我进行折叠。第 1 部分
+                			</a>
+            			</h4>
+        		</div>
+        
+			<div id="collapseOne" class="panel-collapse collapse in">
+            			<div class="panel-body">
+                			Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
+                			cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
+               		 		vice lomo.
+            			</div>
+        		</div>
+    		</div>
+
+
+
+	=============================================================================
+	
+
+
+
+七.轮播插件
+
+
+	（1）data属性
+
+	data-target="#myCarousel"   
+	data-slide-to="0"
+	==============================================================================
+
+	<div id="myCarousel" class="carousel slide">
+    		
+		<!-- 轮播（Carousel）指标 -->
+    		<ol class="carousel-indicators">
+        		<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        		<li data-target="#myCarousel" data-slide-to="1"></li>
+        		<li data-target="#myCarousel" data-slide-to="2"></li>
+    		</ol>   
+
+
+	    	<!-- 轮播（Carousel）项目 -->
+    		<div class="carousel-inner">
+        		<div class="item active">
+            			<img src="/wp-content/uploads/2014/07/slide1.png" alt="First slide">
+				<div class="carousel-caption">标题 1</div>
+        		</div>
+        		<div class="item">
+            			<img src="/wp-content/uploads/2014/07/slide2.png" alt="Second slide">
+				<div class="carousel-caption">标题 2</div>
+        		</div>
+        		<div class="item">
+            			<img src="/wp-content/uploads/2014/07/slide3.png" alt="Third slide">
+				<div class="carousel-caption">标题 3</div>
+        		</div>
+    		</div>
+    
+		<!-- 轮播（Carousel）导航 -->
+    		<a class="carousel-control left" href="#myCarousel"  data-slide="prev">&lsaquo;</a>
+    		<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 	</div>
 
 
-	（2）媒体列表
-
-	<ul class="media-list">
-		<li class="media">
-			//将每一个media放在media-body中
-		</li>
-	</ul>
-
+	 <script> 
+   	$(document).ready(function(){ 
+	    $('#myCarousel').carousel({interval:5000});//每隔5秒自动轮播 
+   	}); 
+  	</script> 
+	=====================================================================================
 
 
-四.列表组件
-
-	<ul class="list-group">
-		<li class="list-group-item list-group-item-success">...</li>
-		...
-	</ul>
-
-五.弹窗组件
-
-	
-
-	<div class="model show" id="myModel">		//模态声明层,fade淡出效果
-		<div class="model-dialog model-md">		//窗口对话层
-			<div class="model-content">	//内容层
-				<div class="model-header">...</div>
-				<div class="model-boby">...</div>
-				<div class="model-footer">...</div>
-			</div>
-		</div>
-	</div>
-	
-	<button class="btn btn-primary" data-toggle="model" data-target="#myModel">
-	
-
-六.轮播插件
-
-	<div id="myCarousel" class="carousel slide" data-ride="carousel">
-		<ol class="carousel-indicators">
-			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-			 <li data-target="#myCarousel" data-slide-to="1"></li>
-			....
-		</ol>
-		<div class="carousel-inner">
-			<div class="item active">
-				<img />
-			</div>
-			...
-		</div>
-		<a href="#myCarousel" data-slide="prev" class="carousel-control-left">...</a>
-		<a href="#myCarousel" data-slide="next" class="carousel-control-left">...</a>
-	
- 	</div>

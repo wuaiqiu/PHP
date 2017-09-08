@@ -1,8 +1,31 @@
 					bootstrap
 
+						----组件
 
-一.按钮组组件
+
+
+
+
+一.图标组件
+
+	(1)图标列表
+		http://www.runoob.com/try/demo_source/bootstrap3-glyph-icons.htm
+
+
+	(2)使用方式
 	
+	<button class="btn btn-default">
+		<span class="glyphicon glyphicon-star"></span>
+	</button>
+
+
+
+
+
+
+二.按钮组组件
+	
+
 	（1）基本格式
 
 		<div class="btn-group">
@@ -10,52 +33,116 @@
 			...
 		</div>
 
+
 	（2）将多个按钮组整合起来
 
 		<div class="btn-toolbar">
 			<div class="btn-group">
+				<button class="btn btn-default">左</button>
+				...
 			</div>
 			...
 		</div>
 
 
-二.按钮式下拉菜单
-
-	这个下拉菜单与前面一样，不过，不需要<div>声明class="dropdown"
-	
-	//群组按钮下拉菜单
-	与前面一样
-
-	//分裂式按钮下拉菜单
-	<div class="btn-group">
-		<button type="button" class="btn btn-default">下拉菜单</button>
-		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-			<span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu">
-			<li>..</li>
-		</ul>
-	</div>
+	（3）按钮组大小
 		
-	
-三.输入框组价
-	
-	//在左侧添加元素
-	<div class="input-group">
-		<span class="input-group-addon">@</span>
-		<input type="text" class="form-control"/>
-	</div>
+		<div class="btn-group  btn-group-lg">
 
-	//在左侧使用复选框与单选框
-	<div class="input-group">
-		<span class="input-group-addon">
-			<input type="checkbox">
-		</span>
-		<input type="text" class="form-control"/>
-	</div>
+		.btn-group-lg	.btn-group-sm	.btn-group-xs
+
+
+	(4)垂直按钮组
+
+		<div class="btn-group btn-group-vertical">
+
+
+
+
+
+三.按钮下拉菜单组件
+
+	（1）基本格式
+
+		 data-toggle="dropdown" 来切换下拉菜单
+
+		======================================================================
+
+		<div class="dropdown">
+			<button class="btn btn-default" data-toggle="dropdown">下拉菜单
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="#">首页</a></li>
+				...
+			</ul>
+		</div>
+
+		========================================================================
+		
+	（2）相关设置
+		
+		<div class="dropup">				//设置向上触发
+
+		<ul class="dropdown-menu dropdown-menu-right"> //菜单项居右对齐，默认dropdown-menu-left
+
+		<li class="divider"></li>			//设置菜单分割线
+
+		<li class="dropdown-header">菜单标题</li> 	//添加小标题]
+
+	(3)分裂式按钮菜单
+
+		第一个按钮没作用，第二个按钮起作用，dropdown-toggle是与其它按钮融合
+	
+		<div class="btn-group">
+			<button type="button" class="btn btn-default">下拉菜单</button>
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li>..</li>
+			</ul>
+		</div>
+	
+
+
+
+四.输入框组件
+	
+	（1）基本格式
+
+
+		//在左侧添加元素
+		<div class="input-group">
+			<span class="input-group-addon">@</span>
+			<input type="text" class="form-control"/>
+		</div>
+
+	
+
+	（2）输入框组的大小
+
+
+		<div class="input-group input-group-lg">
+
+		input-group-sm	input-group-lg	input-group-xs
+
+
+	(3)按钮插件
+		
+		//在右侧添加按钮
+		<div class="input-group">
+                    <input type="text" class="form-control">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
 		
 
-四.导航组件
+
+
+
+五.导航组件
 
 	（1）基本导航标签
 
@@ -76,22 +163,35 @@
 
 		<ul class="nav nav-tabs nav-justified">
 
+
+	（5）下拉菜单
+
+		<li class="dropdown">
+      			<a class="dropdown-toggle" data-toggle="dropdown" href="#">下拉菜单 
+			<span class="caret"></span>
+      			</a>
+      		<ul class="dropdown-menu">
+        		<li><a href="#">Swing</a></li>
+        		<li><a href="#">jMeter</a></li>
+        		<li><a href="#">EJB</a></li>
+      		</ul>
+    		</li>
+
+
+
 	
-五.导航条组件
+五.导航栏组件
 
 	（1）基本格式
-	
-		<nav class="navbar navbar-default">
-		..
-		</nav>
-		
-		//反向	.navbar-inverse
 
-	（2）基本导航条，包含标题和列表
+
+	==================================================================================
 
 		<nav class="navbar navbar-default">
 			<div class="container">
-				<div class="navbar-header">标题</div>
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">菜鸟教程</a>
+				</div>
 				<ul class="nav navbar-nav">
 					<li>...</li>
 					...
@@ -99,37 +199,80 @@
 			</div>
 		</nav>	
 
+	====================================================================================	
+
+	(2)响应式导航栏
+
+	=================================================================================
+		
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					//collapse为响应折叠,data-target表明折叠的列表
+					<button class="navbar-toggle" data-toggle="collapse"  data-target="#navs"> 
+					//为折叠时的按钮
+                			 	<span class="icon-bar"></span>
+            					<span class="icon-bar"></span>
+            					<span class="icon-bar"></span>
+        				</button>
+					<a class="navbar-brand" href="#">菜鸟教程</a>
+				</div>
+				//包含需要折叠的项目
+				<div class="collapse navbar-collapse" id="navs">
+					<ul class="nav navbar-nav">
+						<li><a href="#">jmeter</a></li>
+						<li><a href="#">jmeter</a></li>
+						<li><a href="#">jmeter</a></li>
+						<li><a href="#">jmeter</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+	=================================================================================
+	
 
 	（3）在导航条中使用表单
 
-		<form action="" class="navbar-form navbar-left">
-			<div class="input-group">
-				<input type="text" class="form-control">
-				<span class="input-group-btn">
-					<button type="submit" class="btn btn-default">提交</button>
+	==================================================================================
+		
+		<nav class="navbar navbar-default" role="navigation">
+    			<div class="container"> 
+    				<div class="navbar-header">
+				        <a class="navbar-brand" href="#">菜鸟教程</a>
+    				</div>
+    				<form class="navbar-form navbar-left">
+        				<div class="form-group">
+            					<input type="text" class="form-control">
+        				</div>
+        				<button type="submit" class="btn btn-default">提交</button>
+    				</form>
+    			</div>
+		</nav>
+		
+	===================================================================================
 
-				</span>
-			</div>
-		</form>
-
-
-	（4）导航条对齐方式
-
-		<button class="btn btn-default navbar-btn navbar-right">按钮</button>
-
-	（5）导航条使用文本
+	（4）导航条使用文本
 
 		<p class="navbar-text">...</p>
 
-	（6）导航条使用链接
+	（5）导航条使用图标
 
-		<a href="#" class="navbar-link">...</a>
+	===================================================================================
 
-	（7）导航条固定在顶部
+		<ul class="nav navbar-nav navbar-right"> 
+            		<li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li> 
+            		<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li> 
+        	</ul> 
+
+	===================================================================================
+
+
+	（6）导航条固定在顶部
 
 		<nav class="navbar navbar-default navbar-fixed-top">
 
-	（8）静态导航和页面等宽的导航条，去掉圆角
+	（7）静态的顶部，随着页面一起滚动的导航栏
 
 		<nav class="navbar navbar-default navbar-static-top">
 
@@ -143,6 +286,7 @@
 		<li><a herf="#">...</a></li>
 		...
 	</ol>
+
 
 
 七.分页组件
@@ -186,11 +330,12 @@
 
 八.标签
 
-	//在文本后面添加标签
-	<h3>标签<span class="label label-default">...</span></h3>
+	//标签
+	<span class="label label-default">...</span>
 
 	//不同色调的标签
-	.label-success	.label-warning	.label-info	.label-danger
+	label-default、label-primary、label-success、label-info、label-warning、label-danger
+
 
 
 九.徽章
@@ -202,18 +347,19 @@
 	<button class="btn btn-success">提交<span class="badge">10</span></button>
 
 
+
 十.巨幕组件，主要展示网站的关键性区域
 
 	//在固定的范围内有圆角
 	<div class="container">
-		<div class="jumboxtron">
-		<h2>网站标题</h2>
-		<p>...</p>
-		</div>
+		   <div class="jumbotron">
+       			 <h1>欢迎登陆页面！</h1>
+        		 <p>这是一个超大屏幕（Jumbotron）的实例。</p>
+      		   </div>
 	</div>
 
 	//100%全屏，没有圆角
-	<div class="jumboxtron">
+	<div class="jumbotron">
 		<div class="container">
 		<h2>网站标题</h2>
 		<p>...</p>
@@ -221,7 +367,10 @@
 	</div>
 
 
-十一.缩略图组件
+
+十一.缩略图组件，在网格中布局图像、视频、文本等
+
+
 
 	<div class="container">
 		<div class="row">
@@ -239,16 +388,115 @@
 
 
 
+
 十二.警告框组件
 
 	（1）基本格式
 		
 		<div class="alert alert-success">...</div>
 
+		 .alert-success、.alert-info、.alert-warning、.alert-danger
+
 	（2）带关闭的警告
 
-		<div class="alert alert-sucess">bootstrap	
-			<button type="button" class="close" data-dismiss="alert">
-			<span>&times;</span>
+		<div class="alert alert-info alert-dismissable">
+            		<button type="button" class="close" data-dismiss="alert">
+               			&times;
+            		</button>
+            		信息！请注意这个信息。
+        	</div>
+
+
+	（3）警告框的链接
+		
+		<div class="alert alert-success">
+    			<a href="#" class="alert-link">成功！很好地完成了提交。</a>
 		</div>
+
+
+
+十三.进度条组件
+
+	（1）基本格式
+
+		<div class="progress">
+			<div class="progress-bar" style="width:60%">60%</div>
+		</div>
+
+	（2）一些属性
+
+		<div class="progress-bar progress-bar-success" style="width:60%">60%</div>  //结合情景( success、info、warning、danger)
+		
+		<div class="progress progress-bar-striped">				    //条状
+		<div class="progress progress-bar-striped active">			    //动画效果
+	
+
+	（3）堆叠效果
+
+		<div class="progress">
+			<div class="progress-bar progress-success" style="width:20%"></div>
+			....
+		</div>
+
+
+
+
+十四.媒体组件，图文对齐
+
+	（1）基本格式
+
+	<div class="media">
+		//图片左对齐
+		<div class="media-left">
+			 <img class="media-object" src=""  />
+		</div>
+		//文字部分
+		<div class="media-body">
+		....
+		</div>
+	</div>
+
+
+	（2）媒体列表
+
+	<ul class="media-list">
+		<li class="media">
+			//将每一个media放在media-body中
+		</li>
+	</ul>
+
+
+
+十五.列表组件
+
+	<ul class="list-group">
+		<li class="list-group-item list-group-item-success">...</li>
+		...
+	</ul>
+
+
+
+十六.面板
+	
+	(1)基本格式
+
+	<div class="panel panel-default">
+		    <div class="panel-heading">
+		        <h3 class="panel-title">面板标题</h3>
+    		    </div>
+    		    <div class="panel-body">
+        			面板内容
+    		    </div>
+		     <div class="panel-footer">面板脚注</div>
+ 	</div>
+
+
+	(2)情景颜色
+		
+		<div class="panel panel-primary">
+
+		panel-primary、panel-success、panel-info、panel-warning、panel-danger
+
+
+
 

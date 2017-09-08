@@ -1,263 +1,71 @@
 					bootstrap
-
-1.页面排版
-
-	（1）页面主体
-
-		bootstrap将全局设置：
-					
-					font-size:14px , line-height:20px 
-
-	（2）bootstrap分别对h1～h6进行了css样式封装:
-					
-					<h1> bootstrap </h1>
-					或
-					<span class='h1'> bootstrap </span>
-
-
-	（3）内联文本元素:
-
-					<p> </p>	<del> </del>	<s> </s>	<ins> </ins>
-					<u> </u>	<small> </small>	<strong> </strong>	<em> </em>
-
-	（4）文本对齐:
-			
-					.text-left	.text-center	.text-right	.text-nowrap
-
-	（5）文本大小写：
-
-					.text-lowercase	.text-uppercase	.text-capitalize
-
-	（6）地址文本：
-
-					<address>
-						<addr title="phone">P:</addr> 123-456
-					</address>
-
-	（7）应用文本：(反向样式.blockquote-reverse)
-
-					<blockquote>
-
-					</blockquote>
-
-
-	（8）列表排版:(移除默认样式.list-unstyled	设置成内联.list-inline)
-
-					<ul>
-						<li> </li>
-						...
-					</ul>
-
-
-	（9）代码
-		
-			内联代码：	<code> </code>
-			用户输入:	<kbd> </kbd>
-			代码块:		<pre> </pre>
+							---css
 
 
 
-二.表格
 
 
-	（1）基本格式，实现基本的表格样式
+一.基本模板
 	
-			<table class="table">
 
-	（2）条纹状表格
-
-			<table class="table table-striped">
-
-	（3）带边框的表格
-
-			<table class="table table-bordered">
-
-	（4）悬停鼠标
-
-			<table class="table table-hover">
-
-	（5）状态类，可以单独设置每一行的背景颜色
-
-			<tr class="success">
-			active	info	danger	success	warning	
-
-	（6）隐藏某一行
-
-			<tr class="sr-only">
-
-	（7）响应式表格，表格父元素设置响应，小于768px出现表框
-
-			<boby class="talbe-responsive">
-
-
-
-三.按钮
-
-	（1）按钮元素
-
-		<a href="#" class="btn btn-default"> LINK </a>
-
-		<button class="btn btn-default"> BUTTON </button>
-
-		<input type="button" class="btn btn-default" value="INPUT" />
-
-		a.导航和导航条组件只支持<button>元素
-		b.如果<a>元素被作为按钮使用，并用于当前页面触发某些功能，而不是用于链接其他页面或链接当前页面中的其他部分，那么务必设置role="button"
-
-
-	（2）预定义样式
-
-		<button class="btn btn-default"> BUTTON </button>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<meta charset="UTF-8">
 		
-		.btn-default	.btn-info	.btn-danger	.btn-link	.btn-success	.btn-warning	.btn-primary
-
-	（3）尺寸大小
-
-		.btn-lg		.bg-sm		.btn-xs
-
-	（4）块级按钮
+		<!--Bootstrap移动设备优先，屏幕宽度和设备一致，初始缩放比例，最大缩放比例和禁止用户缩放-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 		
-		.btn-block
+		<!-- 引入 Bootstrap 核心文件-->
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+		
+		<!-- 引入Jquery -->
+		<script type="text/javascript" src="jquery-3.2.1.js"></script>
+		
+		<!-- 引入Bootstrap核心插件-->
+		<script src="js/bootstrap.min.js"></script>
+		
+		<title>Bootstrap</title>
+	</head>
+	<body>
+		<h1>Hello Bootstrap</h1>
+	</body>
+	</html>
 
-	（5）激活|禁用状态
-	
-		.active		.disabled
 
 
 
-四.表单
+
+
+二.栅格系统
+
 
 	（1）基本格式
 
-		<form>
-			
-			<div class="form-group">
-				<lable>电子邮件</lable>
-				<input type="email" class="form-control"/>
-			</div>
-
-			<div class="form-group">
-				<lable>密码</lable>
-				<input type="password" class="form-control"/>
-			</div>
-
-		</form>
-
-	支持输入框控件:
-		text	password	datetime	date	moth	time	week	number	email	url	search	tel	color
-
-	（2）表单组合
-
-		<div class="input-group">
-			<div class="input-group-addon">$</div>
-			<input type="text" class="form-control"/>
-			<div class="input-group-addon">.00</div>
-		</div>
-
-	（3）内联表单
-
-		<form class="form-inline"> //当小于768px会恢复独占样式
-
-	（4）水平排列，让表单内的元素水平排列
-
-		<form>
-			
-			<div class="form-group">
-				<lable class="col-sm-2 control-label">电子邮件</lable>
-				<div class="col-sm-10">
-					<input type="email" class="form-control"/>
-				</div>
-			</div>
-
-		</form>
-
-	这里用到col-sm栅格系统，而control-label表示和父元素样式同步
-
-	（5）复选框和单选框
-
-	//设置复选框，在一行
-	<div class="checkbox">
-		<label>
-			<input type="checkbox"/>
-		</label>
-		...
-	</div>
-
-	//设置内联一行显示复选框
-	<label class="checkbox-inline">
-		<input type="checkbox"/>
-	</label>
-
-	//设置单选框
-	<div class="radio">
-		<label>
-			<input type="radio" />
-		</label>
-	</div>
-
-	（6）下拉列表
-
-	<select class="form-control">
-		<option></option>
-		...
-	</select>
-	
-	（7）校验状态
-	
-	<div class="form-group has-error">
-	.has-error	.has-warning	.has-success
-	
-	//label标签同步相应状态
-	<label class="control-label"> .. </label>
-
-	（8）添加额外的图标
-	
-	//文本框右侧内置文本图标
-	<div class="form-group has-feeedback">
-		<label>电子邮件</label>
-		<input type="email" class="form-control">
-		<span class="glyphicon glyphicon-ok form-control-feedback"></span>
-	</div>
-	.glyphicon-ok	.glyphicon-warning-sign	.glyphicon-remove
-
-	（9）控制尺寸
-	
-	<input type="password" class="form-control input-lg">
-
-
-
-五.图片
-
-	（1）图片形状
-	<img src="img.png" class="img-rounded">
-	.img-circle	.img-thumbnail
-
-	（2）响应图片
-
-	.img-responsive
-
-
-六.布局容器
-
-	（1）bootstrap移动设备优先，屏幕宽度和设备一致，初始缩放比例，最大缩放比例和禁止用户缩放
-	
-		<meta name="viewport" content="width=device-width,inital-scale=1,maximum-scale=1,user-scalable=no"/>
-
-	（2）布局容器
-
-		bootstrap需要为页面内容和栅格系统包裹一个.container容器，由于padding属性原因，这两种容器不能互相嵌套
-		
-		<div class="container">	//固定宽度
-			<div class="row">	//创建响应行
-			...
-			</div>
-		</div>
-	
-		<div class="container-fluid"> //100%宽度
-			....
-		</div>
-
 		栅格系统中，系统容器会随着屏幕大小的增减自动分配最多12列，通过一系列的行与列的组合，来创建页面布局
+			
+		<div class="container">		//固定宽度
+			<div class="row">	//创建响应行，行必须放置在 .container class 内
+			   <div class="col-*-*"> ... </div>
+			   <div class="col-*-*"> ... </div>    
+			</div>
+		</div>
+
+	==================================================================================================
+	
+	超小屏幕 手机 (<768px)	小屏幕 平板 (≥768px)	中等屏幕 桌面显示器 (≥992px)	大屏幕 大桌面显示器 (≥1200px)
+	.col-xs-		.col-sm-		.col-md-			.col-lg-
+	
+	==================================================================================================
+
+	(2)响应式的列重置
+		
+		某些元素字数较多，窄屏幕中就没有办法放在一行中，就会影响行高，某些列可能会出现比别的列高的情况。为了克服这一问题，
+
+	建议联合使用 .clearfix和 响应式工具类。
+		
+		<div class="clearfix visible-xs"></div>
+		
 
 	（3）列偏移，中间保持空隙
 
@@ -268,7 +76,7 @@
 			</div>
 		</div>
 
-	（4）嵌套
+	（4)列嵌套
 	
 		<div class="container">	
 			<div class="row">	
@@ -279,7 +87,7 @@
 			</div>
 		</div>
 		
-	（5）交换位置 push向左移动 pull向右移动
+	（5）列排序，交换位置 push向左移动 pull向右移动
 
 		<div class="container">	
 			<div class="row">	
@@ -289,11 +97,311 @@
 		</div>
 
 
-七.辅助类
+三.页面排版
+
+
+	（1）bootstrap分别对h1～h6进行了css样式封装:
+					
+					<h1> 主标题 <small>副标题</small> </h1>
+
+	（2）内联文本元素:
+
+					<p> </p>	<del> </del>	<s> </s>	<ins> </ins>
+					<u> </u>	<small> </small>	<strong> </strong>	<em> </em>
+
+	（3）文本对齐:
+			
+					.text-left	.text-center	.text-right	.text-nowrap
+
+	（4）文本大小写：
+
+					.text-lowercase	.text-uppercase	.text-capitalize
+
+	（5）地址文本：
+
+					<address>
+						<addr title="phone">P:</addr> 123-456
+					</address>
+
+	（6）应用文本：(反向样式.blockquote-reverse)
+
+					<blockquote>
+
+					</blockquote>
+
+
+	（7）列表排版:(移除默认样式.list-unstyled	设置成内联.list-inline)
+
+					<ul class="list-unstyled">
+						<li> ... </li>
+						...
+					</ul>
+
+
+	（8）代码
+		
+			内联代码(内联)：		<code> ... </code>
+			代码块（块级）:		<pre> ... </pre>
+
+
+
+
+
+
+
+四.表格
+
+
+	（1）基本格式，实现基本的表格样式
+	
+	======================================================================
+			<table class="table">
+  				<caption>基本的表格布局</caption>
+			  	<thead>
+    					<tr>
+      						<th>名称</th>
+      						<th>城市</th>
+    					</tr>
+  				</thead>
+			 	<tbody>
+    					<tr>
+      						<td>Tanmay</td>
+      						<td>Bangalore</td>
+    					</tr>
+    					<tr>
+      						<td>Sachin</td>
+      						<td>Mumbai</td>
+    					</tr>
+  				</tbody>
+			</table>
+
+	（2）table类样式
+			
+			<table class="table table-striped">	条纹状表格
+		
+			<table class="table table-bordered">	带边框的表格
+		
+			<table class="table table-hover">	悬停鼠标
+
+	（3）<th> <td> <tr>状态类，可以单独设置每一行的背景颜色
+
+			<tr class="success">
+		
+			active	  info	  danger  success    warning	
+
+	（4）<th> <td> <tr>隐藏
+
+			<tr class="sr-only">
+
+
+
+
+
+
+三.表单
+
+	（1）基本格式
+
+	========================================================================================
+
+	<form role="form">
+		<div class="form-group">
+    			<label for="name">名称</label>
+    			<input type="text" class="form-control" >
+  		</div>
+  		<div class="form-group">
+    			<label for="name">密码</label>
+    			<input type="password" class="form-control" >
+  		</div>
+  		<button type="submit" class="btn btn-default">提交</button>	
+	</form>
+	
+	========================================================================================
+
+
+	支持输入框控件:
+		
+		text	password     datetime	 date	 moth	 time	 week	 number	
+		email	url	     search	 tel	 color
+
+
+	（2）表单内联
+
+		<form role="form" class="form-inline">		
+		
+		
+	（3）其他控件
+
+	=================================文本框(textarea)===============================
+		
+		<form role="form">
+			<div class="form-group">
+    				<label for="name">文本框</label>
+    				<textarea class="form-control" rows="3"></textarea>
+  			</div>
+		</form>
+
+	============================复选框（Checkbox）和单选框（Radio)===================
+		
+		<div class="checkbox">
+    			<label><input type="checkbox" value="" name="checkbox">选项 1</label>
+		</div>
+		<div class="checkbox">
+    			<label><input type="checkbox" value="" name="checkbox">选项 2</label>
+		</div>
+
+
+		<div class="radio">
+    			<label><input type="radio" value="" name="radio">选项 1</label>
+ 
+		</div>
+		<div class="radio">
+    			<label><input type="radio" value="" name="radio">选项 2</label>
+ 
+		</div>
+
+	对一系列复选框和单选框使用 .checkbox-inline 或 .radio-inline class，控制它们显示在同一行上
+
+	===========================选择框（Select）======================================
+
+		<form role="form">
+		  <div class="form-group">
+    			<label for="name">选择列表</label>
+    			<select class="form-control">
+      				<option>1</option>
+      				<option>2</option>
+      				<option>3</option>
+    			</select>
+  		</div>
+	     </form>
+
+	（4）表单大小
+
+	可以分别使用 class .input-lg 和 .col-lg-* 来设置表单的高度和宽度
+	
+	 .input-sm  .input-md   .input-lg   控制高度
+	 .col-sm-*  .col-md-*   .col-lg-*   控制宽度 	
+
+	====================================================================================
+
+	<div class="form-group">
+    		<input class="form-control input-lg" type="text">
+ 	</div>
+
+	<div class="row">
+    		<div class="col-lg-2">
+      			<input type="text" class="form-control" placeholder=".col-lg-2">
+    		</div>
+   		<div class="col-lg-3">
+      			<input type="text" class="form-control" placeholder=".col-lg-3">
+    		</div>
+    		<div class="col-lg-4">
+      			<input type="text" class="form-control" placeholder=".col-lg-4">
+    		</div>
+  	</div>
+	
+	====================================================================================
+
+	（5）表单组合
+
+		<div class="input-group">
+			<div class="input-group-addon">$</div>
+			<input type="text" class="form-control"/>
+			<div class="input-group-addon">.00</div>
+		</div>
+
+	
+	（6）校验状态，显示不同颜色
+	
+	<div class="form-group has-error">
+	.has-error	.has-warning	.has-success
+	
+	//label标签同步相应状态
+	<label class="control-label"> .. </label>
+
+	=============================================================================
+	
+	<div class="form-group has-warning">
+    		<label class="control-label" for="inputWarning">输入警告</label>
+      		<input type="text" class="form-control" id="inputWarning">
+	</div>
+
+	==============================================================================
+
+
+
+
+
+
+四.按钮
+
+	（1）按钮元素
+
+		
+		<button class="btn btn-default"> BUTTON </button>
+
+		<input type="button" class="btn btn-default" value="INPUT" />
+
+		a.导航和导航条组件只支持<button>元素
+		
+
+	（2）按钮样式
+		
+		状态颜色
+
+		<button class="btn btn-default"> BUTTON </button>
+		
+		.btn-default	.btn-info	.btn-danger	.btn-link	.btn-success	.btn-warning	.btn-primary
+
+	
+
+		尺寸大小
+		
+		<button class="btn btn-default btn-lg"> BUTTON </button>
+
+		.btn-lg		.bg-sm		.btn-xs
+
+
+
+		块级按钮
+		
+		<button class="btn btn-default btn-block"> BUTTON </button>
+		
+		.btn-block
+
+
+
+		激活|禁用状态
+	
+		<button class="btn btn-default active"> BUTTON </button>
+
+		.active		.disabled
+
+
+
+
+
+五.图片
+
+	（1）图片形状
+	
+		<img src="img.png" class="img-rounded">
+	
+		.img-circle	.img-thumbnail    .img-rounded
+		将图片变为圆形 	缩略图功能	  为图片添加圆角
+
+	（2）响应图片
+
+		<img src="img.png" class="img-responsive" >
+		
+		.img-responsive
+
+
+六.辅助类
 
 	（1）情景文本颜色
 		
-		.text-muted 柔和灰	.text-success	成功绿	.text-warning	警告黄
+		.text-muted 	柔和灰	.text-success	成功绿	.text-warning	警告黄
 		.text-primary	主要蓝	.text-info	信息蓝	.text-danger	危险红
 
 	（2）情景背景色
@@ -303,7 +411,7 @@
 
 	（3）关闭按钮
 
-		<button type="button" class="clos">&times;</button>
+		<button type="button" class="close">&times;</button>
 
 	（4）三角符号
 
@@ -328,51 +436,17 @@
 		<div class="hidden">hidden</div>
 
 
-八.响应工具
+
+
+七.响应工具类
 
 	在媒体查询时，针对不同的屏幕大小，有时需要显示和隐藏部分内容，响应式工具类，就提供了这种解决方案
 	
-	超小屏幕	.visible-xs-*	hidden-xs-*
-	小屏幕	.visible-sm-*	hidden-sm-*
-	中等屏幕	.visible-md-*	hidden-md-*
-	大屏幕	.visible-lg-*	hidden-lg-*
+	超小屏幕	.visible-xs-*	.hidden-xs
+	小屏幕	.visible-sm-*	.hidden-sm
+	中等屏幕	.visible-md-*	.hidden-md
+	大屏幕	.visible-lg-*	.hidden-lg
 
-	对于显示内容，有三种方式	block	inline-block	inline
+	对于显示内容，有三种方式block   inline-block	inline
 
-	<div class="visible-xs-block"> bootstrap	</div>
-
-
-九.图标组件
-
-	<i class="glyphicon glyphicon-star"></li>
-	或
-	<span class="glyphicon glyphicon-star"></span>
-	或
-	<button class="btn btn-default">
-		<span class="glyphicon glyphicon-star"></span>
-	</button>
-
-
-十.下拉菜单组件
-
-	（1）基本格式
-
-		<div class="dropdown">
-			<button class="btn btn-default" data-toggle="dropdown">下拉菜单
-				<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu">
-				<li><a href="#">首页</a></li>
-				...
-			</ul>
-		</div>
-
-	（2）相关设置
-		
-		<div class="dropup">	//设置向上触发
-
-		<ul class="dropdown-menu drop-menu-right"> //菜单项居右对齐，默认drop-meun-left
-
-		<li class="divider"></li>		//设置菜单分割线
-	
-		<div class="dropdown-open">		//让菜单默认显示
+	<div class="visible-xs-block"> bootstrap</div>  //在超小屏幕才可以出现bootstrap
