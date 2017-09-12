@@ -5,22 +5,45 @@
 1.javascript输出
 
 	(1)使用window.alert()弹出警告框。
+	
 	(2)使用document.write()方法将内容写到HTML文档中。注意：如果在文档已完成加载后执行
-						document.write，整个 HTML 页面将被覆盖。
+	document.write，整个 HTML 页面将被覆盖。
+
+	=======================================================================	
+		<p>我的第一个段落。</p>
+		<button onclick="myFunction()">点我</button>
+
+		<script>
+			function myFunction() {
+   				document.write(Date());
+			}
+		</script>
+	=======================================================================
+	
 	(3)使用innerHTML写入到HTML元素。改变 HTML元素的内容
+
+	=======================================================================
+		<p id="p1">我的第一个段落。</p>
+		
+		<script>
+   			document.getElementById('p1').innerHTML=Date();
+		</script>		
+	=======================================================================
+	
 	(4)使用console.log()写入到浏览器的控制台。
 	
 
+
 2.javascript数据类型
 
-	(1)基本数据类型
+	(1)基本数据类型，基本数据类型是按值访问的，因为可以直接操作保存在变量中的实际值。
 		字符串(String)、数字(Number)、布尔(Boolean)、未定义（Undefined）
 			a.字符串(String)字面量可以使用单引号或双引号;'John Doe'
 			b.数字(Number)字面量可以是整数或者是小数，或者是科学计数;123e5
 			
 			
-	(2)对象数据类型
-		数组(Array)、对象(Object)、空(Null)、日期(Date).函数(Function)
+	(2)对象数据类型，存储在变量处的值是一个指针（point），指向存储对象的内存地址。
+		数组(Array)、对象(Object)、空(Null)、日期(Date),函数(Function)
 			a.数组(Array)字面量定义一个数组;[40, 100, 1, 5, 25, 10]
 			b.对象(Object)字面量 定义一个对象;{firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}
 			c.函数(Function)字面量定义一个函数;function myFunction(a, b) { return a * b;}
@@ -40,49 +63,56 @@
 		var cars=   new Array();
 		var person= new Object();
 	
-	则JavaScript变量均为对象。当您声明一个变量时，就创建了一个新的对象。
+	则JavaScript变量均为对象。当您声明一个变量时，就创建了一个新的对象
 	
 	(5)JavaScript类型转换
+
+
+		typeof:对于值类型，你可以通过typeof判断，string/number/boolean都很清楚，但是typeof在判断到引用类型
+		的时候，返回值只有object/function，你不知道它到底是一个object对象，还是数组，还是new Number等等。
+	
+		Instanceof:运算符的第一个变量A；第二个变量B。Instanceof的判断队则是：沿着A的__proto__这条线来找，
+		同时沿着B的__proto__这条线来找，如果两条线能找到同一个引用，即同一个对象，那么就返回true。如果
+		找到终点还未重合，则返回false。
+	
 		
+
+		---------------------------Number=>String----------------------------------------
 		a.将数字转换为字符串
 			全局方法String()可以将数字转换为字符串。该方法可用于任何类型的数字，字母，变量，表达式
 				String(123)       // 将数字 123 转换为字符串并返回
-			
-			Number方法toString()也是有同样的效果。
-				(123).toString()
 		
 		b.将布尔值转换为字符串
 			全局方法String()可以将布尔值转换为字符串。
 				String(false)        // 返回 "false"
-			Boolean方法toString()也有相同的效果。
-				false.toString()     // 返回 "false"
+	
 			
 		c.将日期转换为字符串
 			全局方法String()可以将日期转换为字符串。
 				String(Date()) 
-			Date方法toString()也有相同的效果。
-				Date().toString() 
 		
-		d.将字符串转换为数字
+
+		-----------------------------------------String=>Number--------------------------------
+		a.将字符串转换为数字
 			全局方法 Number() 可以将字符串转换为数字。字符串包含数字(如 "3.14") 转换为数字 (如 3.14).
 		空字符串转换为 0。其他的字符串会转换为 NaN (不是个数字)。
 			Number("3.14")    // 返回 3.14
 			Number(" ")       // 返回 0 
 			Number("99 88")   // 返回 NaN
 	
-		e.一元运算符+将变量转换为数字：
+		b.一元运算符+将变量转换为数字：
 			var y = "5";      // y 是一个字符串
 			var x = + y;      // x 是一个数字
 		如果变量不能转换它仍然会是一个数字，但值为 NaN (不是一个数字):
 			var y = "John";   // y 是一个字符串
 			var x = + y;      // x 是一个数字 (NaN)
 
-		f.将布尔值转换为数字
+		c.将布尔值转换为数字
 			全局方法 Number() 可将布尔值转换为数字。
 				Number(false)     // 返回 0
 				Number(true)      // 返回 1
 			
-		h.将日期转换为数字
+		d.将日期转换为数字
 			全局方法 Number() 可将日期转换为数字。
 				d = new Date();
 				Number(d)          // 返回 1404568027739
@@ -90,21 +120,16 @@
 				d = new Date();
 				d.getTime()        // 返回 1404568027739
 			
-		i.自动转换类型
-			当 JavaScript 尝试操作一个 "错误" 的数据类型时，会自动转换为 "正确" 的数据类型。
-		以下输出结果不是你所期望的：
-			5 + null    // 返回 5         null 转换为 0
-			"5" + null  // 返回"5null"   null 转换为 "null"
-			"5" + 1     // 返回 "51"      1 转换为 "1"  
-			"5" - 1     // 返回 4         "5" 转换为 5
-		
-		j.自动转换为字符串
-			document.getElementById("demo").innerHTML = myVar;
 
-			// if myVar = {name:"Fjohn"}  // toString 转换为 "[object Object]"
-			// if myVar = [1,2,3,4]       // toString 转换为 "1,2,3,4"
-			// if myVar = new Date()      // toString 转换为 "Fri Jul 18 2014 09:08:55 GMT+0200"
+		-----------------------------------------toString()-------------------------------------
+		a.对象类型自动转换为字符串,toString()
 	
+			if myVar = {name:"Fjohn"}  // toString 转换为 "[object Object]"
+			if myVar = [1,2,3,4]       // toString 转换为 "1,2,3,4"
+			if myVar = new Date()      // toString 转换为 "Fri Jul 18 2014 09:08:55 GMT+0200"
+	
+
+
 
 
 3.JavaScript 变量
@@ -122,25 +147,18 @@
 			var lastname="Doe",
 			age=30,
 			job="carpenter";
+
+
 			
 			
-4.JavaScript语句
-
-	(1)分号用于分隔JavaScript语句。通常我们在每条可执行的语句结尾添加分号.您也可能看到不带有分号的
-案例。在JavaScript中，用分号来结束语句是可选的。
-
-	(2)您可以在文本字符串中使用反斜杠对代码行进行换行
-		document.write("你好 \
-		世界!");
+4.JavaScript注释
 		
-		不过，您不能像这样折行：
-		document.write \ 
-		("你好世界!");
-		
-	(3)单行注释以 // 开头。
+	(1)单行注释以 // 开头。
 	
-	(4)多行注释以 /* 开始，以 */ 结尾
+	(2)多行注释以 /* 开始，以 */ 结尾
 	
+
+
 
 5.JavaScript 函数
 
@@ -165,71 +183,93 @@
 				var x=5;
 				return x;
 		}
-	--------------------------------------------------------------------------------
-		Return语句使用注意事项
-			function myFunction(a) {
-				var
-				power = 10;  
-				return
-				a * power;
-			}
-			结果会返回 undefined
-			因为在 JavaScript 中，实例的代码与下面的代码一致：
-			function myFunction(a) {
-			var
-			power = 10;  
-			return;       // 分号结束，返回 undefined
-			a * power;
-		}
-		在JavaScript中，分号是可选的 。由于return是一个完整的语句，所以JavaScript将关闭 
-		return语句
-	-------------------------------------------------------------------------------
-	
+
+
 	(4)局部 JavaScript 变量
-		a.在JavaScript函数内部声明的变量(使用 var)是局部变量，所以只能在函数内部访问它。
-		b.如果变量在函数内没有声明（没有使用 var 关键字），该变量为全局变量
-			carname="Volvo"; //全局变量
+		a.在JavaScript【函数】内部声明的变量(使用 var)是局部变量，所以只能在函数内部访问它。
+		b.如果变量在函数外声明（没有使用 var 关键字），该变量为全局变量
+		----------------------------------------------------------------------------
+			function fun1(){
+				var a=1;
+				b=4;
+			}
+			
+			fun1();	
+			console.log(b);		//4
+		-----------------------------------------------------------------------------
+
+			
 	
 	(5)全局 JavaScript 变量
 		a.在函数外声明的变量是全局变量，网页上的所有脚本和函数都能访问它。
 		b.如果您把值赋给尚未声明的变量，该变量将被自动作为全局变量声明。
-		
-		
-	(6)程序块作用域
-	在每个代码块中 JavaScript 不会创建一个新的作用域，一般各个代码块的作用域都是全局的。
-	for (var i = 0; i < 10; i++) {
-		// some code
-	}
-		return i;		//10
+		-----------------------------------------------------------------------------
+			c=5;
+			function fun1(){
+				console.log(c); //5
+			}
+			
+			fun1();	
+			console.log(c);		//5
+		-----------------------------------------------------------------------------
+		c.在每个语句代码块的作用域都是全局的。
 	
-	(7)函数表达式
+		-------------------------------------------------------------------------------
+		for (var i=0;i<10;i++){}
+		console.log(i);			//10
+		-------------------------------------------------------------------------------
+
+
+	(6)函数表达式
 	JavaScript 函数可以通过一个表达式定义。函数表达式可以存储在变量中：
 		var x = function (a, b) {return a * b};
 	在函数表达式存储在变量后，变量也可作为一个函数使用：
 		var z = x(4, 3);
-		
-	(8)函数自调用
-		如果表达式后面紧跟 () ，则会自动调用。不能自调用声明的函数。自调函数在加载时就调用一次
-		var myfun=function(){alert("haa")}(); //自调用
-		
-		或者匿名自我调用的函数。通过添加括号，
-		(myfun(){alert("ajdfk")})();
 	
-	(9)function属性
-		arguments.length 属性返回函数调用过程接收到的参数个数
-		toString() 方法将函数作为一个字符串返回
 	
-	(10)函数显式参数(Parameters)与隐式参数(Arguments)
-		函数显式参数在函数定义时列出。函数隐式参数在函数调用时传递给函数真正的值。
+	(7)函数表达式自调用
+		如果表达式后面紧跟 () ，则会自动调用。自调函数在加载时就调用一次
 		
-		JavaScript函数定义时显式参数没有指定数据类型。JavaScript 函数对隐式参数没有进行类型检测。
-	JavaScript函数对隐式参数的个数没有进行检测。
+		var myfun=function(a,b){alert("haa")}(1,2); //自调用
 		
-		如果函数在调用时未提供隐式参数，参数会默认设置为： undefined
-		如果函数调用时设置了过多的参数，参数将无法被引用
+		function myfun(){}();		//不能自调用声明的函数。
+		
+		或者匿名自我调用的函数。通过添加括号，因为JavaScript里括弧()里面不能包含语句，所以在这一点上，
+		解析器在解析function关键字的时候，会将相应的代码解析成function表达式，而不是function声明。
+		
+		(myfun(a,b){alert("ajdfk")})(1,2);
+		(myfun(a,b){alert("ajdfk")}(1,2));
+
+	
+	(8)JavaScript 闭包
+		var add = (function () {
+			var counter = 0;
+			return function () {console.log(counter += 1);}
+		})();
+
+		add();
+		add();
+		add();
+
+		// 计数器为 3
+		
+	变量 add 指定了函数自我调用的返回字值。自我调用函数只执行一次。设置计数器为 0。并返回函数表达式。
+add变量可以作为一个函数使用。非常棒的部分是它可以访问函数上一层作用域的计数器。这个叫作 JavaScript 
+闭包。它使得函数拥有私有变量变成可能。计数器受匿名函数的作用域保护，只能通过 add 方法修改。
+
+
+	(9)函数参数数组
+
+		function fun1(){
+			console.log(arguments);
+		}
+
+		arguments为函数的属性
 		
 		
-	(11)函数调用
+		
+		
+	(10)函数调用
 	
 		a.作为一个函数调用
 			function myFunction(a, b) {
@@ -249,7 +289,7 @@
 		myObject.fullName();         // 返回 "John Doe"
 		this 的值为 myObject 对象。
 		
-		c.使用构造函数调用函数
+		c.使用构造函数调用函数（对象定义的另一种方式）
 			如果函数调用前使用了 new 关键字, 则是调用了构造函数。这看起来就像创建了新的函数，但实
 		际上 JavaScript 函数是重新创建的对象：
 			function myFunction(arg1, arg2) {
@@ -262,7 +302,7 @@
 			
 		构造函数中 this 关键字没有任何的值。this 的值在函数调用时实例化对象(new object)时创建。
 		
-		d.作为函数方法调用函数
+		d.作为函数方法调用函数（function对象的方法）
 			两个方法都使用了对象本身作为第一个参数。 两者的区别在于第二个参数： apply传入的是一个参数
 		数组，也就是将多个参数组合成为一个数组传入，而call则作为call的参数传入（从第二个参数开始）。
 			function myFunction(a, b) {
@@ -276,36 +316,16 @@
 			myArray = [10, 2];
 			myObject = myFunction.apply(myObject, myArray);  // 返回 20
 			
-			在 JavaScript 严格模式(strict mode)下, 在调用函数时第一个参数会成为 this 的值， 即使该
-		参数不是一个对象。
-			在 JavaScript 非严格模式(non-strict mode)下, 如果第一个参数的值是null或undefined, 它
-		将使用全局对象替代。
 		
-	(13)JavaScript 闭包
-		var add = (function () {
-			var counter = 0;
-			return function () {return counter += 1;}
-		})();
-
-		add();
-		add();
-		add();
-
-		// 计数器为 3
-		
-	变量 add 指定了函数自我调用的返回字值。自我调用函数只执行一次。设置计数器为 0。并返回函数表达式。
-add变量可以作为一个函数使用。非常棒的部分是它可以访问函数上一层作用域的计数器。这个叫作 JavaScript 
-闭包。它使得函数拥有私有变量变成可能。计数器受匿名函数的作用域保护，只能通过 add 方法修改。
+	
 
 
 6.JavaScript 对象
 
-	(1)对象也是一个变量，但对象可以包含多个值（多个变量）。
+
+	-----------------------------------------直接定义-------------------------------------
 	
-	(2)对象定义(直接定义)
-		你可以使用字符来定义和创建 JavaScript 对象:
-			
-			var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
+	(1)对象定义
 		
 		定义JavaScript对象可以跨越多行，空格跟换行不是必须的：
 			
@@ -313,27 +333,29 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 				firstName:"John",
 				lastName:"Doe",	
 				age:50,
-				eyeColor:"blue"
+				eyeColor:"blue",
+				run:function(a){
+					console.log(a);
+				}
 			};	
-		
-	(3)对象属性
-		我们通常认为 "JavaScript 对象是键值对的容器"。键值对通常写法为name:value (键与值以冒号分割)。
-	键值对在JavaScript对象通常称为对象属性。
+	
 
-	(4)访问对象属性
+	(2)访问对象属性
 		你可以通过两种方式访问对象属性:
-		person.lastName
-		person["lastName"];
+		person.lastName;		//Doe
+		person["lastName"];		//Doe
+		person.run(1);			//1
+		person.run;			//function(a){console.log(a)};
 		
-	(5)对象方法
-		对象的方法定义了一个函数，并作为对象的属性存储。对象方法通过添加 () 调用 (作为一个函数)。
-	该实例访问了person对象的fullName()方法,不加括号输出函数表达式:
-		name=person.fullName();
-		name=person.fullName	//function(){return  this.firstName + " " + this.lastName; }
-		你可以使用以下语法创建对象方法：
-		methodName:function(){code lines}
-		
-	(6)定义对象(构造器)
+
+
+	(3)把属性添加到 JavaScript 对象,方法添加到 JavaScript 对象
+		person.firstname="John";
+		person.eat=function(a){console.log(a)};
+	
+
+	-----------------------------------------构造器-------------------------------------	
+	(1)定义对象
 		function person(firstname,lastname,age,eyecolor)
 		{
 			this.firstname=firstname;
@@ -343,89 +365,59 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 		}
 		
 		var myFather=new person("John","Doe",50,"blue");
-		var myMother=new person("Sally","Rally",48,"green");
 		
-	(7)把属性添加到 JavaScript 对象,方法添加到 JavaScript 对象
-		person.firstname="John";
-		x=person.firstname;   //John
 
-	(8)对象都是通过函数来创建的,而函数却又是一种对象
+
+	(2)把属性添加到 JavaScript 对象,方法添加到 JavaScript 对象
+		myFather.class="J";
+		myFather.run=function(a){console.log(a)};
+	
+	
+		
+	
+	-------------------------------------内部实现------------------------------------------
+	(1)对象都是通过构造函数来创建的,而函数却又是一种对象
 		var obj = { a: 10, b: 20 };
 		var arr = [5, 'x', true];
 		
 		本质
 		var obj = new Object();
-        obj.a = 10;
-        obj.b = 20;
+        	obj.a = 10;
+        	obj.b = 20;
 
-        var arr = new Array();
-        arr[0] = 5;
-        arr[1] = 'x';
-        arr[2] = true;
+        	var arr = new Array();
+        	arr[0] = 5;
+        	arr[1] = 'x';
+        	arr[2] = true;
 		
 		
-	(9)JavaScript 基于 prototype，而不是基于类的。
+	(2)JavaScript 基于 prototype，而不是基于类的。
 	
+					----------函数独有属性---------
 		a.每个函数都有一个属性叫做prototype。这个prototype的属性值是一个对象,此对象(function.prototype)
 	有一个构造方法指向原构造函数
 		
 		b.可以在自己自定义的函数的prototype中新增自己的属性
-			function Fn() { }
-				Fn.prototype.name = '王福朋';
-				Fn.prototype.getYear = function () {
-				return 1988;
-			};
-
-			var fn = new Fn();
-			console.log(fn.name);		//王福朋
-			console.log(fn.getYear());	//1988
 		
-		c.每个对象都有一个__proto__属性，可成为隐式原型，这个属性引用了创建这个对象的函数
+	
+					------------对象与函数属性--------
+		a.每个对象都有一个__proto__属性，可成为隐式原型，这个属性引用了创建这个对象的函数
 	的prototype。即：fn.__proto__ === Fn.prototype;每个函数也有一个__proto__属性，即
 	fun.__proto__===Function.prototype
 		
-		d.Object.prototype的__proto__指向的是null
+		b.Object.prototype的__proto__指向的是null
 	
-	(10)对于值类型，你可以通过typeof判断，string/number/boolean都很清楚，但是typeof在判断到引用类型
-	的时候，返回值只有object/function，你不知道它到底是一个object对象，还是数组，还是new Number等等。
-	
-	Instanceof运算符的第一个变量A；第二个变量B。Instanceof的判断队则是：沿着A的__proto__这条线来找，
-	同时沿着B的__proto__这条线来找，如果两条线能找到同一个引用，即同一个对象，那么就返回true。如果
-	找到终点还未重合，则返回false。
-	
-	(11)javascript中的继承是通过原型链来体现的.访问一个对象的属性时，先在基本属性中查找，如果没有，
+
+	(3)javascript中的继承是通过原型链来体现的.访问一个对象的属性时，先在基本属性中查找，如果没有，
 	再沿着__proto__这条链向上找，这就是原型链。
 	
 	
-7.JavaScript字符串
 
-	(1)你可以使用索引位置来访问字符串中的每个字符,字符串的索引从 0 开始
-		var carname = 'Volvo XC60';
-		var character = carname[7];
-	
-	(2)你也可以在字符串添加转义字符来使用引号：
-		var x = 'It\'s alright';
-	
-	(3)可以使用内置属性 length 来计算字符串的长度：
-		var sln = txt.length;
-	
-	(4)对字符串和数字进行加法运算
-	两个数字相加，返回数字相加的和，如果数字与字符串相加，返回字符串
-		z="Hello"+5; //Hello5
+
+
 		
-	(5)JavaScript 字符串分行
-		JavaScript 允许我们在字符串中使用断行语句:
-			var x =
-				"Hello World!";
-				
-		但是，在字符串中直接使用回车换行是会报错的：
-			var x = "Hello
-				World!";
-		字符串断行需要使用反斜杠(\)，如下所示:
-			var x = "Hello \
-				World!";
 	
-8.条件语句
+7.条件语句
 	
 =============================================================================
 
@@ -518,14 +510,16 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 			被执行的代码块
 		}
 	
-	(2)For/In 循环
-		var person={fname:"John",lname:"Doe",age:25}; 
- 
-		for (x in person)
-		{
-			txt=txt + person[x];
+	(2)For/In 循环,只能用obj[x]
+		var obj={
+			name:"zhangsan",
+			age:12
 		}
 	
+		for (x in obj){
+			console.log(x+"==>"+obj[x]);
+		}
+
 	(3)While 循环
 		while (条件)
 		{
@@ -677,38 +671,41 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 				this.a = 1;
 			};
 			f();// 报错，this未定义
+
+
 			
 	
-11.JavaScript JSON
+11.JavaScript JSON(JavaScript Object Notation)
 
-	"sites":[
-		{"name":"Runoob", "url":"www.runoob.com"}, 
-		{"name":"Google", "url":"www.google.com"},
-		{"name":"Taobao", "url":"www.taobao.com"}
-	]
+	(1)它是一种严格的js对象的格式，JSON的属性名必须有双引号,值不能是方法函数
+
+	{"name":"Runoob", "url":"www.runoob.com"}
 	
-	数据为 键/值 对。
-	数据由逗号分隔。
-	大括号保存对象
-	方括号保存数组
+
+	(2)JSON 字符串转换为 JavaScript 对象
 	
-	JSON 字符串转换为 JavaScript 对象
-	首先，创建 JavaScript 字符串，字符串为 JSON 格式的数据
-	var text = '{ "sites" : [' +
-		'{ "name":"Runoob" , "url":"www.runoob.com" },' +
-		'{ "name":"Google" , "url":"www.google.com" },' +
-		'{ "name":"Taobao" , "url":"www.taobao.com" } ]}';
-		
-	然后，使用 JavaScript 内置函数 JSON.parse() 将字符串转换为 JavaScript 对象:
+	var text = '{"name":"Runoob", "url":"www.runoob.com"}';
 	var obj = JSON.parse(text);
-	最后，在你的页面中使用新的 JavaScript 对象：
-	document.getElementById("demo").innerHTML = obj.sites[1].name + " " + obj.sites[1].url;
+	console.log(obj);
 	
+	>{name: "Runoob", url: "www.runoob.com"}
+
+	(3)javascript对象转化为json字符串
 	
+	var obj={name:"zhangsan",id:10};
+	var str=JSON.stringify(obj);
+	console.log(str);
+	
+	>{"name":"zhangsan","id":10}
+
+
+
+
 12.JavaScript 变量提升(hoisting(变量提升))
 	
-	(1)JavaScript 中，函数及变量的声明都将被提升到函数的最顶部。JavaScript 中，变量可以在使用后声明，
+	(1)JavaScript 中，【函数及变量】的声明都将被提升到函数的最顶部。JavaScript 中，变量可以在使用后声明，
 也就是变量可以先使用再声明。以下两个实例将获得相同的结果：
+	
 	<a>		x = 5; // 变量 x 设置为 5
 			console.log(x);		//5
 			var x; // 声明 x
@@ -724,23 +721,15 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 		
 		<b>console.log(x);		//undefined
 		   var x = 5; // 初始化 x
-		这是因为变量声明 (var x) 提升了，但是初始化(x = 7) 并不会提升，所以 x 变量是一个未定义的变量。
+		这是因为变量声明 (var x) 提升了，但是初始化(x = 5) 并不会提升，所以 x 变量是一个未定义的变量。
 	
 	(3)使用表达式定义函数时无法提升。
 		myfun();		//报错
 		var myfun=function(){alert("haha");};
-	
-13.JavaScrip调试
-	
-	(1)debugger 关键字
-		debugger 关键字用于停止执行 JavaScript，并调用调试函数。这个关键字与在调试工具中设置断点的
-	效果是一样的。
-		var x = 15 * 5;
-		debugger;
-		document.getElementbyId("demo").innerHTML = x;
+
 		
 		
-14.JavaScript 错误
+13.JavaScript 错误
 
 	(1)JavaScript try 和 catch
 		try 语句允许我们定义在执行时进行错误测试的代码块。
@@ -752,15 +741,26 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 		//在这里处理错误
 	}
 	
-	(2)throw 语句允许我们创建自定义错误,异常可以是 JavaScript 字符串、数字、逻辑值或对象。
-			throw exception		
+	(2)throw 语句允许我们创建自定义错误,异常可以是 JavaScript 字符串、数字、逻辑值或对象。	
 			
 			if(isNaN(x)) throw "不是数字";
-			
-			
-15.javascript:void(..):表示执行内部代码但没有返回值
 
-16.javascript数组
+
+	=============================================================================
+		try{
+			var x="str";
+			if(isNaN(x)) throw "不是数字";
+		}catch(err){
+			console.log(err);
+		}
+		
+		>不是数字
+	=============================================================================
+			
+	
+	
+
+14.javascript数组
 
 	(1)数组中使用名字来索引
 		JavaScript 不支持使用名字来索引数组，只允许使用数字索引。
@@ -786,7 +786,7 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 		points = [40, 100, 1, 5, 25, 10];
 		
 		
-17.DOM
+15.DOM
 
 	当网页被加载时，浏览器会创建页面的文档对象模型（Document Object Model）。
 	
@@ -794,9 +794,9 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 	
 		a.通过 id 查找 HTML 元素
 			var x=document.getElementById("intro");
-		b.通过标签名查找 HTML 元素
+		b.通过标签名查找 HTML 元素,返回数组
 			var y=document.getElementsByTagName("p");
-		c.通过类名找到 HTML 元素
+		c.通过类名找到 HTML 元素，返回数组
 			var x=document.getElementsByClassName("intro");
 		
 	(2)改变 HTML 属性
@@ -808,16 +808,9 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 	(4)改变 HTML 样式
 		document.getElementById(id).style.property="新样式";
 		
-	(5)常见的HTML事件
-		事件	描述
-		onchange	HTML 元素改变
-		onclick	用户点击 HTML 元素
-		onmouseover	用户在一个HTML元素上移动鼠标
-		onmouseout	用户从一个HTML元素上移开鼠标
-		onkeydown	用户按下键盘按键
-		onload	浏览器已完成页面的加载
+
 		
-18.BOM
+16.BOM
 
 	(1)Window对象
 		所有 JavaScript 全局对象、函数以及变量均自动成为 window 对象的成员。全局变量是 window 对象的属
