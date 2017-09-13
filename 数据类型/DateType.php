@@ -7,9 +7,9 @@
 	<?php
     /*
      * 1.基本数据类型：
-     * 整型(int,integer)
-     * 浮点型(float,double)
-     * 布尔型(bool,boolean)
+     * 整型(integer)
+     * 浮点型(double)
+     * 布尔型(boolean)
      * 字符串型(string)
      * 
      * 2.符合类型

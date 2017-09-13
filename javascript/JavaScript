@@ -148,7 +148,9 @@
 			age=30,
 			job="carpenter";
 
-
+	(6)JavaScript没有静态变量，与访问控制，可以借助闭包实现相同的功能
+	
+	(7)JavaScript没有常量
 			
 			
 4.JavaScript注释
@@ -318,7 +320,7 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 			
 		
 	
-
+	
 
 6.JavaScript 对象
 

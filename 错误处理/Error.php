@@ -96,6 +96,22 @@
    	     
 
 	?>
+
+
+
+	 /*
+     	  * 四.die函数
+     	  *      die("message");
+     	  * */
+  
+    	if(!file_exists("welcome.txt"))
+    	{
+        	die("文件不存在");
+    	}
+    	else
+    	{
+        	$file=fopen("welcome.txt","r");
+	}
    
 
     </body>

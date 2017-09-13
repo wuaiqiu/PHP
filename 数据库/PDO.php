@@ -16,7 +16,7 @@
    	    /*
    	     * 1.链接数据库
    	     * */
-        $dsn="mysql:host=localhost;port=3306;dbname=students";
+             $dsn="mysql:host=localhost;port=3306;dbname=students";
    	    $options=array(PDO::MYSQL_ATTR_INIT_COMMAND=>"set names utf8");
    	    $pdo=new PDO($dsn , "root", "123456", $options);
    	    
