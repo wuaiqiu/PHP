@@ -3,6 +3,8 @@
 
 
 1.javascript输出
+	
+	javascript是解释型语言，动态语言
 
 	(1)使用window.alert()弹出警告框。
 	
