@@ -57,27 +57,14 @@
 		var x = 5;           // 现在 x 为数字
 		var x = "John";      // 现在 x 为字符串
 
-	(4)当您声明新变量时，可以使用关键词 "new" 来声明其类型：
-		
-		var carname=new String();
-		var x=      new Number();
-		var y=      new Boolean();
-		var cars=   new Array();
-		var person= new Object();
-	
-	则JavaScript变量均为对象。当您声明一个变量时，就创建了一个新的对象
-	
-	(5)JavaScript类型转换
+	(4)JavaScript类型转换
 
 
 		typeof:对于值类型，你可以通过typeof判断，string/number/boolean都很清楚，但是typeof在判断到引用类型
 		的时候，返回值只有object/function，你不知道它到底是一个object对象，还是数组，还是new Number等等。
 	
 		Instanceof:运算符的第一个变量A；第二个变量B。Instanceof的判断队则是：沿着A的__proto__这条线来找，
-		同时沿着B的__proto__这条线来找，如果两条线能找到同一个引用，即同一个对象，那么就返回true。如果
-		找到终点还未重合，则返回false。
-	
-		
+		如果两条线能找到同一个引用，即同一个对象，那么就返回true。如果找到终点还未重合，则返回false。
 
 		---------------------------Number=>String----------------------------------------
 		a.将数字转换为字符串
@@ -136,24 +123,74 @@
 
 3.JavaScript 变量
 
-	(1)变量通常是可变的。字面量是一个恒定的值。
-	(2)JavaScript 对大小写是敏感的
-	(3)JavaScript 中，常见的是驼峰法的命名规则，如lastName
-	(4)如果重新声明 JavaScript 变量，该变量的值不会丢失：在以下两条语句执行后，
+	(1)如果重新声明 JavaScript 变量，该变量的值不会丢失：在以下两条语句执行后，
 	变量 carname 的值依然是 "Volvo"：
 		var carname="Volvo"; 
 		var carname;
-	(5)您可以在一条语句中声明很多变量。该语句以 var 开头，并使用逗号分隔变量即可;
+	(2)您可以在一条语句中声明很多变量。该语句以 var 开头，并使用逗号分隔变量即可;
 			var lastname="Doe", age=30, job="carpenter";
-		声明也可横跨多行
-			var lastname="Doe",
-			age=30,
-			job="carpenter";
 
-	(6)JavaScript没有静态变量，与访问控制，可以借助闭包实现相同的功能
+	(3)JavaScript没有静态变量，与访问控制，可以借助闭包实现相同的功能
 	
-	(7)JavaScript没有常量
-			
+	(4)JavaScript常量const
+	
+	===================================================================
+	a.可以在全局作用域或者函数内声明常量，常量需要被初始化；常量拥有块级作用域
+
+	const FUN=1;
+	console.log(FUN);//1
+	if(true){
+		const FUN1=2;
+		console.log(FUN1);//2
+		console.log(FUN);//1
+	}
+	console.log(FUN1);//FUN1 is not defined
+	===================================================================	
+
+	(5)块级作用域的局部变量let
+	
+	============================================================
+	a.let声明的变量只在其声明的块或子块中可用
+
+	function varTest() {
+  		var x = 1;
+  		if (true) {
+    		   var x = 2;  // 同样的变量!
+    		   console.log(x);  // 2
+  		}
+	  	console.log(x);  // 2
+	}
+
+	function letTest() {
+  		let x = 1;
+  		if (true) {
+    		   let x = 2;  // 不同的变量
+    		   console.log(x);  // 2
+	       }
+  		console.log(x);  // 1
+	}
+	============================================================
+	b.在程序或者函数的顶层，let并不会像var一样在【全局对象】上创造一个属性	
+
+	var x = 'global';
+	let y = 'global';
+	console.log(this.x); // "global"
+	console.log(this.y); // undefined
+	===========================================================
+	c.let不会hoisting(变量提升)，当在同一个函数或同一个作用域中用let重复定
+	义一个变量将引起TypeError
+	
+	if (x) {
+ 	 let foo;
+  	 let foo; // TypeError thrown.
+	}
+
+	function do_something() {
+  		console.log(foo); // error
+  		let foo = 2;
+	}
+	===============================================================
+
 			
 4.JavaScript注释
 		
@@ -191,7 +228,7 @@
 
 	(4)局部 JavaScript 变量
 		a.在JavaScript【函数】内部声明的变量(使用 var)是局部变量，所以只能在函数内部访问它。
-		b.如果变量在函数外声明（没有使用 var 关键字），该变量为全局变量
+		b.如果变量在函数内声明（没有使用 var 关键字），该变量为全局变量
 		----------------------------------------------------------------------------
 			function fun1(){
 				var a=1;
@@ -241,8 +278,8 @@
 		或者匿名自我调用的函数。通过添加括号，因为JavaScript里括弧()里面不能包含语句，所以在这一点上，
 		解析器在解析function关键字的时候，会将相应的代码解析成function表达式，而不是function声明。
 		
-		(myfun(a,b){alert("ajdfk")})(1,2);
-		(myfun(a,b){alert("ajdfk")}(1,2));
+		(function(a,b){alert("ajdfk")})(1,2);
+		(function(a,b){alert("ajdfk")}(1,2));
 
 	
 	(8)JavaScript 闭包
@@ -338,10 +375,20 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 				lastName:"Doe",	
 				age:50,
 				eyeColor:"blue",
+				
 				run:function(a){
 					console.log(a);
+				},
+				-------------------------
+				run(a){
+					console.log(a)
 				}
-			};	
+				------------------------
+			};
+
+	还可以创建新对象
+	var obj=Object.create(person);
+		
 	
 
 	(2)访问对象属性
@@ -366,6 +413,10 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 			this.lastname=lastname;
 			this.age=age;
 			this.eyecolor=eyecolor;
+			this.fun=fun;
+			function fun(){
+		           console.log("this is fun");
+			}
 		}
 		
 		var myFather=new person("John","Doe",50,"blue");
@@ -401,7 +452,7 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 		a.每个函数都有一个属性叫做prototype。这个prototype的属性值是一个对象,此对象(function.prototype)
 	有一个构造方法指向原构造函数
 		
-		b.可以在自己自定义的函数的prototype中新增自己的属性
+		b.可以在自己自定义的函数的prototype中新增自己的属性,则所有实例对象都有此属性，并且节省内存
 		
 	
 					------------对象与函数属性--------
@@ -415,10 +466,6 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 	(3)javascript中的继承是通过原型链来体现的.访问一个对象的属性时，先在基本属性中查找，如果没有，
 	再沿着__proto__这条链向上找，这就是原型链。
 	
-	
-
-
-
 		
 	
 7.条件语句
@@ -455,36 +502,6 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 			当条件 1 和 条件 2 都不为 true 时执行的代码
 		}
 		
--------------------------------------------------------------------------
-
-	(1)if条件语句返回 false (是我们预期的)因为 x 不等于 10:
-		var x = 0;
-		if (x == 10)
-		
-	  if条件语句返回 true (不是我们预期的)因为条件语句执行为 x 赋值 10，10 为 true:
-		var x = 0;
-		if (x = 10)
-		
-	  if条件语句返回 false (不是我们预期的)因为条件语句执行为 x 赋值 0，0 为 false:
-		var x = 0;
-		if (x = 0)
-		
-	赋值语句返回变量的值。
-	
-	(2)在常规的比较中，数据类型是被忽略的，以下 if 条件语句返回 true：
-		var x = 10;
-		var y = "10";
-		if (x == y)
-	在严格的比较运算中，=== 为恒等计算符，同时检查表达式的值与类型，以下 if 条件语句返回 false：
-		var x = 10;
-		var y = "10";
-		if (x === y)
-		
-	==	等于
-	===	绝对等于（值和类型均相等)
---------------------------------------------------------------------------
-		
-		
 =================================================================================
 		
 	(4)JavaScript switch 语句
@@ -515,14 +532,22 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 		}
 	
 	(2)For/In 循环,只能用obj[x]
-		var obj={
-			name:"zhangsan",
-			age:12
+		for..in循环会把某个类型的原型(prototype)中方法与属性给遍历出来
+		每个实例对象都有一个hasOwnProperty()方法，用来判断某一个属性到底是本地属性，还是继承自prototype对象的属性。
+ 
+		function fun(){
+			this.name="zhangsan";
 		}
-	
-		for (x in obj){
-			console.log(x+"==>"+obj[x]);
+		
+		fun.prototype.sex="男";
+		var obj=new fun();
+		for (var x in obj){
+			if(obj.hasOwnProperty(x)){
+				console.log(x+"==>"+obj[x]);
+			}
 		}
+		
+		//name==>zhangsan
 
 	(3)While 循环
 		while (条件)
@@ -602,25 +627,14 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 10.JavaScript严格模式(use strict)
 	
 	(1)"use strict" 指令在 JavaScript 1.8.5 (ECMAScript5) 中新增。它不是一条语句，但是是一个字面量
-表达式，在 JavaScript 旧版本中会被忽略。"use strict" 的目的是指定代码在严格条件下执行。严格模式下
-你不能使用未声明的变量
+	表达式，在 JavaScript 旧版本中会被忽略。"use strict" 的目的是指定代码在严格条件下执行。
 
 	<script>
 		"use strict";
 		x = 3.14;       // 报错 (x 未定义)
 	</script>
 	
-	(2)在函数内部声明是局部作用域 (只在函数内使用严格模式):
-		
-		x = 3.14;       // 不报错 
-		myFunction();
-
-	function myFunction() {
-		"use strict";
-		y = 3.14;   // 报错 (y 未定义)
-	}
-	
-	(3)严格模式的限制
+	(1)严格模式的限制
 		a.不允许使用未声明的变量,对象也是一个变量。
 			"use strict";
 			x = {p1:10, p2:20};      // 报错 (x 未定义)
@@ -743,6 +757,8 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 		//在这里运行代码
 	} catch(err) {
 		//在这里处理错误
+	}finally{
+	   //不管是否出错都会执行
 	}
 	
 	(2)throw 语句允许我们创建自定义错误,异常可以是 JavaScript 字符串、数字、逻辑值或对象。	
@@ -756,6 +772,8 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 			if(isNaN(x)) throw "不是数字";
 		}catch(err){
 			console.log(err);
+		}finally{
+			console.log("this is over");
 		}
 		
 		>不是数字
@@ -843,3 +861,64 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 	(5)Window Navigator
 		window.navigator 对象在编写时可不使用 window 这个前缀。window.navigator对象包含有关访问者浏
 	览器的信息。来自navigator对象的信息具有误导性，不应该被用于检测浏览器版本
+
+
+17.Map（映射）
+
+	一个Map对象就是一个简单的键值对映射集合，可以按照数据插入时的顺序遍历所有的元素。
+	
+	a.简单实例
+	========================================================================
+	var sayings = new Map();
+	sayings.set("dog", "woof");
+	sayings.set("cat", "meow");
+	sayings.set("elephant", "toot");
+	sayings.size; // 3
+	sayings.get("fox"); // undefined
+	sayings.has("bird"); // false
+	sayings.delete("dog");
+
+	for (var [key, value] of sayings) {
+	  console.log(key + " goes " + value);
+	}
+	// "cat goes meow"
+	// "elephant goes toot"
+	========================================================================
+	b.与对象的区别
+		
+	   （1）Object的键均为Strings类型，在Map里键可以是任意类型
+	   （2）必须手动计算Object的尺寸，但是可以很容易地获取使用Map的尺寸(size)
+	   （3）Map的遍历遵循元素的插入顺序
+
+	========================================================================
+
+
+18.Set（集合）
+
+	Set对象是一组值的集合，这些值是不重复的，可以按照添加顺序来遍历。
+	
+	a.简单实例
+	=====================================================================
+	var mySet = new Set();
+	mySet.add(1);
+	mySet.add("some text");
+	mySet.add("foo");
+
+	mySet.has(1); // true
+	mySet.delete("foo");
+	mySet.size; // 2
+
+	for (let item of mySet) console.log(item);
+	// 1
+	// "some text"
+	=====================================================================
+	b.数组（Array）和集合（Set）的转换
+	
+	//Set==>Array
+	var arr=Array.from(mySet);	
+	var arr=[...mySet2];
+
+	//Array=>Set
+	mySet2 = new Set([1,2,3,4]);
+	====================================================================
+	
