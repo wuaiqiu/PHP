@@ -1,3 +1,0 @@
-PHP（外文名:PHP: Hypertext Preprocessor，中文名：“超文本预处理器”）
-是一种通用开源脚本语言。
-语法吸收了C语言、Java和Perl的特点，利于学习，使用广泛，this is file
