@@ -10,28 +10,17 @@
 
 	INSERT INTO student(name,id) VALUES('zhangsan',12);		#指定列插入数据
 	
-	INSERT INTO student VALUES('zhangsan',12,1996-11-08);	#插入全列数据
-	
-	UPDATE student SET name='lisi' WHERE id=12;				#修改数据
-	
-	DELETE FROM student WHERE id=12;						#删除数据
-	
+	INSERT INTO student VALUES('zhangsan',12,1996-11-08);		#插入全列数据
 
+	INSERT INTO Websites (name, country) SELECT app_name, country FROM apps;
+									#将apps表的app_name,country字段插入websites表中
+	
+	UPDATE student SET name='lisi' WHERE id=12;			#修改数据
+	
+	DELETE FROM student WHERE id=12;				#删除数据
+
+	DELETE FROM student;						#删除所有数据
+	
 =========================================================================================
 
 	注意:SQL的字符串必须要用单引号('),不能用双引号(")
-	
-	SQL数据类型
-	
-		int -------------------------->> 整型
-		double ----------------------->> 浮点型，double(5,2)表示最多5位,其中必须有2位小数
-		decimal ---------------------->> 浮点型,精确度比double高
-		char ------------------------->> 字符型,char(10)表示字符长度为10个字节
-		varchar ---------------------->> 可变字符型
-		text ------------------------->> 字符串类型,tinytext(256B) < text(64K) < mediumtext(16M) < 
-										longtext(4G)
-										
-		blob ------------------------->> 二进制类型,tinyblob < blob < mediumblob < longblob
-		data ------------------------->> 日期类型, yyyy-mm-dd
-		time ------------------------->> 时间类型,hh:mm:ss
-		

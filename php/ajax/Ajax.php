@@ -1,13 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Ajax</title>
-</head>
-		
-    <body>
-    	<p>Asynchronous JavaScript and XML</p>
-    <?php
+<?php
         $arr=array("abc","bcd","def");
         
         //从请求URL地址中获取 q 参数
@@ -36,7 +27,4 @@
         //输出返回值
         echo $response;
         
-	?>
-    </body>
-  
-</html>
+?>

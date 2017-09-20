@@ -18,7 +18,7 @@
 	
 		name char(10),
 		id int ,
-		PRIMARY KEY (id)
+		CONSTRAINT pkName PRIMARY KEY (id)
 		
 	);
 
@@ -26,6 +26,8 @@
 创建后	
 	
 	ALTER TABLE student ADD PRIMARY KEY(id);
+	
+	ALTER TABLE student ADD CONSTRAINT pkName PRIMARY KEY (id);
 	
 	ALTER TABLE student DROP PRIMARY KEY;
 	
@@ -83,8 +85,23 @@
 		name char(10) UNIQUE
 	);
 
-------------------------------------------------------------------------
+	CREATE TABLE student(
 
+		id int,
+		name char(10),
+		CONSTRAINT unionName UNIQUE (id,name)
+	);
+
+------------------------------------------------------------------------
+创建后
+
+	ALTER TABLE Persons ADD UNIQUE (P_Id);
+
+	ALTER TABLE Persons ADD CONSTRAINT unionName UNIQUE (P_Id,LastName);
+
+	ALTER TABLE Persons DROP INDEX unionName;
+
+----------------------------------------------------------------------
 
 
 
@@ -107,3 +124,53 @@
 	ALTER TABLE student DROP FOREIGN KEY fk;
 	
 ------------------------------------------------------------------------
+
+
+
+6. CHECK 约束
+
+	CHECK 约束用于限制列中的值的范围。
+
+--------------------------------------------------------------------------
+创建时
+
+	CREATE TABLE Persons(
+	
+		P_Id int NOT NULL,
+		LastName varchar(255) NOT NULL,
+		CONSTRAINT chk_Person CHECK (P_Id>0)
+	);
+
+-------------------------------------------------------------------------
+创建后
+
+	ALTER TABLE Persons ADD CHECK (P_Id>0);
+
+	ALTER TABLE Persons  ADD CONSTRAINT chk_Person CHECK (P_Id>0);
+
+	ALTER TABLE Persons DROP CHECK chk_Person;
+-----------------------------------------------------------------------
+
+
+
+7.DEFAULT 约束
+	
+	DEFAULT 约束用于向列中插入默认值。	
+
+--------------------------------------------------------------------
+创建时
+	CREATE TABLE Persons(
+	
+		P_Id int NOT NULL,
+		LastName varchar(255) NOT NULL,
+		City varchar(255) DEFAULT 'Sandnes'
+	);
+
+-------------------------------------------------------------------
+创建后
+
+	ALTER TABLE Persons ALTER City SET DEFAULT 'SANDNES';
+
+	ALTER TABLE Persons  ALTER City DROP DEFAULT;
+
+-------------------------------------------------------------------

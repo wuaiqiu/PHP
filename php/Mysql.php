@@ -1,35 +1,32 @@
 <?php
 
 
-//-------------------------------php操作mysql的基本流程---------------------------//        
+//-------------------------------mysqli（面向过程）---------------------------//        
     
    //1.链接数据库
-   $link = mysql_connect("localhost","root","123456");
+   $link = mysqli_connect("localhost","root","123456","students");
     
     /*
      * 打开非持久的 MySQL 连接
-     * msyql_connect("ip","user","password"):
+     * msyqli_connect("ip","user","password","dbname"):
      * 如果成功，则返回一个 MySQL 连接标识，
      *          失败则返回 FALSE。
      * */
     
     
+    //2.检测连接
+    if (!$link) {
+    	die("Connection failed: " . mysqli_connect_error());
+    }
+   
     
-    //2.设置编码
-    mysql_set_charset("utf8");
-    
-    
-    
-    //3.选定数据库
-    mysql_select_db("students");
-    
-    
-    
-    //4.建立查询
-    $result = mysql_query("select * from users");
+    //3.建立查询mysqli_query(connection,query,resultmode);
+    //resultmode	MYSQLI_USE_RESULT（如果需要检索大量数据，请使用这个）
+   //			MYSQLI_STORE_RESULT（默认）
+    $result = mysqli_query($link,"select * from users");
    
     /*
-     * mysql_query("sql语句");
+     * mysqli_query("sql语句");
      *
      * 1.执行没有数据返回的语句(insert , update , delete , create tables等)
      *      返回true，表示执行成功
@@ -43,26 +40,23 @@
     
     
     
-    //5.解析结果集
+    //4.解析结果集
+    //mysqli_error(connection) 函数返回最近调用函数的最后一个错误描述。
+
     if(!$result){
-        
-            echo "语句执行失败,原因如下:<br/>".mysql_error();
-   
+            echo "语句执行失败,原因如下:<br/>".mysqli_error($link);
     }else{
-        while( $rec = mysql_fetch_array($result) ){
-            
+        while( $rec = mysqli_fetch_array($result) ){
             echo "<br/>".var_dump($rec);
-            
         }
-            
     }
     
     
-    //7.关闭链接
-    mysql_close($link);
+    //5.关闭链接
+    mysqli_close($link);
     /* 
-    脚本一结束，到服务器的连接就被关闭，除非之前已经明确调用 mysql_close() 关闭了。
-    msyql_close()只能关闭非持久链接
+    脚本一结束，到服务器的连接就被关闭，除非之前已经明确调用 mysqli_close() 关闭了。
+    msyqli_close()只能关闭非持久链接
      */
     
     
@@ -91,22 +85,17 @@
      */
     
    
-    
-    
-    
-    
-    
-    
+
         /*
          * 解析结果集的函数
          * 
-         * 1.mysql_fetch_assoc($result):
+         * 1.mysqli_fetch_assoc($result):
          *      array( "id"=>"1" , "name"=>"zhangsan" , "class"=>"103" );
          *    
-         * 2.mysql_fetch_row($result):
+         * 2.mysqli_fetch_row($result):
          *      array( "1" , "zhangsan" , "103" );
          *      
-         * 3.mysql_fetch_array($result):     
+         * 3.mysqli_fetch_array($result):     
          *      array( "1" , "id"=>"1" ,
          *             "zhangsan" , "name"=>"zhangsan" ,
          *             "103" , "class"=>"103" );
@@ -119,13 +108,38 @@
         /*
          * 其他函数
          * 
-         * mysql_num_rows($result):返回结果集的数据行数
+         * mysqli_num_rows($result):返回结果集的数据行数
          * 
-         * mysql_num_fields($result):返回结果集的数据列数
-         * 
-         * mysql_field_name($result,n):返回结果集第n(0~)个列名
+         * mysqli_num_fields($result):返回结果集的数据列数
          * 
          * */
+
+//---------------------------mysqli(面对对象)--------------------------------//
+
+	//1.创建连接
+	$link = new mysqli("localhost", "root", "123456", "students");
+	
+	//2.检查连接
+	if ($link->connect_error) {
+	    die("连接失败: " . $link->connect_error);
+	}
+
+	//3.建立查询
+	$result = $link->query("SELECT * FROM users");
+
+	//4.解析结果集
+	if ($result) {
+    		while($rec = mysqli_fetch_array($result)) {
+        		echo "<br/>".var_dump($rec);
+    	}
+	} else {
+	    echo "语句执行失败,原因如下:<br/>".$link->error;
+	}
+	
+	//5.关闭连接
+	$link->close();
+	
+
 //-----------------------------------PDO-------------------------------------//
 	
 	/*
@@ -139,8 +153,7 @@
    	     * 1.链接数据库
    	     * */
             $dsn="mysql:host=localhost;port=3306;dbname=students";
-   	    $options=array(PDO::MYSQL_ATTR_INIT_COMMAND=>"set names utf8");
-   	    $pdo=new PDO($dsn , "root", "123456", $options);
+   	    $pdo=new PDO($dsn , "root", "123456");
    	    
    	    
    	    

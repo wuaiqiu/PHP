@@ -71,32 +71,47 @@
          fclose($file);
 
 //-----------------------------上传文件----------------------------------------//
+$_FILES数组：可以从客户计算机向远程服务器上传文件
+array(1) {
+  ["file"]=>array(5) {
+    		["name"]=>string(11) "welcome.txt"
+    		["type"]=>string(10) "text/plain"
+    		["tmp_name"]=>string(14) "/tmp/php3TN6DB"
+    		["error"]=>int(0)
+    		["size"]=>int(3)
+  		}
+}
 	
-    if ($_FILES["file"]["error"] > 0)
-    {
-        echo "错误：" . $_FILES["file"]["error"] . "<br>";//由文件上传导致的错误代码
-    }
-    else
-    {
-        echo "上传文件名: " . $_FILES["file"]["name"] . "<br>";//上传文件的名称
-        echo "文件类型: " . $_FILES["file"]["type"] . "<br>";//上传文件的类型
+
+
+    if ($_FILES["file"]["error"] > 0){
+        echo "错误：" . $_FILES["file"]["error"] . "<br>";		//由文件上传导致的错误代码
+    }else{
+        echo "上传文件名: " . $_FILES["file"]["name"] . "<br>"; 		//上传文件的名称
+        echo "文件类型: " . $_FILES["file"]["type"] . "<br>";		//上传文件的类型
         echo "文件大小: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";//上传文件的大小，以字节计
-        echo "文件临时存储的位置: " . $_FILES["file"]["tmp_name"];//存储在服务器的文件的临时位置
+        echo "文件临时存储的位置: " . $_FILES["file"]["tmp_name"];		//存储在服务器的文件的临时位置
         
        
            
-        if (file_exists("./" . $_FILES["file"]["name"]))   //判断文件是否存在
-        {
+     if (file_exists("./" . $_FILES["file"]["name"])){   		//判断文件是否存在
             echo "<br/>".$_FILES["file"]["name"] . " 文件已经存在。 ";
-        }
-        else
-        {
+     }else{
             // 如果 不存在该文件则将文件上传
             move_uploaded_file($_FILES["file"]["tmp_name"], "./" . $_FILES["file"]["name"]);
             echo "<br/>文件存储在: " . "./" . $_FILES["file"]["name"];
         }
     }
 
+//-----------------------------下载文件---------------------------------------//
+
+	function downfile(){
+    		$filename=realpath("./welcome.txt");    //返回文件的绝对路径
+    		header( "Content-type:  application/form-data");
+    		header( "Content-Disposition:  attachment;  filename= welcome.txt");
+    		readfile($filename); //输出一个文件
+	}
+	downfile();
 
 //-----------------------------加载文件----------------------------------------//
 	

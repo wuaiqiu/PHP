@@ -21,9 +21,9 @@
 	REVOKE [ALL,CREATE,ALTER,DROP,INSERT,UPDATE,DELETE,SELECT] ON mydb1.* FROM wu@'%';
 								#撤销指定的用户的权限
 								
-	SHOW GRANTS FOR wu@'%';			#查看权限
+	SHOW GRANTS FOR wu@'%';					#查看权限
 	
-	DROP USER  wu@'%';				#删除用户
+	DROP USER  wu@'%';					#删除用户
 	
 
 ======================================================================================

@@ -14,35 +14,46 @@
 		
 		SELECT name FROM student;					#指定列查询
 		
-		SELECT DISTINCT data FROM student;			#去重复指定列查询
-		
+		SELECT DISTINCT data FROM student;				#去重复指定列查询
+	
 	(2)列运算
 	
 		SELECT id*5	FROM student;					#指定列乘5后返回
 		
-		SELECT CONCAT('$',id) FROM student;			#连接字符并返回
+		SELECT CONCAT('$',id) FROM student;				#连接字符并返回
 		
-		SELECT IFNULL(id,0)*12 FROM student;		#空字段转0后乘12并返回
+		SELECT IFNULL(id,0)*12 FROM student;				#空字段转0后乘12并返回
 		
-		SELECT id (AS) ids FROM student;			#列别名返回
+		SELECT id (AS) ids FROM student;				#列别名返回
 		
 		
 	(3)条件控制
 	
-		SELECT id,name  FROM student WHERE id>10;	
+		SELECT id,name  FROM student WHERE id>10;			#where基本查询
+
+		SELECT * FROM Websites  WHERE name IN ('Google','菜鸟教程');	#in包含查询
+
+		SELECT * FROM Websites  WHERE id BETWEEN 1 AND 20;		#between之间查询
+
 		
-	(4)模糊查询（'_'表示单个字符,'%'表示多个字符）
+	(4)模糊查询（'_'表示单个字符,'%'表示多个字符,[charlist]字符列中的任何单一字符,[^charlist]或[!charlist]不在字符列中的任何单一字符）
 	
 		SELECT * FROM student WHERE name LIKE 'zhang_';
 		
 		SELECT * FROM student WHERE name LIKE 'zhang%';
-		
+
+		SELECT * FROM student WHERE name where name REGEXP '^[abc]';
+
+		SELECT * FROM student WHWRE name where name NOT REGEXP '[abc]';
+	
+	
 	(5)排序（ASC:默认,表示从小到大排序;DESC:表示从大到小排序）
 	
 		SELECT * FROM WHERE id>1 ORDER BY id ASC;
 		
 		SELECT * FROM WHERE id>1 ORDER BY id ASC, data DESC;
-		
+	
+	
 	(6)聚合函数
 	
 		1)COUNT记录数总个数
@@ -60,6 +71,10 @@
 		SELECT data,COUNT(*) FROM student GROUP BY data;
 				
 							#以data分组，计算各组的记录数
+
+		SELECT data,COUNT(*) nums FROM student GROUP BY data HAVING nums>3;
+			
+							#以data分组，计算各组的记录数,并记录数大于3
 							
 	(8)LIMIT限定行数
 	
@@ -78,7 +93,18 @@
 		
 =================================================================================================
 
-	
+	where子句中的运算符
+
+	=	等于
+	<>	不等于。注释：在 SQL 的一些版本中，该操作符可被写成 !=
+	>	大于
+	<	小于
+	>=	大于等于
+	<=	小于等于
+	BETWEEN	在某个范围内
+	LIKE	搜索某种模式
+	IN	指定针对某个列的多个可能值
+===============================================================================================
 		
 	
 		

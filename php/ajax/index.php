@@ -42,7 +42,7 @@
 			/*
 			 *	3.接受响应
 			 *		responseText	:获得字符串形式的响应数据。
-			 *	    responseXML:获得 XML 形式的响应数据。利用DOM解析
+			 *	    	responseXML:获得 XML 形式的响应数据。利用DOM解析
 			 **/
 			
 			xmlhttp.onreadystatechange=function(){
