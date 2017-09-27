@@ -1,0 +1,737 @@
+				ruby(二)
+
+一.类与对象
+	
+	(1)创建类
+		类总是以关键字 class 开始，后跟类的名称。类名的首字母应该大写
+
+		class Customer
+			.....
+		end
+
+		class 是 module 的子类，所有class对象有三个方法
+			class.new		实例化对象
+			class.superclass	获取当前类的父类
+			class.allocate		实例化对象，但不会调用initialize方法
+		
+	(2)Ruby 类中的变量
+		
+		注意：在 Ruby 中，您可以通过在变量或常量前面放置 #{ expr } 字符，
+
+	来访问任何变量或常量的值。
+
+		a.局部变量：局部变量是在方法中定义的变量。局部变量在方法外是不可用的。
+
+	局部变量以小写字母或 _ 开始。
+		
+	
+		b.实例变量：实例变量可以跨任何特定的实例或对象中的方法使用。这意味着，
+
+	实例变量可以从对象到对象的改变。实例变量在变量名之前放置符号（@）。未初始化的
+
+	实例变量的值为 nil
+
+	========================================================================	
+	
+		class Customer
+		   def initialize(id, name, addr)
+		      @cust_id=id
+		      @cust_name=name
+		      @cust_addr=addr
+		   end
+	   
+		  def display_details()
+		      puts "Customer id #{@cust_id}"
+		      puts "Customer name #{@cust_name}"
+		      puts "Customer address #{@cust_addr}"
+		    end
+		end
+	========================================================================	
+
+		c.类变量：类变量可以跨不同的对象使用。类变量属于类，且是类的一个属性。
+
+	类变量在变量名之前放置符号（@@）。必须初始化后才能在方法定义中使用，类变量在定
+
+	义它的类或模块的子类或子模块中可共享使用。
+	
+	========================================================================	
+		class Customer
+		   @@no_of_customers=0
+		    def total_no_of_customers()
+		       @@no_of_customers += 1
+		       puts "Total number of customers: #{@@no_of_customers}"
+		    end
+		end
+	=====================================================================
+
+		d.全局变量：类变量不能跨类使用。如果您想要有一个可以跨类使用的变量，
+
+	您需要定义全局变量。全局变量总是以美元符号（$）开始。未初始化的实例变量的
+
+	值为 nil	
+	
+	=====================================================================
+		$global_variable = 10
+		class Class1
+			  def print_global
+			      puts "全局变量在 Class1 中输出为 #{$global_variable}"
+			  end
+		end
+
+		class Class2
+			  def print_global
+			      puts "全局变量在 Class2 中输出为 #{$global_variable}"
+			  end
+		end
+	 =====================================================================
+	
+		e.Ruby常量以大写字母开头。定义在类或模块内的常量可以从类或模块的内部访问，
+
+	定义在类或模块外的常量可以被全局访问。
+
+	======================================================================
+		class Example
+		   VAR1 = 100
+		   VAR2 = 200
+		   def show
+		       puts "第一个常量的值为 #{VAR1}"
+		       puts "第二个常量的值为 #{VAR2}"
+		   end
+		end
+	=======================================================================
+	
+
+	(3)创建对象
+		
+		使用类的方法 new 创建对象。
+		
+		cust1 = Customer. new
+		cust2 = Customer. new
+
+		构造方法
+		
+		class Customer
+			   @@no_of_customers=0
+			   def initialize(id, name, addr)
+			      @cust_id=id
+			      @cust_name=name
+		      	      @cust_addr=addr
+			   end	
+		end
+
+	(4)Ruby 类中的成员函数
+		
+		类中的每个方法是以关键字 def 开始，方法名总是以小写字母开头
+		
+		class Sample
+		   def function
+		      statement 1
+		      statement 2
+		   end
+		end
+
+
+	(5)Ruby 伪变量
+		
+		它们是特殊的变量，有着局部变量的外观，但行为却像常量。您不能给
+
+	这些变量赋任何值。
+		
+		self: 当前方法的接收器对象。
+		true: 代表 true 的值。
+		false: 代表 false 的值。
+		nil: 代表 undefined 的值。
+		__FILE__: 当前源文件的名称。
+		__LINE__: 当前行在源文件中的编号。
+		
+
+	(7)类方法
+
+	当方法定义在类的外部，方法默认标记为 private。另一方面，如果方法定义在类中的，
+
+	则默认标记为 public。
+
+	===================================================================
+
+	class Accounts
+	   def Accounts.return_date
+	   	puts "ok"
+	   end
+	end
+	
+	Accounts.return_date
+	>ok
+	==================================================================
+
+	(8)访问器(getter) & 设置器(setter)方法(用于实例变量)
+		
+	由于(getter与setter)两种方法非常常用，Ruby 定义了
+		 attr_accessor :variable_name
+		 attr_reader :variable_name
+		 attr_writer :variable_name 
+
+	==================================================================
+	(9)to_s 方法
+	
+	class Box
+	   # 构造器方法
+	   def initialize(w,h)
+      		@width, @height = w, h
+	   end
+	   # 定义 to_s 方法
+	   def to_s
+	      "(w:#@width,h:#@height)"  # 对象的字符串格式
+	   end
+	end
+ 
+
+	# 创建对象
+	box = Box.new(10, 20)
+	# 自动调用 to_s 方法
+	puts "String representation of box is : #{box}"
+
+	>>String representation of box is : (w:10,h:20)
+
+	==================================================================
+	
+	(10)访问控制
+
+	Ruby 为您提供了三个级别的实例方法保护，分别是 public、private 或 protected。
+	
+	Ruby不在实例和类变量上应用任何访问控制。
+
+	public方法，可以被定义它的类和其子类访问，可以被类和子类的实例对象调用；
+	protected方法，可以被定义它的类和其子类访问，不能被类和子类的实例对象直接调用，但是可以在类和子类中指定给实例对象；
+	private方法，可以被定义它的类和其子类访问，私有方法不能指定对象。
+
+	class Person 
+  		
+		def speak 
+    			"protected:speak " 
+  		end 
+  		
+		def laugh 
+    			"private:laugh" 
+  		end 
+
+	  	protected :speak 
+  		private :laugh 
+
+	  	def useLaugh(another) 
+    			puts another.laugh #这里错误，私有方法不能指定对象
+  		end 
+  		
+		def useSpeak(another) 
+    			puts another.speak 
+  		end 
+	end 
+
+	p1=Person.new 
+	p2=Person.new 
+	p2.useSpeak(p1)  # protected:speak
+	#p2.useLaugh(p1)
+	
+	==================================================================
+
+	(11)类的继承
+
+	class Box
+  		....
+	end
+ 
+	# 定义子类
+	class BigBox < Box
+ 		......
+	end
+
+	==================================================================
+
+	(12)方法重载
+	
+	class Box
+ 	  def getArea
+     		puts "Box"
+   	  end
+	end
+ 
+	class BigBox < Box
+   	  def getArea
+      		puts "BigBox"
+   	  end
+	end
+ 
+	==================================================================
+	（13）祖先链
+
+	祖先链用于描述Ruby对象的继承关系，因为类与模块是父子关系，所以祖先链中也可以包含模块
+		
+	通过Class.ancestors可以查看当前的祖先链
+
+	================================================================
+		module A
+		end
+		
+		class B
+		end
+		
+		class C<B
+		  include A
+		end
+
+		puts C.ancestors
+
+		>[C,A,B,Object,Kernel,BasicObject]
+	
+	==================================================================
+	类对象   class=> [Class, Module, Object, Kernel, BasicObject]
+	==================================================================
+	
+二.语句
+	
+	(1)if..else
+
+	=====================================================================
+		x=1
+		if x > 2
+		   puts "x 大于 2"
+		elsif x <= 2 and x!=0
+		   puts "x 是 1"
+		else
+		   puts "无法得知 x 的值"
+		end
+	=====================================================================
+	
+		$a=1
+		print "debug\n" if $a
+	
+	=====================================================================
+
+	
+	(2)case
+		
+	=====================================================================
+		$age =  5
+		case $age
+		when 0 .. 2
+		    puts "婴儿"
+		when 3 .. 6
+		    puts "小孩"
+		when 7 .. 12
+		    puts "child"
+		when 13 .. 18
+		    puts "少年"
+		else
+		    puts "其他年龄段的"
+		end
+	=====================================================================
+
+	(3)while
+		
+	=====================================================================
+		$i = 0
+		$num = 5
+ 
+		while $i < $num  do
+		   puts("在循环语句中 i = #$i" )
+		   $i +=1
+		end
+	=====================================================================
+
+		$i = 0
+		$num = 5
+		begin
+		   puts("在循环语句中 i = #$i" )
+		   $i +=1
+		end while $i < $num
+	=====================================================================
+	
+	(4)for
+	
+	=====================================================================
+	for i in 0..5
+	   puts "局部变量的值为 #{i}"
+	end
+
+	(0..5).each do |i|
+	   puts "局部变量的值为 #{i}"
+	end
+	=====================================================================
+	
+	(5)break,next,redo
+
+	=====================================================================
+	for i in 0..5
+	   if i > 2 then
+	      break
+	   end
+	   puts "局部变量的值为 #{i}"
+	end
+	
+	>局部变量的值为 0
+	>局部变量的值为 1
+	>局部变量的值为 2
+	=====================================================================
+
+	for i in 0..5
+	   if i < 2 then
+	      next
+	   end
+	   puts "局部变量的值为 #{i}"
+	end
+	
+	>局部变量的值为 2
+	>局部变量的值为 3
+	>局部变量的值为 4
+	>局部变量的值为 5
+
+	=====================================================================
+
+	for i in 0..5
+	   if i < 2 then
+	      puts "局部变量的值为 #{i}"
+	      redo
+	   end
+	end	
+	
+	>局部变量的值为 0
+	>局部变量的值为 0
+	>...
+
+三.ruby方法
+
+	(1)简单的方法
+	def method_name 
+	   expr..
+	end
+	
+	(2)接受参数的方法
+	def method_name (var1, var2)
+	   expr..
+	end
+	
+	(3)参数设置默认值
+	def method_name (var1=value1, var2=value2)
+	   expr..
+	end
+
+	(4)调用方法
+	method_name
+	method_name 25, 30
+
+	(6)return 语句,默认ruby方法都有返回值，默认返回最后一个变量
+	
+	def test
+	   i = 100
+	   j = 200
+	   k = 300
+	return i, j, k
+	end
+	
+	var = test
+	>[100,200,300]
+	
+
+	(7)可变数量的参数
+	
+	def sample (*test)
+	   puts "参数个数为 #{test.length}"
+	   for i in 0...test.length
+	      puts "参数值为 #{test[i]}"
+	   end
+	end
+	sample "Zara", "6", "F"
+	sample "Mac", "36", "M", "MCA"
+
+四.ruby块
+	
+	块总是从与其具有相同名称的函数调用。这意味着如果您的块名称为 test，那么您要使用函数 test 
+
+	来调用这个块。您可以使用 yield 语句来调用块。
+
+	=====================================================================
+	def test
+	   puts "在 test 方法内"
+	   yield
+	   puts "你又回到了 test 方法内"
+	   yield
+	end
+	
+
+	test {puts "你在块内"}
+	>在 test 方法内
+	>你在块内
+	>你又回到了 test 方法内
+	>你在块内
+	=====================================================================
+
+	传递带有参数的 yield 语句
+	
+	def test
+	   yield 5
+	   puts "在 test 方法内"
+	   yield 100
+	end
+	
+	test {|i| puts "你在块 #{i} 内"}
+	>你在块 5 内
+	>在 test 方法内
+	>你在块 100 内
+	=====================================================================
+
+	在块中，您可以在两个竖线之间放置一个变量来接受参数。因此，在上面的代码中，yield 5 
+	语句向 test 块传递值 5 作为参数。
+	
+	test {|i| puts "你在块 #{i} 内"}
+
+	如果您想要传递多个参数，那么 yield 语句如下所示：
+	yield a, b
+	test {|a, b| statement}
+
+
+五.ruby模块
+
+	模块（Module）定义了一个命名空间，相当于一个沙盒
+	
+	模块（Module）是一种把【类方法】、【类】和【常量】，【普通方法】组合在一起的方式。
+	
+	模块类似与类，但有一下不同：
+		(1)模块不能实例化
+		(2)模块没有子类
+		(3)模块只能被另一个模块定义
+
+
+	（1）模块常量命名与类常量命名类似。模块方法定义与类方法定义类似。
+	=====================================================================
+	
+	module Identifie
+
+	   PI=3.14
+
+	   def Identifie.sin
+		..
+	   end
+	
+	   //只能包含在类中调用
+	   def	fun
+		...
+	   end
+
+	end
+
+	调用
+	Identifie::sin
+	Identifie::PI
+	=====================================================================
+	
+
+	（2）module也可以包含类，但调用时需要这样使用 模块名::类名.new
+	=====================================================================
+	module Human
+		class Boy
+			def say
+				puts "cool"
+			end
+		end
+	end
+	
+	调用
+	obj=Human::Boy.new
+	obj.say
+	=========================================================================
+	Ruby require 语句（加载文件）
+	require 语句类似于 C 和 C++ 中的 include 语句以及 Java 中的 import 语句。如果一个
+	第三方的程序想要使用任何已定义的模块，则可以简单地使用 Ruby require 语句来加载模块文件：
+	
+	$LOAD_PATH << '.'
+ 
+	require 'trig.rb'
+	require 'moral'
+
+ 	$LOAD_PATH << '.' 让 Ruby 知道必须在当前目录中搜索被引用的文件。
+	
+	require 方法允许我们载入一个库并且会阻止你加载多次。当我们使用 require 重复加载同一个library时，
+	require方法 将会返回 false。
+	
+	load 方法基本和 require 方法功能一致，但它不会跟踪要导入的库是否已被加载。因此当重复使用 load 方法时，也会载入多次。
+	
+	=====================================================================
+	Ruby include 语句（加载模块）
+	您可以在类中嵌入模块。为了在类中嵌入模块，您可以在类中使用 include 语句：
+	module Week
+	  ....
+	end
+	
+	class Decade
+	include Week
+	  ....
+	end
+	使用
+	Week::const
+	Week::method
+	end
+
+	 在使用require时，请求加载的内容放到引号里，而inclue不是用引号
+
+	prepend与include分别可以向链中添加模块，不同的是调用include方法，模块会被插入祖先链，
+	当前类的正上方，而prepend同样是插入到祖先链，但位置其他却在当前类的正下方,
+	
+	=====================================================================
+	Ruby 中的 Mixins
+	Ruby 没有真正实现多重继承机制，而是采用成为mixin技术作为替代品。将模块include
+	到类定义中，模块中的方法就mix进了类中。
+	
+	module A
+	   def a1
+	   end
+	   def a2
+	   end
+	end
+
+	module B
+	   def b1
+	   end
+	   def b2
+	   end
+	end
+ 
+	class Sample
+	include A
+	include B
+		def s1
+	        end
+	end
+
+
+六.日期 & 时间
+
+	(1)获取时间
+
+
+		====================================================================
+			time1 = Time.new
+			puts "当前时间 : " + time1.inspect
+ 
+			# Time.new 功能相同
+			time2 = Time.now
+			puts "当前时间 : " + time2.inspect
+		====================================================================
+
+
+	(2)time方法
+
+		=====================================================================
+
+			# Time 的组件
+			puts "当前时间 : " + time.inspect
+			puts time.year    # => 日期的年份
+			puts time.month   # => 日期的月份（1 到 12）
+			puts time.day     # => 一个月中的第几天（1 到 31）
+			puts time.wday    # => 一周中的星期几（0 是星期日）
+			puts time.hour    # => 23：24 小时制
+			puts time.min     # => 59
+			puts time.sec     # => 59			
+			puts time.zone    # => "UTC"：时区名称
+		======================================================================
+
+
+
+	(3)格式化时间和日期
+
+		=======================================================================
+
+			puts time.strftime("%Y-%m-%d %H:%M:%S")
+
+			>2017-09-11 09:43:02
+		======================================================================
+
+
+
+
+七.文件与目录操作
+
+	
+	（1）新建文件
+	
+	===============================================================================
+		    f=File.new(File.join(".","Test.txt"), "w+")
+		    f.puts("I am Jack")
+		    f.puts("Hello World")    
+
+
+		    File::join( item...)
+		    返回一个字符串，由指定的项连接在一起，并使用 File::Separator（/） 进行分隔。
+		    例如：File::join("", "home", "usrs", "bin") # => "/home/usrs/bin"
+
+		    "r" ：只读，默认
+		    "r+" ：读写，覆盖型
+		    "w" ：只写，覆盖型
+	            "w+" ：读写，覆盖型
+		    "a" ：只写，追加型
+		    "a+" ：读写，追加型
+	================================================================================
+
+	（2）读取文件
+
+	================================================================================
+	    file=File.open(File.join(".","Test.txt"),"r")
+	    file.each { |line| print "#{file.lineno}.", line }
+	    file.close
+	==================================================================================
+
+
+	(3)删除、重命名文件
+	
+	==================================================================================
+	    File.rename( "books.txt", "chaps.txt" )
+	    File.delete( "chaps.txt" )
+
+	   File::rename( old, new)
+	   改变文件名 old 为 new。
+
+	   File::delete( path...)
+	   File::unlink( path...)
+	   删除指定的文件。
+	==================================================================================
+	   
+
+	(4)目录操作
+	
+	==================================================================================	
+	    创建目录
+    	    Dir.mkdir("./testdir")
+
+	    删除目录
+     	    Dir.rmdir("./testdir")
+
+	    查询目录里的文件，返回Array
+	    puts Dir.entries(File.join(".","testdir"))
+
+	================================================================================
+
+	(5)文件信息查询
+
+	====================================================================
+    		#文件是否存在
+    		p File::exists?( "cnblogslink.txt" ) # => true
+    		#是否是文件
+    		p File.file?( "cnblogslink.txt" ) # => true
+    		#是否是目录
+    		p File::directory?( "c:/ruby" ) # => true
+    		p File::directory?( "cnblogslink.txt" ) # => false
+	    	#文件权限
+	    	p File.readable?( "cnblogslink.txt" ) # => true
+	    	p File.writable?( "cnblogslink.txt" ) # => true
+	    	p File.executable?( "cnblogslink.txt" ) # => false
+	    	#是否是零长度
+	    	p File.zero?( "cnblogslink.txt" ) # => false
+	    	#文件大小 bytes
+	    	p File.size?( "cnblogslink.txt" ) # => 74
+	    	p File.size( "cnblogslink.txt" ) # => 74
+	    	#文件或文件夹
+	    	p File::ftype( "cnblogslink.txt" ) # => "file"
+	    	#文件创建、修改、最后一次存取时间
+	    	p File::ctime( "cnblogslink.txt" ) # => Sat Sep 19 08:05:07 +0800 2009
+	    	p File::mtime( "cnblogslink.txt" ) # => Sat Sep 19 08:06:34 +0800 2009
+    		p File::atime( "cnblogslink.txt" ) # => Sat Sep 19 08:05:07 +0800 2009
+
+	========================================================================
