@@ -17,8 +17,7 @@
     
                 $file=fopen("welcome.txt","r");
     
-                
-                
+ 
           /*
            * 2.读取文件
            *        feof($file):当读完文件返回true
@@ -35,14 +34,12 @@
                 echo "文件打开失败";
             }
             
-            
-            
-            
             /*
              * 3.关闭文件
              *     fclose($file)
              * */
             fclose($file);
+
 
 //------------------------------------写入文件--------------------------------//
 
@@ -70,7 +67,9 @@
              * */
          fclose($file);
 
+
 //-----------------------------上传文件----------------------------------------//
+
 $_FILES数组：可以从客户计算机向远程服务器上传文件
 array(1) {
   ["file"]=>array(5) {
@@ -103,6 +102,7 @@ array(1) {
         }
     }
 
+
 //-----------------------------下载文件---------------------------------------//
 
 	function downfile(){
@@ -112,6 +112,7 @@ array(1) {
     		readfile($filename); //输出一个文件
 	}
 	downfile();
+
 
 //-----------------------------加载文件----------------------------------------//
 	
@@ -159,4 +160,73 @@ array(1) {
 		echo "<br/>主文件结束加载...";
 	   ?>
 
+
+//--------------------------------加载类文件--------------------------------//
+	
+	/*
+   	 * 一.自动加载类 __autoload($className)
+   	 *   当某行代码需要某个类的时候，php会自动按需加载某个类
+   	 *   注意需要加载的类文件名与类名相同
+   	 * */
+   	
+   	function __autoload($className){
+   	    require_once "./{$className}.php";
+   	}
+   	
+   	//当new出一个对象时,会自动加载相应的类
+   	$obj = new LoadClass();
+   	
+
+
+
+	/*
+   	  * 二.自定义加载类
+   	  *     自动加载类只能满足个人开发加载文件
+   	  *     自定义加载类可以满足团队开发（每个人有自己的加载类）
+   	  *     自定义加载类会按顺序依次查找，直到找到
+   	  *     
+   	  *  定义形式
+   	  *     spl_autoload_register("函数1"); //声明"函数1"为加载类
+   	  *     spl_autoload_register("函数2"); //声明"函数2"为加载类
+   	  *     ....
+   	  *     
+   	  *     function 函数1($className){
+   	  *         //与__autoload($className)作用相同
+   	  *     }
+   	  *     
+   	  *     function 函数2($className){
+   	  *         //与__autoload($className)作用相同
+   	  *     }
+   	  *     
+   	  *     ....
+   	  * */
+   	
+   	    spl_autoload_register("loadFun");
+   	    spl_autoload_register("loadFun2");
+   	    
+   	    function loadFun($className){
+   	        echo "<br/>准备在loadFun中加载文件";
+   	        $file="./class/{$className}.php";
+   	        if(file_exists($file)){
+   	               require_once $file;
+   	        }
+   	    }
+   	    
+   	    function loadFun2($className){
+   	        echo "<br/>准备在loadFun2中加载文件";
+   	        $file="./{$className}.php";
+   	        if(file_exists($file)){
+   	            require_once $file;
+   	        }
+   	    }
+   	    
+   	    
+   	    $obj = new LoadClass();
+   	    $obj->move();
+   	    
+   	 /* 
+   	    准备在loadFun中加载文件
+   	    准备在loadFun2中加载文件
+   	    这是LoadClass的move方法
+   	 */
 ?>
