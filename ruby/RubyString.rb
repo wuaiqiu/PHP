@@ -35,6 +35,19 @@
           str.to_f
           返回把 str 中的前导字符解释为浮点数的结果。
 
+      (5)String运算符
+        str * integer
+        返回一个包含 integer 个 str 的新的字符串。换句话说，str 被重复了 integer 次。
+        
+        str + other_str
+        连接 other_str 到 str。
+        
+        str <=> other_str
+        把 str 与 other_str 进行比较，返回 -1（小于）、0（等于）或 1（大于）。比较是区分大小写的。
+
+        str == obj
+        检查 str 和 obj 的相等性。如果 obj 不是字符串，则返回 false，如果 str <=> obj，则返回 true，
+        返回 0。
 
 二.Symbol类型
   
