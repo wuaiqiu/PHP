@@ -1,38 +1,36 @@
 #------------------------------类属性与方法----------------------------#
 =begin
 1.属性
-    a.局部变量：局部变量是在方法中定义的变量。局部变量在方法外是不可用的。局部变量以小写字母或 _ 开
-始。
+    a.局部变量：局部变量是在方法中定义的变量。局部变量在方法外是不可用的。
     b.实例变量：实例变量在变量名之前放置符号（@）。未初始化的实例变量的值为 nil;
           实例变量的访问器(getter) & 设置器(setter)方法
             attr_accessor :variable_name
             attr_reader :variable_name
             attr_writer :variable_name 
     c.类变量：类变量属于类，且是类的一个属性。类变量在变量名之前放置符号（@@）。必须初始化后才能在
-方法定义中使用，类变量在定义它的类或模块的子类或子模块中可共享使用。
-    d.全局变量：类变量不能跨类使用。如果您想要有一个可以跨类使用的变量，您需要定义全局变量。全局变量
-总是以美元符号（$）开始。未初始化的实例变量的值为 nil
-    e.常量:Ruby常量以大写字母开头。定义在类或模块内的常量可以从类或模块的内部访问，定义在类或模块外
-的常量可以被全局访问。
-   d.伪变量
-      self: 当前方法的接收器对象。
-      true: 代表 true 的值。
-      false: 代表 false 的值。
-      nil: 代表 undefined 的值。
-      __FILE__: 当前源文件的名称。
-      __LINE__: 当前行在源文件中的编号
+    方法定义中使用，类变量在定义它的类或模块的子类或子模块中可共享使用。
+    d.全局变量：类变量不能跨类使用。如果您想要有一个可以跨类使用的变量，您需要定义全局变量。全局变
+    量总是以美元符号（$）开始。未初始化的实例变量的值为 nil
+    e.常量:Ruby常量以大写字母开头。定义在类或模块内的常量可以从类或模块的内部访问，定义在类或模块
+    外的常量可以被全局访问。
+    d.伪变量
+        self: 当前方法的接收器对象。
+        true: 代表 true 的值。
+        false: 代表 false 的值。
+        nil: 代表 undefined 的值。
+        __FILE__: 当前源文件的名称。
+        __LINE__: 当前行在源文件中的编号
 
 
 2.方法
     a.构造方法 initialize
     b.成员方法
     c.类方法
-
 =end
 
 class Customer
   $global_variable = 10 #全局变量
-  @@no_of_customers=10 #类变量
+  @@no_of_customers = 10 #类变量
   VAR1 = 100      #常量
   attr_accessor :cust_id,:cust_name,:cust_addr
   
@@ -74,8 +72,8 @@ Customer::fun()
 #-----------------------------作用域------------------------------------#
 =begin
 作用域
-  Ruby中不具备嵌套作用域(即在内部作用域，可以看到外部作用域的)的特点，它的作用域是截然分开的，一旦进入一个
-新的作用域，原先的绑定会被替换为一组新的绑定。类定义class 模块定义 module  方法定义 def
+  Ruby中不具备嵌套作用域(即在内部作用域，可以看到外部作用域的)的特点，它的作用域是截然分开的，一旦
+进入一个新的作用域，原先的绑定会被替换为一组新的绑定。类定义class 模块定义 module  方法定义 def
 
 (1)扁平化作用域（局部变量）
     Class.new替代class
@@ -86,11 +84,9 @@ Customer::fun()
   my_var = "Success"
   MyClass = Class.new do
         puts "#{my_var} in  the class definition"
-
         define_method :my_method do
             puts "#{my_var} in the method"
         end
-  
   end
 
   obj2=MyClass.new
@@ -101,11 +97,12 @@ Customer::fun()
 (2)BasicObject#instance_eval{代码块}
     可以访问到调用者对象中的变量（实例变量）
 =end
+  
   class MyClass
 
     def initialize
           @v = 1
-        end
+    end
 
   end
 
@@ -117,7 +114,7 @@ Customer::fun()
     
 =begin
 (3)BasicObject#instance_exec(参数){|参数列表| }
-    与instance_eval一样
+    与instance_eval一样,但是可以传参
 =end
 
   class C
@@ -181,16 +178,15 @@ Person::Student.new
   Ruby不在实例和类变量上应用任何访问控制。
 
   public方法，可以被定义它的类和其子类访问，可以被类和子类的实例对象调用；
-  protected方法，可以被定义它的类和其子类访问，不能被类和子类的实例对象直接调用，但是可以在类和子类中指定给实例对象；
+  protected方法，可以被定义它的类和其子类访问，不能被类和子类的实例对象直接调用，但是可以在类和子
+  类中指定给实例对象；
   private方法，可以被定义它的类和其子类访问，私有方法不能指定对象。
-
 =end
 class Person 
       
     def speak 
           "protected:speak " 
-    end 
-      
+    end  
     def laugh 
           "private:laugh" 
     end 
@@ -201,7 +197,6 @@ class Person
     def useLaugh(another) 
          puts another.laugh #这里错误，私有方法不能指定对象
     end 
-      
     def useSpeak(another) 
          puts another.speak 
     end 
@@ -217,12 +212,10 @@ end
 #----------------------------------继承------------------------------#
 #1.类的继承
 class Box
-  
 end
  
 # 定义子类
 class BigBox < Box
-    
 end
 
 #2.Mixins
@@ -249,12 +242,10 @@ end
 
 #3.祖先链
 =begin
-  祖先链用于描述Ruby对象的继承关系，因为类与模块是父子关系，所以祖先链中也可以包含模块通过Class.ancestors可以
-查看当前的祖先链
+  祖先链用于描述Ruby对象的继承关系，因为类与模块是父子关系，所以祖先链中也可以包含模块通过
+Class.ancestors可以查看当前的祖先链
 
-==================================================================
  类对象   class=> [Class, Module, Object, Kernel, BasicObject]
-==================================================================
 =end
 module A
 end
@@ -351,8 +342,9 @@ sample "Mac", "36", "M", "MCA"
      
 =begin 
 (3)method_missing方法
-  method_missing利用的机制是，当一个对象进行某个方法调用的时候，会到其对应的类的实例方法中进行查找，如果没有找到，则顺着祖先链向上查找，直到找
-到BasicObject类为止。如果都没有则会最终调用一个BasicObject#method_missing抛出NoMethodError异常。
+  method_missing利用的机制是，当一个对象进行某个方法调用的时候，会到其对应的类的实例方法中进行查
+找，如果没有找到，则顺着祖先链向上查找，直到找到BasicObject类为止。如果都没有则会最终调用一个
+BasicObject#method_missing抛出NoMethodError异常。
 =end
     class SendClass  
         def method_missing(name, *argc)  
@@ -372,6 +364,8 @@ sample "Mac", "36", "M", "MCA"
     
 =begin
 (4)删除方法
+  undef_method会删除所有(包括继承而来的)方法。而remove_method只删除接受者自己的方法，而保留继
+承来的方法。
 =end
    class A
         def fun1
@@ -390,13 +384,12 @@ sample "Mac", "36", "M", "MCA"
     B.new.fun1
     #>ok
     
-  #undef_method会删除所有(包括继承而来的)方法。而remove_method只删除接受者自己的方法，而保留继承来的方法。
  
-
     
-#-------------------------------Methode对象---------------------------#
+#-------------------------------Methode对象--------------------------------#
 =begin
-(1)通过Kernel#method方法，可以获得一个用Method对象表示的方法，在之后可以用Method#call方法对其进行调用。
+(1)通过Kernel#method方法，可以获得一个用Method对象表示的方法，在之后可以用Method#call方法对其
+进行调用。
 =end  
   class A
     def fun
@@ -408,12 +401,13 @@ sample "Mac", "36", "M", "MCA"
   m=obj1.method :fun
   m.call
 
+  
 =begin
 (2)自由方法
-  它会从最初定义它的类或模块中脱离出来(即脱离之前的作用域)，可以将一个方法变为自由方法。
-通过调用Module#instance_method获得一个自由方法（UnboundMethod对象），通过UnboundMethod#bind
-方法把UnboundMethod对象绑定到一个对象上；从某个类中分离出来的UnboundMethod对象只能绑定在该类及
-其子类对象上，从模块中分离出来的UnboundMethod对象不在有此限制了。
+  它会从最初定义它的类或模块中脱离出来(即脱离之前的作用域)，可以将一个方法变为自由方法。通过调用
+Module#instance_method获得一个自由方法（UnboundMethod对象），通过UnboundMethod#bind方法把
+UnboundMethod对象绑定到一个对象上；从某个类中分离出来的UnboundMethod对象只能绑定在该类及其子类
+对象上，从模块中分离出来的UnboundMethod对象不在有此限制了。
 =end
   class A
     def fun
@@ -428,17 +422,16 @@ sample "Mac", "36", "M", "MCA"
 
     
     
-#--------------------------------单件方法-------------------------#
+#--------------------------------单件方法----------------------------#
 =begin
 单件方法
-  
   Ruby允许给单个对象增加方法,这种只针对单个对象生效的方法，称为单件方法
   
-  定义方式
-  Object#define_singleton_method
-  Object#singleton_methods 
+  (1)定义方式
+    Object#define_singleton_method
+    Object#singleton_methods 
     
-  Ruby中class也是对象，则类方法也是一个类的单件方法
+  (2)Ruby中class也是对象，则类方法也是一个类的单件方法
       def ClassName.fun
       end
 
@@ -448,7 +441,6 @@ sample "Mac", "36", "M", "MCA"
   end
 
   obj=A.new
-
   #方法一
   def obj.fun
       puts "this is fun"
@@ -462,52 +454,47 @@ sample "Mac", "36", "M", "MCA"
   puts obj.singleton_methods  #=>fun fun2
 
  
+  
 #-----------------------------单件类------------------------------#
 =begin
+  (1)单件类
   单件方法也不能在祖先链的某个位置中。正确的位置是在单件类中
   每个单件类只有一个实例（被称为单件类的原因），而且不能被继承
   每个对象都有一个单件类
   类方法其实质是生活在该类的单件类中的单件方法
-  -----------------------------------------------------
-  class MyClass
-        class << self
-            def yet_another_class_method
-      end
-        end
-  end
-  ----------------------------------------------------
 
-  （1）获取单件类
-  Object#singleton_class
+      class MyClass
+            class << self
+                def yet_another_class_method
+                end
+            end
+      end
+  
+  (2)引入单件类后的方法查找
+        单件类 => 祖先链
+
+  (3)一个对象的单件类的超类是这个对象的类；一个类的单件类的超类是这个类的超类的单件类。(单件类.png)
 =end
+
+#获取单件类Object#singleton_class
   class A
   end
 
   obj=A.new
-  
   #方法一
   s=class << obj
     self
   end
   puts s.class        #=>Class
-
   #方法二
   puts obj.singleton_class  #=>Class
-
-=begin
-  （2）引入单件类后的方法查找
-
-  单件类 => 祖先链
-
-  (3)一个对象的单件类的超类是这个对象的类；一个类的单件类的超类是这个类的超类的单件类。(单件类.png)
-=end
   
   
   
 #----------------------------------模块与单件类----------------------------#
 =begin
-当一个类包含一个模块时，他获得的是该模块的【实例方法】，而不是【类方法】。
-  【类方法】存在与模块的【单件类】中，没有被类获得
+    当一个类包含一个模块时，他获得的是该模块的【实例方法】，而不是【类方法】。【类方法】存
+在与模块的【单件类】中，没有被类获得
 
   （1）类扩展
   通过向类的单件类中添加模块来定义类方法
@@ -556,7 +543,11 @@ sample "Mac", "36", "M", "MCA"
 #-------------------------方法包装器（Method Wrapper）--------------------#
 =begin
 (1)方法别名
-  Ruby中使用Module#alias_method(:newName,:oldName)方法和alias(:newName :oldName)关键字为方法取别名。
+  Ruby中使用Module#alias_method(:newName,:oldName)方法和alias(:newName :oldName)关键字
+为方法取别名。
+  在顶级作用域中（main【Object, Kernel, BasicObject】）中只能使用alias关键字来命名别名，因为
+在那里调用不到Module#alias_method方法
+  注意:在alias出现循环时，只看第一条alias语句
 =end
   class A
     def fun
@@ -569,11 +560,6 @@ sample "Mac", "36", "M", "MCA"
   obj=A.new
   obj.fun #=>this is fun
   obj.fun1#=>this is fun
-
-=begin  
-  在顶级作用域中（main【Object, Kernel, BasicObject】）中只能使用alias关键字来命名别名，因为在那里调用不到Module#alias_method方法
-  注意:在alias出现循环时，只看第一条alias语句
-=end
 
 
 =begin  
@@ -615,15 +601,14 @@ sample "Mac", "36", "M", "MCA"
   end
 
   puts "War and Peace".length #=>13
-
   using StringRefinement
-
   puts "War and Peace".length  #=> “long”
  
 
 =begin
 (4)下包含包装器 (Module#prepend)
-    prepend是插入到下方，而下方的位置，正好是方法查找时优先查找的位置，利用这一优势，可以覆写当前类的同名方法
+    prepend是插入到下方，而下方的位置，正好是方法查找时优先查找的位置，利用这一优势，可以覆写
+当前类的同名方法
 =end
   
   module ExplicitString
@@ -643,9 +628,9 @@ sample "Mac", "36", "M", "MCA"
 #----------------------------------钩子方法---------------------------------------#
 =begin
   钩子方法有些类似事件驱动装置，可以在特定的事件发生后执行特定的回调函数，这个回调函数就是钩子方法
-(1)Class#inherited
-  当一个类被继承时，Ruby会调用该方法
 =end
+
+#(1)Class#inherited当一个类被继承时，Ruby会调用该方法
 class A
     def self.inherited(arg1)
           puts "A被#{arg1}继承"
@@ -656,9 +641,8 @@ class B <A
 end
 #=>A被B继承
 
-=begin
-(2)Module#included(Module#prepended)
-=end
+
+#(2)Module#included(Module#prepended)
 module A
     def A.included(args)
       puts "#{args}"
@@ -670,9 +654,8 @@ class B
 end
 #=>B
 
-=begin
-(3)Module#extend_object
-=end
+
+#(3)Module#extend_object
 module A
   def A.extend_object(arg1)
     puts "#{arg1}"
@@ -684,9 +667,8 @@ class B
 end
 #=>B
 
-=begin
-(4)Module#method_added(Module#method_removed或Module#method_undefined)
-=end
+
+#(4)Module#method_added(Module#method_removed或Module#method_undefined)
 module A
     def A.method_added(arg1)
       puts "#{arg1}"
@@ -716,14 +698,12 @@ module A
 end
 #=>fun
 
-=begin
-(5)BasicObject#singleton_method_added(BasicObject#singleton_method_remove或
-BasicObject#singleton_method_undefined)
-=end
+
+#(5)BasicObject#singleton_method_added(BasicObject#singleton_method_remove或BasicObject#singleton_method_undefined)
 
 
 
-#-----------------------eval-----------------------------------#
+#--------------------------eval--------------------------------------#
 =begin
 BasicObject#instance_eval 与 Module#class_eval
     instance_eval必须由实例来调用
@@ -775,8 +755,8 @@ BasicObject#instance_eval 与 Module#class_eval
    
 =begin
 Kernal#eval方法
-  (1)与BasicObject#instance_eval和Module#class_eval相比Kernal#eval更加直接，不需要代码块、直接就可以
-执行字符串代码(String of Code)。
+  (1)与BasicObject#instance_eval和Module#class_eval相比Kernal#eval更加直接，不需要代码块、
+直接就可以执行字符串代码(String of Code)。
   BasicObject#instance_eval也是可以执行字符串代码的。
 =end
   
@@ -812,4 +792,3 @@ Kernal#eval方法
 
   a=3
   A.new.fun   #=>3
-

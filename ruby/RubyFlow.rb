@@ -1,4 +1,4 @@
-#(1)if..else
+#(1)if..elsif..else
   x=1
   if x > 2
      puts "x 大于 2"
@@ -8,13 +8,13 @@
      puts "无法得知 x 的值"
   end
 
-#另一种格式
+#..if..
   $a=1
   print "debug\n" if $a
 
 
 
-#(2)case
+#(2)case..when..else..end
   $age =  5
   case $age
   when 0 .. 2
@@ -31,7 +31,7 @@
 
   
   
-#(3)while
+#(3)while..do..end
   $i = 0
   $num = 5
   while $i < $num  do
@@ -39,7 +39,7 @@
      $i +=1
   end
 
-#另一种格式
+#begin..end while..
   $i = 0
   $num = 5
   begin
@@ -49,12 +49,12 @@
 
   
   
-#(4)for
+#(4)for..in..end
   for i in 0..5
     puts "局部变量的值为 #{i}"
   end
 
-#另一种格式
+#().each do..end
 (0..5).each do |i|
    puts "局部变量的值为 #{i}"
 end

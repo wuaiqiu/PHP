@@ -2,7 +2,6 @@
 JavaScript 函数
 
 	(1)函数就是包裹在花括号中的代码块，前面使用了关键词 function：
-	
 		function functionname()
 		{
 			执行代码
@@ -98,7 +97,6 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 
 
 	(9)函数参数数组
-
 		function fun1(){
 			console.log(arguments);
 		}
@@ -106,42 +104,7 @@ add变量可以作为一个函数使用。非常棒的部分是它可以访问�
 		arguments为函数的属性
 		
 		
-		
-		
-	(10)函数调用
-	
-		a.作为一个函数调用
-			function myFunction(a, b) {
-				return a * b;
-			}
-			myFunction(10, 2);           // myFunction(10, 2) 返回 20
-		以上函数会自动变为 window 对象的函数。myFunction() 和 window.myFunction() 是一样的
-		
-		b.函数作为方法调用
-			var myObject = {
-				firstName:"John",
-				lastName: "Doe",
-				fullName: function () {
-			return this.firstName + " " + this.lastName;
-			}
-		}
-		myObject.fullName();         // 返回 "John Doe"
-		this 的值为 myObject 对象。
-		
-		c.使用构造函数调用函数（对象定义的另一种方式）
-			如果函数调用前使用了 new 关键字, 则是调用了构造函数。这看起来就像创建了新的函数，但实
-		际上 JavaScript 函数是重新创建的对象：
-			function myFunction(arg1, arg2) {
-				this.firstName = arg1;
-				this.lastName  = arg2;
-			}
-
-			var x = new myFunction("John","Doe");
-			x.firstName;     
-			
-		构造函数中 this 关键字没有任何的值。this 的值在函数调用时实例化对象(new object)时创建。
-		
-		d.作为函数方法调用函数（function对象的方法）
+	(10)作为函数方法调用函数（function对象的方法）
 			两个方法都使用了对象本身作为第一个参数。 两者的区别在于第二个参数： apply传入的是一个参数
 		数组，也就是将多个参数组合成为一个数组传入，而call则作为call的参数传入（从第二个参数开始）。
 			function myFunction(a, b) {

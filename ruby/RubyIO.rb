@@ -5,25 +5,24 @@
       返回一个字符串，由指定的项连接在一起，并使用 File::Separator（/） 进行分隔。例如：
     File::join("", "home", "usrs", "bin") # => "/home/usrs/bin"
 
-    "r" ：只读，默认
-    "r+" ：读写，覆盖型
-    "w" ：只写，覆盖型
-    "w+" ：读写，覆盖型
-    "a" ：只写，追加型
-    "a+" ：读写，追加型
+      "r" ：只读，默认
+      "r+" ：读写，覆盖型
+      "w" ：只写，覆盖型
+      "w+" ：读写，覆盖型
+      "a" ：只写，追加型
+      "a+" ：读写，追加型
 =end
-        f=File.new(File.join(".","Test.txt"), "w+")
-        f.puts("I am Jack")
-        f.puts("Hello World")    
+        file=File.new(File.join(".","Test.txt"), "w+")
+        file.puts("I am Jack")
+        file.puts("Hello World")    
 
-
-        
+     
 =begin
 (2)读取文件      
 =end
-      file=File.open(File.join(".","Test.txt"),"r")
-      file.each { |line| print "#{file.lineno}.", line }
-      file.close
+        file=File.open(File.join(".","Test.txt"),"r")
+        file.each { |line| print "#{file.lineno}.", line }
+        file.close
 
       
 =begin
@@ -40,15 +39,16 @@
 =begin
 (4)目录操作    
 =end  
-          #创建目录
-          Dir.mkdir("./testdir")
+      #创建目录
+      Dir.mkdir("./testdir")
 
-          #删除目录
-          Dir.rmdir("./testdir")
+      #删除目录
+      Dir.rmdir("./testdir")
 
-          #查询目录里的文件，返回Array
-          Dir.entries(File.join(".","testdir"))
+      #查询目录里的文件，返回Array
+      Dir.entries(File.join(".","testdir"))
 
+      
 =begin
 (5)文件信息查询
 =end
@@ -75,7 +75,8 @@
         p File::mtime( "cnblogslink.txt" ) # => Sat Sep 19 08:06:34 +0800 2009
         p File::atime( "cnblogslink.txt" ) # => Sat Sep 19 08:05:07 +0800 2009
         
-        
+    
+            
 #-------------------------加载类（模块）文件-------------------------#
 =begin
 (1)require 语句（加载文件）
@@ -88,13 +89,14 @@ require方法将会返回 false。
   require 'trig.rb'
   require 'moral'  
   
+        
 (2)load
   load 方法基本和 require 方法功能一致，但它不会跟踪要导入的库是否已被加载。因此当重复使用 load 
 方法时，也会载入多次。
   
+        
 (3)include 语句（加载模块）
   您可以在类中嵌入模块。为了在类中嵌入模块，您可以在类中使用 include 语句
- 
 
         module Week
         end
@@ -102,7 +104,8 @@ require方法将会返回 false。
         class Decade
           include Week # 在使用require时，请求加载的内容放到引号里，而inclue不是用引号
         end
-        
+  
+              
 (4)prepend
   prepend与include分别可以向链中添加模块，不同的是调用include方法，模块会被插入祖先链，当前类的
 正上方，而prepend同样是插入到祖先链，但位置其他却在当前类的正下方,

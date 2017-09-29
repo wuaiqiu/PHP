@@ -7,18 +7,25 @@
 (2)对象数据类型，存储在变量处的值是一个指针（point），指向存储对象的内存地址。
 	数组(Array)、对象(Object)、空(Null)、日期(Date),函数(Function)
 		a.数组(Array)字面量定义一个数组;[40, 100, 1, 5, 25, 10]
-		b.对象(Object)字面量 定义一个对象;{firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}
+		b.对象(Object)字面量 定义一个对象;{firstName:"John", lastName:"Doe", age:50}
 		c.函数(Function)字面量定义一个函数;function myFunction(a, b) { return a * b;}
 
-(3)类型判断
-		typeof:对于值类型，你可以通过typeof判断，string/number/boolean都很清楚，但是typeof在判断到引用类型
-		的时候，返回值只有object/function，你不知道它到底是一个object对象，还是数组，还是new Number等等。
+(3)JavaScript 拥有动态类型。这意味着相同的变量可用作不同的类型：
 	
-		instanceof:运算符的第一个变量A；第二个变量B。instanceof的判断队则是：沿着A的__proto__这条线来找，
-		如果两条线能找到同一个constructor，即同一个对象，那么就返回true。如果找到终点还未重合，则返回false。
+		var x;               // x 为 undefined
+		var x = 5;           // 现在 x 为数字
+		var x = "John";      // 现在 x 为字符串
 
-(4)JavaScript类型转换
+(4)类型判断
+		typeof:对于值类型，你可以通过typeof判断，string/number/boolean都很清楚，但是typeof在判断到
+		引用类型的时候，返回值只有object/function，你不知道它到底是一个object对象，还是数组，还是
+		new Number等等。
+	
+		instanceof:运算符的第一个变量A；第二个变量B。instanceof的判断队则是：沿着A的__proto__这条线来
+		找，如果两条线能找到同一个constructor，即同一个对象，那么就返回true。如果找到终点还未重合，则返
+		回false。
 
+(5)JavaScript类型转换
 		------------------------------------Number=>String--------------------------------
 		a.将数字转换为字符串
 			全局方法String()可以将数字转换为字符串。该方法可用于任何类型的数字，字母，变量，表达式
@@ -34,7 +41,7 @@
 				String(Date()) 
 		
 
-		-----------------------------------------String=>Number--------------------------------
+		-----------------------------------------String=>Number-------------------------------
 		a.将字符串转换为数字
 			全局方法 Number() 可以将字符串转换为数字。字符串包含数字(如 "3.14") 转换为数字 (如 3.14).
 		空字符串转换为 0。其他的字符串会转换为 NaN (不是个数字)。
@@ -63,7 +70,7 @@
 				d.getTime()        // 返回 1404568027739
 			
 
-		---------------------------------------toString()-------------------------------------
+		---------------------------------------toString()------------------------------------
 		a.对象类型自动转换为字符串,toString()
 	
 			if myVar = {name:"Fjohn"}  // toString 转换为 "[object Object]"
@@ -71,10 +78,3 @@
 			if myVar = new Date()      // toString 转换为 "Fri Jul 18 2014 09:08:55 GMT+0200"
 
 */	
-
-//(5)JavaScript 拥有动态类型。这意味着相同的变量可用作不同的类型：
-	
-		var x;               // x 为 undefined
-		var x = 5;           // 现在 x 为数字
-		var x = "John";      // 现在 x 为字符串
-
