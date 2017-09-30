@@ -4,7 +4,7 @@
 		a.字符串(String)字面量可以使用单引号或双引号;'John Doe'
 		b.数字(Number)字面量可以是整数或者是小数，或者是科学计数;123e5
 				
-(2)对象数据类型，存储在变量处的值是一个指针（point），指向存储对象的内存地址。
+(2)引用数据类型，存储在变量处的值是一个指针（point），指向存储对象的内存地址。
 	数组(Array)、对象(Object)、空(Null)、日期(Date),函数(Function)
 		a.数组(Array)字面量定义一个数组;[40, 100, 1, 5, 25, 10]
 		b.对象(Object)字面量 定义一个对象;{firstName:"John", lastName:"Doe", age:50}
@@ -68,13 +68,23 @@
 			日期方法 getTime() 也有相同的效果。
 				d = new Date();
 				d.getTime()        // 返回 1404568027739
-			
-
-		---------------------------------------toString()------------------------------------
-		a.对象类型自动转换为字符串,toString()
+				
+(6)值传递与共享传递
+	JS中的基本类型按值传递，引用数据类型按共享传递的
+	共享传递：
+		(a).如果传递给函数的参数是对象，并且修改了这个对象的属性(某些字段的值)，那么原参数就被修改了。
+		(b).如果传递给函数的参数是对象，并且没有修改这个对象的属性的值，而是把对象作为一个整体来操作的话。原参数就没有被修改。
 	
-			if myVar = {name:"Fjohn"}  // toString 转换为 "[object Object]"
-			if myVar = [1,2,3,4]       // toString 转换为 "1,2,3,4"
-			if myVar = new Date()      // toString 转换为 "Fri Jul 18 2014 09:08:55 GMT+0200"
+*/
 
-*/	
+//共享传递
+var obj={"name":"zhangsan"};
+function fun1(o){
+	o.name="lisi";//操作属性
+}
+function fun2(o){
+	o="zhangsan";//操作整体
+}
+
+fun1(obj); //{"name":"lisi"}
+fun2(obj); //{"name":"zhangsan"}

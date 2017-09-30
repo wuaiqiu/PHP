@@ -19,7 +19,31 @@ Ruby 异常
       catch :MyException do
         puts "出现错误"
       end
-      
+  
+  (4)Exception类:
+      Ruby的标准类和模块引发异常。所有的异常类，形成一个层次，在顶部的类异常。包含7种不同类型的
+  一个新的水平:
+
+      Interrupt（打断）
+      NoMemoryError
+      SignalException
+      ScriptError
+      StandardError(默认)
+      SystemExit  
+
+  (5)自定义异常类
+        class MyException < Exception
+            def message()
+              return "MyException错误"
+            end
+        end
+
+       begin
+          raise(MyException,"发生错误")
+       rescue MyException=>e
+          puts e.message
+       end
+
 =end
 
 begin

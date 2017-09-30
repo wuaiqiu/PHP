@@ -8,7 +8,9 @@
 	try {
 		//在这里运行代码
 	} catch(err) {
-		//在这里处理错误
+		err.message;//错误信息
+		err.name;//错误名称
+		err.stack;//详细错误信息
 	}finally{
 	   //不管是否出错都会执行
 	}
@@ -29,5 +31,25 @@
 		
 		>不是数字
 	=============================================================================
-			
+
+	(3)自定义错误；继承Error类
+		
+				class MyError extends Error{
+					constructor(message) {
+					    super(message); 
+					    this.name = "MyError"; 
+					  }
+				}
+				
+				function test() {
+					  throw new MyError("Whoops!");
+				}
+				
+				try {
+					 test();
+				} catch(err) {
+					console.log(err.message);	//Whoops!
+					console.log(err.name);		//MyError
+					console.log(err.stack);		//MyError: Whoops!
+				}
  */
