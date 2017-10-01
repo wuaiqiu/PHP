@@ -79,42 +79,47 @@ JavaScript 函数
 		(function(a,b){alert("ajdfk")}(1,2));
 
 	
-	(8)JavaScript 闭包闭包就是能够读取其他函数内部变量的函数。
-		var add = (function () {
-			var counter = 0;
-			return function () {console.log(counter += 1);}
-		})();
-
-		add();
-		add();
-		add();
-
-		// 计数器为 3
-		
-	变量 add 指定了函数自我调用的返回字值。自我调用函数只执行一次。设置计数器为 0。并返回函数表达式。
-add变量可以作为一个函数使用。非常棒的部分是它可以访问函数上一层作用域的计数器。这个叫作 JavaScript 
-闭包。它使得函数拥有私有变量变成可能。计数器受匿名函数的作用域保护，只能通过 add 方法修改。
-
-
-	(9)函数参数数组
-		function fun1(){
-			console.log(arguments);
+	(8)JavaScript 闭包,闭包就是能够读取其他函数内部变量的函数。
+		它的最大用处有两个，一个是可以读取函数内部的变量，另一个就是让这些变量的值始终保持在内存中。
+	======================================================================================
+		function Person(){
+			var a=10;
+			function getA(){	//闭包：读取内部函数的参数
+				return a;
+			}
+			return getA();
 		}
+		var a=Person();
+		console.log(a);
+	======================================================================================
+		function Person(){
+			var a=10;
+			function getA(){		//闭包：让a变量始终留在内存中
+				console.log(a++);
+			}
+			return getA;
+		}
+		var a=Person();
+		a();//10
+		a();//11
+		a();//12
+	======================================================================================	
+		缺点：
+		  a.由于闭包会使得函数中的变量都被保存在内存中，内存消耗很大，所以不能滥用闭包，否则会造成网页的性能问题，
+		  b.闭包会在父函数外部，改变父函数内部变量的值。
 
-		arguments为函数的属性
-		
-		
-	(10)作为函数方法调用函数（function对象的方法）
+
+	(9)作为函数方法调用函数
 			两个方法都使用了对象本身作为第一个参数。 两者的区别在于第二个参数： apply传入的是一个参数
 		数组，也就是将多个参数组合成为一个数组传入，而call则作为call的参数传入（从第二个参数开始）。
 			function myFunction(a, b) {
 				return a * b;
 			}
-			myObject = myFunction.call(myObject, 10, 2);     // 返回 20
+			myFunction.call(new Object(), 10, 2);     // 返回 20;让new Object()对象去调用myFunction方法
 			
 			function myFunction(a, b) {
 				return a * b;
 			}
 			myArray = [10, 2];
-			myObject = myFunction.apply(myObject, myArray);  // 返回 20
+			myFunction.apply(new Object(), myArray);  // 返回 20;让new Object()对象去调用myFunction方法
 */

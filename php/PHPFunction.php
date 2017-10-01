@@ -112,55 +112,86 @@
    	         */
 
 
-//-------------------------------其他函数------------------------------------------------//
 
-	    /*一.Date函数
-   	     * date("Y-m-d  H:i:s"):格式化本地日期和时间，并返回已格式化的日期字符串
-   	     * date_default_timezone_set("Asia/Shanghai"):局部,设置脚本中所有日期/时间函数使用的默认时区
-   	     * date_default_timezone_get():局部,获取脚本中所有日期/时间函数使用的默认时区
-   	     * */
+//-----------------------------类的魔术方法---------------------------------------//
 
-
-	   /*二.Math函数
-   	    * max(n,m):返回最大值。
-   	    * min(n,m):返回最小值。
-   	    * round(n,小数点后的位数):对浮点数进行四舍五入。
-   	    * ceil(n):返回不小于 x 的下一个整数,返回的数据依然为float
-   	    * floor(n):返回不大于 x 的下一个整数,返回的数据依然为float
-   	    * abs(n):绝对值。
-   	    * sqrt(n):平方根
-   	    * pow(x,y)：函数返回 x 的 y 次方
-   	    * rand(min,max):函数返回随机整数。
-   	    * */
+    /*
+     * __toString()方法
+     *  将一个对象以字符串输出
+     *  
+     *  __invoke()方法
+     *   当将对象以函数调用时会触发此方法
+     * */    
    	
-   	   
-	     /*三.String函数
-   	      * 1.输出
-   	      *  echo("string","string"):能够输出一个以上的字符串,有无括号均可使用
-   	      *  print("string"):只能输出一个字符串,有无括号均可使用
-   	      *  print_r($var):显示调试信息
-   	      *  var_dump($var):显示调试信息
-   	      *
-   	      * 2.字符串去除与填充
-   	      *  trim($str):移除字符串两侧的空格
-   	      *  str_pad($str,num,$str):用$str从左填充字符串$arr至长度为num
-   	      * 
-   	      * 3.字符串链接与分割
-   	      *  join/implode("字符分割符",$arr):将数组元素组合成的字符串。
-              * explode("字符分隔符",$str):把字符串打散为数组
-   	      * */
+   	class Person{
+   	    public $name="zhangsan";
+   	    public $age="12";
+   	    function __toString(){
+   	        return "<br/>name => $this->name<br/>age => $this->age";
+   	    }
+   	    function __invoke(){
+   	        echo "<br/>这是一个对象，不要当做函数用...";
+   	    }
    	    
-   	     $arr = array('Hello','World!','I','love','Shanghai!');
-   	     echo "<br/>".implode(" ",$arr);
-   	    
-   	     $str = "Hello world. I love Shanghai!";
-   	     print_r (explode(" ",$str));
-   	    
-   	    /* 
-   	    Hello World! I love Shanghai!
-   	    
-   	    Array ( [0] => Hello [1] => world. [2] => I [3] => love [4] => Shanghai! )
-   	     */
+   	}
+   	
+   	$obj = new Person();
+   	echo $obj;
+   	
+   	/* 
+   	name => zhangsan
+   	age => 12
+   	 */
+   	
+   	$obj();
+   	
+   	/* 
+   	这是一个对象，不要当做函数用...
+   	 */
+
+
+
+//---------------------------对象序列化与反序列化----------------------------//
 	
-   	 
+	//1..对象的序列化,会自动调用类中的__sleep()【若存在】：必须返回需要序列化的属性
+   	//      function __sleep(){
+        //             return array('name','age');
+       //  }
+   	    require_once "LoadClass.php";
+   	    $obj = new LoadClass();
+   	    $obj->name="lisi";
+   	    $obj->school="建筑学院";
+   	    $str1=serialize($obj);
+   	    file_put_contents("obj.txt", $str1);
+	
+	
+	//2.对象的反序列化,另外会调用类中__wakeup()【若存在】
+   	//      function __wakeup(){
+        //}
+   	    require_once "LoadClass.php";
+   	    $str1 = file_get_contents("obj.txt");
+   	    $obj = unserialize($str1);
+   	    echo "<pre>";
+   	    var_dump($obj);
+   	    echo "</pre>";
+
+
+
+//------------------------------操作类与对象-------------------------------------//
+	
+	/*一.操作类
+         * class_exists("类名") :判断一个类是否存在
+         * interface_exists("接口名") :判断一个接口是否存在
+         * get_class($obj) : 获取$obj的类名
+         * get_parent_class($obj) :获取$obj的父类名
+         * get_class_methods("类名") : 返回一个类的所有方法名(数组类型)
+         * get_class_vars("类名") : 返回一个类的所有属性名与属性值(数组类型)
+         * $obj instanceof 类名 :判断$obj是否为"类名"的类
+         * */
+
+	/*二.操作方法
+         * is_object($obj) : 判断某个变量是否为对象
+         * get_object_vars($obj) : 返回该对象的所有属性名与属性值(数组类型)
+         * */
+	 
 ?>

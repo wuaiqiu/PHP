@@ -1,35 +1,4 @@
 <?php
-//--------------------------类----------------------------------------//
-
-	  //1.定义Person类
-        	class Person{
-            		public $name;       //属性
-            		public $age;
-            		public $sex;
-            
-            		function move(){    //方法
-                		echo "<br/>{$this->name}可以移动";
-            		}
-            
-        	}
-        
-        
-        
-        
-        //2.实例化
-        $obj = new Person();
-        $obj->name="张三";    
-        $obj->age="12";
-        $obj->sex="男";
-        
-        var_dump($obj);
-        
-        
-        
-        /* 
-       
-	 */
-
 //------------------------------------属性----------------------------------------------------//
 /*
  * a.局部变量
@@ -146,119 +115,6 @@
        这是一个析构方法
        */
 
-
-
-//-------------------------------构造方法-------------------------------------//
-     
-     /*
-      * 一.构造方法（析构方法）调用问题
-      *  1.父类有构造方法（析构方法）
-      *     a.子类没有，实例化调用父类的构造方法（析构方法）
-      *     b.子类有，实例化调用子类的构造方法（析构方法）
-      *   
-      *  2.父类没有构造方法（析构方法）
-      *     调用子类的默认构造方法或子类的构造方法（析构方法）
-      * */
-     
-    
-     class A{
-         function __construct(){
-             echo "<br/> 这是父类的构造方法";
-         }  
-     }
-     
-     class B extends A{
-         function __construct(){
-             echo "<br/> 这是子类的构造方法";
-         }
-     }
-     
-     class C extends A{
-     }
-      
-     $obj1=new B();
-     $obj2=new C();
-      
-     echo "<pre>";
-     var_dump($obj1);
-     var_dump($obj2);
-     echo "</pre>";
-        
-    /* 
-        这是子类的构造方法
-        这是父类的构造方法
-        object(B)#1 (0) {
-        }
-        object(C)#2 (0) {
-        }
-    */
-        
-      
-        
-      /*
-       * 二.手动调用构造方法（析构方法）
-       *    当子类与父类都有构造方法（析构方法）时，默认自动调用子类的构造方法（析构方法），
-       * 这是需要手动调用父类构造方法（析构方法）
-       *    parent :: 构造方法名（析构方法）
-       * */
-        
-        class P{
-            function __construct() {
-               echo "<br/>这是父类构造方法";
-            }
-        }
-        
-        class S extends P{
-            function __construct() {
-                parent::__construct();
-                echo "<br/>这是子类构造方法";
-            }
-        }
-        
-        $o1=new S();
-       
-        /* 
-        这是父类构造方法
-        这是子类构造方法
-         */
-
-
-
-//---------------------------------魔术方法---------------------------------------//
-
-    /*
-     * __toString()方法
-     *  将一个对象以字符串输出
-     *  
-     *  __invoke()方法
-     *   当将对象以函数调用时会触发此方法
-     * */    
-   	
-   	class Person{
-   	    public $name="zhangsan";
-   	    public $age="12";
-   	    function __toString(){
-   	        return "<br/>name => $this->name<br/>age => $this->age";
-   	    }
-   	    function __invoke(){
-   	        echo "<br/>这是一个对象，不要当做函数用...";
-   	    }
-   	    
-   	}
-   	
-   	$obj = new Person();
-   	echo $obj;
-   	
-   	/* 
-   	name => zhangsan
-   	age => 12
-   	 */
-   	
-   	$obj();
-   	
-   	/* 
-   	这是一个对象，不要当做函数用...
-   	 */
 
 //-----------------------------------访问控制符-----------------------------------------//
 
@@ -567,7 +423,7 @@
       *    当一个对象销毁不存在的属性时，会自动调用
       *    
       *    
-      * 3.方法重载
+      * 3.方法重载(模拟其他语言的重载)
       *  调用普通方法 __call($methodName,$argsArray)
       *     当一个对象调用不存在的普通方法时，会自动调用
       *     利用它也可以实现其他语言的重载功能
@@ -765,46 +621,111 @@
    	        
  */
 
-//---------------------------对象序列化与反序列化----------------------------//
-	
-	//1..对象的序列化,会自动调用类中的__sleep()【若存在】：必须返回需要序列化的属性
-   	//      function __sleep(){
-        //             return array('name','age');
-       //  }
-   	    require_once "LoadClass.php";
-   	    $obj = new LoadClass();
-   	    $obj->name="lisi";
-   	    $obj->school="建筑学院";
-   	    $str1=serialize($obj);
-   	    file_put_contents("obj.txt", $str1);
-	
-	
-	//2.对象的反序列化,另外会调用类中__wakeup()【若存在】
-   	//      function __wakeup(){
-        //}
-   	    require_once "LoadClass.php";
-   	    $str1 = file_get_contents("obj.txt");
-   	    $obj = unserialize($str1);
-   	    echo "<pre>";
-   	    var_dump($obj);
-   	    echo "</pre>";
-
-//------------------------------操作类与对象-------------------------------------//
-	
-	/*一.操作类
-         * class_exists("类名") :判断一个类是否存在
-         * interface_exists("接口名") :判断一个接口是否存在
-         * get_class($obj) : 获取$obj的类名
-         * get_parent_class($obj) :获取$obj的父类名
-         * get_class_methods("类名") : 返回一个类的所有方法名(数组类型)
-         * get_class_vars("类名") : 返回一个类的所有属性名与属性值(数组类型)
-         * $obj instanceof 类名 :判断$obj是否为"类名"的类
-         * */
-
-	/*二.操作方法
-         * is_object($obj) : 判断某个变量是否为对象
-         * get_object_vars($obj) : 返回该对象的所有属性名与属性值(数组类型)
-         * */
 
 
+//---------------------------------多态------------------------------------------//
+/*
+ *      java声明变量时都要给变量设定类型，所以存在什么父类引用和接口引用。而php则没有这点体现，
+ * php声明变量不需要给变量设定类型，一个变量可以指向不同的数据类型。所以，php不具有像java一样
+ * 的多态。
+ * */
+
+abstract class animal{
+    abstract function fun();
+}
+class cat extends animal{
+    function fun(){
+        echo "cat say miaomiao...";
+    }
+}
+class dog extends animal{
+    function fun(){
+        echo "dog say wangwang...";
+    }
+}
+function work($obj){
+    if($obj instanceof animal){
+        $obj -> fun();
+    }else{
+        echo "no function";
+    }
+}
+work(new dog());
+work(new cat());
+
+
+
+//--------------------------------继承--------------------------------------//
+ /*
+      * 一.构造方法（析构方法）调用问题
+      *  1.父类有构造方法（析构方法）
+      *     a.子类没有，实例化调用父类的构造方法（析构方法）
+      *     b.子类有，实例化调用子类的构造方法（析构方法）
+      *   
+      *  2.父类没有构造方法（析构方法）
+      *     调用子类的默认构造方法或子类的构造方法（析构方法）
+      * */
+     
+    
+     class A{
+         function __construct(){
+             echo "<br/> 这是父类的构造方法";
+         }  
+     }
+     
+     class B extends A{
+         function __construct(){
+             echo "<br/> 这是子类的构造方法";
+         }
+     }
+     
+     class C extends A{
+     }
+      
+     $obj1=new B();
+     $obj2=new C();
+      
+     echo "<pre>";
+     var_dump($obj1);
+     var_dump($obj2);
+     echo "</pre>";
+        
+    /* 
+        这是子类的构造方法
+        这是父类的构造方法
+        object(B)#1 (0) {
+        }
+        object(C)#2 (0) {
+        }
+    */
+        
+      
+        
+      /*
+       * 二.手动调用构造方法（析构方法）
+       *    当子类与父类都有构造方法（析构方法）时，默认自动调用子类的构造方法（析构方法），
+       * 这是需要手动调用父类构造方法（析构方法）
+       *    parent :: 构造方法名（析构方法）
+       * */
+        
+        class P{
+            function __construct() {
+               echo "<br/>这是父类构造方法";
+            }
+        }
+        
+        class S extends P{
+            function __construct() {
+                parent::__construct();
+                echo "<br/>这是子类构造方法";
+            }
+        }
+        
+        $o1=new S();
+       
+        /* 
+        这是父类构造方法
+        这是子类构造方法
+         */
+ 
 ?>
