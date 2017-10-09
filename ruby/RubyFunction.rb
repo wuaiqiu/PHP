@@ -20,7 +20,7 @@ end
 
 
 
-#(4)return 语句,默认ruby方法都有返回值，默认返回最后一个变量
+#(4)return 语句,默认ruby方法返回值将是最后一个语句的值
 def test
      i = 100
      j = 200
@@ -35,7 +35,7 @@ var = test
 #----------------------------动态方法---------------------------------#
 =begin
 (1)动态调用方法  
-    在Ruby中通过Object#send方法可以代替点标识调用对象的指定实例方法
+    在Ruby中通过Object#send方法可以代替点标识调用对象的指定【实例方法】
 =end
 
     class MyClass
@@ -70,13 +70,14 @@ var = test
 =end
     
     class MyClass
-          define_method :get do |arg|
-              puts "get#{arg}"
-            end
+          (1..3).each{ |i|
+		define_method :"get#{i}" do
+              		puts "get#{i}"
+	        end
+    	  }
     end
-
     obj = MyClass.new
-    obj.get(1)  #=> get1
+    obj.get1  #=> get1
 
     
      
@@ -146,8 +147,8 @@ BasicObject#method_missing抛出NoMethodError异常。
 (2)自由方法
   它会从最初定义它的类或模块中脱离出来(即脱离之前的作用域)，可以将一个方法变为自由方法。通过调用
 Module#instance_method获得一个自由方法（UnboundMethod对象），通过UnboundMethod#bind方法把
-UnboundMethod对象绑定到一个对象上；从某个类中分离出来的UnboundMethod对象只能绑定在该类及其子类
-对象上，从模块中分离出来的UnboundMethod对象不在有此限制了。
+UnboundMethod对象绑定到一个对象上,并返回一个Method对象；从某个类中分离出来的UnboundMethod对象
+只能绑定在该类及其子类对象上，从模块中分离出来的UnboundMethod对象不在有此限制了。
 =end
   class A
     def fun
@@ -162,7 +163,7 @@ UnboundMethod对象绑定到一个对象上；从某个类中分离出来的Unbo
 
     
     
-#--------------------------------单件方法----------------------------#
+#----------------------------------单件方法-------------------------------#
 =begin
 单件方法
   Ruby允许给单个对象增加方法,这种只针对单个对象生效的方法，称为单件方法
@@ -170,12 +171,6 @@ UnboundMethod对象绑定到一个对象上；从某个类中分离出来的Unbo
   (1)定义方式
     Object#define_singleton_method
     Object#singleton_methods 
-    
-  (2)Ruby中class也是对象，则类方法也是一个类的单件方法
-      def ClassName.fun
-      end
-
-      ClassName.define_singleton_method(:fun){}
 =end
   class A
   end
@@ -189,7 +184,7 @@ UnboundMethod对象绑定到一个对象上；从某个类中分离出来的Unbo
   puts obj.singleton_methods  #=>fun
 
   #方法二
-  obj.define_singleton_method(:fun2) { puts "this is fun2" }
+  obj.define_singleton_method(:fun2) {|a,b| puts "this is fun2" }
   obj.fun2  #=>this is fun2
   puts obj.singleton_methods  #=>fun fun2
 
@@ -199,7 +194,6 @@ UnboundMethod对象绑定到一个对象上；从某个类中分离出来的Unbo
 =begin
   (1)单件类
   单件方法也不能在祖先链的某个位置中。正确的位置是在单件类中
-  每个单件类只有一个实例（被称为单件类的原因），而且不能被继承
   每个对象都有一个单件类
   类方法其实质是生活在该类的单件类中的单件方法
 
@@ -213,22 +207,11 @@ UnboundMethod对象绑定到一个对象上；从某个类中分离出来的Unbo
   (2)引入单件类后的方法查找
         单件类 => 祖先链
 
-  (3)一个对象的单件类的超类是这个对象的类；一个类的单件类的超类是这个类的超类的单件类。(单件类.png)
+  (3)获取单件类Object#singleton_class
+
 =end
 
-#获取单件类Object#singleton_class
-  class A
-  end
 
-  obj=A.new
-  #方法一
-  s=class << obj
-    self
-  end
-  puts s.class        #=>Class
-  #方法二
-  puts obj.singleton_class  #=>Class
-  
   
   
 #----------------------------------模块与单件类----------------------------#
@@ -278,92 +261,7 @@ UnboundMethod对象绑定到一个对象上；从某个类中分离出来的Unbo
 
   obj.fun
 
-  
-  
-#-------------------------方法包装器（Method Wrapper）--------------------#
-=begin
-(1)方法别名
-  Ruby中使用Module#alias_method(:newName,:oldName)方法和alias(:newName :oldName)关键字
-为方法取别名。
-  在顶级作用域中（main【Object, Kernel, BasicObject】）中只能使用alias关键字来命名别名，因为
-在那里调用不到Module#alias_method方法
-  注意:在alias出现循环时，只看第一条alias语句
-=end
-  class A
-    def fun
-      puts "this is fun"
-    end
-  
-    alias_method :fun1,:fun
-  end
-
-  obj=A.new
-  obj.fun #=>this is fun
-  obj.fun1#=>this is fun
-
-
-=begin  
-(2)环绕别名
-    a.给方法定义一个别名
-    b.重定义这个方法
-    c.在新的方法中调用老的方法
-=end
-  class A
-    def fun
-      puts "this is origin function"
-    end
-    private :fun
-
-    def fun2    #b.重定义这个方法
-      puts "this is head"
-      fun1      #c.在新的方法中调用老的方法
-      puts "this is footer" 
-    end
-    
-    alias :fun1 :fun  #a.给方法定义一个别名
-    alias :fun :fun2
-  end
-  
-  A.new.fun
  
-
-=begin  
-(3)细化(refine)  
-  细化的作用范围是文件末尾，而环绕别名则是作用在全局
-=end
-  
-  module StringRefinement
-      refine String do
-          def length
-              super > 5 ? 'long' : 'short'
-          end
-      end 
-  end
-
-  puts "War and Peace".length #=>13
-  using StringRefinement
-  puts "War and Peace".length  #=> “long”
- 
-
-=begin
-(4)下包含包装器 (Module#prepend)
-    prepend是插入到下方，而下方的位置，正好是方法查找时优先查找的位置，利用这一优势，可以覆写
-当前类的同名方法
-=end
-  
-  module ExplicitString
-        def length
-            super > 5 ? ‘long’ : ‘short’
-        end
-  end
-
-  String.class_eval do
-    prepend ExplicitString
-  end
-
-  puts "War and Peace".length  #=> “long”
-
-  
   
 #----------------------------------钩子方法---------------------------------------#
 =begin
@@ -406,129 +304,3 @@ class B
   extend A
 end
 #=>B
-
-
-#(4)Module#method_added(Module#method_removed或Module#method_undefined)
-module A
-    def A.method_added(arg1)
-      puts "#{arg1}"
-    end
-    def fun
-    end 
-end
-#=>fun
-
-module A
-    def A.method_added(arg1)
-      puts "#{arg1}"
-    end
-    def fun
-    end 
-    remove_method :fun
-end
-#=>fun
-
-module A
-    def A.method_added(arg1)
-      puts "#{arg1}"
-    end
-    def fun
-    end 
-    undef_method :fun
-end
-#=>fun
-
-
-#(5)BasicObject#singleton_method_added(BasicObject#singleton_method_remove或BasicObject#singleton_method_undefined)
-
-
-
-#----------------------------eval方法--------------------------------------#
-=begin
-BasicObject#instance_eval 与 Module#class_eval
-    instance_eval必须由实例来调用
-    class_eval必须由类来调用
-=end
-
-  class A
-      def self.fun1
-          puts @var
-      end
-  
-    def fun2
-          puts @var
-      end
-  end
-
-  obj=A.new
-  
-  #由于A类是Class类的一个实例，因此就定义了A类的单件方法m1，进而m1只会对A类的实例变量进行操作。
-  A.instance_eval do
-     def m1
-        @var=1
-     end
-  end
-  
-  #由于obj是A类的一个实例，因此就定义了obj实例的单件方法m2，进而只会对obj的实例变量进行操作。
-  obj.instance_eval do
-      def m2
-          @var=2
-      end
-  end
-  
-  #由于定义了A类的实例方法m3，因此只会对obj的实例变量进行操作。
-  A.class_eval do
-      def m3
-          @var=3
-      end
-  end
-
-  A.m1  
-  A.fun1 #=>1
-  
-  obj.m2 
-  obj.fun2  #=>2
-
-  obj.m3  #=>A.class_eval
-  obj.fun2#=>3
- 
-   
-=begin
-Kernal#eval方法
-  (1)与BasicObject#instance_eval和Module#class_eval相比Kernal#eval更加直接，不需要代码块、
-直接就可以执行字符串代码(String of Code)。
-  BasicObject#instance_eval也是可以执行字符串代码的。
-=end
-  
-  eval "puts 'ok'"    #ok
-  instance_eval "puts 'ok'" #ok
- 
-  
-=begin
-  (2)绑定对象
-  Binding是一个完整作用域对象，通过eval方法在这个Binding对象所携带的作用域内执行代码
-=end
-  
-  class MyClass
-      def my_method
-          @x = 1
-          binding
-      end
-  end
-
-  b = MyClass.new.my_method
-  eval "puts @x", b #=> 1
-
-  
-=begin
-  (3)TOPLEVEL_BINDING的预定义常量,表示顶级作用域Binding对象
-=end  
-  
-  class A
-    def fun
-              eval "puts a",TOPLEVEL_BINDING
-    end
-  end
-
-  a=3
-  A.new.fun   #=>3

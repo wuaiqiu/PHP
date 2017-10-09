@@ -110,38 +110,36 @@ Person::Student.new
 #--------------------------------控制访问---------------------------#
 =begin
   Ruby 为您提供了三个级别的【实例方法】保护，分别是 public、private 或 protected。
-  Ruby不在实例和类变量上应用任何访问控制。
+  这些访问控制对【类方法】则无效
+ 
 
-  public方法，可以被定义它的类和其子类访问，可以被类和子类的实例对象调用；
-  protected方法，可以被定义它的类和其子类访问，不能被类和子类的实例对象直接调用，但是可以在类和子
-  类中指定给实例对象；
-  private方法，可以被定义它的类和其子类访问，私有方法不能指定对象。
+public       可以被任何实例对象调用，不存在访问控制；
+protected    可以被定义它的类和其子类访问，可以在类中或子类中指定给实例对象；
+private      可以被定义它的类和其子类访问，不能被实例对象调用。
 =end
+
 class Person 
-      
     def speak 
           "protected:speak " 
     end  
     def laugh 
           "private:laugh" 
     end 
-
     protected :speak 
     private :laugh 
-
-    def useLaugh(another) 
-         puts another.laugh #这里错误，私有方法不能指定对象
-    end 
-    def useSpeak(another) 
-         puts another.speak 
-    end 
+    
+    def useLaugh 
+          puts self.laugh #这里错误，私有方法不能指定对象
+     end 
+     def useSpeak
+          puts self.speak 
+     end 
 end 
 
-  p1=Person.new 
-  p2=Person.new 
-  p2.useSpeak(p1)  # protected:speak
-  #p2.useLaugh(p1)
-  
+obj=Person.new
+#obj.speak#=>error
+#obj.laugh#=>error
+obj.useSpeak#=>protected:speak
   
   
 #----------------------------------继承------------------------------#
@@ -175,7 +173,7 @@ class Sample
     end
 end
 
-#3.祖先链
+#3.祖先链（Module#ancestors）
 =begin
   祖先链用于描述Ruby对象的继承关系，因为类与模块是父子关系，所以祖先链中也可以包含模块通过
 Class.ancestors可以查看当前的祖先链
@@ -211,7 +209,7 @@ class BigBox < Box
       
       # 重写to_s 方法
        def to_s
-          "(w:#@width,h:#@height)"  # 对象的字符串格式
+          "This is BigBox"  # 对象的字符串格式
        end
 end
 

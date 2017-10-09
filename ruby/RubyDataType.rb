@@ -39,10 +39,10 @@
     (1...5)       #==> 1, 2, 3, 4
     ==============================================================
 
-3.true和false
+3.Boolean类型
   分别为TrueClass与FalseClass的实例
-4.字符类型
-5.symbol类型
+4.String类型
+5.Symbol类型
 6.Array类型
 7.Hash类型
 

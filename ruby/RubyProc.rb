@@ -1,4 +1,4 @@
-#------------------------yield-----------------------------#
+#------------------------yield（代码块）-----------------------------#
 =begin
  (1)块总是从与其具有相同名称的函数调用。这意味着如果您的块名称为 test，那么您要使用函数 test 
 来调用这个块。您可以使用 yield 语句来调用块。
@@ -12,7 +12,7 @@
   end
   
 
-  test {puts "你在块内"}
+  test {puts "你在块内"}#或者test do puts "你在块内" end
   #>在 test 方法内
   #>你在块内
   #>你又回到了 test 方法内
@@ -34,7 +34,7 @@
      yield 100
   end
   
-  test {|i| puts "你在块 #{i} 内"}
+  test {|i| puts "你在块 #{i} 内"}#或者test do |i| puts "你在块#{i}内" end
   #>你在块 5 内
   #>在 test 方法内
   #>你在块 100 内
@@ -47,38 +47,36 @@ Proc对象：Proc是由块转换来的对象。
 inc = Proc.new { | x | x + 1}
 inc.call(2)  #=> 3
 
-# 法二
-inc = lambda {| x | x + 1 }
-inc.call(2)  #=> 3
-
-# 法三
+# 法二(proc关键字)
 inc = proc {|x| x + 1 }
 inc.call(2) #=> 3
+
+# 法三(lambda关键字)
+inc = lambda {| x | x + 1 }
+inc.call(2)  #=> 3
 
 
 =begin
 还有一种通过&操作符的方式，将代码块与Proc对象进行转换。
-&符号的含义是： 这是一个Proc对象，我想把它当成代码块来使用。去掉&符号，将能再次得到一个Proc对象。
+&符号的含义是： 这是一个代码块，去掉&符号，将能再次得到一个Proc对象。
 =end
 
 def my_method(&the_proc)
-      the_proc
+      the_proc.call("world")
 end
 
-p = my_method {|name| "Hello, #{name} !"}
-p.call("Bill")   #=> "Hello,Bill"
+my_method{|msg| puts "hello #{msg}"}
 
 
 =begin
-如果需要将某个代码块作为参数传递给方法，需要通过为这个参数添加&符号，并且其位置必须是在参数的最后
-一个
+如果需要将某个代码块作为参数传递给方法,必须放在参数列表的最后一个参数
 =end
-def my_method(greeting)
-    "#{greeting}, #{yield}!"
-end
 
-my_proc = proc { "Bill" }
-my_method("Hello", &my_proc)
+def my_method
+      yield
+end
+p=proc{ puts "Hello world" }
+my_method(&p)
 
 
 =begin

@@ -9,12 +9,12 @@
   end
 
 #..if..
-  $a=1
-  print "debug\n" if $a
+  a=1
+  puts "debug" if a
 
 
 
-#(2)case..when..else..end
+#(2)case..when..else..end(没有break)
   $age =  5
   case $age
   when 0 .. 2
@@ -34,7 +34,7 @@
 #(3)while..do..end
   $i = 0
   $num = 5
-  while $i < $num  do
+  while $i < $num 
      puts("在循环语句中 i = #$i" )
      $i +=1
   end
@@ -54,10 +54,17 @@
     puts "局部变量的值为 #{i}"
   end
 
-#().each do..end
+#Range|array.each do..end
 (0..5).each do |i|
    puts "局部变量的值为 #{i}"
 end
+
+#int.times do..end
+
+3.times do |i|
+	puts "This is #{i}"
+end
+
 
 
 
