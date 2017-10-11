@@ -24,11 +24,9 @@
 
    	    
    	    	/*
-   	     	 * 二.触发错误
+   	     	 * 二.触发错误;trigger_error("message",type)；仅触发E_USER_*类错误
   		 */
-   	   
-   	
-   	    	//a.自定义错误;trigger_error("message",type)
+   	    	
    	   	 $age=200;
    	    	if($age<0 || $age>120){
    	        	trigger_error("age值错误",E_USER_WARNING);
@@ -36,16 +34,10 @@
    	    
    	   	 #Warning: age值错误 in /home/wu/workspace/day3/Error.php on line 46
    	    
-   	    
-		//b.自定义错误;die("message")
-    		if(!file_exists("welcome.txt")){
-        		die("文件不存在");
-    		}
-   	    
 
 	     /*
    	      *三.自定义错误处理器
-   	      *     让系统不要去处理错误，而完全由我们（开发者）来对错误进行处理;不能处理error级错误
+   	      *     让系统不要去处理错误，而完全由我们（开发者）来对错误进行处理; 不能处理E_ERROR
    	      * */
    	     
    	     //1.设定由于处理错误的函数名
