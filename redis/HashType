@@ -4,7 +4,7 @@
 
 
 
-	(1)HSET		将哈希表key中的字段field的值设为value。
+	(1)HSET		将哈希表key中的字段field的值设为value。1表示成功
 	 >hset key1 field1 value1
 	 =>(integer) 1
 
@@ -14,7 +14,7 @@
 	 =>"value1"
 
 
-	(3)HSETNX	只有在字段field不存在时，设置哈希表字段的值。
+	(3)HSETNX	只有在字段field不存在时，设置哈希表字段的值。1表示成功
 	 >hget key1 field1
 	 =>"value1"
 	 >hsetnx key1 field1 value11
@@ -34,14 +34,14 @@
 	 => 2) "value4"
 
 
-	(6)HINCRBY	为哈希表key中的指定字段的整数值加上增量increment
+	(6)HINCRBY	为哈希表key中的指定字段的整数值加上增量increment，返回增加后的值
 	 >hset key1 field5 1
 	 =>(integer) 1
 	 >hincrby key1 field5 5
 	 =>(integer) 6
 
 
-	(7)HEXISTS	查看哈希表key中，指定的字段是否存在。
+	(7)HEXISTS	查看哈希表key中，指定的字段是否存在。1表示存在
 	 >hget key1 field5
 	 =>"6"
 	 >hexists key1 field5

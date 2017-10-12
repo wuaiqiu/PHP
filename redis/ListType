@@ -5,14 +5,14 @@
 又可以实现列队
 
 	
-	(1)LPUSH 	将一个或多个值插入到列表头部
+	(1)LPUSH 	将一个或多个值插入到列表头部，返回最终值个数
 	 >lpush key value1
 	 =>(integer) 1
  	 >lrange key 0 -1
 	 => 1) "value1"
 
 
-	(2)RPUSH	将一个或多个值插入到列表尾部
+	(2)RPUSH	将一个或多个值插入到列表尾部，返回最终值个数
 	 >rpush key value2
 	 =>(integer) 2
 	 >lrange key 0 -1
@@ -38,7 +38,7 @@
 	 >lrange key 0 -1
 	 =>(empty list or set)
 
-	(6)LINSERT	在列表的元素前或者后插入元素
+	(6)LINSERT	在列表的元素前或者后插入元素，返回最终值个数
 	 >rpush key value1
  	 =>(integer) 1
 	 >rpush key value2

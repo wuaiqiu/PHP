@@ -3,7 +3,7 @@
 	有序集合和集合一样也是string类型元素的集合，与Set不同的是ZSet每个元素都会关联一个double类型的Score,Score可以重复
 
 
-	(1)ZADD				向有序集合添加一个或多个成员，或者更新已存在成员的分数
+	(1)ZADD				向有序集合添加一个或多个成员，或者更新已存在成员的分数，返回增加成功的数目
 	 >zadd key 1 value1
 	 =>(integer) 1
 	 >zadd key 1 value2
@@ -50,7 +50,7 @@
 	 =>(integer) 2
 
 
-	(6)ZINCRBY			有序集合中对指定成员的分数加上增量 increment
+	(6)ZINCRBY			有序集合中对指定成员的分数加上增量 increment，返回增加后的分数
 	 >zincrby key 0.5 value2
 	 =>"1.5"
 	 >zrange key 0 -1 withscores
@@ -85,16 +85,16 @@
 	 =>(integer) 3
 
 
-	(10)ZREM			移除有序集合中的一个或多个成员
+	(10)ZREM			移除有序集合中的一个或多个成员，返回成功的个数
 	 >zrem key value1
 	 =>(integer) 1
 
 
-	(11)ZREMRANGEBYRANK		移除有序集合中给定的【索引】区间的所有成员
+	(11)ZREMRANGEBYRANK		移除有序集合中给定的【索引】区间的所有成员，返回成功的个数
 	 >zremrangebyrank key 0 1
 	 =>(integer) 2
 
 
-	(12)ZREMRANGEBYSCORE		移除有序集合中给定的【分数】区间的所有成员
+	(12)ZREMRANGEBYSCORE		移除有序集合中给定的【分数】区间的所有成员，返回成功的个数
 	>zremrangebyscore key 1 1.5
 	=>(integer) 2

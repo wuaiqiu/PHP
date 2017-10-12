@@ -14,7 +14,7 @@ String可以包含任何数据，比如图片或序列化对象
 		   =>"value1"
 
 
-		(3)SETNX 	只有在key不存在时设置key的值。
+		(3)SETNX 	只有在key不存在时设置key的值。1表示成功
 		   >get key1
 	  	   =>"value1"
 		   >setnx key1 value11
@@ -34,7 +34,7 @@ String可以包含任何数据，比如图片或序列化对象
 		   =>(nil)
 
 
-		(5)SETRANGE	设定key的value的子字符串，
+		(5)SETRANGE	设定key的value的子字符串，返回最终字符串的个数
 		   >get key1
 		   =>"value1"
 		   >setrange key1 3 22
@@ -61,7 +61,7 @@ String可以包含任何数据，比如图片或序列化对象
 		  => 2) "value4"
 
 
-		(9)MSETNX	同时设置一个或多个key-value对，当且仅当所有给定key都不存在。
+		(9)MSETNX	同时设置一个或多个key-value对，当且仅当所有给定key都不存在。1表示成功
 		  >get key4
 		  =>"value4"
 		  >msetnx key4 value44 key5 value5
@@ -82,35 +82,35 @@ String可以包含任何数据，比如图片或序列化对象
 		  =>"value55"
 
 
-		(11)INCR	将key中储存的数字值增一。
+		(11)INCR	将key中储存的数字值增一。返回增加后的值
 		  >set key6 1
 		  =>OK
 		  >incr key6
 		  =>(integer) 2
 
 
-		(12)DECR	将key中储存的数字值减一。
+		(12)DECR	将key中储存的数字值减一。返回减少后的值
 		  >get key6
 		  =>"2"
 		  >decr key6		
 		  =>(integer) 1
 
 
-		(13)INCRBY	将key所储存的值加上给定的增量值（increment） 。
+		(13)INCRBY	将key所储存的值加上给定的增量值（increment） 。返回增加后的值
 		 >get key6
 		 =>"1"
 		 >incrby key6 5
    		 =>(integer) 6
 
 
-		(14)DECRBY 	将key所储存的值减去给定的减量值（decrement） 。
+		(14)DECRBY 	将key所储存的值减去给定的减量值（decrement） 。返回减少后的值
 		 >get key6
 		 =>"6"
 		 >decrby key6 5
 		 =>(integer) 1
 
 
-		(15)APPEND	如果key已经存在并且是一个字符串，APPEND命令将value追加到key原来的值的末尾。
+		(15)APPEND	如果key已经存在并且是一个字符串，APPEND命令将value追加到key原来的值的末尾。返回字符串长度
 		 >get key5
 		 =>"value55"
 		 >append key5 values
@@ -124,13 +124,3 @@ String可以包含任何数据，比如图片或序列化对象
 		 =>"value55values"
 		 >strlen key5
 		 =>(integer) 13
-
-		(17)DEL 	删除一个或多个key，
-		 >get key1
-		 =>"val221"
-		 >del key1
-		 =>(integer) 1
-		 >get key1
-		 =>(nil)
-		 >del key2 key3 key4
-		 =>(integer) 3
