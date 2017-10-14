@@ -4,20 +4,17 @@
  * a.局部变量
  * b.成员变量
  * c.类变量(静态变量)
- * d.类常量
- *	1)使用 const 关键字来修饰常量，非类常量可以用define()
+ * d.类常量:必须使用 const 关键字来修饰常量；类常量必须赋值
  * e.没有final属性
  */
 
-
-    //定义Person类
      class Person{
          public $name;       //全局(实例)变量
          static $count;      //类变量(静态变量)
-	 const CON="p";	    //类常量必须赋值
+         const CON="p";	    //类常量
      }
         
-     
+
      
     //使用普通属性  $对象名 -> 属性名
     $obj = new Person();
@@ -31,80 +28,38 @@
 
 
 //---------------------------------------方法---------------------------------------------//
-
 /*
- *1.构造方法
+ *1.构造方法:方法名固定不变 __construct
  *2.成员方法
- *3.类方法
- *4.析构方法
- *5.final方法（最终方法）
+ *3.类方法:静态方法中一般使用静态属性,不能使用普通属性，因为调用静态方法的是类
+ *4.析构方法:方法名固定不变 __destruct;该方法会在对象销毁前自动调用;该方法没有参数，当可以用$this表示当前对象
+ *5.final方法（最终方法）:即不可以被继承的方法
  *6.final类(最终类)：即不可以被继承的类
  **/	
-	//定义一个类
-       class Person{
-           
-           /*
-            * 1.构造方法
-            * 	a.方法名固定不变 __construct
-            * 	b.该方法会在实例化对象时自动调用
-            * 	c.主要用于对象的初始化工作
-            * 	d.在如下情况中，对象会被销毁
-            *     1)如果程序执行完成了，所有对象都会被销毁
-            *     2)如果一个对象没有任何一个变量指向时，他会被销毁
-            * */
+
+       class Person{           
            function  __construct(){
                echo "<br/>这是一个构造方法";
            } 
-           
-         
-           /*
-            * 2.成员方法
-            * 	a.可以在该类实例化出的对象上使用（不同对象的普通方法不同）
-            * */
+
            function fun1(){
                echo "<br/>这是一个普通方法";
            }
-           
-  
-           /*
-            * 3.静态方法
-            * 	a.它只属于类，但所有在该类实例化出的对象上共享(不同对象的静态方法相同)
-            * 	b.静态方法中一般使用静态属性,不能使用普通属性，因为调用静态方法的是类
-            **/
+          
           static function fun2(){
                echo "<br/>这是一个静态方法";
            }
            
-  
-           /*
-            * 4.析构方法
-            * 	a.方法名固定不变 __destruct
-            * 	b.该方法会在对象销毁前自动调用
-            * 	c.该方法没有参数，当可以用$this表示当前对象
-            * */
            function  __destruct(){
                echo "<br/>这是一个析构方法";
            }
-
-		
-	  /*
-           * 5.最终方法：即不可以被继承的方法
-      	   *      final function 方法名{
-      	   *
-      	   *      }
-           * */
            
        }
-       
-	
-       
-       
+
        //调用普通方法 $对象名 -> 方法名()
        $obj1 = new Person();
        $obj1->fun1();
-       
-       
-       
+
        //调用静态方法 类名 :: 静态方法名()
        Person::fun2();
     
@@ -157,41 +112,14 @@
      echo "<br/>age => $obj->age";  #Fatal error
      echo "<br/>sex => $obj->sex";  #Fatal error
 
-
-
-//-----------------------------对象属性遍历------------------------------------------//
-
-	/*
-   	 * 对象属性遍历
-   	 * 
-   	 * 1.只能遍历普通属性
-   	 * 2.需要考虑访问控制符的限制
-   	 * 3.形式
-   	 *      foreach ( $obj as $propName=>$vlaue){
-   	 *              //遍历
-   	 *      }
-   	 * */
-   	
-   		function __autoload($className){
-        		require_once "./{$className}.php";
-   		}
-   	
-   		$obj = new LoadClass();
-   	
-   		foreach ($obj as $name=>$value){
-   	    		echo "<br/>$name => $value";
-   		}
-   	
-   	
-	   	/* 
-	   	name => zhangsan
-	   	school => 信息学院
-   	 	*/
-
-
-
+     
 //-----------------------------------this_self_parent的区别---------------------------//
-
+/*
+ * this:表示调用该方法的对象
+ * self:表示本类，即Person 
+ * parent:表示该类的父类，即Biology;通常调用静态方法与静态属性
+ * */
+    
     //定义Biology类
      class Biology{     
         static $C="this is a variable";
@@ -202,26 +130,10 @@
      class Person extends Biology{
          public $name;
          static $age = 12;
-         function fun(){
-             
-         echo "<br/>{$this->name}是一个人,普通对象";
-         /*
-          *this
-          *	表示调用该方法的对象 
-          * */
-             
-         echo "<br/>他的年龄为(静态变量):".self::$age;
-         /*
-          * self
-          * 表示本类，即Person
-          * */
-             
-          echo "<br/>他说了一句话:".parent::$C;
-           /*
-            * parent
-            * 表示该类的父类，即Biology
-            * 通常调用静态方法与静态属性
-            * */
+         function fun(){             
+            echo "<br/>{$this->name}是一个人,普通对象";
+            echo "<br/>他的年龄为(静态变量):".self::$age;
+            echo "<br/>他说了一句话:".parent::$C;
          }   
      }
      
