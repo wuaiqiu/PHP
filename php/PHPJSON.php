@@ -22,12 +22,9 @@
          * */
         
         $json = '{"a":1,"b":2}';
-        
-        echo "<br/><pre>";
         var_dump(json_decode($json));
-        echo "<br/>";
         var_dump(json_decode($json, true));
-        echo "</pre>";
+
         
         /*
          object(stdClass)#1 (2) {

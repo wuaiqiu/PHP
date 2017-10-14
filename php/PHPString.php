@@ -1,35 +1,26 @@
 <?php
-//一.字符串类型定义
-//1.双引号定义:可以识别 \" , \\ , \n , \t , \r , \$ 转义符；可以识别变量
-$str1="abc";      #abc
-$str11="a\"bc";   #a"bc
-$str12="a\$bc";   #a$bc
-$str13="a\bc";    #当"\"在字符中间时可以不转义；a\bc
+/*
+ * 一.字符串类型定义
+ *  1.双引号定义:可以识别 \" , \\ , \n , \t , \r , \$ 转义符；可以识别变量
+ *  2.单引号定义:可以识别 \' , \\ 转义符;不能识别变量
+ *  3.双引号定界符定义:STR3为标识符，最后标识符必须独占一行
+ *  4.单引号定界符定义:没有转义符,全不需要转义
+ * */
 
-
-//2.单引号定义:可以识别 \' , \\ 转义符;不能识别变量
-$str2='abc';      #abc
-$str21='a\'bc';   #a'bc
-$str22='a\bc';    #当"\"在字符中间时可以不转义；a\bc
-$str23='a$bc';    #a$bc
-
-
-//3.双引号定界符定义:STR3为标识符，最后标识符必须独占一行
-//可以识别 \\ , \n , \t , \r , \$ 转义符
+$str1="a\$bc";   #a$bc
+$str2='a$bc';    #a$bc
 $str3=<<<"STR3"
 	    abc ab\\c a"bc a'bc a\$bc
 STR3;
 #abc ab\c a"bc a'bc a$bc
 
-
-//4.单引号定界符定义:没有转义符,全不需要转义
 $str4=<<<'STR4'
         abc a\bc a'bc a"bc a$bc
 STR4;
 #abc ab\c a'bc a"bc
 
-
-/*二.String函数
+/*
+ * 二.String函数
  * 
  *  trim($str):移除字符串两侧的空格
  *  str_pad($str,num,$str):用$str从左填充字符串$arr至长度为num
@@ -51,7 +42,6 @@ print_r (explode(" ",$str));
 
 /*
  Hello World! I love Shanghai!
- 
  Array ( [0] => Hello [1] => world. [2] => I [3] => love [4] => Shanghai! )
  */
   

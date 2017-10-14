@@ -103,8 +103,7 @@
    	   * rsort($arr):对数组逆向排序。在原数组上操作
    	   * shuffle($arr):将数组打乱。在原数组上操作
    	   * */
-   	    
-   	    echo "<br/>";
+
    	    $arr4=array("a","fd","dv");
    	    print_r($arr4);
    	    sort($arr4);
@@ -128,9 +127,7 @@
    	   * in_array("value",$arr)：数组中是否存在指定的值，返回boolean值
    	   * array_key_exists("key",$arr):检查指定的键名是否存在于数组中。
    	   **/
-   	    
-   	    
-   	    echo "<br/>";
+
    	    $arr5=array(1=>3,"dd"=>11,88=>2);
    	    var_dump(in_array(11, $arr5));
    	    var_dump(array_search("dd", $arr5));
@@ -152,7 +149,6 @@
    	    * array_values($arr):返回数组中所有的值。
    	    * */
    	    
-   	    echo "<br/>";
    	    $arr6=array(1=>3,"dd"=>11,88=>2);
    	    echo "数组个数:".count($arr6);
    	    print_r(array_keys($arr6));

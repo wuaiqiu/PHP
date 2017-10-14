@@ -1,71 +1,17 @@
 <?php
-
 //-----------------------------变量------------------------------------------//
     
-   /*
+        /*
         *1.变量的名称和值的关系可以称为“引用”
         *2.变量名必须以"$"开头
         *3.定义一个变量后必须进行赋值
+        *4.isset($var):判断变量是否存在，如果存在返回true，否则返回false
+        *5.unset($var)：删除变量
+        *6.empty($var):检查一个变量是否为空,若变量不存在,或者变量存在且其值为""、0、"0"、null、false、array();则返回 TURE
         * */
-	
-	   //isset($var):判断变量是否存在，如果存在返回true，否则返回false
-	   $v1=isset($s1);     #返回false
-	   $s2=2;
-	   $v2=isset($s2);     #返回true
-	   $s3=false;
-	   $v3=isset($s3);     #返回true
-	   $s4="";
-	   $v4=isset($s4);     #返回true
-	   $s5=null;
-	   $v5=isset($s5);     #返回false
-	      
-	   
-	   
-	   
-	   //unset($var)：删除变量
-	   $s6=23;
-	   $v61=isset($s6);    #返回true
-	   unset($s6);
-	   $v62=isset($s6);    #返回false
-	
-	   
-	   
-	   //变量传值方式(1.值传递，2.引用传递)
-	   //1.值传递，两个变量各自拥有各自的数据空间，互不影响
-	   $s7=7;
-	   $v7=$s7;
-	   
-	   //2.引用传递，两个变量共有一个数据空间
-	   $s8=8;
-	   $v8=&$s8;
-	   
 
-	   
-	   //可变变量，php变量的特殊
-	   $s9="abc";
-	   $abc=1;
-	   echo $$s9;  #输出1
-	   
-	   
-	   
-	   
-	   
-	   //empty($var):检查一个变量是否为空,若变量不存在,或者变量存在且其值为""、0、"0"、null、
-	   //false、array();则返回 TURE
-	   $v10=empty($s10);       #返回true
-	   $s11="";
-	   $v11=empty($s11);       #返回true
-	   $s12=0;
-	   $v12=empty($s12);       #返回true
-	   $s13="0";
-	   $v13=empty($s13);       #返回true
-	   $s14=null;
-	   $v14=empty($s14);       #返回true
-	   $s15=false;
-	   $v15=empty($s15);       #返回true
-	   
-	   
-//----------------------------------常量------------------------------------------------//
+
+//----------------------------------常量----------------------------------------//
 
 	 /*1.常量无需"$"
      	  *2.常量一旦定义就不可以改变和销毁
@@ -85,8 +31,6 @@
 	echo "<br/>常量SCHOOL的值为".SCHOOL;
 	
 	
-	
-	
 	//常量定义方法二: const 常量名 = 常量值; 关键字定义
 	const CC1 = 3.14;
 	const CC2 = "php";
@@ -95,40 +39,33 @@
 	echo "<br/>常量CC2的值为".CC2;
 	
 	
-	
-	
 	//使用常量的另一种方法:  constant("常量名")函数取值
 	$s1=constant("PI");
 	echo "s1=$s1";
 	
 	
-	
-	
 	//defined("常量名"): 判断常量是否存在
-    	var_dump(defined("PI")); //true
-    	var_dump(defined($s1)); //false
+    var_dump(defined("PI")); //true
+    var_dump(defined($s1)); //false
     
     
-    
-    
-    	//未定义变量与常量的区别
-    	echo "s2=$s2";             //报错;s2=
-    	echo "S2=".S2;              //报错;S2=S2
-    
+  
+  	//未定义变量与常量的区别
+    echo "s2=$s2";             //报错;s2=
+    echo "S2=".S2;              //报错;S2=S2
     
     
    	 //预定义常量
-   	echo "<br/>M_PI=".M_PI;         //圆周率；M_PI=3.1415926535898
-    	echo "<br/>PHP_OS=".PHP_OS;     //操作系统；PHP_OS=Linux
-    	echo "<br/>PHP_VERSION=".PHP_VERSION; //PHP版本号；PHP_VERSION=5.3.29
-    	echo "<br/>PHP_INT_MAX=".PHP_INT_MAX; //PHP整型最大值；PHP_INT_MAX=9223372036854775807
+   	 echo "<br/>M_PI=".M_PI;         //圆周率；M_PI=3.1415926535898
+     echo "<br/>PHP_OS=".PHP_OS;     //操作系统；PHP_OS=Linux
+     echo "<br/>PHP_VERSION=".PHP_VERSION; //PHP版本号；PHP_VERSION=5.3.29
+     echo "<br/>PHP_INT_MAX=".PHP_INT_MAX; //PHP整型最大值；PHP_INT_MAX=9223372036854775807
     
     
-    
-    	//魔术常量(会因环境不同而发生改变)
-    	echo __FILE__;          //当前页面的绝对路径；/home/wu/workspace/day1/Constant.php
-    	echo __DIR__;           //当前页面的父目录；/home/wu/workspace/day1
-    	echo __LINE__;          //当前代码行；69
+    //魔术常量(会因环境不同而发生改变)
+    echo __FILE__;          //当前页面的绝对路径；/home/wu/workspace/day1/Constant.php
+    echo __DIR__;           //当前页面的父目录；/home/wu/workspace/day1
+    echo __LINE__;          //当前代码行；69
 
 
 //----------------------------------------变量作用域--------------------------------------------//
@@ -151,44 +88,6 @@
    	     *      在局部范围中，只赋值一次，并不会随调用函数的结束而销毁
    	     *
    	     * */
-   	      
-   	
-   	
-   	     //全局变量
-   	       $s1=123;
-       	    //静态全局变量
-   	       static $s2=456;
-   	       echo "<br/>s1=".(--$s1);     
-   	       echo "<br/>s2=".(--$s2);
-   	       
-   	     /*   s1=122
-   	          s2=455
-   	       
-   	          s1=122
-   	          s2=455 */
-   	     
-   	       
-   	       
-   	       
-   	    
-   	      function fun1(){
-   	          //局部变量
-   	          $v1=321;
-   	          //局部静态变量
-   	          static $v2=654;
-   	          echo "<br/>v1=".(--$v1);
-   	          echo "<br/>v2=".(--$v2);
-   	          
-   	      }
-   	      
-   	      fun1();
-   	      fun1();
-   	      
-   	     /* v1=320
-   	        v2=653
-   	        
-   	        v1=320
-   	        v2=652 */
 
 //--------------------------------局部范围获取全局变量--------------------------------------//
 

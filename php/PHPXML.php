@@ -1,31 +1,21 @@
 <?php
-
 //--------------------------SimpleXml------------------------------------------------//
 
-     /*
-      * 1.加载并解析xml
-      * */
+/*
+ * 基于树的解析器
+ * 
+ * 
+ *     simplexml_load_file(file):把XML文档载入对象中，返回SimpleXmlElement对象
+ *     $xml->children():返回指定节点的所有子节点
+ *     $xml->asXML():以字符串的形式显示xml文档
+ *     $child->getName():获取XML元素的名称
+ *     $child->attributes():获取XML元素的所有属性
+ *     $child->addAttribute(name,value):给 XML 元素添加一个属性
+ *     $child->addChild(name,value):给 XML 节点添加一个子节点
+ *  
+ * */
+
     
-        $xml=simplexml_load_file("note.xml");
-        print_r($xml);
-      
-       /*
-        SimpleXMLElement Object ( 
-                [to] => Tove 
-                [from] => Jani 
-                [heading] => Reminder 
-                [body] => Don't forget me this weekend! 
-         )
-       */
-        
-        
-        
-        
-        /*
-         * 2.遍历
-         *  getName() 函数返回 XML 元素的名称。
-         *  children() 函数查找指定节点的所有子节点。
-         * */
         $xml=simplexml_load_file("note.xml");
         foreach($xml->children() as $child){
             echo $child->getName() . ": " . $child . "<br>";
@@ -39,22 +29,69 @@
         */	
 
 
+//-----------------------------DOM 解析器---------------------------------------//
+  /*
+   * 基于树的解析器
+   *    
+   *    方法：
+   *    new DOMDocument():实例化DOMDocument对象
+   *    $xml->load(path):导入指定位置的XML文档
+   *    $xml->getElementsByTagName(name):返回指定名字的元素集合
+   *    $xml->createElement(name):创建一个元素节点并返回
+   *    $child->appendChild(child):为当前节点添加一个新的子节点,放在最后的子节点后
+   *    $xml->removeChild(child):从子结点列表中删除指定的子节点
+   *    $xml->save(path):把XML文件存到指定path
+   *    $xml->saveXML():以字符串的形式显示xml文档
+   *    $child->setAttribute(name,value):给 XML 元素添加一个属性
+   *    
+   *    
+   *    
+   *    属性：
+   *    $xml->documentElement：返回文档的根元素
+   *    $child->childNodes：指定节点的子节点列表
+   *    $child->nodeValue:返回节点的文本
+   *    $child->nodeType:返回节点的类型
+   *    $child->nodeName:返回节点的名字
+   *    $child->Attributes:返回节点的属性列表
+   *    
+   * */
+        
+     
+        $xmlDoc = new DOMDocument();     
+        $xmlDoc->load("note.xml"); 
+        $x = $xmlDoc->documentElement;
+        foreach ($x->childNodes AS $item){
+            echo $item->nodeName . " = " . $item->nodeValue . "<br/>";
+        }
+        
+        /*
+         to = Tove
+         from = Jani
+         heading = Reminder
+         body = Don't forget me this weekend!
+         */
+        
 //---------------------------Expat--------------------------------------//
 
+    /*
+     * 基于事件的解析器
+     * 
+     * 1.创建XML解析器
+     *      xml_parser_create()：创建XML解析器，返回parser
+     *      xml_set_element_handler($parser,start,end):规定在 XML 文档中元素的起始和终止调用的函数
+     *      xml_set_character_data_handler($parser,handler):为 XML 解析器建立字符数据处理器
+     * 
+     * 2.解析XML
+     *      xml_get_error_code($parser)：函数获取 XML 解析器错误代码。返回errorcode对象
+     *      xml_error_string($errorcode)：函数获取 XML 解析器的错误描述。  
+     *      xml_get_current_line_number($parser)：函数获取 XML 解析器的当前行号。
+     *      xml_parse($parser,$xml,$end)：解析 XML 文档,$end是否为文档结尾
+     * 
+     * 3.释放XML解析器
+     *      xml_parser_free($parser):释放 XML 解析器
+     * */
 
-	 /*
-         * 
-         *  1. 有两种基本的 XML 解析器类型：
-         *       a.基于树的解析器：这种解析器把 XML 文档转换为树型结构。它分析整篇文档，并提
-         *       供了对树中元素的访问，例如文档对象模型 (DOM)。
-         *       b.基于事件的解析器：将 XML 文档视为一系列的事件。当某个具体的事件发生时，
-         *       解析器会调用函数来处理。
-         *  
-         *  2.Expat 解析器是基于事件的解析器。
-         * */
-    
-
-        
+	
         //重写开始标签方法,注意获取$element_name为大写；$element_attrs为标签属性数组
         function start($parser,$element_name,$element_attrs){
             
@@ -88,39 +125,14 @@
          function char($parser,$data){
                 echo $data;
         }
-        
-        
-        
-        
-        //初始化parser解析器
-        $parser=xml_parser_create();
-    
-        //定义标签方法
-        xml_set_element_handler($parser,"start","stop");
-    
-        //定义内容方法
-        xml_set_character_data_handler($parser,"char");
-    
-        //打开文件
-        $fp=fopen("note.xml","r");
-    
-        //解析xml
-        //fread( resource $handle , int $length )读取数据 
-	//feof($handle):是否为文档结尾
-        //xml_error_string(errorcode) 函数获取 XML 解析器的错误描述。
-        //xml_get_error_code($parser) 函数获取 XML 解析器错误代码。
-        //xml_get_current_line_number($parser) 函数获取 XML 解析器的当前行号。
-        //xml_parse($parser,$xml,$end)解析 XML 文档,$end是否为文档结尾
-        while ($data=fread($fp,4096)){
-            xml_parse($parser,$data,feof($fp)) or
-            die (xml_error_string(
-                    xml_get_error_code($parser)
-                )
-            );
-        }
-    
 
-        //释放parser
+        $parser=xml_parser_create();
+        xml_set_element_handler($parser,"start","stop");
+        xml_set_character_data_handler($parser,"char");
+        $fp=fopen("note.xml","r");
+         while ($data=fread($fp)){
+            xml_parse($parser,$data,feof($fp))  or  die (xml_error_string(xml_get_error_code($parser)));
+        }
         xml_parser_free($parser);
         
 
@@ -131,35 +143,5 @@
         Heading: Reminder
         Message: Don't forget me this weekend!
         */
-
-
-//-----------------------------DOM 解析器---------------------------------------//
-
-	//加载和输出 XML 字符串
-        
-        $xmlDoc = new DOMDocument();        //实例化
-        $xmlDoc->load("note.xml");          //加载xml文件
-        echo $xmlDoc->saveXML();    //输出xml字符串
-    
-        #Tove Jani Reminder Don't forget me this weekend!
-       
-        
-        
-        
-        //遍历 XML
-        $xmlDoc = new DOMDocument();
-        $xmlDoc->load("note.xml");
-        
-        $x = $xmlDoc->documentElement;	//获取html元素
-        foreach ($x->childNodes AS $item){
-            echo $item->nodeName . " = " . $item->nodeValue . "<br/>";
-        }
-        
-        /*
-        to = Tove
-        from = Jani
-        heading = Reminder
-        body = Don't forget me this weekend!
-        */  
 
 ?>

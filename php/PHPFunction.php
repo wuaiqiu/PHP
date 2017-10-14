@@ -1,7 +1,5 @@
 <?php
 
-//-----------------------------函数----------------------------------------//
-
 	/*
    	 * 1.函数定义
    	 *      function 函数名(参数, ...){
@@ -110,88 +108,4 @@
    	         *v1=2
    	         *v2=3
    	         */
-
-
-
-//-----------------------------类的魔术方法---------------------------------------//
-
-    /*
-     * __toString()方法
-     *  将一个对象以字符串输出
-     *  
-     *  __invoke()方法
-     *   当将对象以函数调用时会触发此方法
-     * */    
-   	
-   	class Person{
-   	    public $name="zhangsan";
-   	    public $age="12";
-   	    function __toString(){
-   	        return "<br/>name => $this->name<br/>age => $this->age";
-   	    }
-   	    function __invoke(){
-   	        echo "<br/>这是一个对象，不要当做函数用...";
-   	    }
-   	    
-   	}
-   	
-   	$obj = new Person();
-   	echo $obj;
-   	
-   	/* 
-   	name => zhangsan
-   	age => 12
-   	 */
-   	
-   	$obj();
-   	
-   	/* 
-   	这是一个对象，不要当做函数用...
-   	 */
-
-
-
-//---------------------------对象序列化与反序列化----------------------------//
-	
-	//1..对象的序列化,会自动调用类中的__sleep()【若存在】：必须返回需要序列化的属性
-   	//      function __sleep(){
-        //             return array('name','age');
-       //  }
-   	    require_once "LoadClass.php";
-   	    $obj = new LoadClass();
-   	    $obj->name="lisi";
-   	    $obj->school="建筑学院";
-   	    $str1=serialize($obj);
-   	    file_put_contents("obj.txt", $str1);
-	
-	
-	//2.对象的反序列化,另外会调用类中__wakeup()【若存在】
-   	//      function __wakeup(){
-        //}
-   	    require_once "LoadClass.php";
-   	    $str1 = file_get_contents("obj.txt");
-   	    $obj = unserialize($str1);
-   	    echo "<pre>";
-   	    var_dump($obj);
-   	    echo "</pre>";
-
-
-
-//------------------------------操作类与对象-------------------------------------//
-	
-	/*一.操作类
-         * class_exists("类名") :判断一个类是否存在
-         * interface_exists("接口名") :判断一个接口是否存在
-         * get_class($obj) : 获取$obj的类名
-         * get_parent_class($obj) :获取$obj的父类名
-         * get_class_methods("类名") : 返回一个类的所有方法名(数组类型)
-         * get_class_vars("类名") : 返回一个类的所有属性名与属性值(数组类型)
-         * $obj instanceof 类名 :判断$obj是否为"类名"的类
-         * */
-
-	/*二.操作方法
-         * is_object($obj) : 判断某个变量是否为对象
-         * get_object_vars($obj) : 返回该对象的所有属性名与属性值(数组类型)
-         * */
-	 
 ?>

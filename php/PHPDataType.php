@@ -12,8 +12,8 @@
  * 对象类型(object)
  *
  * 3.特殊类型:
- * 空类型(null)
- * 资源类型(resource)
+ * 空类型(null):尚未被赋值；被赋值为 NULL；被unset()函数处理过的变量
+ * 资源类型(resource)：实质只是一个整数
  * 
  * 4.数据类型判断
  *      gettype($var)获取数据类型
