@@ -1,6 +1,22 @@
 					Model
 
 
+模型类的作用大多数情况是操作数据表的，如果按照系统的规范来命名模型类的话，大多数情况下是可以自动对应数据表。
+属性
+tablePrefix	定义模型对应数据表的前缀，
+tableName	不包含表前缀的数据表名称，
+trueTableName	包含前缀的数据表名称，也就是数据库中的实际表名，
+dbName	定义模型当前对应的数据库名称
+
+DB_PREFIX 为 think_
+系统的规则下，tableName会转换为小写定义，但是trueTableName定义的数据表名称是保持原样
+
+
+
+D('User') //实例化UserModel当 \Home\Model\UserModel 类不存在的时候，D函数会尝试实例化公共模块下面的 \Common\Model\UserModel 类。如果不存在，则会实例化系统的\Think\Model基类
+D('User','Logic') //实例化UserLogic
+D('User','Service') //实例化UserService
+
 1.模型操作（Application/Home/Model）
 
 	(1)常规配置（pdo）
@@ -17,6 +33,22 @@
     		'db_charset' =>    'utf8',
 		'show_page_trace' => true, 用于调试
 
+		模型类定义
+		 protected $connection = array(
+		        'db_type'  => 'mysql',
+		        'db_user'  => 'root',
+		        'db_pwd'   => '1234',
+		        'db_host'  => 'localhost',
+		        'db_port'  => '3306',
+		        'db_name'  => 'thinkphp',
+		        'db_charset' =>    'utf8',
+		        'db_params' =>  array(), // 非必须
+    		);
+
+也可以采用字符串方式定义，定义格式为：
+
+数据库类型://用户名:密码@数据库地址:数据库端口/数据库名#字符集
+protected $connection = 'mysql://root:1234@localhost:3306/thinkphp#utf8';
 		2.编写控制器
 
 			2.1使用Model('数据表名')类；直接实例化基类Model，需要导入命名空间
@@ -76,7 +108,13 @@
 
 		2.在配置文件中指明关闭缓存
 			'db_fields_cache'=>false;
-	
+
+	手动设置
+	 protected $fields = array('id', 'username', 'email', 'age');
+	    protected $pk     = 'id';
+	protected $fields = array('id', 'username', 'email', 'age',
+        '_type'=>array('id'=>'bigint','username'=>'varchar','email'=>'varchar','age'=>'int')
+    );
 	
 
 2.sql操作
@@ -234,6 +272,11 @@
             	array('where'=>array('id'=>1)) ,
         'sql2'=>
             	array('order'=>'id desc','limit'=>2)
+	 // 默认的命名范围
+         'default'=>array(
+             'where'=>array('status'=>1),
+             'limit'=>10,
+         ),调用$Model->scope()->select();
         
     	);
 
@@ -243,7 +286,12 @@
 	或
 	$link->sql1()->select();
 
+也可以支持同时调用多个命名范围定义，例如：
 
+$Model->scope('normal')->scope('latest')->select();
+或者简化为：
+
+$Model->scope('normal,latest')->select();
 
 		
 4.CURD  
