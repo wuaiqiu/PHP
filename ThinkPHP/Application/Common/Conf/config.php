@@ -13,5 +13,7 @@ return array(
     
     #允许模块访问
     'MODULE_ALLOW_LIST'=>array('Home'),
-    
+   
+    #定义模板文件位置
+    'VIEW_PATH'=>'./Theme/'
 );

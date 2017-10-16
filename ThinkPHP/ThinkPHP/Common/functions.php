@@ -14,9 +14,17 @@
  *      C('configName','value'):设置配置参数
  *      C('config',null,'value'):读取的时候（不存在）设置默认值
  *      C('configName.subConfigName'):读取二维配置
- *      
+ *  
+ *  
+ * (3)D函数（实例化具体的1Model对象）
+ *      当 \Home\Model\UserModel 类不存在的时候，D函数会尝试实例化公共模块下面的
+ * \Common\Model\UserModel 类。如果不存在，则会实例化系统的\Think\Model基类
+ *      D('User')         #实例化当前模块Model目录下的UserModel
+ *      D('Admin/User')   #实例化Admin模块的Model目录下的UserModel
+ *      D('User','Logic') #实例化当前模块Logic目录下的UserLogic
  * 
- * (3)I函数（读取参数）
+ * 
+ * (4)I函数（读取参数）
  *      a.I('变量类型.变量名',['默认值'])  
  *          
  *          变量类型
@@ -48,9 +56,20 @@
  *       I('get.id/d')      #强制变量转换为整型
  *       I('post.name/s')   #强制转换变量为字符串类型
  *       I('post.ids/a')    #强制变量转换为数组类型
- *         
+ *   
+ *   
+ * (5)M函数（直接实例化基类Model）
+ *      如果你仅仅是对数据表进行基本的CURD操作的话，使用M方法实例化的话；由于不需要加载具体的模型类，所以性能会更高
+ *      M('User')       #根据Model基类实例化一个对应user数据表的实例；UserModel可以不存在
+ *      
+ * (6)T函数（获取模板地址）
+ *      T([模块@][主题/][控制器/]操作)
+ *      
+ *      T();				./Application/Home/View/default/User/index.html
+ *      T('bule/User/index');		./Application/Home/View/bule/User/index.html
+ *      T('Admin@default/User/index');	./Application/Admin/View/default/User/index.html
  * 
- * (4)U函数（操作URL）
+ * (7)U函数（操作URL）
  *      U('地址表达式',参数)
  *          地址表达式：[模块/控制器/操作#锚点@域名]?参数1=值1&...
  *          

@@ -13,9 +13,9 @@
  *          
  *          b.配置跳转页面
  *              #设置错误跳转对应的模板文件
- *              'TMPL_ACTION_ERROR' =>'Public:error',
+ *              'TMPL_ACTION_ERROR' =>THINK_PATH . 'Tpl/dispatch_jump.tpl',
  *              #设置成功跳转对应的模板文件
- *              'TMPL_ACTION_SUCCESS' =>'Public:success',
+ *              'TMPL_ACTION_SUCCESS' =>THINK_PATH . 'Tpl/dispatch_jump.tpl',
  *             
  *          c.模板文件可以使用模板标签
  *              $message	页面提示信息
