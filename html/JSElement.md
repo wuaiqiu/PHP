@@ -31,6 +31,8 @@ target|_blank，_self，_parent，_top|设置或返回针对页面中所有链�
 href|URL|设置或返回被链接资源的 URL
 innerHTML|string|设置或返回一个链接的内容
 target|_blank，_self，_parent，_top|设置或返回在何处打开链接
+blur()||把焦点从链接上移开
+focus()||给链接应用焦点
 
 <br/>
 
@@ -133,10 +135,9 @@ focus()||为单选按钮赋予焦点
 --|--|--
 disabled|true，false|设置或返回是否应禁用下拉列表
 length|int|返回下拉列表中的选项数目
-multiple|true，false|设置或返回是否选择多个项目
 size|int|设置或返回下拉列表中的可见行数
 name|string|设置或返回下拉列表的名称
-selectedIndex|int|设置或返回下拉列表中被选项目的索引号，若允许多重选择，则仅会返回第一个被选选项的索引号
+selectedIndex|int|设置或返回下拉列表中被选项目的索引号
 options[]||返回包含下拉列表中的所有选项的一个数组
 add(option,before|null)|option:添加选项元素，before|null:选项数组的该元素之前增加新的元素，null为追加|向下拉列表添加一个选项
 blur()||从下拉列表移开焦点
@@ -149,7 +150,6 @@ remove(index)|index:要删除的选项的索引号|从下拉列表中删除一�
 --|--|--
 index|int|返回下拉列表中某个选项的索引位置
 selected|true，false|设置或返回 selected 属性的值
-text|string|设置或返回某个选项的纯文本值
 value|string|设置或返回被送往服务器的值
 
 7).Textarea对象
@@ -160,17 +160,10 @@ cols|length|设置或返回 textarea 的宽度
 rows|length|设置或返回 textarea 的高度
 disabled|true，false|设置或返回 textarea 是否应当被禁用
 name|string|设置或返回 textarea 的名称
-readOnly|true，false|设置或返回 textarea 是否应当是只读的
 value|string|设置或返回在 textarea 中的文本
 blur()||从 textarea 移开焦点
 focus()||在 textarea 上设置焦点
 select()||选择 textarea 中的文本
-
-8).Datalist对象
-
-属性|值|描述
---|--|--
-options[]||返回 datalist 中所有选项的集合
 
 <br/>
 
@@ -185,6 +178,7 @@ caption||对表格的caption元素的引用
 cellpadding|pixels，%|规定单元边沿与其内容之间的空白
 cellspacing|pixels，%|规定单元格之间的空白
 width|%，pixels|规定表格的宽度
+frame|void（四周没有边)，above（上边），below（下边)，hsides（上下边），lhs（左边），rhs（右边），vsides（左右边），box（四周边）|规定外侧边框的哪个部分是可见的
 rules|none（行列没有)，rows（行)，cols（列），all（行列）|规定内侧边框的哪个部分是可见的
 cells[]||返回包含表格中所有单元格的一个数组
 rows[]||返回包含表格中所有行的一个数组
@@ -199,6 +193,8 @@ insertRow(index)||在表格中插入一个新行
 
 属性|值|描述
 --|--|--
+align|right，left，center|定义表格行的内容对齐方式
+VAlign|top，middle，bottom，baseline|规定表格行中内容的垂直对齐方式
 rowIndex|int|返回该行在表中的位置
 deleteCell(index)||删除行中的指定的单元格
 insertCell(index)||在一行中的指定位置插入一个空的td元素
@@ -207,6 +203,8 @@ insertCell(index)||在一行中的指定位置插入一个空的td元素
 
 属性|值|描述
 --|--|--
+align|left（左对齐)，right（右对齐），center（中对齐）|规定单元格内容的水平对齐方式
+VAlign|top（上对齐），middle（中对齐），bottom（下对齐)|规定单元格内容的垂直排列方式
 cellIndex|int|返回单元格在某行的单元格集合中的位置
 colSpan|int|单元格横跨的列数
 rowSpan|int|设置或返回单元格可横跨的行数
@@ -242,7 +240,6 @@ alt|string|设置或返回无法显示图像时的替代文本
 complete|true，false|返回浏览器是否已完成对图像的加载
 height|pixels，%|设置或返回图像的高度
 width|pixels，%|设置或返回图像的宽度
-isMap|true，false|返回图像是否是服务器端的图像映射
 src|url|设置或返回图像的 URL
 useMap|string|设置或返回客户端图像映射的 usemap 属性的值
 
