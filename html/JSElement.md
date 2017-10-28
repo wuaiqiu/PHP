@@ -185,8 +185,6 @@ rows[]||返回包含表格中所有行的一个数组
 createCaption()||为表格创建一个 caption 元素
 deleteCaption()||从表格删除 caption 元素以及其内容
 deleteRow(index)||从表格删除一行
-deleteTFoot()||从表格删除 tFoot 元素及其内容
-deleteTHead()||从表格删除 tHead 元素及其内容
 insertRow(index)||在表格中插入一个新行
 
 2).TableRow对象
