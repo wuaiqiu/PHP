@@ -51,7 +51,7 @@ rgb(x,x,x)|RGB 值 (比如 rgb(255,0,0))
 
 **三.文本**
 
-1).字体属性
+1).字体属性（Font）
 
 属性|值|描述
 --|--|--
@@ -61,7 +61,7 @@ font-size|xx-small，x-small，small，medium，large，x-large，xx-large，%�
 font-family|family-name|规定文本的字体系列
 font|font-style font-variant font-weight font-size font-family|在一个声明中设置所有字体属性
 
-2).文本属性
+2).文本属性（Text）
 
 属性|值|描述|
 --|--|--
@@ -83,7 +83,7 @@ word-wrap|normal，break-word|允许对长的不可分割的单词进行分割�
 
 **四.动画**
 
-1).动画
+1).动画属性（Animation）
 
 属性|值|描述
 --|--|--
@@ -161,7 +161,7 @@ opacity|从 0.0 （完全透明）到 1.0（完全不透明）|规定颜色透�
 
 **六.边框**
 
-1).border属性
+1).边框属性（Border 和 Outline）
 
 属性|值|描述
 --|--|--
@@ -184,7 +184,7 @@ border-bottom-left-radius|length，%|定义边框左下角的形状
 border-radius|top-left top-right bottom-right bottom-left|简写属性
 box-shadow|h-shadow（水平阴影的位置） v-shadow（垂直阴影的位置） blur（模糊距离） color（阴影的颜色）|向方框添加一个或多个阴影
 
-2).box属性
+2).Box属性
 
 属性|值|描述|
 ---|---|---
@@ -204,7 +204,7 @@ caption-side|top，bottom|规定表格标题的位置
 
 **七.布局**
 
-1).可伸缩框属性
+1).可伸缩框属性（Flexible Box）
 
 属性|值|描述
 --|--|--
