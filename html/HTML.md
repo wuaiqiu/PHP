@@ -1,6 +1,5 @@
 # HTML
 
-
 **一.全局属性**
 
 属性|描述
@@ -10,7 +9,6 @@ id|规定元素的唯一 id
 data-*|用于存储页面或应用程序的私有定制数据
 hidden|规定元素仍未或不再相关
 style|规定元素的行内 CSS 样式
-title|规定有关元素的额外信息
 
 <br/>
 
@@ -29,10 +27,10 @@ onunload|一旦页面已下载时触发（或者浏览器窗口已被关闭）
 属性|描述
 --|--
 onblur|元素失去焦点时运行的脚本
-onchange|在元素值被改变时运行的脚本
 onfocus|当元素获得焦点时运行的脚本
-onselect|在元素中文本被选中后触发
-onsubmit|在提交表单时触发
+onchange|在元素值被改变时运行的脚本；select，textarea，input
+onselect|在元素中文本被选中后触发；file，password，text，textarea
+onsubmit|在提交表单时触发；form
 
 3).Mouse事件
 
@@ -75,10 +73,13 @@ rows|pixels，%，*（其余所有的空间）|定义框架集中行的数目和
 --|--|--
 frameborder|0，1|规定是否显示框架周围的边框
 src|URL|规定在框架中显示的文档的 URL
-marginheight|pixels|定义框架的上方和下方的边距
-marginwidth|pixels|定义框架的左侧和右侧的边距
+marginheight|pixels|定义框架的内容与上方和下方的边距
+marginwidth|pixels|定义框架的内容与左侧和右侧的边距
+noresize|noresize|规定无法调整框架的大小
+scrolling|yes，no，auto|规定是否在框架中显示滚动条
 
 ```
+<html>
 <frameset cols="25%,50%,25%">
 	<noframes>
   		Your browser does not handle frames!
@@ -87,20 +88,23 @@ marginwidth|pixels|定义框架的左侧和右侧的边距
   	<frame src="frame_b.htm" />
   	<frame src="frame_c.htm" />
 </frameset>
+</html>
 ```
+
+>frameset不能与body标签一起使用
 
 3).iframe属性
 
 属性|值|描述
 --|--|--
 frameborder|1，0|规定是否显示框架周围的边框
-height|pixels，%|规定 iframe 的高度
-width|pixels，%|定义 iframe 的宽度
-marginheight|pixels|定义 iframe 的顶部和底部的边距
-marginwidth|pixels|定义 iframe 的左侧和右侧的边距
+height|pixels，%|规定iframe的高度
+width|pixels，%|定义iframe的宽度
+marginheight|pixels|定义iframe的内容与顶部和底部的边距
+marginwidth|pixels|定义iframe的内容与左侧和右侧的边距
 sandbox|""（应用所有的限制），allow-forms，allow-scripts|启用一系列对 iframe中内容的额外限制
-scrolling|yes，no，auto|规定是否在 iframe 中显示滚动条
-src|URL|规定在 iframe 中显示的文档的 URL
+scrolling|yes，no，auto|规定是否在iframe中显示滚动条
+src|URL|规定在iframe中显示的文档的URL
 
 ```
 <iframe src ="/index.html" frameborder="0">
@@ -154,19 +158,30 @@ src|URL|规定在 iframe 中显示的文档的 URL
 
 1).标签为页面上的所有链接规定默认地址
 
-a属性
-
 属性|值|描述
 ---|---|---
 target|_blank，_parent，_self，_top|规定在何处打开链接文档
 
 ```
-<base href="http://www.w3school.com/" />
-<base target="_blank" />
+<head>
+	<base href="http://www.w3school.com/" />
+	<base target="_blank" />
+</head>
 <a href="index.html">W3School</a>
 ```
 
-2).导航条
+>base标签必须位于head元素内部
+
+2)css伪类
+
+```
+a:link {color: #FF0000}		/* 未访问的链接 */
+a:visited {color: #00FF00}	/* 已访问的链接 */
+a:hover {color: #FF00FF}	/* 鼠标移动到链接上 */
+a:active {color: #0000FF}	/* 选定的链接 */
+```
+
+3).导航条
 
 ```
 <nav>
@@ -176,19 +191,20 @@ target|_blank，_parent，_self，_top|规定在何处打开链接文档
 </nav>
 ```
 
-3).链接一个外部样式表
-
-script属性
-
-属性|值|描述
---|--|--
-type|MIME|指示脚本的 MIME 类型
-defer|defer|规定是否对脚本执行进行延迟，直到页面加载为止
-src|URL|规定外部脚本文件的 URL
+4).链接
 
 ```
-<link rel="stylesheet" type="text/css" href="theme.css" />
-<script src="demo.js"></script>
+<head>
+	<meta name="keywords"content="meta总结,html meta,meta属性,meta跳转"> 
+	<meta name="description"content="haorooms博客,html的meta总结，meta是html语言head区的一个辅助性标签。"> 
+	<meta http-equiv="expires"content="Fri,12 Jan 2001 18:18:18 GMT">
+	<meta http-equiv="Pragma"content="no-cache">
+	<meta http-equiv="Refresh"content="2;URL=http://www.haorooms.com"> 
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta charset="utf-8"> 
+	<link rel="stylesheet" type="text/css" href="theme.css" />
+	<script src="demo.js" defer="defer"></script>
+</head>
 ```
 
 <br/>
@@ -217,7 +233,7 @@ src|URL|规定外部脚本文件的 URL
 ```
 <p>文本段落</p>
 <span>行内文本</span>
-<code代码段落code>
+<code>代码段落</code>
 <pre>预留段落</pre>
 <font size="3" color="red">普通文本</font>
 <center>居中文本</center>
@@ -297,9 +313,9 @@ poster|URL|规定视频下载时显示的图像，或者在用户点击播放按
 属性|值|描述
 ---|---|---
 height|pixels|设置嵌入内容的高度
+width|pixels|设置嵌入内容的宽度
 src|url|嵌入内容的 URL
 type|mime_type|定义嵌入内容的类型
-width|pixels|设置嵌入内容的宽度
 
 ```
 <embed src="helloworld.swf" />
@@ -323,13 +339,14 @@ enctype|application/x-www-form-urlencoded（默认），multipart/form-data（�
 属性|值|描述
 --|--|--
 autocomplete|on，off|规定是否使用输入字段的自动完成功能
+autofocus|autofocus|规定输入字段在页面加载时是否获得焦点
 disabled|disabled|当 input 元素加载时禁用此元素
-maxlength|number|规定输入字段中的字符的最大长度
-size|number_of_char|定义显示的宽度
+maxlength|number|规定文本（密码）输入字段中的字符的最大长度
+size|number_of_char|定义文本（密码）显示的宽度
 name|field_name|定义 input 元素的名称
 placeholder|text|规定帮助用户填写输入字段的提示
 required|required|指示输入字段的值是必需的
-type|button，checkbox，file，hidden，image，password，radio，reset，submit，text|规定input元素的类型
+type|file，hidden，password，text|规定input元素的类型
 value|value|规定 input 元素的值
 
 ```
@@ -413,20 +430,6 @@ required|required|规定文本区域是必填的
   <option value="Ford">
   <option value="Volvo">
 </datalist>
-```
-
-9).度量给定范围
-
-属性|值|描述
---|--|--
-form|form_id|规定meter元素所属的一个或多个表单
-max|number|规定范围的最大值
-min|number|规定范围的最小值
-value|number|必需。规定度量的当前值
-
-```
-<meter value="3" min="0" max="10">十分之三</meter>
-<meter value="0.6">60%</meter> 
 ```
 
 <br/>
@@ -513,6 +516,7 @@ valign|top（上对齐），middle（中对齐），bottom（下对齐）|规定
 2).有序
 
 属性|值|描述
+--|--|--
 reversed|reversed|规定列表顺序为降序(9,8,7...)
 start|number|规定有序列表的起始值
 type|1，A，a，I，i|规定在列表中使用的标记类型
