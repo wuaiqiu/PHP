@@ -172,7 +172,7 @@ target|_blank，_parent，_self，_top|规定在何处打开链接文档
 
 >base标签必须位于head元素内部
 
-2)css伪类
+2).css伪类
 
 ```
 a:link {color: #FF0000}		/* 未访问的链接 */
@@ -196,7 +196,7 @@ a:active {color: #0000FF}	/* 选定的链接 */
 ```
 <head>
 	<meta name="keywords"content="meta总结,html meta,meta属性,meta跳转"> 
-	<meta name="description"content="haorooms博客,html的meta总结，meta是html语言head区的一个辅助性标签。"> 
+	<meta name="description"content="meta是html语言head区的一个辅助性标签"> 
 	<meta http-equiv="expires"content="Fri,12 Jan 2001 18:18:18 GMT">
 	<meta http-equiv="Pragma"content="no-cache">
 	<meta http-equiv="Refresh"content="2;URL=http://www.haorooms.com"> 
@@ -217,7 +217,7 @@ a:active {color: #0000FF}	/* 选定的链接 */
 <!--这是一段注释。注释不会在浏览器中显示。-->
 ```
 
-2)标题
+2).标题
 
 ```
 <h1>这是标题 1</h1>
@@ -228,7 +228,7 @@ a:active {color: #0000FF}	/* 选定的链接 */
 <h6>这是标题 6</h6>
 ```
 
-3)文本
+3).文本
 
 ```
 <p>文本段落</p>
@@ -286,13 +286,15 @@ type|MIME|规定媒体资源的 MIME 类型
 
 属性|值|描述
 --|--|--
-autoplay|autoplay|如果出现该属性，则音频在就绪后马上播放
+autoplay|autoplay|如果出现该属性，则音频(视频)在就绪后马上播放
 controls|controls|如果出现该属性，则向用户显示控件，比如播放按钮
-loop|loop|如果出现该属性，则每当音频结束时重新开始播放
-muted|muted|规定视频输出应该被静音
-src|URL|要播放的音频的 URL
-preload|preload|如果出现该属性，则视频在页面加载时进行加载，并预备播放。如果使用 "autoplay"，则忽略该属性
-poster|URL|规定视频下载时显示的图像，或者在用户点击播放按钮前显示的图像（video）
+loop|loop|如果出现该属性，则每当音频(视频)结束时重新开始播放
+muted|muted|规定音频(视频)输出应该被静音
+src|URL|要播放的音频(视频)的 URL
+preload|preload|如果出现该属性，则音频(视频)在页面加载时进行加载，并预备播放。如果使用 "autoplay"，则忽略该属性
+poster|URL|规定视频下载时显示的图像，或者在用户点击播放按钮前显示的图像
+height|pixels|设置视频播放器的高度
+width|pixels|设置视频播放器的宽度
 
 ```
 <audio controls>
@@ -330,7 +332,6 @@ type|mime_type|定义嵌入内容的类型
 属性|值|描述
 --|--|--
 action|URL|规定当提交表单时向何处发送表单数据
-autocomplete|on，off|规定是否启用表单的自动完成功能
 method|get，post|规定用于发送 form-data 的 HTTP 方法
 enctype|application/x-www-form-urlencoded（默认），multipart/form-data（上传文件）|规定在发送表单数据之前如何对其进行编码
 
@@ -338,14 +339,11 @@ enctype|application/x-www-form-urlencoded（默认），multipart/form-data（�
 
 属性|值|描述
 --|--|--
-autocomplete|on，off|规定是否使用输入字段的自动完成功能
-autofocus|autofocus|规定输入字段在页面加载时是否获得焦点
 disabled|disabled|当 input 元素加载时禁用此元素
 maxlength|number|规定文本（密码）输入字段中的字符的最大长度
 size|number_of_char|定义文本（密码）显示的宽度
 name|field_name|定义 input 元素的名称
 placeholder|text|规定帮助用户填写输入字段的提示
-required|required|指示输入字段的值是必需的
 type|file，hidden，password，text|规定input元素的类型
 value|value|规定 input 元素的值
 
@@ -362,6 +360,10 @@ value|value|规定 input 元素的值
 
 3).按钮
 
+属性|值|描述
+--|--|--
+disabled|disabled|规定禁用该下拉列表
+
 ```
 <input type="button" value="Click Me!"/>
 <button type="button">Click Me!</button>
@@ -369,30 +371,47 @@ value|value|规定 input 元素的值
 
 4).单选框
 
+属性|值|描述
+--|--|--
+disabled|disabled|规定禁用该下拉列表
+checked|checked|单选按钮的状态
+
 ```
 <label for="maleId">Male</label>
-<input type="radio" name="sex" id="maleId" />
+<input type="radio" name="sex" id="maleId" value="male"/>
 <br />
 <label for="femaleId">Female</label>
-<input type="radio" name="sex" id="femaleId" />
+<input type="radio" name="sex" id="femaleId" value="female"/>
 ```
 
 5).复选框
 
+属性|值|描述
+--|--|--
+disabled|disabled|规定禁用该下拉列表
+checked|checked|单选按钮的状态
+
 ```
 <label for="bikeId">我喜欢自行车：</label>
-<input type="checkbox" name="Bike" id="bikeId">
+<input type="checkbox" name="Bike" id="bikeId" value="bike"/>
 <br />
 <label for="carId">我喜欢汽车：</label>
-<input type="checkbox" name="Car" id="carId">
+<input type="checkbox" name="Car" id="carId" value="car"/>
 ```
 
-6)下拉列表
+6).下拉列表
+
+属性|值|描述
+--|--|--
+disabled|disabled|规定禁用该下拉列表
+name|name|规定下拉列表的名称
+size|number|规定下拉列表中可见选项的数目
+
 
 ```
 <select>
 	<optgroup label="Swedish Cars">
-		<option value ="volvo">Volvo</option>
+		<option value ="volvo" selected>Volvo</option>
 		<option value ="saab">Saab</option>
 	</optgroup>
 	<optgroup label="German Cars">
@@ -412,24 +431,11 @@ disabled|disabled|规定禁用该文本区
 maxlength|number|规定文本区域的最大字符数
 name|name_of_textarea|规定文本区的名称
 placeholder|text|规定描述文本区域预期值的简短提示
-readonly|readonly|规定文本区为只读
-required|required|规定文本区域是必填的
 
 ```
 <textarea rows="10" cols="30">
 	The cat was playing in the garden.
 </textarea>
-```
-
-8).选项列表
-
-```
-<input id="myCar" list="cars" />
-<datalist id="cars">
-  <option value="BMW">
-  <option value="Ford">
-  <option value="Volvo">
-</datalist>
 ```
 
 <br/>
