@@ -453,21 +453,14 @@ width|%，pixels|规定表格的宽度
 frame|void（四周没有边)，above（上边），below（下边)，hsides（上下边），lhs（左边），rhs（右边），vsides（左右边），box（四周边）|规定外侧边框的哪个部分是可见的
 rules|none（行列没有)，rows（行)，cols（列），all（行列）|规定内侧边框的哪个部分是可见的
 
-2).tbody，tfoot，thead属性
-
-属性|值|描述
---|--|--
-align|right，left，center|定义 tbody 元素中内容的对齐方式
-valign|top，middle，bottom|规定 tbody 元素中内容的垂直对齐方式
-
-3).tr属性
+2).tr属性
 
 属性|值|描述
 --|--|--
 align|right，left，center|定义表格行的内容对齐方式
 valign|top，middle，bottom，baseline|规定表格行中内容的垂直对齐方式
 
-4).td，th属性
+3).td，th属性
 
 属性|值|描述
 --|--|---
@@ -479,28 +472,22 @@ valign|top（上对齐），middle（中对齐），bottom（下对齐）|规定
 ```
 <table border="1">
 	<caption>我的标题</caption>
-	<thead>
-		<tr>
-			<th>Month</th>
-			<th>Savings</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-      			<td>January</td>
-			<td>$100</td>
-    		</tr>
-    		<tr>
-      			<td>February</td>
-			<td>$80</td>
-    		</tr>
-	</tbody>
-	<tfoot>
-		<tr>
-			<td>Sum</td>
-			<td>$180</td>
-		</tr>
-	</tfoot>
+	<tr>
+		<th>Month</th>
+		<th>Savings</th>
+	</tr>
+	<tr>
+      		<td>January</td>
+		<td>$100</td>
+    	</tr>
+    	<tr>
+      		<td>February</td>
+		<td>$80</td>
+    	</tr>
+	<tr>
+		<td>Sum</td>
+		<td>$180</td>
+	</tr>
 </table>
 ```
 
