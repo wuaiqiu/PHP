@@ -69,7 +69,7 @@
  *					myBtn.onclick=null; //删除事件
  *				</script>
  *		3）.DOM2级事件处理程序（冒泡或捕获）
- *			1)可以为一个元素添加多个事件
+ *			1)可以为一个元素添加多个相同的事件
  *				<button id="btn">点击</button>
  *				<script>
  *					var myBtn=document.getElementById("btn");	
