@@ -163,7 +163,9 @@ $(selector).toggle(speed,callback);	//切换hide()和show()方法
 ```
 
 >1).$(selector)选中的元素的个数为n个，则callback函数会执行n次
+
 >2).callback函数名后加括号，会立刻执行函数体，而不是等到显示/隐藏完成后才执行
+
 >3).callback既可以是函数名，也可以是匿名函数
 
 2).淡入淡出
@@ -234,10 +236,10 @@ $selector.val("hello")|function(index,oldvalue)|设置或返回匹配元素的�
 **元素其他操作**||
 $selector.clone(true or false)||创建匹配元素集合的副本
 $selector.replaceWith($newSelector)|function()|用匹配的元素替换所有匹配到的元素
-$selector.get(index)|获得由选择器指定的DOM元素
-$selector.index()|返回指定元素相对于其他指定元素的index位置
-$selector.size()|返回被jQuery选择器匹配的元素的数量
-$selector.toArray()|以数组的形式返回jQuery选择器匹配的元素
+$selector.get(index)||获得由选择器指定的DOM元素
+$selector.index()||返回指定元素相对于其他指定元素的index位置
+$selector.size()||返回被jQuery选择器匹配的元素的数量
+$selector.toArray()||以数组的形式返回jQuery选择器匹配的元素
 **CSS操作**||
 $selector.css(key,value)|name,function(index,oldValue)|设置或返回匹配元素的样式属性
 $selector.height(value)|function(index,oldHeight)|设置或返回匹配元素的高度
