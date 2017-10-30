@@ -21,6 +21,23 @@ http://www.runoob.com/try/demo_source/bootstrap3-glyph-icons.htm
 </button>
 ```
 
+(4)font-awessome
+
+```
+<!--不同大小-->
+<p><span class="icon-camera-retro icon-large"></span> icon-camera-retro</p>
+<p><span class="icon-camera-retro icon-2x"></span> icon-camera-retro</p>
+<p><span class="icon-camera-retro icon-3x"></span> icon-camera-retro</p>
+<p><span class="icon-camera-retro icon-4x"></span> icon-camera-retro</p>
+
+<!--动画-->
+<span class="icon-spinner icon-spin"></span> Spinner icon when loading content...
+
+<!--对齐文本-->
+<span class="icon-quote-left icon-4x pull-left icon-muted"></span>
+Use a few of the new styles together ... lots of new possibilities.
+```
+
 <br/>
 
 **二.按钮组组件**
