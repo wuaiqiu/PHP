@@ -1,12 +1,12 @@
 <?php
 /*
  * AOP(Aspect Oriented Programming,面向切面编程)
- * 
+ *
  *   Aspect(切面)：包含各个模块的共同代码片的集合
  *   Advice（增强）：Advice用于调用Aspect（切面）某个代码块的处理
  *   Joinpoint（连接点）：Joinpoint是需要各个模块的方法
  *   Pointcut（切入点）：Jointpoint具体的连接点
- *   
+ *
  *   Advice类型
  *     前置增强（Before advice）：在某连接点之前执行的增强，但这个增强不能阻止连接点前的执行（除非它抛出一个异常）
  *     后置返回增强（After returning advice）：在某连接点正常完成后执行的增强
@@ -17,45 +17,41 @@
 
 //Aspect切面类
 class Aspect{
-  static function log(){
-      return "This is log ".Date("Y-m-d h:i:s");
+    static function log(){
+        echo "This is log<br/>";
     }
-   static function checkAuthentication(){
-        return "This is checkAuthentication";
-    }
-}
-
-
-class Blog{
-    
-    //切入点
-    function createBlog(){
-        Aspect::log();//前置增强
-        echo "<br/>This createBlog<br/>";
-    }
-    
-    //切入点
-    function editBlog(){
-        echo "<br/>This is editBlog<br/>";
-        Aspect::log();//后置返回增强
-    }
-    
-    //切入点
-    function deleteBlog(){
-        try{
-            echo "<br/>This is deleteBlog<br/>";
-        }catch(Exception $e){
-            Aspect::log();//后置异常增强
-        }finally {
-            Aspect::checkAuthentication();//后置最终增强
-        }
-    }
-    
-    //切入点
-    function viewBlog(){
-        Aspect::log();//环绕增强
-        echo "<br/>This is viewBlog<br/>";
-        Aspect::checkAuthentication();     
+    static function checkAuthentication(){
+        echo "This is checkAuthentication<br/>";
     }
 }
 
+
+//增强类
+class AOP{
+    function __call($method,$args) {
+       Aspect::checkAuthentication();
+       call_user_func_array(array($this, $method), $args=[]);
+       Aspect::log();
+     
+    } 
+}
+
+
+class Blog extends AOP{
+
+    //切入点(protected，父类才可以调用)
+   protected function createBlog(){
+        echo "This createBlog<br/>";
+    }
+    
+    //切入点(protected，父类才可以调用)
+   protected function editBlog(){
+       echo "This is editBlog<br/>";
+    }
+    
+}
+
+
+$blog=new Blog();
+$blog->createBlog();
+$blog->editBlog();
