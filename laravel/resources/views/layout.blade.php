@@ -1,0 +1,16 @@
+<html>
+<head>
+	<title>index</title>
+</head>
+<body>
+<p>
+@section('content')
+这是父模板content
+@show
+</p>
+<hr/>
+<p>
+@yield('footer','这是父模板footer')
+</p>
+</body>
+</html>
