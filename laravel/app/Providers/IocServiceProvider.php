@@ -1,9 +1,4 @@
 <?php
-namespace  App\Providers;
-
-use App\Http\Services\Ioc;
-use Illuminate\Support\ServiceProvider;
-
 class IocServiceProvider extends ServiceProvider{
     
     //注册服务

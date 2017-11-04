@@ -29,7 +29,13 @@ CREATE TABLE student (
 	name	char(10),
 	id 	int
 );
-	
+
+#创建数据表指定引擎
+CREATE TABLE student(
+        name   char(10),
+        id     int
+)engine=mysiam;	
+
 #创建与student表相同的user数据表
 CREATE TABLE user  SELECT * FROM student;
 
@@ -64,6 +70,9 @@ ALTER TABLE student CHANGE name  newName char(11);
 
 #修改表结构(删除列)												
 ALTER TABLE student DROP name;
+
+#修改表引擎
+ALTER TABLE student engine=myisam;
 ```	
 		
 <br/>
@@ -73,17 +82,20 @@ ALTER TABLE student DROP name;
 数据类型|描述
 ---|---
 **Text类型**|
-char(size)|字符型(256B-->2^8)
-varchar(size)|可变字符型(256B-->2^8)
-text|字符串类型；tinytext(256B-->2^8)，text(64K-->2^16)，mediumtext(16M-->2^24)，longtext(4G-->2^32)
+char(size)|字符型(256B)
+varchar(size)|可变字符型(256B)
+text|字符串类型；tinytext(256B)，text(64K)，mediumtext(16M)，longtext(4G)
+enum|枚举类型（所有可能值）；内部利用整数管理
+set|集合类型（所有可以组合的值）；内部利用整数管理
 **二进制类型**|
-blob|二进制类型；tinyblob(256B-->2^8)，blob(64K-->2^16)，mediumblob(16M-->2^24)，longblob(4G-->2^32)
+blob|二进制类型；tinyblob(256B)，blob(64K)，mediumblob(16M)，longblob(4G)
 **Number类型**|
-int(size)|整型；tinyint(-2^7B ~ 2^7-1B)，smallint(-2^15B ~ 2^15-1B)，mediumint(-2^23B ~ 2^23-1B)，int(-2^31B ~ 2^31-1B)，bigint(-2^63B ~ 2^63-1B)
-float(size,d)| 浮点型
+int|整型；tinyint(1B)，smallint(2B)，mediumint(3B)，int(4B)，bigint(8B)
+float(size,d)| 浮点型，float(5,2)表示最多5位,其中必须有2位小数
 double(size,d)|浮点型，double(5,2)表示最多5位,其中必须有2位小数
 decimal(size,d)|浮点型，精确度比double高
 **Date类型**|
 data|日期类型； yyyy-mm-dd
 time|时间类型；hh:mm:ss
-datatime|日期与时间结合；yyyy-mm-dd hh:mm:ss	
+datatime|日期与时间结合；yyyy-mm-dd hh:mm:ss
+timestamp|时间戳

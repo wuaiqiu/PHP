@@ -33,6 +33,7 @@ SHOW INDEX FROM student;
 			
 (3).主键索引,即添加主键约束即可
 
+
 2.组合索引:一个组合索引包含两个或两个以上的列
 
 ```
@@ -48,13 +49,28 @@ CREATE	 INDEX indexName On student(id,name(4));
 CREATE TABLE student ( 
       id INT, 
       name char(10),
-      FULLTEXT(id) 
+      FULLTEXT(name) 
 );
 
-ALTER TABLE student ADD FULLTEXT fullName(id);
+ALTER TABLE student ADD FULLTEXT fullName(name);
 
-CREATE FULLTEXT INDEX fullName ON student(id);
+CREATE FULLTEXT INDEX fullName ON student(name);
 
 #使用全文索引
 SELECT * FROM student WHERE MATCH(`name`) AGAINST('聪')
 ```
+
+4.强制使用索引
+
+```
+SELECT * FROM student USE INDEX (name) WHERE name='zhangsan';
+```
+
+<br/>
+
+**三.索引存储类型**
+
+1).聚集索引(innodb):表数据按照索引的顺序来存储的，也就是说索引项的顺序与表中记录的物理顺序一致。对于聚集索引，叶子结点即存储了真实的数据行，不再有另外单独的数据页。 在一张表上最多只能创建一个聚集索引，因为真实数据的物理顺序只能有一种。
+
+2).非聚集索引(myisam):表数据存储顺序与索引顺序无关。对于非聚集索引，叶结点包含索引字段值及指向数据页数据行的逻辑指针，其行数量与数据表行数据量一致。
+

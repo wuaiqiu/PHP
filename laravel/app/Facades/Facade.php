@@ -32,4 +32,5 @@ class PersonFacade extends Facade{
     }
 }
 
+//实现
 echo PersonFacade::run('zhangsan');
