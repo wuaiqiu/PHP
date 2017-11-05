@@ -98,4 +98,4 @@ decimal(size,d)|浮点型，精确度比double高
 data|日期类型； yyyy-mm-dd
 time|时间类型；hh:mm:ss
 datatime|日期与时间结合；yyyy-mm-dd hh:mm:ss
-timestamp|时间戳
+timestamp|时间戳与datatime相同只是范围变小
