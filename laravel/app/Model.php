@@ -130,4 +130,10 @@
  * $bool=$students->delete();
  * $num=Student::destroy([28,29])：删除主键为28,29的数据
  * 
+ * 
+ * (4).记录序列化
+ *  $students->toArray()：序列化为数组
+ *  $students->toJson()：序列化为 JSON
+ *  $user->makeVisible('attribute')->toArray()：临时暴露属性
+ *  $user->makeHidden('attribute')->toArray();临时隐藏属性
  * */
