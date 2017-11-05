@@ -7,6 +7,17 @@
  *          'age' => 'required',
  * ]);
  * 
+ * ---------------------------------------------------
+ * 
+ * $validator=Validator::make($request->input(),[
+ *      'name' => 'required|unique:posts|max:255',
+ *      'age' => 'required',
+ * ]);
+ * 
+ * if($validator->fails()){
+ *  return redirect()->back()->withErrors($validator);
+ * }
+ * 
  * 
  * (2).验证规则
  * 
@@ -29,4 +40,35 @@
  *  $errors->all():获取所有字段的所有错误信息
  *  $errors->has('email'):判断消息中是否存在某字段的错误信息
  *  $errors->all('<li>:message</li>'):获取指定格式的所有错误信息
+ *  
+ * (4).自定义错误信息
+ * 
+ *  $this->validate($request, [
+ *          'name' => 'required|unique:posts|max:255',
+ *          'age' => 'required',
+ * ],[
+ *          'required'=>':attribute为必选项',
+ *          'max'=>':attrbute不符合要求'
+ * ],[
+ *          'name'=>'姓名',
+ *          'age'=>'年龄'
+ * ]);
+ * 
+ * -------------------------------------------------------
+ * 
+ * $validator=Validator::make($request->input(),[
+ *      'name' => 'required|unique:posts|max:255',
+ *      'age' => 'required',
+ * ],[
+ *          'required'=>':attribute为必选项',
+ *          'max'=>':attrbute不符合要求'
+ * ],[
+ *          'name'=>'姓名',
+ *          'age'=>'年龄'
+ * ]);
+ * 
+ * if($validator->fails()){
+ *  return redirect()->back()->withErrors($validator);
+ * }
+ * 
  * */

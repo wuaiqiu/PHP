@@ -229,3 +229,21 @@ echo url()->current();
 echo url()->full();
 echo url()->previous();
 ```
+
+asset():使用当前请求的 scheme（HTTP或HTTPS）为前端资源生成一个URL
+
+```
+$url = asset('img/photo.jpg');
+#http://localhost/public/img/photo.jpp
+```
+
+<br/>
+
+**五.其他函数**
+
+abort():调用resource/views/errors下的视图
+
+```
+abort('403');
+#调用403.blade.php视图
+```
