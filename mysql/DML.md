@@ -11,7 +11,7 @@ INSERT INTO student(name,id) VALUES('zhangsan',12);
 #插入全列数据
 INSERT INTO student VALUES('zhangsan',12,1996-11-08);
 
-#将apps表的app_name,country字段插入websites表中
+#将apps表的app_name,country字段插入websites表中(批量插入)
 INSERT INTO Websites (name, country) SELECT app_name, country FROM apps;
 
 #修改数据	

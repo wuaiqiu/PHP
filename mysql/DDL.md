@@ -34,7 +34,7 @@ CREATE TABLE student (
 CREATE TABLE student(
         name   char(10),
         id     int
-)engine=mysiam;	
+)engine=mysiam|innodbd;	
 
 #创建与student表相同的user数据表
 CREATE TABLE user  SELECT * FROM student;
@@ -48,28 +48,28 @@ DESC student;
 #显示创建表过程	
 SHOW CREATE TABLE student;
 
+#修改表结构(删除列)												
+ALTER TABLE student DROP name;
+
 #删除表	
 DROP TABLE student;
 
 #删除数据表,并返回一张空表	
 TRUNCATE TABLE student;
 
-#修改表(重命名表)
-ALTER TABLE student RENAME TO students;
-
 #修改表结构(添加列)	
 ALTER TABLE student ADD (
 	brith data
 );
+
+#修改表(重命名表)
+ALTER TABLE student RENAME TO students;
 
 #修改表结构(修改列类型)	
 ALTER TABLE student MODIFY name char(11);
 
 #修改表结构(修改列名,列类型)	
 ALTER TABLE student CHANGE name  newName char(11);
-
-#修改表结构(删除列)												
-ALTER TABLE student DROP name;
 
 #修改表引擎
 ALTER TABLE student engine=myisam;

@@ -5,22 +5,18 @@
 
 Data Query Language: 数据查询语言,【查询记录】(不修改记录)
 	
-(1).基本查询
+(1).**单表查询**
 	
 ```
 #全表查询
 SELECT * FROM student;
 
 #指定列查询		
-SELECT name FROM student;
+SELECT name (AS) '姓名' FROM student;
 
 #去重复指定列查询		
 SELECT DISTINCT data FROM student;
-```
-	
-(2).列运算
 
-```
 #指定列乘5后返回
 SELECT id*5  FROM student;
 
@@ -30,93 +26,75 @@ SELECT CONCAT('$',id) FROM student;
 #空字段转0后乘12并返回		
 SELECT IFNULL(id,0)*12 FROM student;
 
-#列别名返回		
-SELECT id (AS) ids FROM student;
-```
-		
-(3).条件控制
-
-```
-#where基本查询
+#where查询（比较大小）
 SELECT id,name  FROM student WHERE id>10;
 
-#in包含查询
+#where查询（between，not between）
+SELECT * FROM Websites  WHERE id BETWEEN 1 AND 20;
+
+#where查询（in，not in）
 SELECT * FROM Websites  WHERE name IN ('Google','菜鸟教程');
 
-#between之间查询
-SELECT * FROM Websites  WHERE id BETWEEN 1 AND 20;
-```
-		
-(4).模糊查询（'_'表示单个字符,'%'表示多个字符,[charlist]字符列中的任何单一字符,[^charlist]或[!charlist]不在字符列中的任何单一字符）
-	
-```
-SELECT * FROM student WHERE name LIKE 'zhang_';
-		
+#where查询（模糊查询，like，not like）
+SELECT * FROM student WHERE name LIKE 'zh\_ang_';
 SELECT * FROM student WHERE name LIKE 'zhang%';
 
-SELECT * FROM student WHERE name where name REGEXP '^[abc]';
-
-SELECT * FROM student WHWRE name where name NOT REGEXP '[abc]';
-```	
-	
-(5).排序（ASC:默认,表示从小到大排序;DESC:表示从大到小排序）
-
-```	
+#排序(order by，NULL最小)；不能用于子查询
 SELECT * FROM WHERE id>1 ORDER BY id ASC;
-		
 SELECT * FROM WHERE id>1 ORDER BY id ASC, data DESC;
-```	
-	
-(6).聚合函数
-	
-1).COUNT记录数总个数
-		
-```
-#计算student表的id字段【不为NULL的记录数】
+
+#聚集函数（count，sum，avg，max，min）；只能用于select子句与having子句
+#计算student表的id字段数量【不为NULL的记录】
 SELECT COUNT(id) FROM student;
-```
-							
-2).MAX,MIN,SUM,AVG
-
-```
-#计算student表的【id字段值的平均值】	
+#计算student表的id字段值的平均值【不为NULL的记录】
 SELECT AVG(id) FROM student;
-```
+#计算student表class字段值种类【不为NULL的记录】
+SELECT COUNT(DISTINCT class) FROM student;
+#计算student表class总数大于2的class
+SELECT class FROM demo1 GROUP BY class HAVING COUNT(class)>2;
 
-(7).分组查询
-
-```
+#分组（group by，having）
 #以data分组，计算各组的记录数	
 SELECT data,COUNT(*) FROM student GROUP BY data;
-
 #以data分组，计算各组的记录数,并记录数大于3
 SELECT data,COUNT(*) nums FROM student GROUP BY data HAVING nums>3;
-```
 
-(8).LIMIT限定行数
-
-```	
-SELECT * FROM student LIMIT 4,3;#截取5,6,7行记录
+#LIMIT限定行数
+#截取5,6,7行记录
+SELECT * FROM student LIMIT 4,3;
 ```
 
 <br/>
 
-**二.SQL语句排序**
-	
+(2).**连接查询**
 
->SELECT --> FROM --> WHERE --> GROUP BY --> HAVING --> ORDER BY
-							
-		
-where子句中的运算符
+```
+#内连接(等值连接);两表的公共记录部分
+SELECT * FROM student stu,teacher tea WHERE stu.id=tea.id;
+SELECT * FROM student stu INNER JOIN teacher tea ON stu.id=tea.id;
+SELECT stu.id,tea.name FROM student stu INNER JOIN teacher tea on stu.id=tea.id;
 
-符号|描述
----|---
-=|等于
-<>|不等于。注释：在 SQL 的一些版本中，该操作符可被写成 !=
-&gt;|大于
-&lt;|小于
-&gt;=|大于等于
-&lt;=|小于等于
-BETWEEN|在某个范围内
-LIKE|搜索某种模式
-IN|指定针对某个列的多个可能值
+#外连接；以一张表为主表，另一张表为附表	
+#右外连接
+SELECT * FROM student stu LEFT OUTER JOIN teacher tea ON stu.id=tea.id;
+#左外连接
+SELECT * FROM student stu RIGHT OUTER JOIN teacher tea ON stu.id=tea.id;
+
+#嵌套查询
+SELECT * FROM users WHERE id IN (SELECT id FROM demo1);
+SELECT * FROM users WHERE id >ANY (SELECT id FROM demo1);
+SELECT * FROM users WHERE id >ALL (SELECT id FROM demo1);
+SELECT * FROM users WHERE EXISTS(SELECT * FROM demo1 WHERE users.id=demo1.id);
+SELECT * FROM users WHERE NOT EXISTS(SELECT * FROM demo1 WHERE users.id=demo1.id);
+SELECT * FROM users,(SELECT * FROM demo1) AS demo1 WHERE users.id=demo1.id;
+
+#并集查询（要求被合并的表中，列的类型与列数相同）
+#不去除重复行
+SELECT * FROM student
+UNION ALL
+SELECT * FROM teacher;
+#去除重复行
+SELECT * FROM student
+UNION
+SELECT * FROM teacher;
+```
