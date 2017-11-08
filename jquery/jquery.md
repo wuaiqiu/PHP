@@ -54,8 +54,9 @@ $(":file")|所有文件域
 事件|描述
 --|--
 **window事件**|
-$(window).error(function)|触发或将函数绑定到指定元素的error事件
-$(window).load(function)|触发或将函数绑定到指定元素的load事件
+$(document).ready(function)|在文档加载后激活函数
+$().ready(function)|在文档加载后激活函数
+$(function)|在文档加载后激活函数
 $(window).unload(function)|触发或将函数绑定到指定元素的unload事件
 **Form事件**|
 $(selector).focus(function)|触发或将函数绑定到被选元素的获得焦点事件
