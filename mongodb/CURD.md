@@ -24,6 +24,9 @@ use test			#可以切换一个指定的数据库test（可以不存在）
 
 db.createCollection("students")	#在当前数据库创建一个students集合
 
+db.createCollection("students",{"capped":true,"size":1024,"max":5})
+#固定集合size表示集合的总大小为1024个字节，max为集合总文档条数为5条，当条数超过则删除最早的一条
+
 show collections		#显示当前数据库所有的集合
 
 db.students.drop()		#删除当前数据库的students集合

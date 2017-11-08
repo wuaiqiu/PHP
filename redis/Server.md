@@ -1,8 +1,7 @@
 # Server
 
->管理redis有关命令
+**一.管理redis有关命令**
 
-	
 (1).**PING**	用于检测 redis 服务是否启动。PONG表示启动
 
 ```	
@@ -91,3 +90,58 @@
 >client kill 127.0.0.1:36016
 =>OK
 ```
+
+<br/>
+
+**二.持久化**
+
+>Redis是一个内存数据库，也就是说redis需要经常将内存中的数据同步到硬盘来保证持久化，redis支持两种持久化方式:Snapshotting(快照),Append-only File(AOF)
+
+Snapshotting（默认）
+
+```
+save 900 1 #900秒内如果超过1个key被修改，则发起快照保存
+save 300 10 #300秒内如果超过10个key被修改，则发起快照保存
+```
+
+AOF（追加更新）
+
+```
+appendonly yes #启动aof持久化方式
+appendfsync always #收到写命令就立即写入磁盘，最慢，但是保证完全的持久化
+appendsync everysec #每秒钟写入磁盘一次，在性能和持久化方面做了很好的折中
+appendfsync no#完全依赖os，性能最好，持久化没保证
+```
+
+<br>
+
+**三.用户管理**
+
+设置密码
+
+```
+requirepass beijing
+```
+
+验证方式
+
+```
+在登录前:
+redis-cli -a beijing
+
+在登录后:
+auth beijing
+```
+
+<br/>
+
+**四.主从复制**
+
+从服务器
+
+```
+slaveof 192.168.1.110 6379#指定master的ip与port
+masterauth beijingb  #指定master的验证密码
+```
+
+>info命令可以查看是否为主从服务器
