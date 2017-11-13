@@ -24,7 +24,6 @@ ALTER TABLE student ADD PRIMARY KEY(id);
 ALTER TABLE student ADD CONSTRAINT pkName PRIMARY KEY (id);
 	
 ALTER TABLE student DROP PRIMARY KEY;
-
 ```	
 	
 <br/>
@@ -38,6 +37,22 @@ CREATE TABLE student(
 	id int NOT NULL,
 	name char(10)
 );
+
+CREATE TABLE student(
+	id int,
+	name char(10),
+	CONSTRAINT notnull NOT NULL(id),
+);
+```
+
+创建后
+
+```
+ALTER TABLE student ADD NOT NULL(id);
+
+ALTER TABLE student ADD CONSTRAINT notnull NOT NULL(id);
+	
+ALTER TABLE student DROP NOT NULL notnull;
 ```
 
 <br/>
@@ -66,7 +81,7 @@ ALTER TABLE Persons ADD UNIQUE (P_Id);
 
 ALTER TABLE Persons ADD CONSTRAINT unionName UNIQUE (P_Id,LastName);
 
-ALTER TABLE Persons DROP INDEX unionName;
+ALTER TABLE Persons DROP UNION unionName;
 ```
 
 <br/>
@@ -79,6 +94,9 @@ ALTER TABLE Persons DROP INDEX unionName;
 CREATE TABLE student(
 	id int ,
 	CONSTRAINT fk FOREIGN KEY (id) REFERENCES teacher(id) #表级约束
+	CONSTRAINT fk FOREIGN KEY (id) REFERENCES teacher(id) ON DELETE | UPDATE CASCADE，#当删除或更新teacher表的id，相应的删除或更新student的id
+	CONSTRAINT fk FOREIGN KEY (id) REFERENCES teacher(id) ON DELETE | UPDATE SET NULL,#当删除或更新teacher表的id,相应的设置student表的id为null
+	CONSTRAINT fk FOREIGN KEY (id) REFERENCES teacher(id) ON DELETE | UPDATE NO ACTION,#拒绝teacher表删除或更新id
 );
 ```
 
