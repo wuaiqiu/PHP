@@ -78,9 +78,12 @@ ALTER TABLE Persons DROP index unionName;
 CREATE TABLE student(
 	id int ,
 	CONSTRAINT fk FOREIGN KEY (id) REFERENCES teacher(id) #表级约束
-	CONSTRAINT fk FOREIGN KEY (id) REFERENCES teacher(id) ON DELETE | UPDATE CASCADE，#当删除或更新teacher表的id，相应的删除或更新student的id
-	CONSTRAINT fk FOREIGN KEY (id) REFERENCES teacher(id) ON DELETE | UPDATE SET NULL,#当删除或更新teacher表的id,相应的设置student表的id为null
-	CONSTRAINT fk FOREIGN KEY (id) REFERENCES teacher(id) ON DELETE | UPDATE NO ACTION,#拒绝teacher表删除或更新id
+	CONSTRAINT fk FOREIGN KEY (id) REFERENCES teacher(id) ON DELETE | UPDATE CASCADE,
+	#当删除或更新teacher表的id，相应的删除或更新student的id
+	CONSTRAINT fk FOREIGN KEY (id) REFERENCES teacher(id) ON DELETE | UPDATE SET NULL,
+	#当删除或更新teacher表的id,相应的设置student表的id为null
+	CONSTRAINT fk FOREIGN KEY (id) REFERENCES teacher(id) ON DELETE | UPDATE NO ACTION,
+	#拒绝teacher表删除或更新id
 );
 ```
 
