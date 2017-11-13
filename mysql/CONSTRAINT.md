@@ -37,22 +37,6 @@ CREATE TABLE student(
 	id int NOT NULL,
 	name char(10)
 );
-
-CREATE TABLE student(
-	id int,
-	name char(10),
-	CONSTRAINT notnull NOT NULL(id),
-);
-```
-
-创建后
-
-```
-ALTER TABLE student ADD NOT NULL(id);
-
-ALTER TABLE student ADD CONSTRAINT notnull NOT NULL(id);
-	
-ALTER TABLE student DROP NOT NULL notnull;
 ```
 
 <br/>
@@ -81,7 +65,7 @@ ALTER TABLE Persons ADD UNIQUE (P_Id);
 
 ALTER TABLE Persons ADD CONSTRAINT unionName UNIQUE (P_Id,LastName);
 
-ALTER TABLE Persons DROP UNION unionName;
+ALTER TABLE Persons DROP index unionName;
 ```
 
 <br/>
