@@ -12,10 +12,25 @@
 #创建视图
 CREATE VIEW vName AS SELECT * FROM website WHERE id >4;
 
+#创建视图并指定列名(行列子集视图)
+CREATE VIEW vName(v_name,v_url) AS SELECT name,url FROM website WHERE id>4;
+
+#创建视图（带表达式的视图）
+CREATE VIEW vName(v_name,v_url,v_num) AS SELECT name,url,num+1 FROM website WHERE id>4;
+
 #查看视图
 SELECT * FROM vName;
 
-#更新视图
+#查看视图结构
+DESC vName;
+
+#查看指定视图的创建信息
+SHOW CREATE VIEW vName;
+
+#查看所有视图
+SELECT * FROM information_schema.views;
+
+#修改视图(如果输入的视图名称不存在，MYSQL自动创建该视图)
 CREATE OR REPLACE VIEW vName AS SELECT * FROM website WHERE id<4;
 
 #撤销视图
