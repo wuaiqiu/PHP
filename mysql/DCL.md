@@ -42,3 +42,37 @@ REVOKE INSERT ON mydb1.* FROM privileges;
 #删除角色
 DROP ROLE privileges;
 ```
+
+<br/>
+
+**二.审计***
+
+(1).开启审计
+
+```
+#加载audit_log插件
+[mysqld] 
+plugin-load=audit_log.so
+
+#如果希望数据库强制开启审计功能，如果不开启的话server不启动，或者审计功能不能进行时server挂住，加入
+[mysqld] 
+plugin-load=audit_log.so 
+audit-log=FORCE_PLUS_PERMANENT
+```
+
+(2).设置审计
+
+```
+show variables like '%audit%';
+
+audit_log_policy:记录了审计日志的控制策略(ALL->记录所有，LOGINS->只记录登录信息，QUERIES->只记录语句信息，NONE->什么都不记录)
+audit_log_connection_policy:记录了连接审计的信息(ALL->记录所有连接信息，ERRORS->记录错误连接，NONE->什么都不记录)
+audit_log_statement_policy：记录了语句的审计策略(ALL->记录所有语句,ERRORS->只记录错误语句，NONE->什么也不记录)
+audit_log_exclude_accounts：控制哪儿些用户可以不进入审计，字符串类型，默认可以使用逗号分隔（只能选其一）。
+audit_log_include_accounts：控制哪儿些用户可以进入审计，字符串类型，默认可以使用逗号分隔（只能选其一）。
+audit_log_current_session：标志当前会话是否进入审计。
+audit_log_file：可以用于控制审计日志的名称和路径
+audit_log_format：审计日志的格式，分为OLD和NEW
+audit_log_rotate_on_size：审计日志的文件大小。当参数大于0的时候，当审计日志超过限制后，会自动的重命名为加时间戳后缀的日志文件。同时创建新的审计日志
+audit_log_buffer_size:审计缓存，建议设置为4096的倍数，该参数只有在audit_log_strategy为ASYNCHRONOUS时生效。
+```
