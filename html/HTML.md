@@ -4,11 +4,12 @@
 
 属性|描述
 ---|---
-class|规定元素的一个或多个类名（引用样式表中的类）
+class|规定元素的一个或多个类名
 id|规定元素的唯一 id
 data-*|用于存储页面或应用程序的私有定制数据
-hidden|规定元素仍未或不再相关
-style|规定元素的行内 CSS 样式
+hidden|规定对元素进行隐藏(不占空间)
+style|规定元素的行内 CSS 样式、
+title|规定元素的额外信息
 
 <br/>
 
@@ -18,9 +19,7 @@ style|规定元素的行内 CSS 样式
 
 属性|描述
 --|--
-onerror|在错误发生时运行的脚本
 onload|页面结束加载之后触发
-onunload|一旦页面已下载时触发（或者浏览器窗口已被关闭）
 
 2).Form事件
 
@@ -160,7 +159,7 @@ src|URL|规定在iframe中显示的文档的URL
 
 属性|值|描述
 ---|---|---
-target|_blank，_parent，_self，_top|规定在何处打开链接文档
+target|_blank(新窗口)，_parent(父框架窗口)，_self(自身窗口，默认)，_top(顶级框架窗口)|规定在何处打开链接文档
 
 ```
 <head>
@@ -197,14 +196,23 @@ a:active {color: #0000FF}	/* 选定的链接 */
 <head>
 	<meta name="keywords"content="meta总结,html meta,meta属性,meta跳转"> 
 	<meta name="description"content="meta是html语言head区的一个辅助性标签"> 
-	<meta http-equiv="expires"content="Fri,12 Jan 2001 18:18:18 GMT">
-	<meta http-equiv="Pragma"content="no-cache">
 	<meta http-equiv="Refresh"content="2;URL=http://www.haorooms.com"> 
+	<meta http-equiv="Pragma" content="no-cache"> 
+        <meta http-equiv="Cache-Control" content="no-cache"> 
+        <meta http-equiv-="Expires" content="0"> 
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 	<meta charset="utf-8"> 
 	<link rel="stylesheet" type="text/css" href="theme.css" />
+	<link rel="icon" href="a.ico"/>
 	<script src="demo.js" defer="defer"></script>
 </head>
+```
+
+5).锚点
+
+```
+<a id="tips">有用的提示部分(任何id标签)</a>
+<a href="#tips">访问有用的提示部分</a>
 ```
 
 <br/>
@@ -215,6 +223,7 @@ a:active {color: #0000FF}	/* 选定的链接 */
 
 ```
 <!--这是一段注释。注释不会在浏览器中显示。-->
+/*css注释*/
 ```
 
 2).标题
@@ -233,14 +242,12 @@ a:active {color: #0000FF}	/* 选定的链接 */
 ```
 <p>文本段落</p>
 <span>行内文本</span>
-<code>代码段落</code>
-<pre>预留段落</pre>
-<font size="3" color="red">普通文本</font>
-<center>居中文本</center>
+<code>代码段落(里面的标签需要转义)</code>
+<pre>预留段落(里面的标签需要转义)</pre>
 <i>斜体文本</i>
-<em>斜体文本</em>
+<em>斜体文本(加重语气)</em>
 <b>粗体文本</b>
-<strong>粗体文本</strong>
+<strong>粗体文本(加重语气)</strong>
 <big>大号文本</big>
 <small>小号文本</small>
 <del>删除线</del>
@@ -267,7 +274,7 @@ a:active {color: #0000FF}	/* 选定的链接 */
 cite|规定引用的来源URL
 
 ```
-<blockquote>段落引用</blockquote>
+<blockquote>块引用</blockquote>
 <q>行内引用</q>
 ```
 
@@ -323,6 +330,18 @@ type|mime_type|定义嵌入内容的类型
 <embed src="helloworld.swf" />
 ```
 
+4).object属性
+
+属性|值|描述
+---|---|---
+height|pixels|设置嵌入内容的高度
+width|pixels|设置嵌入内容的宽度
+data|url|嵌入内容的 URL
+
+```
+<object data="helloworld.swf">不能播放</object>
+```
+
 <br/>
 
 **七.表单**
@@ -334,12 +353,15 @@ type|mime_type|定义嵌入内容的类型
 action|URL|规定当提交表单时向何处发送表单数据
 method|get，post|规定用于发送 form-data 的 HTTP 方法
 enctype|application/x-www-form-urlencoded（默认），multipart/form-data（上传文件）|规定在发送表单数据之前如何对其进行编码
+autocomplete|on off|拥有自动完成功能
 
 2).输入框
 
 属性|值|描述
 --|--|--
 disabled|disabled|当 input 元素加载时禁用此元素
+autocomplete|on off|拥有自动完成功能
+autofocus|boolean|在页面加载时，域自动地获得焦点
 maxlength|number|规定文本（密码）输入字段中的字符的最大长度
 size|number_of_char|定义文本（密码）显示的宽度
 name|field_name|定义 input 元素的名称
@@ -378,7 +400,7 @@ checked|checked|单选按钮的状态
 
 ```
 <label for="maleId">Male</label>
-<input type="radio" name="sex" id="maleId" value="male"/>
+<input type="radio" name="sex" id="maleId"  value="male"/>
 <br />
 <label for="femaleId">Female</label>
 <input type="radio" name="sex" id="femaleId" value="female"/>
@@ -393,10 +415,10 @@ checked|checked|单选按钮的状态
 
 ```
 <label for="bikeId">我喜欢自行车：</label>
-<input type="checkbox" name="Bike" id="bikeId" value="bike"/>
+<input type="checkbox" name=“vehicle" id="bikeId" value="bike"/>
 <br />
 <label for="carId">我喜欢汽车：</label>
-<input type="checkbox" name="Car" id="carId" value="car"/>
+<input type="checkbox" name="vehicle"  id="carId" value="car"/>
 ```
 
 6).下拉列表
@@ -438,6 +460,19 @@ placeholder|text|规定描述文本区域预期值的简短提示
 </textarea>
 ```
 
+8).预先定义的输入控件
+
+```
+<input list="browsers" name="browser">
+<datalist id="browsers">
+  <option value="Internet Explorer">
+  <option value="Firefox">
+  <option value="Chrome">
+  <option value="Opera">
+  <option value="Safari">
+</datalist>
+```
+
 <br/>
 
 **八.表格**
@@ -446,7 +481,7 @@ placeholder|text|规定描述文本区域预期值的简短提示
 
 属性|值|描述
 --|--|--
-border|pixels|规定表格边框的宽度
+border|pixels|规定表格边框的宽度(默认没有边框)
 cellpadding|pixels，%|规定单元边沿与其内容之间的空白
 cellspacing|pixels，%|规定单元格之间的空白
 width|%，pixels|规定表格的宽度
@@ -469,6 +504,13 @@ rowspan|number|规定单元格可横跨的行数
 align|left（左对齐)，right（右对齐），center（中对齐）|规定单元格内容的水平对齐方式
 valign|top（上对齐），middle（中对齐），bottom（下对齐）|规定单元格内容的垂直排列方式
 
+4).col：用于对每一列进行格式化
+
+描述|值|描述
+---|---|---
+span|num|跨越的列数目
+
+
 ```
 <table border="1">
 	<caption>我的标题</caption>
@@ -488,6 +530,24 @@ valign|top（上对齐），middle（中对齐），bottom（下对齐）|规定
 		<td>Sum</td>
 		<td>$180</td>
 	</tr>
+</table>
+
+
+<table border="1">
+   <colgroup>
+    <col span="2" style="background-color:red">
+    <col style="background-color:yellow">
+  </colgroup>
+  <tr>
+    <th>ISBN</th>
+    <th>Title</th>
+    <th>Price</th>
+  </tr>
+  <tr>
+    <td>3476896</td>
+    <td>My first HTML</td>
+    <td>$53</td>
+  </tr>
 </table>
 ```
 
@@ -581,4 +641,232 @@ value|number|规定已经完成多少任务。
 
 ```
 <progress value="22" max="100"></progress> 
+```
+
+<br/>
+
+**十二.字符实体**
+
+```
+描述 ---> 实体名称
+空格 ---> &nbsp;
+< ---> &lt;
+> ---> &gt;
+& ---> &amp;
+" ---> &quot;
+' ---> &apos;
+© ---> &copy;
+® ---> &reg;
+™ ---> &trade;
+× ---> &times;
+÷ ---> &divide;
+```
+
+<br/>
+
+**十三.canvas**
+
+```
+<canvas id="myCanvas" width="200" height="100"></canvas>
+```
+
+矩形
+
+```
+
+//纯色
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+ctx.fillStyle="#FF0000";
+ctx.fillRect(0,0,150,75);
+
+//Liner（Radial）渐变色
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+var gd=ctx.createLinearGradient(0,0,150,75);
+gd.addColorStop(0,"black");
+gd.addColorStop(1,"white");
+ctx.fillStyle=gd;
+ctx.fillRect(0,0,150,75);
+
+//图片
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+var img=document.getElementById("image")
+var pat=ctx.createPattern(img,"repeat"); //repeat repeat-x repeat-y no-repeat
+ctx.rect(0,0,150,75);
+ctx.fillStyle=pat;
+ctx.fill();
+
+//清除canvas
+ctx.clearRect(0,0,150,75); 
+```
+
+划线
+
+```
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+ctx.moveTo(0,0);
+ctx.lineTo(200,100);
+ctx.stroke();
+```
+
+圆形
+
+```
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+ctx.beginPath();
+ctx.arc(95,50,40,0,2*Math.PI);
+ctx.stroke();
+```
+
+文本
+
+```
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+ctx.font="30px Arial";
+ctx.fillText("Hello World",10,50);//实心
+ctx.strokeText("Hello World",10,50);//空心
+```
+
+<br/>
+
+**十四.拖放**
+
+```
+<script>
+function allowDrop(ev){
+    ev.preventDefault();//默认无法将元素放置到其他元素
+}
+ 
+function drag(ev){
+    ev.dataTransfer.setData("Text",ev.target.id);
+}
+ 
+function drop(ev){
+    ev.preventDefault();//默认行为是以链接形式打开
+    var data=ev.dataTransfer.getData("Text");
+    ev.target.appendChild(document.getElementById(data));
+}
+</script>
+
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<img id="drag1" src="/images/logo.png" draggable="true" ondragstart="drag(event)" width="336" height="69">
+```
+
+<br/>
+
+**十五.web存储**
+
+只有本站点可以访问
+
+```
+//长久存储
+localStorage.setItem("name","zhangsan");
+console.log(localStorage.getItem("name"));
+localStorage.removeItem("name");
+localStorage.clear();
+
+//会话存储
+sessionStorage.setItem("age",12);
+console.log(sessionStorage.getItem("age"));
+sessionStorage   .removeItem("age");
+sessionStorage.clear();
+```
+
+<br/>
+
+**十六.Application Cache**
+
+
+```
+1.添加mime型(.htaccess)
+
+AddType text/cache-manifest appcache
+
+2.appcache文件
+
+CACHE MANIFEST
+CACHE: #需要缓存的文件
+a.js 
+
+NETWORK: #不需要缓存的文件
+b.js
+```
+
+<br/>
+
+**十七.Web Workers**
+
+```
+<button id="start" onclick="start()">start</button>
+<button id="stop" onclick="stop()">stop7</button>
+<script>
+    var w;
+    function start() {
+        if(typeof(Worker)!="undefined"){
+            if(typeof(w)=="undefined"){
+                w=new Worker("c.js");
+            }
+        }else{
+            console.log("你的浏览器不支持worker");
+        }
+    }
+    function stop(){
+        w.terminate();
+        w=undefined;
+    }
+</script>
+```
+
+```
+setInterval("console.log('ss')",500);
+```
+
+<br/>
+
+**十八.服务器发送事件(Server-Sent Events)**
+
+```
+<script>
+    if(typeof (EventSource)!="undefined"){
+        var sse=new EventSource('index1.php');
+        sse.onmessage=function (event) {
+            console.log(event.data);
+        }
+    }else{
+        console.log("你的浏览器不支持");
+    }
+</script>
+```
+
+```
+header('Content-Type: text/event-stream');
+
+for($i=0;$i<10;$i++){
+    $time = date('r');
+    echo "data: The server time is: {$time}\n\n";
+    //格式为 data:  xxxx \n\n
+}
+```
+
+<br/>
+
+
+**十九.URL编码**
+
+html
+
+```
+encodeURI():非ASCII码
+encodeURIComponent():非ASCII码  ; / ? : @ & = + $ , #
+```
+
+php
+
+```
+urldecode():解码
 ```

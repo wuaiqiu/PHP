@@ -177,9 +177,28 @@ Use a few of the new styles together ... lots of new possibilities.
 
 **四.导航栏组件**
 
-(1).响应式导航栏
+(1).普通表单
 
 ```
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">Home</a>
+    </div>
+    <ul class="nav navbar-nav">
+            <li class="active"><a href="#">option 1</a></li>
+            <li><a href="#">option 2</a></li>
+            <li><a href="#">option 3</a></li>
+            <li><a href="#">option 4</a></li>
+            <li><a href="#">option 5</a></li>
+            <li><a href="#">option 6</a></li>
+    </ul>
+</nav>
+```
+
+(2).响应式导航栏
+
+```
+//白黑色
 <nav class="navbar navbar-default">
    <div class="navbar-header">
 	<button class="navbar-toggle" data-toggle="collapse"  data-target="#navs"> 
@@ -200,13 +219,10 @@ Use a few of the new styles together ... lots of new possibilities.
   	    <li><a href="#">option 6</a></li>
 	</ul>
    </div>
-</nav>	
-```
+</nav>
 
-(2).在导航条中使用表单
-
-```
-<nav class="navbar navbar-default">
+//黑白色
+<nav class="navbar navbar-inverse">
    <div class="navbar-header">
 	<button class="navbar-toggle" data-toggle="collapse"  data-target="#navs"> 
                 <span class="icon-bar"></span>
@@ -225,17 +241,42 @@ Use a few of the new styles together ... lots of new possibilities.
   	    <li><a href="#">option 5</a></li>
   	    <li><a href="#">option 6</a></li>
 	</ul>
-	<form class="navbar-form navbar-left">
-           <div class="form-group">
-            	 <input type="text" class="form-control" placeholder="Search">
-           </div>
-           <button type="submit" class="btn btn-default">提交</button>
-        </form>
-     </div>
-</nav>	
+   </div>
+</nav>
 ```
 
-(3).导航条位置
+(3).在导航条中使用表单
+
+```
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">Home</a>
+    </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">option 1</a></li>
+            <li><a href="#">option 2</a></li>
+            <li><a href="#">option 3</a></li>
+            <li><a href="#">option 4</a></li>
+            <li><a href="#">option 5</a></li>
+            <li><a href="#">option 6</a></li>
+        </ul>
+        <form class="navbar-form navbar-left">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">提交</button>
+        </form>
+</nav>
+```
+
+(4).表单浮动
+
+```
+<p class="navbar-text navbar-right">向右对齐-文本</p>
+<p class="navbar-text navbar-leftt">向左对齐-文本</p>
+```
+
+(5).导航条位置（注意位置重叠，请向 body 标签添加至少 50 像素的内边距）
 
 ```
 <!--固定在顶部-->
@@ -263,6 +304,26 @@ Use a few of the new styles together ... lots of new possibilities.
 (1).分页
 
 ```
+<ul class="pagination pagination-lg">
+    <li><a href="#">&laquo;</a></li>
+    <li class="active"><a href="#">1</a></li>
+    <li class="disabled"><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">&raquo;</a></li>
+</ul>
+
+<ul class="pagination">
+    <li><a href="#">&laquo;</a></li>
+    <li class="active"><a href="#">1</a></li>
+    <li class="disabled"><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">&raquo;</a></li>
+</ul>
+
 <ul class="pagination pagination-sm">
     <li><a href="#">&laquo;</a></li>
     <li class="active"><a href="#">1</a></li>
@@ -277,6 +338,13 @@ Use a few of the new styles together ... lots of new possibilities.
 (2).翻页
 
 ```
+<!--中间对齐-->
+<ul class="pager">
+    <li><a href="#">Previous</a></li>
+    <li><a href="#">Next</a></li>
+</ul>
+
+<!--两边对齐-->
 <ul class="pager">
     <li class="previous disabled"><a href="#">Previous</a></li>
     <li class="next"><a href="#">Next</a></li>
@@ -332,6 +400,13 @@ Use a few of the new styles together ... lots of new possibilities.
 **九.警告框组件**
 
 ```
+<div class="alert alert-success">成功！很好地完成了提交。</div>
+<div class="alert alert-info">信息！请注意这个信息。</div>
+<div class="alert alert-warning">警告！请不要提交。</div>
+<div class="alert alert-danger">错误！请进行一些更改。</div>```
+
+
+<!--带取消-->
 <div class="alert alert-error alert-dismissable">
 	<button type="button" class="close" data-dismiss="alert">
                	&times;

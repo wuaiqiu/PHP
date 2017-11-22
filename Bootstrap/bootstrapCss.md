@@ -70,8 +70,8 @@
 ```
 <div class="container">	
     <div class="row">	
-	 <div class="col-md-8">8</div>	
-	 <div class="col-md-3 col-md-offset-1">3</div> 
+	 <div class="col-xs-8">8</div>	
+	 <div class="col-md-3 col-xs-offset-1">3</div> 
     </div>
 </div>
 ```
@@ -86,7 +86,8 @@
 	     <div class="col-md-8">8</div>	
 	     <div class="col-md-4">4</div>
 	  </div>
-        </div>	
+        </div>
+        <div class="col-md-4"></div>
     </div>
 </div>
 ```
@@ -115,6 +116,11 @@
 <h4>主标题<small>副标题</small></h4>
 <h5>主标题<small>副标题</small></h5>
 <h6>主标题<small>副标题</small></h6>
+
+<!--页面标题-->
+<div class="page-header">
+    <h1>页面标题实例<small>子标题</small></h1>
+</div>
 ```
 
 (2).内联文本元素
@@ -139,7 +145,9 @@
 <p class="text-lowercase">小写字母</p>
 <p class="text-uppercase">大写字母</p>
 <p class="text-capitalize">首字母大写</p>
-<p class="hidden">隐藏</p>
+<p class="hidden">隐藏(不占空间)</p>
+<p class="sr-only">隐藏(不占空间,阅读器显示)</p>
+<p class="center-block">块级中间对齐</p>
 
 <!--文本颜色-->
 <p class="text-muted">text-muted</p>
@@ -161,7 +169,7 @@
 
 ```
 <abbr title="World Wide Web">WWW</abbr><br>
-<abbr title="Real Simple Syndication" class="initialism">RSS</abbr>
+<abbr title="Real Simple Syndication" class="initialism">RSS（更小的字体）</abbr>
 ```
 
 (5).地址
@@ -196,14 +204,30 @@
 ```
 <code>内联代码</code>
 <pre>块级代码</pre>
-<pre class="pre-scrollable">带有滚动条的块级代码</pre>
+<pre class="pre-scrollable">带有滚动条的块级代码大于340px</pre>
 ```
 
 <br/>
 
 **四.表单**
 
-(1).内联表单
+(1).垂直表单
+
+```
+<form>
+	<div class="form-group">
+		<label for="name">名称</label>
+		<input type="text" class="form-control" id="name"  placeholder="请输入名称">
+	</div>
+	<div class="form-group">
+		 <label for="pass">密码:</label>
+	       <input type="password" class="form-control" id="pass" placeholder="Password"/>
+	</div>
+	<button type="submit" class="btn btn-default">提交</button>
+</form>
+```
+
+(2).内联表单
 
 ```
 <form class="form-inline">
@@ -223,40 +247,40 @@
 </form>
 ```
 
-(2).水平表单
+(3).水平表单
 
 ```
 <form class="form-horizontal">
 
     <div class="form-group">
-	<label for="email" class="col-md-2 control-label">Email:</label>
-        <p class="form-control-static col-md-2" id="emamil">email@example.com</p>
+        <label for="email" class="col-sm-2 control-label">Email:</label>
+        <p class="form-control-static col-sm-2" id="email">email@example.com</p>
     </div>
 
-   <div class="form-group">
-        <label for="name" class="col-md-2 control-label">名称:</label>
-        <div class="col-md-2">
-           <input type="text" class="form-control" id="name" placeholder="Name"/>
-        </div>
-   </div>
-  
-   <div class="form-group">
-       <label for="pass" class="col-md-2 control-label">密码:</label>
-       <div class="col-md-2">
-          <input type="password" class="form-control" id="pass" placeholder="Password"/>
-       </div>
-   </div>
-  
     <div class="form-group">
-       <div class="col-md-offset-2 col-md-2">
-  	  <button type="submit" class="btn btn-default">提交</button>
-       </div>
-   </div>	
-  
+        <label for="name" class="col-sm-2 control-label">名称:</label>
+        <div class="col-sm-2">
+        <input type="text" class="form-control" id="name" placeholder="Name"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="pass" class="col-sm-2 control-label">密码:</label>
+        <div class="col-sm-2">
+        <input type="password" class="form-control" id="pass" placeholder="Password"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2 col-sm-offset-2">
+            <button type="submit" class="btn btn-default">提交</button>
+        </div>
+    </div>
+
 </form>
 ```
 
-(3).按钮
+(4).按钮
 
 ```
 <!--按钮颜色-->
@@ -276,10 +300,10 @@
 <!--按钮样式-->
 <button type="button" class="btn btn-primary active">激活按钮</button>
 <button type="button" class="btn btn-primary disabled">禁用的按钮</button>
-<button type="button" class="btn  btn-primary btn-block">块级的按钮</button>
+<button type="button" class="btn  btn-primary btn-block">块级的按钮（拉伸至父元素100%的宽度）</button>
 ```
 
-(4).单选框
+(5).单选框
 
 ```
 <div class="form-group">
@@ -306,7 +330,7 @@
 </div>
 ```
 
-(5).复选框
+(6).复选框
 
 ```
 <div class="form-group">
@@ -333,7 +357,7 @@
 </div>
 ```
 
-(6).下拉列表
+(7).下拉列表
 
 ```
 <div class="form-group">
@@ -348,7 +372,7 @@
 </div>
 ```
 
-(7).文本框
+(8).文本框
 
 ```
 <div class="form-group">
@@ -359,7 +383,7 @@
 </div>
 ```	
 
-(8).输入框组件
+(9).输入框组件
 
 ```
 <div class="form-group">
@@ -371,6 +395,39 @@
 	</div> 
    </div>
 </div>
+```
+
+(10).验证状态
+
+```
+<div class="form-group has-success">
+	<label class="col-sm-2 control-label" for="inputSuccess">输入成功</label>
+	<div class="col-sm-10">
+		<input type="text" class="form-control" id="inputSuccess">
+    	</div>
+</div>
+
+<div class="form-group has-warning">
+	<label class="col-sm-2 control-label" for="inputSuccess">输入警告</label>
+	<div class="col-sm-10">
+		<input type="text" class="form-control" id="inputSuccess">
+    	</div>
+</div>
+
+<div class="form-group has-error">
+	<label class="col-sm-2 control-label" for="inputSuccess">输入错误</label>
+	<div class="col-sm-10">
+		<input type="text" class="form-control" id="inputSuccess">
+    	</div>
+</div>
+```
+
+(11).输入框行高
+
+```
+<input class="form-control input-lg" type="text" placeholder=".input-lg">
+<input class="form-control" type="text" placeholder="默认输入">
+<input class="form-control input-sm" type="text" placeholder=".input-sm">
 ```
 
 <br/>
@@ -460,6 +517,22 @@
 **六.序列**
 
 ```
+<!--有序列表-->
+<ol>
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li>Item 3</li>
+  <li>Item 4</li>
+</ol>
+
+<!--无序列表-->
+<ul>
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li>Item 3</li>
+  <li>Item 4</li>
+</ul>
+
 <!--未定义样式列表-->
 <ul class="list-unstyled">
   <li>Item 1</li>
@@ -476,7 +549,15 @@
   <li>Item 4</li>
 </ul>
 
-<!--水平的定义列表-->
+<!--自定义列表-->
+<dl>
+  <dt>Description 1</dt>
+  <dd>Item 1</dd>
+  <dt>Description 2</dt>
+  <dd>Item 2</dd>
+</dl>
+
+<!--水平的自定义列表-->
 <dl class="dl-horizontal">
   <dt>Description 1</dt>
   <dd>Item 1</dd>
@@ -571,4 +652,13 @@
 <div class="progress progress-striped active">
     <div class="progress-bar progress-bar-success" style="width:60%">60%</div>
 </div>
+```
+
+<br/>
+
+**十.辅助类**
+
+```
+<div class="pull-left">元素浮动到左侧</div>
+<div class="pull-right">元素浮动到右侧</div>
 ```

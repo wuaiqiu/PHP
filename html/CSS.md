@@ -16,7 +16,6 @@ element1~element2|p~ul|选择前面有p元素的每个ul元素
 [attribute]|[target]|选择带有 target 属性所有元素
 [attribute=value]|[target=_blank]|选择 target="_blank" 的所有元素
 [attribute~=value]|[title~=flower]|选择 title 属性包含单词 "flower" 的所有元素
-[attribute|=value]|[lang|=en]|选择 lang 属性值以 "en" 开头的所有元素
 [attribute^=value]|a[src^="https"]|选择其 src 属性值以 "https" 开头的每个a元素
 [attribute$=value]|a[src$=".pdf"]|选择其 src 属性以 ".pdf" 结尾的所有a元素
 [attribute\*=value]|a[src\*="abc"]|选择其 src 属性中包含 "abc" 子串的每个a元素
@@ -26,6 +25,8 @@ element1~element2|p~ul|选择前面有p元素的每个ul元素
 :empty|p:empty|选择没有子元素的每个p元素（包括文本节点）
 :disabled|input:disabled|选择每个禁用的input元素
 :checked|input:checked|选择每个被选中的input元素
+:before|p:before|在每个 p 元素的内容之前插入内容
+:after|p:after|在每个 p 元素的内容之后插入内容
 
 <br/>
 
@@ -59,7 +60,21 @@ font-style|normal，italic|规定文本的字体样式
 font-weight|normal，bold，bolder，lighter,100～900|规定字体的粗细
 font-size|xx-small，x-small，small，medium，large，x-large，xx-large，%（基于父元素）|规定文本的字体尺寸
 font-family|family-name|规定文本的字体系列
-font|font-style font-variant font-weight font-size font-family|在一个声明中设置所有字体属性
+font|font-style font-weight font-size font-family|在一个声明中设置所有字体属性
+
+```
+//Internet Explorer 9+, Firefox, Chrome, Safari, 和 Opera 支持 WOFF (Web Open Font Format) 字体.
+//Firefox, Chrome, Safari, 和 Opera 支持 .ttf(True Type字体)和.otf(OpenType)字体字体类型）。
+
+@font-face{
+    font-family: myFirstFont;
+    src: url(sansation_light.woff);
+}
+ 
+div{
+    font-family:myFirstFont;
+}
+```
 
 2).文本属性（Text）
 
@@ -70,8 +85,8 @@ direction|ltr（从左到右），rtl（从右到左）|规定文本的方向 / 
 letter-spacing|normal，length|设置字符间距
 word-spacing|length|设置单词间距
 line-height|length，%（基于当前字体大小）|设置行高
-text-align|left，right，center|规定文本的水平对齐方式
-text-decoration|underline，overline，line-through，blink|规定添加到文本的装饰效果
+text-align|left，right，center,justify|规定文本的水平对齐方式
+text-decoration|underline，overline，line-through，none|规定添加到文本的装饰效果
 text-indent|length，%（基于父元素）|规定文本块首行的缩进
 text-transform|none，capitalize（每个单词以大写字母开头），uppercase，lowercase|控制文本的大小写
 white-space|normal，pre（相当于pre标签），nowrap|规定如何处理元素中的空白
@@ -140,6 +155,31 @@ transition|transition-property transition-duration transition-timing-function tr
 transition:width 2s; /*W3C*/
 ```
 
+
+3).2d转换
+
+```
+//平移
+transform: translate(50px,100px);
+-ms-transform: translate(50px,100px); /* IE 9 */
+-webkit-transform: translate(50px,100px); /* Safari and Chrome */
+
+//中心旋转
+transform: rotate(30deg);
+-ms-transform: rotate(30deg); /* IE 9 */
+-webkit-transform: rotate(30deg); /* Safari and Chrome */
+
+//放大倍数
+-ms-transform:scale(2,3); /* IE 9 */
+-webkit-transform: scale(2,3); /* Safari */
+transform: scale(2,3); /* 标准语法 */
+
+//倾斜角度
+transform: skew(30deg,20deg);
+-ms-transform: skew(30deg,20deg); /* IE 9 */
+-webkit-transform: skew(30deg,20deg); /* Safari and Chrome */
+```
+
 <br/>
 
 **五.背景**
@@ -147,15 +187,62 @@ transition:width 2s; /*W3C*/
 属性|值|描述
 --|--|--
 background-color|颜色|规定要使用的背景颜色
-background-position|x% y%，xpos ypos，（top|center|bottom） （right|center|left)|规定背景图像的位置
+background-position|x% y%，xpos ypos，（top\|center\|bottom） （right\|center\|left)|规定背景图像的位置
 background-size|wpx hpx，x% y%，cover（覆盖整个区域），contain（包含完整图片）|规定背景图片的尺寸
-background-repeat|repeat（在垂直方向和水平方向重复），repeat-x（在水平方向重复），repeat-y（在垂直方向重复），no-repeat（仅显示一次）|规定如何重复背景图像
+background-repeat|repeat（在垂直方向和水平方向重复,默认），repeat-x（在水平方向重复），repeat-y（在垂直方向重复），no-repeat（仅显示一次）|规定如何重复背景图像
 background-origin|padding-box（背景图像相对于内边距框来定位），border-box（背景图像相对于边框盒来定位），content-box（背景图像相对于内容框来定位）|规定背景图片的定位区域
 background-clip|border-box（背景被裁剪到边框盒），padding-box（背景被裁剪到内边距框—），content-box（背景被裁剪到内容框）|规定背景的绘制区域
 background-attachment|scroll（背景图像会随着页面其余部分的滚动而移动），fixed（背景图像不会移动）|规定背景图像是否固定或者随着页面的其余部分滚动
 background-image|url|规定要使用的背景图像
-background|background-color background-position background-size background-repeat background-origin background-clip background-attachment background-image|在一个声明中设置所有的背景属性
+background|bg-color bg-image  bg-repeat bg-attachment bg-position|在一个声明中设置所有的背景属性
 opacity|从 0.0 （完全透明）到 1.0（完全不透明）|规定颜色透明度。
+
+```
+//线性渐变 - 从上到下（默认情况下）
+background: -webkit-linear-gradient(red, blue); /* Safari 5.1 - 6.0 */
+background: -o-linear-gradient(red, blue); /* Opera 11.1 - 12.0 */
+background: -moz-linear-gradient(red, blue); /* Firefox 3.6 - 15 */
+background: linear-gradient(red, blue); /* 标准的语法 */
+
+//线性渐变 - 从左到右
+background: -webkit-linear-gradient(left, red , blue); /* Safari 5.1 - 6.0 */
+background: -o-linear-gradient(right, red, blue); /* Opera 11.1 - 12.0 */
+background: -moz-linear-gradient(right, red, blue); /* Firefox 3.6 - 15 */
+background: linear-gradient(to right, red , blue); /* 标准的语法 */
+
+//线性渐变 - 对角
+background: -webkit-linear-gradient(left top, red , blue); /* Safari 5.1 - 6.0 */
+background: -o-linear-gradient(bottom right, red, blue); /* Opera 11.1 - 12.0 */
+background: -moz-linear-gradient(bottom right, red, blue); /* Firefox 3.6 - 15 */
+background: linear-gradient(to bottom right, red , blue); /* 标准的语法 */
+
+//0deg 将创建一个从下到上的渐变，90deg 将创建一个从左到右的渐变
+//换算公式 90 - x = y 其中 x 为标准角度，y为非标准角度
+background: -webkit-linear-gradient(180deg, red, blue); /* Safari 5.1 - 6.0 */
+background: -o-linear-gradient(180deg, red, blue); /* Opera 11.1 - 12.0 */
+background: -moz-linear-gradient(180deg, red, blue); /* Firefox 3.6 - 15 */
+background  : linear-gradient(180deg, red, blue); /* 标准的语法 */
+  
+//径向渐变 - 颜色结点均匀分布（默认情况下）
+background: -webkit-radial-gradient(red, green, blue); /* Safari 5.1 - 6.0 */
+background: -o-radial-gradient(red, green, blue); /* Opera 11.6 - 12.0 */
+background: -moz-radial-gradient(red, green, blue); /* Firefox 3.6 - 15 */
+background: radial-gradient(red, green, blue); /* 标准的语法 */
+
+//径向渐变 - 颜色结点不均匀分布
+background: -webkit-radial-gradient(red 5%, green 15%, blue 60%); /* Safari 5.1 - 6.0 */
+background: -o-radial-gradient(red 5%, green 15%, blue 60%); /* Opera 11.6 - 12.0 */
+background: -moz-radial-gradient(red 5%, green 15%, blue 60%); /* Firefox 3.6 - 15 */
+background: radial-gradient(red 5%, green 15%, blue 60%); /* 标准的语法 */
+
+//设置形状,circle 表示圆形，ellipse 表示椭圆形。默认值是 ellipse
+background: -webkit-radial-gradient(circle, red, yellow, green); /* Safari 5.1 - 6.0 */
+background: -o-radial-gradient(circle, red, yellow, green); /* Opera 11.6 - 12.0 */
+background: -moz-radial-gradient(circle, red, yellow, green); /* Firefox 3.6 - 15 */
+background: radial-gradient(circle, red, yellow, green); /* 标准的语法 */
+
+
+```
 
 <br/>
 
@@ -184,14 +271,7 @@ border-bottom-left-radius|length，%|定义边框左下角的形状
 border-radius|top-left top-right bottom-right bottom-left|简写属性
 box-shadow|h-shadow（水平阴影的位置） v-shadow（垂直阴影的位置） blur（模糊距离） color（阴影的颜色）|向方框添加一个或多个阴影
 
-2).Box属性
-
-属性|值|描述|
----|---|---
-overflow-x|visible（不裁剪内容，可能会显示在内容框之外），hidden，scroll，auto（如果溢出框，则应该提供滚动机制）|如果内容溢出了元素内容区域，是否对内容的左/右边缘进行裁剪
-overflow-y|visible（不裁剪内容，可能会显示在内容框之外），hidden，scroll，auto（如果溢出框，则应该提供滚动机制）|如果内容溢出了元素内容区域，是否对内容的上/下边缘进行裁剪
-
-3).表格属性（Table）
+2).表格属性（Table）
 
 属性|值|描述
 --|--|--
@@ -206,31 +286,47 @@ caption-side|top，bottom|规定表格标题的位置
 
 1).可伸缩框属性（Flexible Box）
 
+box
+
 属性|值|描述
 --|--|--
-box-align|start，end，center|垂直方向
-box-pack|start，end，center|水平方向
-box-direction|normal（以默认方向显示子元素），reverse（以反方向显示子元素）|规定框的子元素的显示方向
-box-flex|int|规定框的子元素是否可伸缩
-box-lines|single，multiple|规定当超出父元素框的空间时，是否换行显示
-box-ordinal-group|integer（值更低的元素会显示在值更高的元素前面显示）|规定框的子元素的显示次序
-box-orient|horizontal（在水平行中从左向右排列子元素），vertical（从上向下垂直排列子元素）|规定框的子元素是否应水平或垂直排列
+flex-direction| row \| row-reverse \| column \| column-reverse|指定了弹性子元素在父容器中的位置
+justify-content| flex-start \| flex-end \| center \| space-between \| space-around|沿着弹性容器的横轴对齐
+align-items| flex-start \| flex-end \| center \| baseline \| stretch|沿着弹性容器的纵轴对齐
+flex-wrap|nowrap \| wrap \| wrap-reverse | 指定弹性盒子的子元素换行方式
+align-content|flex-start \| flex-end \| center \| space-between \| space-around \| stretch|类似于 align-items,但是各个行的对齐
+
+box-item
+
+属性|值|描述
+--|--|--
+order|int|排序,数值小的排在前面
+align-self| auto \| flex-start \| flex-end \| center \| baseline \| stretch|设置弹性元素自身在侧轴（纵轴）方向上的对齐方式
+flex|int|属性用于指定弹性子元素如何分配空间
 
 ```
-/* Firefox */
-display:-moz-box;
--moz-box-pack:center;
--moz-box-align:center;
+.flex-container {
+    display: -webkit-flex;
+    display: flex;
+    width: 400px;
+    height: 250px;
+    background-color: lightgrey;
+}
+ 
+.flex-item {
+    background-color: cornflowerblue;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}
+```
 
-/* Safari、Opera 以及 Chrome */
-display:-webkit-box;
--webkit-box-pack:center;
--webkit-box-align:center;
-
-/* W3C */
-display:box;
-box-pack:center;
-box-align:center;
+```
+<div class="flex-container">
+  <div class="flex-item">flex item 1</div>
+  <div class="flex-item">flex item 2</div>
+  <div class="flex-item">flex item 3</div> 
+</div>
 ```
 
 2).外边距属性（Margin）
@@ -263,6 +359,7 @@ column-rule-width|thin，medium，thick，length|规定列之间线条的宽度
 column-rule-style|none，hidden，dotted，dashed，solid，double|规定列之间线条的样式
 column-rule-color|颜色|规定列之间规则的颜色
 column-rule|column-rule-width column-rule-style column-rule-color|设置所有 column-rule-* 属性的简写属性
+column-span|all|跨越所有列，一般为标题
 
 ```
 -moz-column-count:3; /* Firefox */
@@ -276,6 +373,10 @@ column-gap:40px;
 -moz-column-rule:4px outset #ff0000; /* Firefox */
 -webkit-column-rule:4px outset #ff0000; /* Safari and Chrome */
 column-rule:4px outset #ff0000;
+
+column-span:all;
+-webkit-column-span:all; /* Safari and Chrome */
+-moz-column-span:all; /* Firefox */
 ```
 
 5).定位属性（Positioning）
@@ -286,15 +387,18 @@ top|length，%|设置定位元素的上外边距边界与其包含块上边界�
 right|length，%|设置定位元素右外边距边界与其包含块右边界之间的偏移
 bottom|length，%|设置定位元素下外边距边界与其包含块下边界之间的偏移
 left|length，%|设置定位元素左外边距边界与其包含块左边界之间的偏移
-position|absolute，relative|规定元素的定位类型
+position|absolute，relative，fixed|规定元素的定位类型
 float|left（元素向左浮动），right（元素向右浮动），none（元素不浮动）|规定框是否应该浮动
 clear|left，right，both|规定元素的哪一侧不允许其他浮动元素
 cursor|url，default（箭头），crosshair（十字线），pointer（一只手），auto（默认），wait（通常是一只表或沙漏），help（通常是一个问号或一个气球）|规定要显示的光标的类型（形状）
-display|block，inline，inline-block|规定元素应该生成的框的类型
+display|block，inline，inline-block，none(不占据空间)|规定元素应该生成的框的类型
+overflow-x|visible，hidden，scroll，auto|如果内容溢出了元素内容区域，是否对内容的左/右边缘进行裁剪
+overflow-y|visible，hidden，scroll，auto|如果内容溢出了元素内容区域，是否对内容的上/下边缘进行裁剪
 overflow|visible，hidden，scroll，auto|规定当内容溢出元素框时发生的事情
 vertical-align|top，middle，bottom|设置元素的垂直对齐方式
-visibility|visible，hidden|规定元素是否可见
+visibility|visible，hidden（占据空间）|规定元素是否可见
 z-index|int(如果为正数，则离用户更近，为负数则表示离用户更远)|设置元素的堆叠顺序
+box-sizing|border-box|元素的 width 和 height 中包含 padding(内边距) 和 border(边框),自动调节
 
 <br/>
 
@@ -306,3 +410,30 @@ list-style-type|none（无标记），disc（实心圆），circle（空心圆�
 list-style-position|inside，outside|设置列表项标记的放置位置
 list-style-image|url|将图象设置为列表项标记
 list-style|list-style-type list-style-position list-style-image|在一个声明中设置所有的列表属性
+
+<br/>
+
+**九.多媒体查询**
+
+值|描述
+--|--
+all|用于所有多媒体类型设备
+print|用于打印机
+screen|用于电脑屏幕，平板，智能手机等。
+speech|用于屏幕阅读器
+
+```
+@media not|only mediatype and (expressions) {
+       CSS 代码...;
+}
+
+<link rel="stylesheet" media="mediatype and|not|only (expressions)" href="print.css">
+```
+
+```
+@media screen and (min-width: 480px) {
+    body {
+        background-color: lightgreen;
+    }
+}
+```
