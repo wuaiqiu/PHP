@@ -21,21 +21,55 @@ http://www.runoob.com/try/demo_source/bootstrap3-glyph-icons.htm
 </button>
 ```
 
-(4)font-awessome
+(4).font-awessome
 
 ```
+http://fontawesome.io/icons/
+
+<!--反转颜色-->
+<i class="fa fa-twitter  fa-inverse"></i>
+
 <!--不同大小-->
-<p><span class="icon-camera-retro icon-large"></span> icon-camera-retro</p>
-<p><span class="icon-camera-retro icon-2x"></span> icon-camera-retro</p>
-<p><span class="icon-camera-retro icon-3x"></span> icon-camera-retro</p>
-<p><span class="icon-camera-retro icon-4x"></span> icon-camera-retro</p>
+<i class="fa fa-car fa-lg"></i>
+<i class="fa fa-car fa-2x"></i>
+<i class="fa fa-car fa-3x"></i>
+<i class="fa fa-car fa-4x"></i>
+<i class="fa fa-car fa-5x"></i>
 
-<!--动画-->
-<span class="icon-spinner icon-spin"></span> Spinner icon when loading content...
+<!--列表图标-->
+<ul class="fa-ul">
+  <li><i class="fa-li fa fa-square"></i>List icons</li>
+  <li><i class="fa-li fa fa-square"></i>List icons</li>
+  <li><i class="fa-li fa fa-square"></i>List icons</li>
+</ul>
 
-<!--对齐文本-->
-<span class="icon-quote-left icon-4x pull-left icon-muted"></span>
-Use a few of the new styles together ... lots of new possibilities.
+<!--边界和浮动-->
+<i class="fa fa-car fa-border"></i>
+<i class="fa fa-car fa-pull-right"></i>
+
+<!--动态图标-->
+<i class="fa fa-spinner fa-spin"></i>
+<i class="fa fa-spinner fa-pulse"></i>
+
+<!--旋转和翻转-->
+<i class="fa fa-shield fa-rotate-90"></i>
+<i class="fa fa-shield fa-rotate-180"></i>
+<i class="fa fa-shield fa-flip-horizontal"></i>
+<i class="fa fa-shield fa-flip-vertical"></i>
+
+<!--堆叠的图标-->
+<span class="fa-stack">
+  <i class="fa fa-circle-thin fa-stack-2x"></i>
+  <i class="fa fa-twitter fa-stack-1x"></i>
+</span>
+
+<!--固定宽度-->
+<div class="list-group">
+  <a href="#" class="list-group-item"><i class="fa fa-home fa-fw"></i> Home</a>
+  <a href="#" class="list-group-item"><i class="fa fa-book fa-fw"></i> Library</a>
+  <a href="#" class="list-group-item"><i class="fa fa-pencil fa-fw"></i> Applications</a>
+  <a href="#" class="list-group-item"><i class="fa fa-cog fa-fw"></i> Settings</a>
+</div>
 ```
 
 <br/>
@@ -490,4 +524,14 @@ Use a few of the new styles together ... lots of new possibilities.
 		面板脚注
 	</div>
  </div>
+```
+
+<br/>
+
+**十二.Well**
+
+```
+<div class="well well-lg">您好，我在大的 Well 中！</div>
+<div class="well">您好，我在 Well 中！</div>
+<div class="well well-sm">您好，我在小的 Well 中！</div>
 ```

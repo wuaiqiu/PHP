@@ -87,4 +87,22 @@
  *		}
  *		myArray = [10, 2];
  *		myFunction.apply(new Object(), myArray);  // 返回 20;让new Object()对象去调用myFunction方法
+ *
+ *
+ *(9)javascript:void(0)
+ *  操作符指定要计算一个表达式但是不返回
+ *
+ *  var a,b;
+ *  a=void(b=3);
+ *  console.log(a); //undefined
+ *  console.log(b); //3
+ *
+ *(10)setTimeOut与setInterval
+ *
+ *  setTimeout(function,millisec) 方法用于在指定的毫秒数后调用函数或计算表达式。
+ *  clearTimeout(id)终止
+ *
+ *  setInterval(function,millisec) 方法可按照指定的周期（以毫秒计）来调用函数或计算表达式.
+ *   clearInterval(id)终止
+ *
 */

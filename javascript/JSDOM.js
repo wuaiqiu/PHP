@@ -20,7 +20,6 @@
  * 		replaceChild(newElement,oldElement)	替换元素中的子元素
  * 		cloneNode(true)						克隆元素，true为克隆所有后代
  * 		
- * 		attributes							返回元素属性的集合（NamedNodeMap）
  * 		getAttribute(name)					返回元素节点的指定属性值
  * 		setAttribute(name,value)			把指定属性设置或更改为指定值。
  *  	removeAttribute(name)				从元素中移除指定属性。
@@ -29,15 +28,7 @@
  * 
  * 		innerHTML							设置或返回元素的内容(标签与文本)
  * 		
- * 
- * 
- * NamedNodeMap（属性集合）
- * 		length 							 返回映射(map)中对象的数量。
- * 		
- * 		getNamedItem(AttrName)			 返回一个给定名字对应的属性节点（Attr）。
- * 		setNamedItem(AttrName,AttrValue) 替换或添加一个属性节点（Attr）到映射（map）中。
- * 		removeNamedItem(AttrName)		 移除一个属性节点（Attr）。
- * 		item()						 	返回 NamedNodeMap 中位于指定下标的节点。
+ *    style.property          设置或返回元素的样式
  * 		
  */
 
@@ -99,6 +90,6 @@
  *			currentTarget	其事件处理程序当前正在处理事件的那个元素（currentTarget始终===this,即处理事件的元素）
  *
  *			stopPropagation()	 		用于阻止事件冒泡
- *			preventDefault()	 		阻止事件的默认行为
- *			stopImmediatePropagation()	可以阻止之后事件处理程序被调用。
+ *			preventDefault()	 		   阻止事件的默认行为
+ *			stopImmediatePropagation()	立即阻止所有事件执行。
  */

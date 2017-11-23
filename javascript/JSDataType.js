@@ -1,6 +1,6 @@
 /*
  * (1)基本数据类型，基本数据类型是按值访问的，因为可以直接操作保存在变量中的实际值。
- * 		字符串(String)、数字(Number)、布尔(Boolean)、未定义（Undefined）、空(Null)
+ * 		字符串(String)、数字(Number)、布尔(Boolean)、未定义（Undefined，undefined 是一个没有设置值的变量）、空(Null，null表示一个空对象引用，一般用来清空对象)
  * 
  * (2)引用数据类型，存储在变量处的值是一个指针（point），指向存储对象的内存地址。
  * 		对象(Object)
@@ -13,6 +13,9 @@
  * (4)类型判断
  * 		typeof:判断基本数据类型（string/number/boolean）
  * 		instanceof:判断引用类型
+ *     obj.constructor:利用构造函数来判断类型
+ *     ==== :为绝对等（值与类型）
+ *     ==:为值相等
  * 
  * (5)JavaScript类型转换
  * 

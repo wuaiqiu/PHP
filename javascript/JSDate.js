@@ -10,6 +10,7 @@
  * 		toLocaleString()	根据本地时间格式，把 Date 对象转换为字符串
  * 		toLocaleTimeString()根据本地时间格式，把 Date 对象的时间部分转换为字符串。
  * 		toLocaleDateString()根据本地时间格式，把 Date 对象的日期部分转换为字符串。
+ *     getTime() 返回时间戳
  */
 
 var obj=new Date();

@@ -2,7 +2,9 @@
  * JSON(JavaScript Object Notation)
  * 
  * 	(1)它是一种严格的js对象的格式，JSON的属性名必须有双引号,值不能是方法函数
- * 		{"name":"Runoob", "url":"www.runoob.com"}
+ * 		{"name":"Runoob", "url":"www.runoob.com"} 
+ *    {"name":["zhangsan","lisi"]}
+ *    {"name":[{},{}]}
  * 	
  * 	(2)JSON 字符串转换为 JavaScript 对象
  * 		var text = '{"name":"Runoob", "url":"www.runoob.com"}';

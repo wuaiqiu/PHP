@@ -44,56 +44,234 @@ $('#myModal').on('hidden.bs.modal', function () {
 <br/>
 		
 **二.滚动监听（Scrollspy）插件，自动更新导航栏**
-	
+
+水平插件
+
 ```
-<nav id="navbar-example" class="navbar navbar-default">
-	<div class="navbar-header">
-            <a class="navbar-brand" href="#">教程名称</a>
+<style>
+    body {
+        position: relative;
+    }
+
+    #section1 {
+        padding-top: 50px;
+        height: 500px;
+        color: #fff;
+        background-color: #1E88E5;
+    }
+
+    #section2 {
+        padding-top: 50px;
+        height: 500px;
+        color: #fff;
+        background-color: #673ab7;
+    }
+
+    #section3 {
+        padding-top: 50px;
+        height: 500px;
+        color: #fff;
+        background-color: #ff9800;
+    }
+</style>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">WebSiteName</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="#ios">iOS</a></li>
-            <li><a href="#svn">SVN</a></li>
+            <li><a href="#section1">Section 1</a></li>
+            <li><a href="#section2">Section 2</a></li>
+            <li><a href="#section3">Section 3</a></li>
         </ul>
+    </div>
 </nav>
 
-<div data-spy="scroll" data-target="#navbar-example" data-offset="0"  style="height:100px;overflow:auto; position: relative;">
-  <div class="section">
-    <h4 id="ios">iOS</h4>
-      <small><a href="#" onclick="removeSection(this);">&times; 删除该部分</a></small>
-      <p>
-         iOS是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple
-         TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本
-         iOS是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple
-         TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。
-         iOS是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple
-         TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。。
-      </p>
-  </div>
-  <div class="section">
-    <h4 id="svn">SVN</h4>
-      <small><a href="#" onclick="removeSection(this);">&times; 删除该部分</a></small>
-      <p>
-       Apache Subversion，通常缩写为 SVN，是一款开源的版本控制系统软件。Subversion 由 CollabNet 公司在 2000
-       年创建。但是现在它已经发展为 Apache Software Foundation 的一个项目，因此拥有丰富的开发人员和用户社区。
-        Apache Subversion，通常缩写为 SVN，是一款开源的版本控制系统软件。Subversion 由 CollabNet 公司在 2000
-       年创建。但是现在它已经发展为 Apache Software Foundation 的一个项目，因此拥有丰富的开发人员和用户社区
-        Apache Subversion，通常缩写为 SVN，是一款开源的版本控制系统软件。Subversion 由 CollabNet 公司在 2000
-       年创建。但是现在它已经发展为 Apache Software Foundation 的一个项目，因此拥有丰富的开发人员和用户社区
-      </p>
-   </div>
+<div id="section1" class="container-fluid">
+    <h1>Section 1</h1>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at
+        the navigation bar while scrolling!</p>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at
+        the navigation bar while scrolling!</p>
+</div>
+<div id="section2" class="container-fluid">
+    <h1>Section 2</h1>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at
+        the navigation bar while scrolling!</p>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at
+        the navigation bar while scrolling!</p>
+</div>
+<div id="section3" class="container-fluid">
+    <h1>Section 3</h1>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at
+        the navigation bar while scrolling!</p>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at
+        the navigation bar while scrolling!</p>
 </div>
 
+</body>
+```
+
+垂直插件
+
+```
+<style>
+    body {
+        position: relative;
+    }
+
+    ul.nav-pills {
+        top: 20px;
+        position: fixed;
+    }
+
+    div.col-sm-9 div {
+        height: 250px;
+        font-size: 28px;
+    }
+
+    #section1 {
+        color: #fff;
+        background-color: #1E88E5;
+    }
+
+    #section2 {
+        color: #fff;
+        background-color: #673ab7;
+    }
+
+    #section3 {
+        color: #fff;
+        background-color: #ff9800;
+    }
+
+    @media screen and (max-width: 810px) {
+        #section1, #section2, #section3 {
+            margin-left: 150px;
+        }
+    }
+</style>
+
+
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
+<div class="container">
+    <div class="row">
+
+        <nav class="col-sm-3" id="myScrollspy">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a href="#section1">Section 1</a></li>
+                <li><a href="#section2">Section 2</a></li>
+                <li><a href="#section3">Section 3</a></li>
+            </ul>
+        </nav>
+        
+        <div class="col-sm-9">
+            <div id="section1">
+                <h1>Section 1</h1>
+                <p>Try to scroll this section and look at the navigation list while scrolling!</p>
+            </div>
+            <div id="section2">
+                <h1>Section 2</h1>
+                <p>Try to scroll this section and look at the navigation list while scrolling!</p>
+            </div>
+            <div id="section3">
+                <h1>Section 3</h1>
+                <p>Try to scroll this section and look at the navigation list while scrolling!</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+```
+
+带删除
+
+```
+<style>
+    body {
+        position: relative;
+    }
+
+    #section1 {
+        padding-top: 50px;
+        height: 500px;
+        color: #fff;
+        background-color: #1E88E5;
+    }
+
+    #section2 {
+        padding-top: 50px;
+        height: 500px;
+        color: #fff;
+        background-color: #673ab7;
+    }
+
+    #section3 {
+        padding-top: 50px;
+        height: 500px;
+        color: #fff;
+        background-color: #ff9800;
+    }
+</style>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">WebSiteName</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="#section1">Section 1</a></li>
+            <li><a href="#section2">Section 2</a></li>
+            <li><a href="#section3">Section 3</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="section1" class="section container-fluid">
+    <h1>Section 1
+        <small><a href="#" onclick="removeSection(this);">&times; 删除该部分</a></small>
+    </h1>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at
+        the navigation bar while scrolling!</p>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at
+        the navigation bar while scrolling!</p>
+</div>
+<div id="section2" class="section container-fluid">
+    <h1>Section 2
+        <small><a href="#" onclick="removeSection(this);">&times; 删除该部分</a></small>
+    </h1>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at
+        the navigation bar while scrolling!</p>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at
+        the navigation bar while scrolling!</p>
+</div>
+<div id="section3" class="section container-fluid">
+    <h1>Section 3
+        <small><a href="#" onclick="removeSection(this);">&times; 删除该部分</a></small>
+    </h1>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at
+        the navigation bar while scrolling!</p>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at
+        the navigation bar while scrolling!</p>
+</div>
+</body>
+
 <script>
-    $(function(){
-    	removeSection = function(e) {
+    $(function () {
+        removeSection = function (e) {
             $(e).parents(".section").remove();
             $('[data-spy="scroll"]').each(function () {
                 var $spy = $(this).scrollspy('refresh');
             });
-        };
+        }
     });
 </script>
 ```
+
 
 <br/>
 	

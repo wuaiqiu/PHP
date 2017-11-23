@@ -32,27 +32,6 @@ function Human(firstname,lastname){
 console.log(new Human("John","Doe"));
 //==>Human {firstname: "John", lastname: "Doe", fun: ƒ}
 
-
-//------------------------Object.create()-------------------------//
-/*
- * Object.create(proto[,propertiesObject]): 方法会使用指定的原型对象及其属性去创建一个新的对象。
- * 	propertiesObject对象:
- * 		数据属性
- * 			writable:是否可任意写
- * 			configurable：是否能够删除，是否能够被修改
- * 			enumerable：是否能用 for in 枚举
- * 			value：值
- * */
-var obj=Object.create(Object.prototype,{
-	firstName:{value:"John"},
-	lastName:{value:"Doe"},	
-	run:{value:function(){console.log("ok")}}
-	}
-);
-console.log(obj);
-//==>Object{firstName: "John", lastName: "Doe" ,run: ƒ}
-
-
 //-----------------------获取属性与方法--------------------------//
 person.lastName;		//Doe
 person["lastName"];		//Doe
