@@ -4,6 +4,7 @@
  *		getElementsByName(name)			返回带有指定名称的Element[]
  *		getElementsByTagName(TagName)	返回带有指定标签名的Element[]
  *		createElement(TagName)			用给定的标签名创建一个新的元素
+ *  createAttribute(AttrName) 创建属性节点。
  *		
  *
  * Element（元素对象）

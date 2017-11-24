@@ -31,7 +31,8 @@ STR4;
  *  str_split(string,length):把字符串分割到数组中
  *  sha1(string):计算字符串的 SHA-1 散列
  *  md5(string):计算字符串的 MD5 散列
- *  
+ *  preg_match($pattern ,$string , $matches):正则表达式匹配,成功返回 1 ，否则返回 0
+ *  preg_match_all($pattern ,$string , $matches):正则表达式匹配,成功返回 1 ，否则返回 0
  * */
 
 $arr = array('Hello','World!','I','love','Shanghai!');
@@ -44,4 +45,9 @@ print_r (explode(" ",$str));
  Hello World! I love Shanghai!
  Array ( [0] => Hello [1] => world. [2] => I [3] => love [4] => Shanghai! )
  */
+
+preg_match('/(go*l)/i','gooolgoolggollogol',$match);
+var_dump($match[1]);    #string(5) "goool"
+preg_match_all('/(go*l)/i','gooolgoolggollogol',$match);
+var_dump($match[1]);    #array(4) { [0]=> string(5) "goool" [1]=> string(4) "gool" [2]=> string(3) "gol" [3]=> string(3) "gol" }
   

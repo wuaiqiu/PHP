@@ -12,3 +12,4 @@
 
 echo Date("Y-m-d"); #2017-10-01
 echo Date("h:i:s"); #09:10:39
+echo time();  #返回时间戳

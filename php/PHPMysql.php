@@ -70,16 +70,13 @@
         /*
          * 1.链接数据库
          *  new PDO($dsn,user,pass):初始化一个PDO对象
-         *  $pdo->errorCode():获取跟数据库句柄上一次操作相关的错误码
-         *  $pdo->errorInfo(): 返回最后一次操作数据库的错误信息
+         *  $pdo->errorInfo(): 返回最后一次操作数据库的错误信息(数组类型)
          *  
          * 2.执行sql语句
          *  $pdo->query(sql):有数据返回，成功返回PDOStatement，失败返回false
          *  $pdo->exec(sql)：无数据返回，成功返回true，失败返回false
          *  
          * 3.解析result结果集对象
-         *  $result->errorCode():获取跟上一次语句句柄操作相关的错误码
-         *  $result->errorInfo():获取跟上一次语句句柄操作相关的扩展错误信息
    	     *  $result->rowCount():结果集的行数
    	     *  $result->columnCount():结果集的列数
    	     *  $result->fetch("类型"):取一行数据
@@ -103,11 +100,10 @@
    	                var_dump($rec);
    	                echo "</pre>";
    	            }
+                $result->closeCursor();
    	        }else{
-   	            echo "<br/>错误代码: ".$pdo->errorCode();
-   	            echo "<br/>错误信息: ".$pdo->errorInfo();
+   	           var_dump($pdo->errorInfo());
             } 	    
-   	        $result->closeCursor();
    	        $pdo=null;
 
 
@@ -127,34 +123,33 @@
    	       * */
    	        
        	    $dsn="mysql:host=localhost;port=3306;dbname=students";
-       	    $options=array(PDO::MYSQL_ATTR_INIT_COMMAND=>"set names utf8");
-       	    $pdo=new PDO($dsn , "root", "123456", $options);
-       	    $sql1="select * from users where id=?";
-       	    $sql2="select * from users where id=:v1";
-       	    $result1=$pdo->prepare($sql1);
-       	    $result2=$pdo->prepare($sql2);
-   	        $result1->bindValue(1, 1);
-   	        $result2->bindValue(":v1", 3);
-   	        $result1->execute();
-   	        $result2->execute();
-           	if(  $result1 && $result2 ){
-       	        while($rec = $result1->fetch()){
+       	    $pdo=new PDO($dsn , "root", "123456");
+             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+       	   try{
+                $sql1="select * from users where id=?";
+       	       $sql2="select * from users where id=:v1";
+       	       $result1=$pdo->prepare($sql1);
+       	       $result2=$pdo->prepare($sql2);
+   	           $result1->bindValue(1, 1);
+   	           $result2->bindValue(":v1", 3);
+   	           $result1->execute();
+   	           $result2->execute();
+       	      while($rec = $result1->fetch()){
        	            echo "<pre>";
        	            var_dump($rec);
        	            echo "</pre>";
-       	        }
-       	        while($rec = $result2->fetch()){
+       	      }
+       	      while($rec = $result2->fetch()){
        	            echo "<pre>";
        	            var_dump($rec);
        	            echo "</pre>";
-       	        }
-   	        }else{
-   	            echo "<br/>错误代码: ".$pdo->errorCode();
-   	            echo "<br/>错误信息: ".$pdo->errorInfo();
-   	        }
-   	        $result1->closeCursor();
-   	        $result2->closeCursor();
-   	        $pdo=null;
+       	      }
+              $result1->closeCursor();
+              $result2->closeCursor();
+   	          $pdo=null;
+          }catch(PDOException $err){
+            var_dump($err->getMessage());
+          }
    	        
  //----------------------PDO事务-------------------------------------------//
 	      
@@ -164,18 +159,18 @@
 	        *  $pdo->commit():提交事务
 	        *  $pdo->rollBack():回滚事务
 	        * */
-   	        $dsn="mysql:host=localhost;port=3306;dbname=students";
-   	        $pdo=new PDO($dsn , "root", "123456");
-   	        try {
-   	            $pdo->beginTransaction();
-   	            $pdo->exec("insert into staff (id, first, last) values (23, 'Joe', 'Bloggs')");
-   	            $pdo->exec("insert into salarychange (id, amount, changedate) values (23, 50000, NOW())");
-   	            $pdo->commit();
-   	        } catch (Exception $e) {
-   	            $pdo->rollBack();
-   	            echo "Failed: " . $e->getMessage();
-   	        }
-   	        $result->closeCursor();
-   	        $pdo=null;
+   	        $dsn="mysql:host=localhost;port=3306;dbname=users";
+            $pdo = new PDO($dsn, 'root', '123456');
+            $pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            try{
+                $pdo->beginTransaction();
+                $pdo->exec("insert into student values(13,'aa',102)");
+                $pdo->exec("insert into student values(12,'bb',102)");
+                $pdo->commit();
+          }catch (PDOException $err){
+              $pdo->rollBack();
+              var_dump($err->getMessage());
+        }
      
 ?>

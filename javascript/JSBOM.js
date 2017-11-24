@@ -7,14 +7,14 @@
  * 		document	对 Document 对象的只读引用
  * 		history		对 History 对象的只读引用
  * 		location	用于窗口或框架的 Location 对象
- * 		Navigator	对 Navigator 对象的只读引用
- * 		Screen		对 Screen 对象的只读引用
+ * 		navigator	对 Navigator 对象的只读引用
+ * 		screen		对 Screen 对象的只读引用
  * 	
  * 		alert()					显示带有一段消息和一个确认按钮的警告框
  * 		setInterval(fun(),50)	按照指定的周期（以毫秒计）来调用函数或计算表达式,并返回id
  * 		clearInterval(id)		取消 setInterval()
  * 		setTimeout(fun(),50)	在指定的毫秒数后调用函数或计算表达式,并返回id
- * 		clearTimeout()			取消 setTimeout() 
+ * 		clearTimeout(id)			取消 setTimeout() 
  * 	
  * 	Navigator
  * 		Navigator 对象包含有关浏览器的信息。
@@ -47,11 +47,10 @@
  * 	Location
  * 		Location 对象包含有关当前 URL 的信息
  * 		
- * 		 hash		设置或返回从井号 (#) 开始的 URL（锚）。
- * 		 host		设置或返回主机名和当前 URL 的端口号。	
- * 		 hostname	设置或返回当前 URL 的主机名。
  * 		 href		设置或返回完整的 URL。
- * 		 port		设置或返回当前 URL 的端口号。
  * 		 protocol	设置或返回当前 URL 的协议。
+ *     host   设置或返回主机名和当前 URL 的端口号。 
+ *      pathname 设置或返回当前页面的路径和文件名。
  * 		 search		设置或返回从问号 (?) 开始的 URL（查询部分）。
+ *      hash   设置或返回从井号 (#) 开始的 URL（锚）。
  */

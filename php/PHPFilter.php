@@ -17,34 +17,6 @@
  *     (4)FILTER_VALIDATE_EMAIL:Email验证  
  *     (5)FILTER_VALIDATE_URL：URL验证        
  *     (6)FILTER_VALIDATE_REGEXP：正则验证      options【regexp - 验证所依据的正则表达式】
- *    
- *     
- *     (7)FILTER_UNSAFE_RAW:去除或编码特殊字符   flags【FILTER_FLAG_STRIP_LOW - 去除 ASCII 值在 32 以下的字符
- *                                                   FILTER_FLAG_STRIP_HIGH - 去除 ASCII 值在 32 以上的字符
- *                                                   FILTER_FLAG_ENCODE_LOW - 编码 ASCII 值在 32 以下的字符
- *                                                   FILTER_FLAG_ENCODE_HIGH - 编码 ASCII 值在 32 以上的字符
- *                                                   FILTER_FLAG_ENCODE_AMP - 把 & 字符编码为 &amp;】
- *     (8)FILTER_SANITIZE_MAGIC_QUOTES:预定义的字符串前面设置反斜杠('  "  \)
- *     (9)FILTER_SANITIZE_NUMBER_FLOAT:删除浮点数中所有非法的字符    flags【FILTER_FLAG_ALLOW_FRACTION - 允许小数分隔符 （比如 .）
- *                                                                       FILTER_FLAG_ALLOW_THOUSAND - 允许千分隔符 （比如 ,）
- *                                                                       FILTER_FLAG_ALLOW_SCIENTIFIC - 允许科学技术法 （比如 e 和 E）】
- *     (10)FILTER_SANITIZE_NUMBER_INT:删除数字中所有非法的字符  
- *     (11)FILTER_SANITIZE_URL:删除字符串中所有非法的 URL 字符
- *     (12)FILTER_SANITIZE_EMAIL:删除字符串中所有非法的 e-mail 字符
- *     (13)FILTER_SANITIZE_SPECIAL_CHARS:对特殊字符进行 HTML 转义    flags【FILTER_FLAG_STRIP_LOW - 去除 ASCII 值在 32 以下的字符
- *                                                                        FILTER_FLAG_STRIP_HIGH - 去除 ASCII 值在 32 以上的字符
- *                                                                        FILTER_FLAG_ENCODE_HIGH - 编码 ASCII 值在 32 以上的字符】
- *     (14)FILTER_SANITIZE_ENCODED:去除或 URL 编码不需要的字符。      flags【FILTER_FLAG_STRIP_LOW - 去除 ASCII 值在 32 以下的字符
- *                                                                        FILTER_FLAG_STRIP_HIGH - 去除 ASCII 值在 32 以上的字符
- *                                                                        FILTER_FLAG_ENCODE_LOW - 编码 ASCII 值在 32 以下的字符
- *                                                                        FILTER_FLAG_ENCODE_HIGH - 编码 ASCII 值在 32 以上的字符】
- *                                                                   
- *      (15)FILTER_SANITIZE_STRING:去除或编码不需要的字符。           flags【FILTER_FLAG_NO_ENCODE_QUOTES - 该标志不编码引号
- *                                                                        FILTER_FLAG_STRIP_LOW - 去除 ASCII 值在 32 以下的字符
- *                                                                        FILTER_FLAG_STRIP_HIGH - 去除 ASCII 值在 32 以上的字符
- *                                                                        FILTER_FLAG_ENCODE_LOW - 编码 ASCII 值在 32 以下的字符
- *                                                                        FILTER_FLAG_ENCODE_HIGH - 编码 ASCII 值在 32 以上的字符
- *                                                                        FILTER_FLAG_ENCODE_AMP - 把 & 字符编码为 &amp;】
  * */
 
 
