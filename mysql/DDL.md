@@ -34,7 +34,7 @@ CREATE TABLE student (
 CREATE TABLE student(
         name   char(10),
         id     int
-)engine=mysiam|innodbd;	
+)engine=mysiam|innodb;	
 
 #创建与student表相同的user数据表
 CREATE TABLE user  SELECT * FROM student;
@@ -99,3 +99,13 @@ data|日期类型； yyyy-mm-dd
 time|时间类型；hh:mm:ss
 datatime|日期与时间结合；yyyy-mm-dd hh:mm:ss
 timestamp|时间戳与datatime相同只是范围变小
+
+
+```
+CREATE TABLE person(
+	id set('1','2','3','4'),
+	age enum('20','21','22')
+)
+
+INSERT INTO person values('1,2','20');
+```

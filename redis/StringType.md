@@ -33,7 +33,7 @@
 (4).**SETEX**	将值value关联到key，并将key的过期时间设为seconds(以秒为单位)。
 
 ```
->setex key3 value3
+>setex key3 3 value3
 =>OK
 >get key3
 =>"value3"

@@ -72,7 +72,7 @@ SELECT * FROM student LIMIT 4,3;
 #内连接(等值连接);两表的公共记录部分
 SELECT * FROM student stu,teacher tea WHERE stu.id=tea.id;
 SELECT * FROM student stu INNER JOIN teacher tea ON stu.id=tea.id;
-SELECT stu.id,tea.name FROM student stu INNER JOIN teacher tea on stu.id=tea.id;
+SELECT stu.id,tea.name FROM student stu INNER JOIN teacher tea ON stu.id=tea.id;
 
 #外连接；以一张表为主表，另一张表为附表	
 #右外连接

@@ -21,8 +21,6 @@ CREATE TABLE student(
 );
 		
 CREATE INDEX indexName ON student(name(4)); 
-	
-ALTER TABLE student ADD INDEX indexName(name(4));
 
 DROP INDEX indexName ON student; 
 	
@@ -43,7 +41,7 @@ CREATE	 INDEX indexName On student(id,name(4));
 >注意：	索引where时的条件要按照建立索引的时候字段的排序方式
 
 
-3.全文索引:如果文本中出现多个一样的字符,普通索引将失效,则需要全文索引
+3.全文索引
 
 ```
 CREATE TABLE student ( 
@@ -51,8 +49,6 @@ CREATE TABLE student (
       name char(10),
       FULLTEXT(name) 
 );
-
-ALTER TABLE student ADD FULLTEXT fullName(name);
 
 CREATE FULLTEXT INDEX fullName ON student(name);
 
