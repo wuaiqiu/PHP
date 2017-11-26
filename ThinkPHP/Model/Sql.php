@@ -87,9 +87,9 @@
  *
  *
  *  (4)表达式查询  【 $map['字段']=array('表达式','查询条件') 】
- *       eq	=		neq	!=		gt	>		    egt	>=
- *       lt	<		elt	<=		[not]like		[not] between
- *       [not] in
+ *       eq	=		neq	!=		gt	>		    gte	>=
+ *       lt	<		lte	<=		[not]like		[not] between
+ *       [not] in  exists   all
  *
  *
  *  (5)快捷查询    【 字段|字段  字段&字段 】

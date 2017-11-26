@@ -1,8 +1,4 @@
 <?php
-/*
- *  项目Application入口文件（一个项目对应一个入口）
- * 
- * */
 
 #(1)加载框架入口文件（必须加载核心文件）
 require './ThinkPHP/ThinkPHP.php';

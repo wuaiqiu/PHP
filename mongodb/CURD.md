@@ -53,11 +53,23 @@ db.students.insert({"name":"zhangsan","age":19,"sex":"男"})
 
 #向students集合中添加多条文档
 db.students.insert([{"name":"lisi","age":21},{"name":"wangwu","sex":"男"}])
+
+#向指定集合中插入一条文档数据
+db.collection.insertOne({"name":"zhangsan","age":19,"sex":"男"})
+
+#向指定集合中插入多条文档数据
+db.collection.insertMany([{"name":"lisi","age":21},{"name":"wangwu","sex":"男"}])
 ```
 
 **查询文档**
 	
 【1】语法：  db.students.find({查询条件},{设置显示的字段})
+
+```
+设置显示的字段（projection ），只能全1或全0，id除外
+db.collection.find(query, {title: 1, by: 1}) // inclusion模式 指定返回的键，不返回其他键
+db.collection.find(query, {title: 0, by: 0}) // exclusion模式 指定不返回的键,返回其他键
+```
 
 ```
 #查询students集合的所有文档，并格式化
@@ -203,11 +215,21 @@ db.students.update({"age":22},{"sex":"男"},true)
 【2】 save({具体文档})
 
 ```	
-#文档替换，需要指定"_id",不存在则添加
+#如果不指定 _id 字段 save() 方法类似于 insert() 方法。如果指定 _id 字段，则会替换该 _id 的数据。
 db.students.save({"_id":ObjectId("59ef008e7fc1a4560396146b"),"name":"zhangsan"})
 ```
 
-【3】修改器（局部更新）
+【3】其他更新
+
+```
+#向指定集合更新单个文档，不存在不添加
+db.collection.updateOne({"条件"},{"修改器"}) 
+
+#向指定集合更新多个文档，不存在不添加
+db.collection.updateMany({"条件"},{"修改器"}) 
+```
+
+【4】修改器（局部更新）
 
 ```
 1).$inc	针对一个数值字段，增加某个数值字段的值	$inc:{"字段":值}
@@ -253,13 +275,13 @@ db.students.update({"name":"leehom"},{$rename:{"name":"sname"}})
 
 **删除文档**
 
-【1】remove({"条件"},multi)
-	multi:当为true时，只删除一个，默认为false
-
 ```	
-#删除name中有san字符的所有文档
-db.students.remove({"name":/san/})
+#删除集合下全部文档：
+db.student.deleteMany({})
 
-#删除当前全部文档
-db.students.remove({})
+#删除 name 等于 zhangsan 的全部文档：
+db.student.deleteMany({ "name" : "zhangsan" })
+
+#删除 name 等于 zhangsan 的一个文档：
+db.student.deleteOne( { "name": "zhangsan" } )
 ```	

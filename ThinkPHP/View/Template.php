@@ -128,20 +128,5 @@
  *              <layout name="layout" />	#Application/Home/View/[theme/]layout.html
  *              <layout name="Layout/layout">#Application/Home/View/[theme/]Layout/layout.html
  *              
- *     (9)模板替换,不需要{}
- *     __ROOT__： 会替换成当前网站的地址（不含域名） 	/
- *     __APP__： 会替换成当前应用的URL地址 （不含域名）	/index.php
- *     __CONTROLLER__:会替换成当前控制器的URL地址（不含域名）/day19/index.php/Home/Verify
- *     __MODULE__：会替换成当前模块的URL地址 （不含域名）	/index.php/Home
- *     __ACTION__：会替换成当前操作的URL地址 （不含域名）/index.php/Home/View/view
- *     __SELF__： 会替换成当前的页面URL/index.php/Home/View/view
- *     __PUBLIC__：会被替换成当前网站的公共目录 通常是 /Public
- *     
- *     #定义或修改模板特殊字符串
- *     'TMPL_PARSE_STRING'  =>array(
- *     '__PUBLIC__' => '/Common', // 更改默认的/Public 替换规则
- *     '__JS__'     => '/Public/JS/', // 增加新的JS类库路径替换规则
- *     '__UPLOAD__' => '/Uploads', // 增加新的上传路径替换规则
- *     )
  *
  * */

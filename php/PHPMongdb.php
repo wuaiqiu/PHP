@@ -38,8 +38,3 @@ $bulk = new MongoDB\Driver\BulkWrite();
 $bulk->delete(['x' => 1], ['limit' => 1]);    //limit 为 1 时，删除第一条匹配数据
 $bulk->delete(['x' => 2], ['limit' => 0]);   // limit 为 0 时，删除所有匹配数据
 $result = $conn->executeBulkWrite('test.site', $bulk);
-
-
-//安全写操作
-$writeConcern = new MongoDB\Driver\WriteConcern(MongoDB\Driver\WriteConcern::MAJORITY, 1000);
-$conn->executeBulkWrite('test.site', $bulk,$writeConcern);   //执行写操作(更新、删除、增加)
