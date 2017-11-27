@@ -15,19 +15,6 @@
  *      
  *     (4)session判断
  *          session('?name');
- *          
- *     (5)session管理
- *     
- *          #默认情况下，初始化之后系统会自动启动session,关闭后可以手动开启
- *          'SESSION_AUTO_START' =>false;
- *           
- *           session('[操作名]');
- *           
- *           操作名	   含义
- *           start	   启动session
- *           pause	   暂停session写入
- *           destroy   销毁session
- *           regenerate	重新生成session id
  *
  *
  * 二.COOKIE

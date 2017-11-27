@@ -123,7 +123,7 @@
  *          __CONTROLLER__      当前控制器的URL地址 /day19/index.php/Home/Contant
  *          __ACTION__          当前操作的URL地址/day19/index.php/Home/Contant/content
  *          __SELF__            当前URL地址/day19/index.php/Home/Contant/content
- *          __PUBLIC__：         /day19/Public
+ *          __PUBLIC__          /day19/Public
  *          MODULE_NAME         当前模块名  Home
  *          MODULE_PATH         当前模块路径./Application/Home/
  *          CONTROLLER_NAME     当前控制器名Contant
