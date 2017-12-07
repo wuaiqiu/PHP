@@ -221,6 +221,7 @@ $selector.detach()||删除被选元素及其子元素,并返回被删除的元�
 **操作属性**||
 $selector.attr(key,value)|key,function(index,oldvalue)|设置或返回匹配元素的属性和值，接受\{\}对象修改多个属性
 $selector.removeAttr(key)||从所有匹配的元素中移除指定的属性
+$selector.prop(key,value)||函数来设置或获取checked、selected、disabled等属性
 **innerHTML**||
 $selector.html("&lt;p&gt;Hello world!&lt;/p&gt;")|function(index,oldcontent)|设置或返回匹配的元素集合中的HTML内容；会覆盖
 $selector.text("&lt;p&gt;Hello world!&lt;/p&gt;")|function(index,oldcontent)|设置或返回匹配元素的内容；特殊字符会被编码；会覆盖
@@ -240,6 +241,7 @@ $selector.replaceWith($newSelector)|function()|用匹配的元素替换所有匹
 $selector.get(index)||获得由选择器指定的DOM元素(不是jquery对象，则不能用jquery方法)
 $selector.index()||返回指定元素相对于其他指定元素的index位置
 $selector.size()||返回被jQuery选择器匹配的元素的数量
+$selector.serialize()||参数序列化，常用用表单提交所有数据
 
 <br/>
 
@@ -266,6 +268,9 @@ $selector.last()|返回被选元素的最后一个元素
 $selector.eq(n)|返回被选元素中带有指定索引号的元素。索引号从 0 开始
 $selector.filter(selector)|返回被匹配的元素
 $selector.not(selector)|方法返回不匹配标准的所有元素
+**遍历函数**|
+$selector.each(function(index))|为每个匹配元素规定运行的函数.返回 false 可用于及早停止循环
+$.each(arr,function(index))|遍历一个数组
 
 <br/>
 
