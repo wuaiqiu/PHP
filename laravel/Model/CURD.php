@@ -104,7 +104,7 @@
  * #查询
  * $students=Student::all():获取所有结果
  * $student=Student::find(1)：返回主键为1的数据
- * $student=StudentfindOrFail(1)：没找到就抛错
+ * $student=Student::findOrFail(1)：没找到就抛错
  * $student=Student::find([1,2,3])：返回主键为1,2,3的数据数组
  * foreach (Students::where('id','>', 20)->cursor() as $user) {
  *         echo $user->name."<br/>";//使用游标，在处理大批量数据时，可大幅减少内存消耗：

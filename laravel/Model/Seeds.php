@@ -23,3 +23,19 @@ class Seeds extends Seeder{
         );
     }
 }
+
+/*
+ * 使用模型工厂
+ *
+ * 1.定义模式工厂(database/factories/ModelFactory.php)
+ *      $factory->define(App\Phone::class, function (Faker\Generator $faker) {
+ *      return [
+ *          'uid'=>$faker->randomDigit,
+ *          'num'=>str_random(3)
+ *       ];
+ *     });
+ *
+ *
+ * 2.使用工厂(随机产生10条数据)
+ *      factory('App\Phone',10)->create();
+ * */

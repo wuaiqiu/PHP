@@ -37,11 +37,4 @@
  * (6).路由保护
  *       Route::get('profile', 'ProfileController@index')->middleware('auth');
  *
- * (7).手动编写
- *      #认证成功的话 attempt 方法将会返回 true
- *      Auth::attempt(['email' => $email, 'password' => $password])
- *      #intended 方法将用户重定向到登录之前用户想要访问的 URL，在目标 URL 无效的情况下回退 home
- *      redirect()->intended('home')
- *      #“记住”用户
- *      Auth::attempt(['email' => $email, 'password' => $password], $remember)
  * */
