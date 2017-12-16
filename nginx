@@ -18,10 +18,13 @@ location ~ \.php$ {
 server {
      listen 80;
      server_name localhost;
-     root /home/wu/www/;
+     root /home/wu/www/Blog/;
      location / {
         index index.html index.htm index.php;
-        autoindex on;
+        if (!-e  $request_filename) {
+              rewrite ^/(.*)$ /index.php?s=$1 last;
+              break;
+        }
      }
       include php.conf;
 }
@@ -29,11 +32,3 @@ server {
 (4).启动服务
 systemctl start php-fpm
 systemctl start nginx
-
-
-二.phpMyAdmin
-
-/etc/ngi
-
-
-		
