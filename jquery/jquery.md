@@ -68,43 +68,7 @@ $(selector).dblclick(function)|触发或将函数绑定到被选元素的双击�
 **Keyboard事件**|
 $(selector).keydown(function)|触发或将函数绑定到指定元素的keydown事件
 
-2).bind绑定事件
-
-```
-//绑定单个事件
-$("button").bind("click",function(){
-	console.log("hello");
-});
-
-//绑定多个事件
-$("button").bind({
-	click:function(){console.log("hello");},
-	mouseover:function(){console.log("hello");},
-	mouseout:function(){console.log("hello");}
-});
-```
-
-3).unbind移除事件
-
-```
-//移除所有p元素的事件处理器
-$("p").unbind();
-
-//移除p元素指定的事件（可以包括多个事件处理器）
-$("p").unbind("click");
-
-//移除p元素指定的事件处理器
-$("p").unbind("click",functionName);
-
-
-//删除自身的所有事件处理器
-$(this).unbind();
-
-//删除自身的指定的事件处理器
-$(this).unbind(event);
-```
-
-4).one只会触发一次
+2).one只会触发一次
 
 ```
 $("p").one("click",function(){
@@ -112,28 +76,32 @@ $("p").one("click",function(){
 });
 ```
 
-5).live在当前或未创建的元素绑定事件
+3).on在当前或未创建的元素绑定事件
 
 ```
-$("button").live("click",function(){
-	console.log("hello");
+$(document).on("focus","a",function(){
+  this.blur();
+});
+
+$("p.test1").on("click",function(){
+    $(this).css("background-color","pink");
 });
 ```
 
-6).die在当前或未创建的元素移除事件
+4).off在当前或未创建的元素移除事件
 
 ```
 //移除所有p元素的事件处理器
-$("p").die();
+$("p").off();
 
 //移除p元素指定的事件（可以包括多个事件处理器）
-$("p").die("click");
+$("p").off("click");
 
 //移除p元素指定的事件处理器
-$("p").die("click",functionName);
+$("p").off("click",functionName);
 ```
 
-7).toggle以不同事件处理器相应click事件
+5).toggle以不同事件处理器相应click事件
 
 ```
 $("p").toggle(
@@ -143,7 +111,7 @@ $("p").toggle(
 );
 ```
 
-8).触发事件
+6).触发事件
 
 ```
 //触发input元素的select事件

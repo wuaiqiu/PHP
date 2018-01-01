@@ -15,6 +15,7 @@
  * 		clearInterval(id)		取消 setInterval()
  * 		setTimeout(fun(),50)	在指定的毫秒数后调用函数或计算表达式,并返回id
  * 		clearTimeout(id)			取消 setTimeout() 
+ *		js是运行于单线程环境中，定时器作用是在规定时间内将事件加入执行队列，而加入的前提是当前事件队列没有任何东西
  * 	
  * 	Navigator
  * 		Navigator 对象包含有关浏览器的信息。

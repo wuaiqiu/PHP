@@ -30,7 +30,7 @@
  *              'User:index'=>array('{:module}/{:controller}/{:action}/{id}'),
  *
  *              #控制器:
- *              'User:index'=>array('User/{:action}/{id}'),
+ *              'User:'=>array('User/{:action}/{id}'),
  *
  *              #*
  *              '*'=>array('{$_SERVER.REQUEST_URI|md5}'),
