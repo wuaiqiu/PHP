@@ -30,14 +30,7 @@ var uploader = new plupload.Uploader({
          ],
          max_file_size : '100kb', //最大只能上传100kb的文件
          prevent_duplicates : true //不允许队列中存在重复文件
-      },
-      #压缩文件
-      resize: {
-          width: 100,//指定压缩后图片的宽度
-          height: 100,//指定压缩后图片的高度
-          crop: true,//是否裁剪图片
-          preserve_headers: false//是否保留图片的元数据
-     }
+      }
     });
 
     #在实例对象上调用init()方法进行初始化
