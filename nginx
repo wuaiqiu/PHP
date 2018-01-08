@@ -32,3 +32,19 @@ server {
 (4).启动服务
 systemctl start php-fpm
 systemctl start nginx
+
+
+(5).配置优化
+
+```
+压缩优化
+
+gzip on;
+gzip_comp_level 4;  （0-9越大越耗时）
+gzip_types text/plain application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;
+
+静态文件等过期时间
+location ~ \.(ico|gif|jpg|jpeg|png|js|css)$ {
+    expires      7d;
+}
+```
