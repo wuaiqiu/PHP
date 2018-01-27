@@ -4,6 +4,9 @@
 **一.基本模板**
 	
 ```
+bs3-cdn
+bs3-template:html5
+
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -30,6 +33,10 @@
 (1).固定宽度
 
 ```	
+bs3-col:4
+bs3-container
+bs3-row
+
 <div class="container">
    <div class="row">
       <div class="col-md-4">col-md-4</div>
@@ -42,6 +49,8 @@
 (2).100%宽度
 
 ```
+bs3-container:fluid
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">col-md-4</div>
@@ -117,6 +126,7 @@
 <h5>主标题<small>副标题</small></h5>
 <h6>主标题<small>副标题</small></h6>
 
+bs3-page-header
 <!--页面标题-->
 <div class="page-header">
     <h1>页面标题实例<small>子标题</small></h1>
@@ -214,6 +224,8 @@
 (1).垂直表单
 
 ```
+bs3-form
+
 <form>
 	<div class="form-group">
 		<label for="name">名称</label>
@@ -230,6 +242,8 @@
 (2).内联表单
 
 ```
+bs3-form:inline
+
 <form class="form-inline">
   
   <div class="form-group">
@@ -250,6 +264,8 @@
 (3).水平表单
 
 ```
+bs3-form:horizontal	
+
 <form class="form-horizontal">
 
     <div class="form-group">
@@ -283,6 +299,8 @@
 (4).按钮
 
 ```
+bs3-submit:h
+
 <!--按钮颜色-->
 <button type="button" class="btn btn-default">默认按钮</button>
 <button type="button" class="btn btn-primary">原始按钮</button>
@@ -306,6 +324,9 @@
 (5).单选框
 
 ```
+bs3-form-field:checkbox
+bs3-radio
+
 <div class="form-group">
   <div class="col-md-offset-2 col-md-2">
      <div class="radio">
@@ -333,6 +354,9 @@
 (6).复选框
 
 ```
+bs3-form-field:checkbox
+bs3-checkbox
+
 <div class="form-group">
   <div class="col-md-offset-2 col-md-2">
       <div class="checkbox">
@@ -360,6 +384,8 @@
 (7).下拉列表
 
 ```
+bs3-form-field:select
+
 <div class="form-group">
    <label for="name" class="col-md-2 control-label">选择列表:</label> 
    <div class="col-md-2">
@@ -375,6 +401,8 @@
 (8).文本框
 
 ```
+bs3-form-field:text
+
 <div class="form-group">
     <label for="name" class="col-md-2 control-label">文本框:</label>
     <div class="col-md-2">
@@ -437,6 +465,11 @@
 (1).基本表格
 
 ```
+bs3-table:bordered
+bs3-table:condensed
+bs3-table:responsive	
+bs3-table:striped
+
 <table class="table table-striped table-bordered table-hover table-condensed">
 	<caption class="text-center">基本的表格布局</caption>
 	<thead>
@@ -517,6 +550,11 @@
 **六.序列**
 
 ```
+bs3-list-group
+bs3-list-group:badges	
+bs3-list-group:content
+
+
 <!--有序列表-->
 <ol>
   <li>Item 1</li>
@@ -604,6 +642,9 @@
 **七.图片**
 
 ```
+bs3-image
+bs3-thumbnail:content
+
 <div class="container">
    <div class="row">
 	<div class="col-xs-6">
@@ -649,6 +690,10 @@
 
 **九.进度条组件**
 ```
+bs3-progress-bar
+bs3-progress-bar:danger
+bs3-progress-bar:striped-animated
+
 <div class="progress progress-striped active">
     <div class="progress-bar progress-bar-success" style="width:60%">60%</div>
 </div>

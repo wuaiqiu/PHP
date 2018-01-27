@@ -12,6 +12,8 @@ http://www.runoob.com/try/demo_source/bootstrap3-glyph-icons.htm
 (2).使用方式
 	
 ```
+bs3-icon:glyphicon
+
 <button type="button" class="btn btn-primary" >
   <span class="glyphicon glyphicon-align-left" ></span>
 </button>
@@ -24,6 +26,8 @@ http://www.runoob.com/try/demo_source/bootstrap3-glyph-icons.htm
 (4).font-awessome
 
 ```
+bs3-icon
+
 http://fontawesome.io/icons/
 
 <!--反转颜色-->
@@ -79,6 +83,8 @@ http://fontawesome.io/icons/
 (1).水平按钮组
 
 ```
+bs3-button-toolbar
+
 <div class="btn-toolbar" role="toolbar">
 <div class="btn-group btn-group-sm">
     <button type="button" class="btn btn-default">按钮 1</button>
@@ -123,6 +129,8 @@ http://fontawesome.io/icons/
 (3).按钮下拉菜单组件
 
 ```
+bs3-button-group:vertical
+
 <div class="btn-group">
 	<button type="button" class="btn btn-default dropdown-toggle"  data-toggle="dropdown">
 		默认 <span class="caret"></span>
@@ -147,6 +155,8 @@ http://fontawesome.io/icons/
 (1).表格导航
 
 ```
+bs3-tabs:justified
+
 <!--水平-->
  <ul class="nav nav-tabs nav-justified">
   <li class="active"><a href="#">option 1</a></li>
@@ -171,6 +181,8 @@ http://fontawesome.io/icons/
 (2).胶囊式导航
 
 ```
+bs3-pills:justified
+
 <!--水平-->
 <ul class="nav nav-pills nav-justified">
   <li class="active"><a href="#">option 1</a></li>
@@ -180,6 +192,8 @@ http://fontawesome.io/icons/
   <li><a href="#">option 5</a></li>
   <li><a href="#">option 6</a></li>
 </ul>
+
+bs3-pills:vertical
 
 <!--垂直-->
  <ul class="nav nav-pills  nav-stacked">
@@ -195,6 +209,8 @@ http://fontawesome.io/icons/
 (3).下拉菜单
 
 ```
+bs3-pills:dropdown	
+
  <li class="dropdown">
 	<a class="dropdown-toggle" data-toggle="dropdown" href="#">option 6 
 		<span class="caret"></span>
@@ -214,6 +230,9 @@ http://fontawesome.io/icons/
 (1).普通表单
 
 ```
+bs3-navbar:basic
+bs3-navbar:inverse
+
 <nav class="navbar navbar-default">
     <div class="navbar-header">
         <a class="navbar-brand" href="#">Home</a>
@@ -232,6 +251,8 @@ http://fontawesome.io/icons/
 (2).响应式导航栏
 
 ```
+bs3-navbar
+
 //白黑色
 <nav class="navbar navbar-default">
    <div class="navbar-header">
@@ -313,6 +334,8 @@ http://fontawesome.io/icons/
 (5).导航条位置（注意位置重叠，请向 body 标签添加至少 50 像素的内边距）
 
 ```
+bs3-navbar:fixed-top
+bs3-navbar:static-top
 <!--固定在顶部-->
 <nav class="navbar navbar-default navbar-fixed-top">
 <!--随着页面一起滚动-->
@@ -324,6 +347,8 @@ http://fontawesome.io/icons/
 **五.路径组件（面包屑导航）**
 
 ```
+bs3-breadcrumbs
+
 <ol class="breadcrumb">
     <li><a href="#">Home</a></li>
     <li><a href="#">2013</a></li>
@@ -338,6 +363,8 @@ http://fontawesome.io/icons/
 (1).分页
 
 ```
+bs3-pagination:large
+
 <ul class="pagination pagination-lg">
     <li><a href="#">&laquo;</a></li>
     <li class="active"><a href="#">1</a></li>
@@ -347,6 +374,8 @@ http://fontawesome.io/icons/
     <li><a href="#">5</a></li>
     <li><a href="#">&raquo;</a></li>
 </ul>
+
+bs3-pagination
 
 <ul class="pagination">
     <li><a href="#">&laquo;</a></li>
@@ -358,6 +387,7 @@ http://fontawesome.io/icons/
     <li><a href="#">&raquo;</a></li>
 </ul>
 
+bs3-pagination:small
 <ul class="pagination pagination-sm">
     <li><a href="#">&laquo;</a></li>
     <li class="active"><a href="#">1</a></li>
@@ -372,6 +402,9 @@ http://fontawesome.io/icons/
 (2).翻页
 
 ```
+bs3-pager
+bs3-pager:aligned
+
 <!--中间对齐-->
 <ul class="pager">
     <li><a href="#">Previous</a></li>
@@ -392,6 +425,8 @@ http://fontawesome.io/icons/
 (1).标签
 
 ```
+bs3-label:danger
+
 <span class="label label-default">默认标签</span>
 <span class="label label-primary">主要标签</span>
 <span class="label label-success">成功标签</span>
@@ -403,6 +438,8 @@ http://fontawesome.io/icons/
 (2).徽章
 
 ```
+bs3-badge
+
 <!--未读信息数量徽章-->
 <a href="#">未读信息<span class="badge">10</span></a>
 ```
@@ -412,6 +449,8 @@ http://fontawesome.io/icons/
 **八.巨幕组件，主要展示网站的关键性区域**
 
 ```
+bs3-jumbotron	
+
 <!--在固定的范围内有圆角-->
 <div class="container">
 	<div class="jumbotron">
@@ -434,17 +473,17 @@ http://fontawesome.io/icons/
 **九.警告框组件**
 
 ```
+bs3-alert:danger
+
 <div class="alert alert-success">成功！很好地完成了提交。</div>
 <div class="alert alert-info">信息！请注意这个信息。</div>
 <div class="alert alert-warning">警告！请不要提交。</div>
-<div class="alert alert-danger">错误！请进行一些更改。</div>```
+<div class="alert alert-danger">错误！请进行一些更改。</div>
 
 
 <!--带取消-->
-<div class="alert alert-error alert-dismissable">
-	<button type="button" class="close" data-dismiss="alert">
-               	&times;
-        </button>
+<div class="alert alert-danger">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
          信息！请注意这个信息。
 </div>
 ```
@@ -476,6 +515,8 @@ http://fontawesome.io/icons/
 (2).媒体列表
 
 ```
+bs3-media-object
+
 <ul class="media-list">
 	<li class="media">
 	<a class="media-left" href="#">
@@ -513,6 +554,8 @@ http://fontawesome.io/icons/
 **十一.面板**	
 
 ```
+bs3-panel:danger
+
 <div class="panel panel-info">
 	<div class="panel-heading">
 		<h3 class="panel-title">面板标题</h3>
@@ -531,6 +574,10 @@ http://fontawesome.io/icons/
 **十二.Well**
 
 ```
+bs3-well
+bs3-well:large
+bs3-well:small
+
 <div class="well well-lg">您好，我在大的 Well 中！</div>
 <div class="well">您好，我在 Well 中！</div>
 <div class="well well-sm">您好，我在小的 Well 中！</div>

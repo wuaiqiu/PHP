@@ -870,3 +870,18 @@ php
 ```
 urldecode():解码
 ```
+
+<br>
+
+**二十.phpstorm快捷键**
+
+```
+<h1></h1>   --->  h1
+<div id="abc"></div>    --->    div#abc
+<div class="abc"></div> --->    div.abc
+<div></div><div></div>  --->    div*2
+<div><p></p></div>  --->    div>p
+<a href="#"></a>    --->    a[href]
+<div>sss</div>  --->    div{sss}
+!   --->    html5模板
+```

@@ -4,6 +4,8 @@
 **一.模态框（Modal）插件,弹出框**
 
 ```
+bs3-modal
+
 <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">模态框</button>
 <div class="modal fade" id="myModal">
     <div class="modal-dialog">

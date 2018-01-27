@@ -43,6 +43,8 @@ $(":submit")|所有提交按钮
 $(":reset")|所有重置按钮
 $(":button")|所有button按钮
 $(":file")|所有文件域
+**混淆选择器**|
+$.escapeSelector( "#target" )|转义类选择器或者ID选择器中的一些CSS特殊字符
 
 <br/>
 
@@ -190,6 +192,7 @@ $selector.detach()||删除被选元素及其子元素,并返回被删除的元�
 $selector.attr(key,value)|key,function(index,oldvalue)|设置或返回匹配元素的属性和值，接受\{\}对象修改多个属性
 $selector.removeAttr(key)||从所有匹配的元素中移除指定的属性
 $selector.prop(key,value)||函数来设置或获取checked、selected、disabled等属性
+$selector.removeProp(name)||从所有匹配的元素中移除指定的属性
 **innerHTML**||
 $selector.html("&lt;p&gt;Hello world!&lt;/p&gt;")|function(index,oldcontent)|设置或返回匹配的元素集合中的HTML内容；会覆盖
 $selector.text("&lt;p&gt;Hello world!&lt;/p&gt;")|function(index,oldcontent)|设置或返回匹配元素的内容；特殊字符会被编码；会覆盖
@@ -209,7 +212,9 @@ $selector.replaceWith($newSelector)|function()|用匹配的元素替换所有匹
 $selector.get(index)||获得由选择器指定的DOM元素(不是jquery对象，则不能用jquery方法)
 $selector.index()||返回指定元素相对于其他指定元素的index位置
 $selector.size()||返回被jQuery选择器匹配的元素的数量
-$selector.serialize()||参数序列化，常用用表单提交所有数据
+**创建元素**||
+$("<div\>")||动态创建div元素
+$("<div\>",\{"class": "test", text: "Click me!",click: function()\{\}\})||动态创建
 
 <br/>
 
@@ -306,6 +311,10 @@ $.ajax({
 function callbackFunction(data) {
      console.log(data);
 }
+
+序列化表单
+$('form').serialize() //single=Single&multiple=Multiple
+$('form').serializeArray()  //[{name:"single",value:"Single"},{name:"multiple",value:"Mutiple"}]
 ```
 
 <br/>
@@ -330,4 +339,189 @@ $("div").queue("fx", []);
 
 #从列队中删除仍未运行的所有项目。
 $("div").clearQueue();
+```
+
+<br>
+
+**八.数据缓存**
+
+```
+//在元素上存放或读取数据,返回jQuery对象
+<div data-test="this is test" ></div>
+$("div").data("test"); //this is test!;
+
+//在一个div上存取名/值对数据
+<div></div>
+$("div").data("test", { first: 16, last: "pizza!" });
+$("div").data("test").first  //16;
+$("div").data("test").last  //pizza!;
+
+//在一个div上存取数据
+$("div").data("blah");  // undefined
+$("div").data("blah", "hello");  // blah设置为hello
+$("div").data("blah");  // hello
+$("div").removeData("blah");  //移除blah
+$("div").data("blah");  // undefined
+```
+
+<br>
+
+**九.延迟对象**
+
+```
+//当延迟成功时调用一个函数或者数组函数。
+$.get("test.php").done(function() { 
+  alert("succeeded"); 
+});
+
+//当延迟失败时调用一个函数或者数组函数。
+$.get("test.php").fail(function(){ 
+    alert("failed"); 
+});
+
+//当延迟对象是成功或失败时被调用添加处理程序。
+$.get("test.php").always( function() { 
+  alert("completed "); 
+});
+
+//when执行,多个请求
+$.when($.ajax("test.php"),$.ajax("test1.php")).done(function() {}).fail(function(){})
+$.when($.ajax( "test.php" ),$.ajax("test1.php")).then(successFunc, failureFunc );
+
+//回调函数
+var dtd = $.Deferred(); // 新建一个deferred对象
+var wait = function(dtd){
+　　var tasks = function(){
+　　　　alert("执行完毕！");
+　　　　dtd.resolve(); // 将deferred对象的运行状态为"已完成"，立即触发done()方法
+                       //dtd.reject():将deferred对象的运行状态变为"已失败"，立即触发fail()方法
+　　};
+　　　  setTimeout(tasks,5000);
+　　　　return dtd;
+};
+$.when(wait(dtd)).done(function(){ 
+        alert("哈哈，成功了！"); 
+    }).fail(function(){ 
+        alert("出错啦！"); 
+    });
+
+
+//改进版
+var dtd = $.Deferred(); // 新建一个Deferred对象
+　　var wait = function(dtd){
+　　　　var tasks = function(){
+　　　　　　alert("执行完毕！");
+　　　　　　dtd.resolve(); // 改变Deferred对象的执行状态
+　　　　};
+
+　　　　setTimeout(tasks,5000);
+　　　　return dtd.promise(); //在原来的deferred对象上返回另一个deferred对象，避免全局dtd状态被改变
+　　};
+　　var d = wait(dtd); // 新建一个d对象，改为对这个对象进行操作
+　　$.when(d).done(function(){ 
+        alert("哈哈，成功了！"); 
+    }).fail(function(){ 
+        alert("出错啦！"); 
+    });
+　　d.resolve(); // 此时，这个语句是无效的
+
+//改进版：$.Deferred()可以接受一个函数名（注意，是函数名）作为参数，$.Deferred()所生成的deferred对象将作为这个函数的默认参数。
+var wait = function(dtd){
+　　　　var tasks = function(){
+　　　　　　alert("执行完毕！");
+　　　　　　dtd.resolve(); // 改变Deferred对象的执行状态
+　　　　};
+　　　　setTimeout(tasks,5000);
+　　　　return dtd.promise();
+　　};
+
+　　$.Deferred(wait).done(function(){ 
+        alert("哈哈，成功了！"); 
+    }).fail(function(){ 
+        alert("出错啦！"); 
+    });
+```
+
+<br>
+
+**十.回调对象**
+
+```
+function fn1(v1,v2) {
+    console.log("f1:"+v1);
+    console.log("f1:"+v2);
+}
+function fn2(v1) {
+    console.log("f2:"+v1);
+}
+
+//once:只执行一次
+var call = $.Callbacks('once');
+call.add(fn1);
+call.add(fn2);
+call.fire("a","b");
+call.fire("c","d");//fire无效
+
+//memory:记忆功能
+var call = $.Callbacks('memory');
+call.add(fn1);
+call.fire("a","b");
+call.add(fn2);
+call.fire();
+//相当于
+call.add(fn1);
+call.add(fn2);
+call.fire("a","b");
+call.fire();
+
+//unique:去除重复的添加
+var call = $.Callbacks('unique');
+call.add(fn1);
+call.add(fn1);
+call.fire("a","b");
+
+//stopOnFalse:当函数return false时候不执行
+var call = $.Callbacks('stopOnFalse');
+call.add(fn1);
+call.add(function() {
+     return false;
+});
+call.add(fn2);//不会执行
+call.fire("a","b");
+
+//remove:移除指定的函数
+call.remove(fn2);
+
+//empty:清空函数列表
+call.empty() 
+
+//lock:之后对call操作无效
+call.lock();
+```
+
+<br>
+
+**十一.数组操作**
+
+```
+//过滤元素大于0
+var arr=$.grep( [0,1,2], function(n,i){
+     return n > 0;
+});
+
+//过滤元素小于等于0
+var arr=$.grep( [0,1,2], function(n,i){
+    return n > 0;
+},true);
+
+//返回一个新数组（each不会）
+var arr=$.map( [0,1,2], function(n,i){
+     return n+1;
+});
+
+//查看对应元素的位置
+var index=$.inArray( 1,[1,0,2]);
+
+//合并数组
+var arr=$.merge( [0,1,2], [2,3,4] )
 ```
