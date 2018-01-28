@@ -1,6 +1,6 @@
 # NodeJs
 
-**(1).异步编程**
+**(1).异步编程;回调函数**
 
 ```
 //异步读取文件
@@ -21,6 +21,85 @@ var fs = require("fs");
 var data = fs.readFileSync('input');
 console.log(data.toString());
 console.log("程序执行结束!");
+
+//通过异步模式获取文件信息
+var fs = require('fs');
+fs.stat('demo1.js', function (err, stats) {
+    if (err) {
+       return console.error(err);
+   }
+   console.log(stats);
+   console.log("是否为文件(isFile) ? " + stats.isFile());
+   console.log("是否为目录(isDirectory) ? " + stats.isDirectory());    
+});
+
+//异步模式下写入文件
+var fs = require("fs");
+fs.writeFile('input.txt', '我是通过写入的文件内容！',  function(err) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log("写入完成");
+});
+console.log("主程序完成");
+
+//同步写入
+var fs = require("fs");
+fs.writeFileSync('input1.txt', '我是通过写入的文件内容！');
+console.log("主程序完成");
+
+//异步读取文件；fd - 通过 fs.open() 方法返回的文件描述符。
+var fs = require("fs");
+var buf = new Buffer(1024);
+fs.open('input.txt', 'r+', function(err, fd) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log("文件打开成功！");
+   fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){
+      if (err){
+         console.log(err);
+      }
+      // 仅输出读取的字节
+      if(bytes > 0){
+         console.log(buf.slice(0, bytes).toString());
+      }
+      // 关闭文件
+      fs.close(fd, function(err){
+         if (err){
+            console.log(err);
+         } 
+         console.log("文件关闭成功");
+      });
+   });
+});
+
+//删除文件
+var fs = require("fs");
+fs.unlink('input.txt', function(err) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log("文件删除成功！");
+});
+
+//创建目录
+var fs = require("fs");
+fs.mkdir("test",function(err){
+   if (err) {
+       return console.error(err);
+   }
+   console.log("目录创建成功。");
+});
+
+//删除目录
+var fs = require("fs");
+fs.rmdir("/tmp/test",function(err){
+   if (err) {
+       return console.error(err);
+   }
+   console.log("目录删除成功。");
+});
 ```
 
 <br>
@@ -278,4 +357,46 @@ console.log('Server running at http://127.0.0.1:8888/');
 ```
 __filename ： 表示当前正在执行的脚本的文件绝对路径
 __dirname ： 表示当前执行脚本所在的目录
+```
+
+<br>
+
+**(8).常用工具**
+
+```
+//util.inherits(constructor, superConstructor)是一个实现对象间原型继承的函数。
+var util = require('util'); 
+function Base() { 
+	this.name='base';
+} 
+Base.prototype.showName = function() { 
+    console.log(this.name);
+}; 
+function Sub() { 
+    this.name = 'sub'; 
+} 
+util.inherits(Sub, Base); 
+var objBase = new Base(); 
+objBase.showName(); 
+var objSub = new Sub(); 
+objSub.showName(); 
+
+//util.inspect(object,[showHidden],[depth],[colors])是一个将任意对象转换为字符串的方法
+var util = require('util'); 
+function Person() { 
+    this.name = 'byvoid'; 
+    this.toString = function() { 
+    return this.name; 
+    }; 
+} 
+var obj = new Person(); 
+console.log(util.inspect(obj,true)); 
+
+//util.isArray(object)判断object是否为数组
+var util = require('util');
+util.isArray([]) #true
+util.isArray(new Array) #true
+util.isArray({}) #false
+
+//util.isRegExp(object)；util.isDate(object)；util.isError(object)
 ```

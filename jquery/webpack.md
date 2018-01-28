@@ -8,7 +8,7 @@ demo1.js
 document.write("It works");
 ```
 
->wepack demo1.js bundle.js
+>webpack demo1.js bundle.js
 
 ```
 demo2.js

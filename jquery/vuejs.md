@@ -431,3 +431,72 @@ new Vue({
        el: '#app'
 });
 ```
+
+<br>
+
+**(12).自定义指令**
+
+```
+<div id="app">
+	<p v-color>页面载入时，input 元素自动获取焦点：</p>
+</div>
+<div id="app1">
+	<p v-color>页面载入时，input 元素自动获取焦点：</p>
+</div>
+
+#注册一个全局自定义指令v-color
+Vue.directive('color', {
+  inserted: function (el) {
+    // 聚焦元素
+ 	el.style.color="red";
+  }
+})
+new Vue({
+  el: '#app'
+})
+new Vue({
+  el: '#app1'
+})
+
+#注册一个局部的自定义指令v-color
+new Vue({
+  el: '#app',
+  directives: {
+    color: {
+      inserted: function (el) {
+        // 聚焦元素
+       el.style.color="red";
+      }
+    }
+  }
+})
+
+#钩子函数(bind:第一次绑定到元素时调用;unbind:指令与元素解绑时调用)
+<div id="app">
+    <div v-runoob="{ color: 'green', text: '菜鸟教程!' }"></div>
+</div>
+
+//完整写法
+<script>
+Vue.directive('runoob', {
+	bind:function (el, binding) {
+	el.innerHTML = binding.value.text
+	el.style.backgroundColor = binding.value.color
+}});
+new Vue({
+  el: '#app'
+})
+</script>
+
+
+//简写方法
+<script>
+Vue.directive('runoob', function (el, binding) {
+    el.innerHTML = binding.value.text
+    el.style.backgroundColor = binding.value.color
+})
+new Vue({
+  el: '#app'
+})
+</script>
+```

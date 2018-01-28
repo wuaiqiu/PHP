@@ -18,6 +18,7 @@ nav {
   color: #F90;
 }
 ```
+
 <br>
 
 (2)**嵌套CSS**
@@ -192,9 +193,6 @@ notice {
 ```
 
 <br>
-
-
-
 
 (11)**混合器传参**
 
@@ -429,4 +427,22 @@ div{
 
 --------------------
 div {height: 6px; }
+```
+
+<br>
+
+**(18).sass编译**
+
+```
+#单文件转换命令
+sass input.scss output.css
+
+#单文件监听命令
+sass --watch input.scss:output.css
+
+#如果你有很多的sass文件的目录，你也可以告诉sass监听整个目录：
+sass --watch app/sass:public/stylesheets
+
+#编译格式(nested嵌套,expanded扩展,compat紧凑,compressed压缩)
+sass --watch input.scss:output.css --style compact
 ```
