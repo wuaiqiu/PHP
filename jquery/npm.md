@@ -83,3 +83,15 @@ npm cache clean
   }
 }
 ```
+
+```
+package-lock.json
+
+
+1.在package-lock.json同级目录下添加自定义npm-shrinkwrap.json文件，package-lock.json会失效。
+2.更新模块
+    (1)直接用@方法安装指定版本的npm包
+    (2)将旧版本包先uninstall，然后再次安装
+    (3)删除package-lock.json，然后再次安装
+3.package-lock.json是npm5做的一个优化，加快了npm 下载的速度。条件就是将依赖的详细信息，包括版本，下载地址等
+```
