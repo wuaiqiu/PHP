@@ -1,6 +1,7 @@
 <?php
 /*
  * Cache(config/cache.php)
+ * composer require predis/predis
  * 
  * #添加
  * Cache::put('key', 'value', 10):缓存键值对（分）
