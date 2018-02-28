@@ -5,17 +5,18 @@
 #加载其它配置文件
 Config::load(APP_PATH.'config/config.php');
 #读取指定配置参数
-Config::get('app_debug'); //config('app_debug')
+Config::get('app_debug');
 #读取二级配置
-Config::get('template.think');  //config('template.think');
+Config::get('template.think');
 #读取所有的配置参数
-Config::get();   //config()
+Config::get();
 #判断是否存在某个设置参数
-Config::has('app_debug');   //config('?app_debug')
+Config::has('app_debug');
 #设置配置参数
-Config::set('app_debug',false); //config('app_debug',false)
+Config::set('app_debug',false);
 #批量设置
-Config::set(['app_debug'=>false]); //config(['app_debug'=>false]);
+Config::set(['app_debug'=>false]);
+
 
 //2.配置域
 #导入my_config.php中的配置参数，并纳入user作用域

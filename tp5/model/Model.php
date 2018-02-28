@@ -1,10 +1,10 @@
 <?php
-#1.模型  模型名就是数据表名
+#1.模型 
 
 class User extends Model{
-    //设置主键
+    //设置主键(主键会自动识别)
     protected $pk = 'uid';
-    //设置当前模型对应的完整数据表名称
+    //设置当前模型对应的完整数据表名称(模型名就是数据表名)
     protected $table = 'think_user';
     //自定义初始化
     protected function initialize(){

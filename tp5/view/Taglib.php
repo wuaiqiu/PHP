@@ -19,7 +19,7 @@
  *        <include file="User/foot"/>
  *
  *        #也可以使用绝对路径
- *        <include file="./Application/Home/View/default/User/head.html"/>
+ *        <include file="../Application/index/view/index/index/index.html"/>
  *        
  *        #传参
  *        <include file="User/foot" name='zhfangna'/>
@@ -160,19 +160,8 @@
  * 
  *    l.导入标签
  *
- *          (1)import
- *               #表示/Public/Js/index.js
- *               <import type='js' file="Js.index" />
- *
- *               #表示/Public/Css/index.css
- *               <import type='css' file="Css.index" />
- *
- *               #表示 /day6/Application/Common/Common/index.css
- *               <import type='css' file="index"  basepath="/Application/Common/Common"/>
- *
- *          (2)load
- *              <load href="/Public/Js/Common.js" />
- *              <load href="/Public/Css/common.css" />
- *              <load href="/Application/Common/Common/index.css" />
+ *          (1)load
+ *              <load href="/static/js/common.js" />
+ *              <load href="/static/css/common.css" />
  *
  * */

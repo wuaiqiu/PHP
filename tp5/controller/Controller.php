@@ -17,7 +17,7 @@ protected $beforeActionList = [
 
 
 #3.页面跳转
-//设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
+//设置成功后跳转页面的地址
 $this->success('新增成功', 'User/list');
 //错误页面的默认跳转页面是返回前一页，通常不需要设置
 $this->error('新增失败');
@@ -30,10 +30,6 @@ $this->redirect('News/category', ['cate_id' => 2]);
 $this->redirect('http://thinkphp.cn/blog/2',302);
 //在重定向的时候通过session闪存数据传值data
 $this->redirect('News/category', ['cate_id' => 2], 302, ['data' => 'hello']);
-//记住当前的URL后跳转
-redirect('News/category')->remember();
-//跳转到上次记住的URL
-redirect()->restore();
 
 
 #5.空操作(系统在找不到指定的操作方法)
@@ -51,11 +47,11 @@ class Error{
 
 
 #7.分层控制器(application/index/event/Blog)
-$event=Loader::controller('Blog', 'event'); //$event=controller('Blog', 'event');
+$event=controller('Blog', 'event');
 //支持跨模块调用
 $event = controller('Admin/Blog', 'event'); //表示实例化Admin模块的Blog控制器类
 //调用Blog控制器的update方法并传参
-Loader::action('Blog/update', ['id' => 5], 'event'); //action('Blog/update', ['id' => 5], 'event');
+action('Blog/update', ['id' => 5], 'event');
 //实现Widget
 action('Blog/menu', ['name'=>'think'], 'widget'); //widget('Blog/menu', ['name' => 'think'])
 

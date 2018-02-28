@@ -46,6 +46,9 @@ php think optimize:route
 #生成配置缓存(runtime/init.php)
 php think optimize:config
 
+#生成数据表字段缓存(runtime/schema)
+php think optimize:schema
+
 #清除缓存文件(runtime)
 php think clear
 ```
