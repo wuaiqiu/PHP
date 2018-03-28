@@ -716,7 +716,41 @@ Promise.race([fun1(false),fun2(true)]).then(function (message) {
 
 <br>
 
-**十四.ES6转ES5**
+**十六.模块化**
+
+```
+#导入的变量名必须和导出的名称一致
+export const PI=3.14;
+export function add (x, y) {
+    return x + y;
+}
+export let obj={
+    a:'A',
+    b:'B'
+};
+
+import {PI,add,obj} greeter from './greeter';
+console.log(PI);
+console.log(add(2,4));
+console.log(obj.a);
+
+import * as greeter from './greeter';
+console.log(greeter.PI);
+console.log(greeter.add(2,4));
+console.log(greeter.obj.a);
+
+#一个模块只能有一个默认导出
+export default function(a,b) {
+    return a+b;
+};
+
+import myFun from './greeter';
+console.log(myFun(1,2));
+```
+
+<br>
+
+**十五.ES6转ES5**
 
 ```
 npm install --save-dev babel-cli babel-preset-env

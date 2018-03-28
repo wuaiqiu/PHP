@@ -6,10 +6,14 @@
 ***Greeter.js***
 
 ```
-module.exports = function() {
+module.exports.a = function() {
   var greet = document.createElement('div');
   greet.textContent = "Hi there and greetings!";
   return greet;
+};
+module.exports.b={
+    a:'A',
+    b:'B'
 };
 ```
 
@@ -17,16 +21,17 @@ module.exports = function() {
 
 ```
 const greeter = require('./Greeter.js');
-document.querySelector("#root").appendChild(greeter());
+document.querySelector("#root").appendChild(greeter.a());
+console.log(greeter.b.a);
 ```
 
 >webpack main.js bundle.js --watch
 
 <br>
 
-**(2)处理ES6**
+**(2)处理ES6,React**
 
-npm install --save-dev babel-core babel-loader babel-preset-env
+npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react
 
 ```
 module.exports = {
@@ -37,7 +42,7 @@ module.exports = {
             use: { //使用的处理loader
                 loader: "babel-loader", //loader的名称
                 options: {
-                    presets: ["env"]
+                    presets: ["env","react"]
                 }
             },
             exclude: /node_modules/, //手动屏蔽(include添加)处理的文件（夹）
@@ -182,23 +187,7 @@ module.exports = {
 
 <br>
 
-**(6)引入jquery及其插件**
-
-```
-output : {
-    filename : "bundle-[hash].js,
-    path : __dirname + "/public",
-    libraryTarget : 'var'  
-},
-
-import $ from 'jquery'
-import 'jquery-ui' 
-```
-
-<br>
-
-
-**(7)配置文件**
+**(6)配置文件(webpack.config.js)**
 
 ```
 module.exports = {

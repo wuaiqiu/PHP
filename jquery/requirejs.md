@@ -1,6 +1,17 @@
-# requirejs
+# requirejs与seajs
 
-**一.基本格式**
+>CommonJS:一种服务器端模块化的规范，Nodejs实现了这种规范，所以就说Nodejs支持CommonJS（webpack）
+
+>AMD(Asynchronous Module Definition,异步模块定义):主要用于浏览器端的JS加载，为了不造成网络阻塞。只有当依赖的模块加载完毕，才会执行回调。（requirejs）
+
+>CMD(Common Module Definition，公共模块定义):在前端使用commonjs的规范,（seajs）
+
+>UMD(Universal Module Definition,通用模块定义):UMD是AMD和CommonJS的一个糅合（umd）
+
+>ES6 Module:es6模块化格式
+
+
+**一.基本格式（requirejs）**
 
 config.js
 
@@ -29,7 +40,7 @@ index.html
 require(['bootstrap'],function () {})
 ```
 
-**二.自定义js文件**
+**二.自定义js文件（requirejs）**
 
 ***标准***
 

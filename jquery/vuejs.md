@@ -108,8 +108,8 @@ new Vue({
 #双向数据绑定
 <div id="app">
     <p>{{ message }}</p>
-     <!--数据只绑定一次-->
-    <p>{{ *message }}</p>
+    <!--只绑定一次-->
+    <p v-once>{{message}}</p>
     <input v-model="message">
 </div>
 
@@ -369,7 +369,7 @@ new Vue({
     <runoob></runoob>
 </div>
 
-// 注册
+//注册
 Vue.component('runoob', {
        template: '<h1>自定义组件!</h1>'
 })
@@ -392,7 +392,7 @@ new Vue({
        }
 })
 
-#定义属性
+#定义属性(prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是不会反过来)
 <div id="app">
     <child value="hello"></child>
 </div>
@@ -446,8 +446,7 @@ new Vue({
 
 #注册一个全局自定义指令v-color
 Vue.directive('color', {
-  inserted: function (el) {
-    // 聚焦元素
+  bind: function (el) {
  	el.style.color="red";
   }
 })
@@ -463,40 +462,137 @@ new Vue({
   el: '#app',
   directives: {
     color: {
-      inserted: function (el) {
-        // 聚焦元素
+      bind: function (el) {
        el.style.color="red";
       }
     }
   }
 })
 
-#钩子函数(bind:第一次绑定到元素时调用;unbind:指令与元素解绑时调用)
+#钩子函数(bind:第一次绑定到元素时调用;update:在bind之后立即以初始值为参数第一次调用，之后绑定值变化的时候，参数为新值与旧值;unbind:指令与元素解绑时调用)
 <div id="app">
-    <div v-runoob="{ color: 'green', text: '菜鸟教程!' }"></div>
+    <p v-color:red="message">Hello</p>
 </div>
-
-//完整写法
 <script>
-Vue.directive('runoob', {
-	bind:function (el, binding) {
-	el.innerHTML = binding.value.text
-	el.style.backgroundColor = binding.value.color
-}});
-new Vue({
-  el: '#app'
-})
+    Vue.directive('color', {
+        bind: function (el,binding) {
+            console.log("bind");
+            console.log(el); //<p>Hello</p>
+            console.log(binding.name); //color
+            console.log(binding.arg); //red
+            console.log(binding.value); //#ff0000
+        },
+        update:function (el,binding) {
+            console.log("update");
+            console.log(el); //<p>Hello</p>
+            console.log(binding.name); //color
+            console.log(binding.arg); //red
+            console.log(binding.value); //#000000
+            console.log(binding.oldValue);//#ff0000
+        },
+        unbind:function (el,binding) {
+            console.log("unbind");
+            console.log(el); //<p>Hello</p>
+            console.log(binding.name); //color
+            console.log(binding.arg); //red
+            console.log(binding.value); //#000000
+        }
+    });
+    var vm= new Vue({
+        el: '#app',
+        data:{
+            message:"#ff0000"
+        }
+    });
 </script>
 
 
-//简写方法
+//bind,update简写方法
+Vue.directive('color', function (el,binding) {
+            console.log(el); //<p>Hello</p>
+            console.log(binding.name); //color
+            console.log(binding.arg); //red
+            console.log(binding.value); //#000000
+            console.log(binding.oldValue);//#ff0000
+
+});
+```
+
+<br>
+
+**(13).生命周期**
+
+```
+<div>
+<p>{{message}}</p>
+</div>
 <script>
-Vue.directive('runoob', function (el, binding) {
-    el.innerHTML = binding.value.text
-    el.style.backgroundColor = binding.value.color
-})
-new Vue({
-  el: '#app'
-})
+   var vm= new Vue({
+       el:"div",
+       data:{
+           message:"Hello world"
+       },
+        beforeCreate: function() {
+            console.group('------beforeCreate创建前状态------');
+            console.log(this.$el); //undefined
+            console.log(this.message);//undefined
+        },
+        /*
+        *data属性进行绑定,初始化事件
+        * */
+        created: function() {
+            console.group('------created创建完毕状态------');
+            console.log(this.$el); //undefined
+            console.log(this.message); //Hello world
+        },
+        /*
+        * el元素进行绑定,如果没有el选项，则停止编译，也就意味着停止了生命周期
+        * */
+        beforeMount: function() {
+            console.group('------beforeMount挂载前状态------');
+            console.log(this.$el);//<div><p>{{message}}</p></div>
+            console.log(this.message); //Hello world
+        },
+        /*
+        *检查template参数选项,如果有template则代替el，否则完成数据绑定
+        * */
+        mounted: function() {
+            console.group('------mounted 挂载结束状态------');
+            console.log(this.$el); //<div><p>Hello world</p></div>
+            console.log(this.message); //Hello world
+        },
+        /*
+        *发现data中的数据发生了改变
+        * */
+        beforeUpdate: function () {
+            console.group('beforeUpdate 更新前状态===============》');
+            console.log(this.$el.innerHTML); //<p>Hello world</p>
+            console.log(this.message); //Hello worlds
+        },
+        /*
+        * view层重新渲染，数据更新
+        * */
+        updated: function () {
+            console.group('updated 更新完成状态===============》');
+            console.log(this.$el.innerHTML); //<p>Hello worlds</p>
+            console.log(this.message); //Hello world
+        },
+        /*
+        *vue实例销毁时触发(vm.$destroy())
+        * */
+        beforeDestroy: function () {
+            console.group('beforeDestroy 销毁前状态===============》');
+            console.log(this.$el); //<div><p>Hello world</p></div>
+            console.log(this.message); //Hello world
+        },
+       /*
+       * Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁
+       * */
+        destroyed: function () {
+            console.group('destroyed 销毁完成状态===============》');
+            console.log(this.$el); //<div><p>Hello world</p></div>
+            console.log(this.message); //Hello world
+        }
+    });
 </script>
 ```
