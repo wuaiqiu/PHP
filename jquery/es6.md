@@ -110,27 +110,12 @@ console.log(a);
 
 ```
 #1.默认参数
-
-function  show1(a,b) {
-      b=b||8;
-      return a*b;
-}
-function show2(a,b=8) {
+function show1(a,b=8) {
       return a*b;
 }
 console.log(show1(1));
-console.log(show2(1));
 
 #2.rest 参数;rest 参数之后不能再有其他参数;rest 参数是一个数组
-function add() {
-    let sum =0;
-    for(var val of Array.prototype.slice.call(arguments)){
-        sum += val;
-    }
-    return sum;
-}
-console.log(add(1,3)); // 4
-
 function add(...values) {
     let sum = 0;
     for (var val of values) {
@@ -139,10 +124,8 @@ function add(...values) {
      return sum;
 }
 console.log(add(2, 5, 3)); // 10
-console.log(add(2,4)); // 6
 
-#3.箭头函数;不可以当作构造函数;不可以使用arguments对象;不可以使用yield命令
-
+#3.箭头函数(匿名函数);不可以当作构造函数;不可以使用arguments对象;不可以使用yield命令
 //单行代码
 function  show1(a,b) {
     return a*b;
@@ -163,14 +146,31 @@ var show4=(a,b)=>{
 console.log(show3(1,2));
 console.log(show4(1,2));
 
-//箭头函数的this指向父函数
-var a=3;
+#1.箭头函数中的this是在定义函数的时候绑定，而不是在执行函数的时候绑定
+#2.箭头函数中的this是继承自父执行上下文(function)
+function Person(){
+    this.say=()=>{
+        console.log(this);
+    }
+}
 var obj={
-   fun:()=>{
-       console.log(this.a);
+    say:()=>{
+        console.log(this);
     }
 };
-obj.fun(); //3
+
+function Person() {
+    var _this = this;
+
+    this.say = function () {
+        console.log(_this);
+    };
+}
+var obj = {
+    say: function say() {
+        console.log(undefined);
+    }
+};
 ```
 
 <br>
@@ -184,27 +184,11 @@ console.log(1, ...[2, 3, 4], 5); // 1 2 3 4 5
 
 #2.数组方法
 /*
-* Array.from():用于将两类对象转为真正的数组：类似数组的对象（array-like object）和可遍历（iterable）的对象
-* Array.of()方法用于将一组值，转换为数组。
-* copyWithin()方法，在当前数组内部，将指定位置的成员复制到其他位置（会覆盖原有成员），然后返回当前数组
 * find()方法，用于找出第一个符合条件的数组成员,直到找出第一个返回值为true的成员，然后返回该成员。如果没有符合条件的成员，则返回undefined
-* findIndex()方法的用法与find方法非常类似，返回第一个符合条件的数组成员的位置，如果所有成员都不符合条件，则返回-1。
 * fill()方法使用给定值，填充一个数组。
 * includes()方法返回一个布尔值，表示某个数组是否包含给定的值
 * */
 
-let obj = {'0': 'a', '1': 'b', '2': 'c',length:3};
-// ES5的写法
-var arr1 = [].slice.call(obj); // ['a', 'b', 'c']
-// ES6的写法
-let arr2 = Array.from(obj); // ['a', 'b', 'c']
-console.log(arr1);
-console.log(arr2);
-console.log(Array.of(1,2));
-// 将3号位复制到0号位
-[1, 2, 3, 4, 5].copyWithin(0, 3, 4);// [4, 2, 3, 4, 5]
-// -2相当于3号位，-1相当于4号位
-[1, 2, 3, 4, 5].copyWithin(0, -2, -1);// [4, 2, 3, 4, 5]
 //找出第一个符合回调函数的元素
 [1, 4, -5, 10].find((n) => n < 0);// -5
 //从 1 号位开始，向原数组填充 7，到 2 号位之前结束
@@ -341,7 +325,7 @@ PersonB.prototype.run=function () {
 console.log(new PersonA());
 console.log(new PersonB());
 
-#2.Class 表达式
+#2.Class表达式立即执行
 let person = new class {
     constructor(name) {
         this.name = name;
@@ -441,8 +425,11 @@ show({name:'zhangsan',age:12});
 
 ```
 #1.定义:表示独一无二的值;Symbol函数前不能使用new命令;可以接受一个字符串参数作为描述;
+let a1 ='foo';
+let a2= 'foo';
 let s1 = Symbol('foo');
 let s2 = Symbol('foo');
+console.log(a1 === a2);//true
 console.log(s1 === s2); //false
 
 #2.方法
@@ -659,58 +646,56 @@ fun(false).then(function (message) {
     console.log(error);
 });
 
-#4.当所有Promise对象全为resolve时可以回调
+#4.当所有Promise对象完成后可以回调
 function fun1 (status) {
-    return new Promise(function (resolve, reject) {
-        if (status) {
-            resolve("fun1执行成功");
-        } else {
-            reject("fun1执行失败");
-        }
-    });
+        return new Promise(function (resolve, reject) {
+            if (status) {
+               setTimeout(function(){resolve("fun1执行成功")},5000);
+            } else {
+                reject("fun1执行失败");
+            }
+        });
 }
 function fun2 (status) {
-    return new Promise(function (resolve, reject) {
-        if (status) {
-            resolve("fun2执行成功");
-        } else {
-            reject("fun2执行失败");
-        }
-    });
+        return new Promise(function (resolve, reject) {
+            if (status) {
+                setTimeout(function(){resolve("fun2执行成功")},2000);
+            } else {
+                reject("fun2执行失败");
+            }
+        });
 }
 
 Promise.all([fun1(true),fun2(true)]).then(function (message) {
-    console.log(message);//["fun1执行成功", "fun2执行成功"]
-    console.log("全部成功");
-}).catch(function (error) {
-    console.log(error); //fun1执行失败
+     console.log(message);//["fun1执行成功", "fun2执行成功"]
+ }).catch(function (error) {
+      console.log(error);
 });
 
 #5.当所有Promise对象有一个状态改变时可以回调
 function fun1 (status) {
-    return new Promise(function (resolve, reject) {
-        if (status) {
-            resolve("fun1执行成功");
-        } else {
-            reject("fun1执行失败");
-        }
-    });
+        return new Promise(function (resolve, reject) {
+            if (status) {
+               setTimeout(function(){resolve("fun1执行成功")},5000);
+            } else {
+                reject("fun1执行失败");
+            }
+        });
 }
 function fun2 (status) {
-    return new Promise(function (resolve, reject) {
-        if (status) {
-            resolve("fun2执行成功");
-        } else {
-            reject("fun2执行失败");
-        }
-    });
+        return new Promise(function (resolve, reject) {
+            if (status) {
+                setTimeout(function(){resolve("fun2执行成功")},2000);
+            } else {
+                reject("fun2执行失败");
+            }
+        });
 }
 
-Promise.race([fun1(false),fun2(true)]).then(function (message) {
-    console.log(message);//["fun1执行成功"]
-    console.log("全部成功");
+Promise.race([fun1(true),fun2(true)]).then(function (message) {
+      console.log(message); //fun2执行成功
 }).catch(function (error) {
-    console.log(error); //fun1执行失败
+     console.log(error);
 });
 ```
 
@@ -750,7 +735,77 @@ console.log(myFun(1,2));
 
 <br>
 
-**十五.ES6转ES5**
+**十五.Generator**
+
+```
+#1.Generator函数是异步
+#2.不能在非Generator函数中使用yield
+#3.Generator函数返回的Iterator实例,执行next(),返回值的结构为{value : "value",done : false}
+#4.如果给Iteerator的next方法传参数,那么这个参数将会作为上一次yield语句的返回值
+#5.如果执行Iterator的return()方法， 那么这个迭代器的返回会被强制设置为迭代完毕,此时done的状态也为true
+function* foo(x) {
+    var y = 2 * (yield (x + 1));
+    var z = yield (y / 3);
+    return (x + y + z);
+}
+var b = foo(5);
+b.next() // { value:6, done:false }
+b.next(12) // { value:8, done:false }
+b.next(13) // { value:42, done:true }
+
+#6.yield*这种语句让我们可以在Generator函数里面再套一个Generator
+function* foo() {
+    yield 0;
+    yield 1;
+}
+function* bar() {
+    yield 'x';
+    yield* foo();
+    yield 'y';
+}
+for (let v of bar()){
+    console.log(v);
+};
+
+#7.如果在Iterator执行到的yield语句写在try{}语句块中,那么这个错误会被内部的try{}catch(){}捕获 ,否则被外部捕获
+var g = function* () {
+        yield;
+        try {
+            yield;
+        } catch (e) {
+            console.log('b内部捕获', e);
+        }
+};
+
+var i = g();
+i.next();
+try {
+    i.throw('a');
+} catch (e) {
+    console.log('a外部捕获', e);
+}
+i.next();
+i.throw('b');
+
+#8.利用Generator函数，可以在任意对象上部署iterator接口
+function* iterEntries(obj) {
+    let keys = Object.keys(obj);
+    for (let i=0; i < keys.length; i++) {
+        let key = keys[i];
+        yield [key, obj[key]];
+    }
+}
+
+let myObj = { foo: 3, bar: 7 };
+
+for (let [key, value] of iterEntries(myObj)) {
+    console.log(key, value); //输出：foo 3 ， bar 7
+}
+```
+
+<br>
+
+**十六.ES6转ES5**
 
 ```
 npm install --save-dev babel-cli babel-preset-env
