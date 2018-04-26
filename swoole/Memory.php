@@ -1,11 +1,6 @@
 <?php
 /*
- * 锁机制
- *      文件锁 SWOOLE_FILELOCK
- *      读写锁 SWOOLE_RWLOCK
- *      信号量 SWOOLE_SEM
- *      互斥锁 SWOOLE_MUTEX
- *      自旋锁 SWOOLE_SPINLOCK
+ * 锁机制(互斥锁)
  * */
 
 #创建锁对象
@@ -24,6 +19,25 @@ if (pcntl_fork() > 0) {
     $lock->unlock();
     exit("[Child] release Lock".PHP_EOL);
 }
+
+
+
+/*
+ * 缓存区:不支持内存共享
+ * */
+
+#创建一个内存对象（默认128字节）
+$buffer=new swoole_buffer();
+#向缓存区的任意内存位置写数据
+$buffer->write(0, "Hello world");
+#将一个字符串数据追加到缓存区末尾
+$buffer->append("swoole");
+#读取缓存区任意位置的内存
+$str=$buffer->read(0, 12);
+echo $str;
+#清理缓存区数据。
+$buffer->clear();
+
 
 
 /*
@@ -57,3 +71,24 @@ $table->del('hello@qq.com');
 foreach($table as $row) {
     var_dump($row);
 }
+
+
+
+/*
+ *Atomic:原子计数操作类，可以方便整数的无锁原子增减
+ * */
+
+#创建一个原子计数对象。
+$atomic = new swoole_atomic(123);
+#增加计数
+echo $atomic->add(12).PHP_EOL;
+#减少计数
+echo $atomic->sub(11).PHP_EOL;
+#如果不等于返回false
+echo $atomic->cmpset(122, 999).PHP_EOL;
+#如果当前数值等于$cmp_value返回true，并将当前数值设置为$set_value
+echo $atomic->cmpset(124, 999).PHP_EOL;
+#获取当前计数的值
+echo $atomic->get().PHP_EOL;
+#将当前值设置为指定的数字。
+$atomic->set(123);

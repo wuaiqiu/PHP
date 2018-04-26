@@ -1,33 +1,15 @@
 <?php
 /*
- *创建进程
+ *  swoole_process($function,$redirect_stdin_stdout, $create_pipe)
+ *      $function：子进程创建成功后要执行的函数
+ *      $redirect_stdin_stdout：重定向子进程的标准输入和输出。设置为true，则在进程内echo将不是打印屏幕，而是写入到管道，
+ *  默认为false，阻塞读取。
+ *      $create_pipe：是否创建管道，默认为true
  * */
-
-#子进程回调函数
-function deal($worker){
-    echo "PID:".$worker->pid.PHP_EOL;
-    sleep(3);
-}
-
-#创建子进程进程
-$p1=new swoole_process("deal");
-$p1->start();
-$p2=new swoole_process("deal");
-$p2->start();
-$p3=new swoole_process("deal");
-$p3->start();
-
-#监听子进程退出信号
-swoole_process::signal(SIGCHLD, function($sig) {
-    #必须为false，非阻塞模式
-    while($ret =  swoole_process::wait(false)) {
-        echo "退出:PID={$ret['pid']}".PHP_EOL;
-    }
-});
 
 
 /*
- * 进程间通信
+ * 进程间通信:管道通信
  * */
 
 #子进程数组
@@ -35,9 +17,9 @@ $workers = [];
 
 #子进程回调函数
 function deal1($worker){
-    #子进程向管道中写数据
+    #向父进程向管道中写数据
     $worker->write($worker->pid);
-    #子进程读数据
+    #从父进程读数据(在此阻塞，等待数据)
     $data=$worker->read();
     echo "Father:".$data;
 }
@@ -51,50 +33,54 @@ for($i=0;$i<3 ; $i++){
 
 #父进程读取管道数据及写入数据
 foreach($workers as $process){
+    #从子进程读数据(在此阻塞，等待数据)
     $data = $process->read();
     echo "Child: " . $data.PHP_EOL;
+    #向子进程向管道中写数据
     $process->write("Hello".$data.PHP_EOL);
 }
 
-swoole_process::signal(SIGCHLD, function($sig) {
-    #必须为false，非阻塞模式
-    while($ret =  swoole_process::wait(false)) {
-        echo "退出:PID={$ret['pid']}".PHP_EOL;
-    }
-});
+#等待回收进程
+for($i = 0; $i < 3; $i++) {
+    $ret = swoole_process::wait(); //阻塞回收结束运行的子进程。
+    $pid = $ret['pid'];
+    unset($workers[$pid]);
+    echo "Worker Exit, PID=".$pid.PHP_EOL;
+}
+
 
 
 /*
- * 进程消息队列
+ * 进程间通信:消息队列(抢占式)
  * */
 
 #进程数组
 $workers = [];
 
-#子进程取父进程的数据
+#子进程回调函数
 function deal2($worker){
-    $recv = $worker->pop();
-    echo "From Master: $recv".PHP_EOL;
-    $worker->exit(0);
+    #从父进程读取数据(在此阻塞，等待数据)
+    $data = $worker->pop();
+    echo "Father:".$data.PHP_EOL;
 }
 
-#创建子进程进程
+#创建子进程并使用消息列队
 for($i = 0; $i < 3; $i++) {
-    $process = new swoole_process('deal2');
-    #使用列队
+    $process = new swoole_process('deal2', false, false);
     $process->useQueue();
     $pid = $process->start();
     $workers[$pid] = $process;
 }
 
-#向子进程添加数据
-foreach($workers as $pid => $process) {
-    $process->push("hello worker[$pid]".PHP_EOL);
+#父进程写入数据
+foreach($workers as $process) {
+    #向子进程写入数据
+    $process->push($process->pid);
 }
 
 #等待回收进程
 for($i = 0; $i < 3; $i++) {
-    $ret = swoole_process::wait();
+    $ret = swoole_process::wait(); //阻塞回收结束运行的子进程。
     $pid = $ret['pid'];
     unset($workers[$pid]);
     echo "Worker Exit, PID=".$pid.PHP_EOL;

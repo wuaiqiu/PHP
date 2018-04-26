@@ -1,6 +1,6 @@
 <?php
 /*
- *异步http服务器
+ *异步http服务器：swoole_http_server对Http协议的支持并不完整，建议仅作为应用服务器。并且在前端增加Nginx作为代理。
  * */
 
 #创建http服务器
@@ -8,6 +8,12 @@ $http = new swoole_http_server("0.0.0.0", 9501);
 
 #获取请求 $request:请求信息 $response:响应信息
 $http->on('request', function ($request, $response) {
+    #获取全局数据
+    $_GET = $request->get;
+    $_POST = $request->post;
+    $_COOKIE = $request->cookie;
+    $_FILES = $request->files;
+    $_SERVER = $request->server;
     #设置返回头信息
     $response->header("Content-Type", "text/html; charset=utf-8");
     #发送信息
@@ -32,6 +38,7 @@ $http->start();
  *      status(int $http_status_code)  发送Http状态码
  *      end(string $html)   发送Http响应体，并结束请求处理
  * */
+
 
 
 /*
