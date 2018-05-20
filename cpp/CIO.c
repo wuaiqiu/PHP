@@ -41,3 +41,16 @@ void getsDemo(){
 	fgets(str,64,stdin);
 	fputs(str,stdout);
 }
+
+
+/*
+ * C++输入/输出对象(endl表示换行并刷新缓冲区)
+ * 	 std::cout<<"Hello world"<<endl; //不需要指定输出类型，可以自动识别类型
+ * 	 std::cin>>x; 					 //不需要指定输入类型，可以自动识别类型
+ * */
+
+ void cppIO(){
+ 	int a;
+ 	std::cout<<"Hello world"<<endl;
+ 	std::cin>>a;
+ }

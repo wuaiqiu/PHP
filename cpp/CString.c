@@ -29,7 +29,7 @@
  * */
 
 /*
- * string
+ * C++:新增string类型
  *
  *	string s;				默认初始化，一个空字符串
  *	string s("ssss");		s是字面值“ssss”的副本

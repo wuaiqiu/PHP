@@ -28,3 +28,26 @@ int main() {
 	 }
 	 return EXIT_SUCCESS;
 }
+
+
+/*
+ * C++异常处理
+ *  1.abort():中止程序
+ *  2.try-catch:捕获错误，并处理
+ * */
+
+void fun(int a){
+	if(a==0)
+		throw(a);
+}
+
+int main(){
+	try{
+		fun(0);
+	}catch(int a){
+		cout<<a<<endl;
+	}catch(...){
+		cout<<"default"<<endl;
+	}
+	return 0;
+}

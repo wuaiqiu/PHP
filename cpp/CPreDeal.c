@@ -31,3 +31,17 @@
  *		//语句段
  *	#endif
  * */
+
+#ifndef AAA
+	#define AAA
+	void fun();
+#endif
+
+
+/*
+ * C++新增预处理:
+ * 		#pragma once:保证头文件只被include一次
+ * */
+
+#pragma once
+	void fun();
