@@ -33,11 +33,13 @@ void fun(int a,int b){
  *	 	void fun(int a,int b){}
  *	 	fun(1,2);//编译正常，运行报错
  *
- * 3.C++内联函数(将调用函数的代码直接拷贝进调用者中)
- *		a.函数原型必须写inline
- *		b.函数定义必须写inline
- *		c.一般用在循环语句函数调用
- *		d.类中的成员函数默认都是内联函数
+ * 3.C++内联函数(将调用函数中的代码直接拷贝进调用者中)
+ *		a.函数定义必须写inline
+ *		b.一般用在循环语句函数调用
+ *		c.inline只适合涵数体内代码简单的函数数使用，不能是直
+ * 	接递归函数
+ *		d.在类内部定义的函数会默认声明为inline函数,若在类外定义需要
+ *	用inline作显式声明
  * */
 
 inline void fun(){
@@ -52,6 +54,6 @@ int main(){
 	return 0;
 }
 
-void fun2(){
+inline void fun2(){
 	cout<<"fun2: Hello world !!!"<<endl;
 }
