@@ -53,8 +53,8 @@ int main(){
  * 	O_APPEND:以追加方式打开
  * 	O_TRUNG:清空文件
  * 	O_NONBLOCK:非阻塞读取/写入文件,报错(需要轮询查看)
- * 	O_CREAT:开启mode参数
- * 	O_EXCL:与O_CREAT一起使用，当文件存在创建失败
+ * 	O_CREAT:不存在则创建文件，开启mode参数
+ * 	O_EXCL:与O_CREAT一起使用，当文件存在时，则返回失败
  *
  * ssize_t:long int
  *

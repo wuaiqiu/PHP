@@ -9,6 +9,7 @@
 #include <string.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
+#include <sys/mman.h>
 
 /*
  * 信号:
@@ -157,7 +158,7 @@ void fun5(){
 }
 
 /*
- * 共享内存:
+ * 共享内存(System V):
  *	int shmget(key_t key,int size,int shmflg):创建共享内存，并返回shmid(IPC_CREAT:
  * 存在就打开，不存在就创建，还可以设置创建权限；size:共享内存大小，以字节为单位)
  *	void* shmat(int shmid,void* shmaddr,int shmflg):映射共享内存(shmaddr:共享内存
@@ -194,6 +195,44 @@ int main(){
 	fun4();
 	fun5();
 	fun6();
+	return 0;
+}
+
+/*
+ * 共享内存(内存映射):
+ * 	void* mmap(void* start,size_t length,int prot,int flags,int fd,off_t offsize):将某
+ * 	个文件所占的物理块大小的内容映射到以页的整数倍内存空间中，对该内存区域的读写操作会异步写
+ * 	入磁盘文件
+ * 	void* munmap(void* start,size_t length):解除映射关系
+ * 	size_t getpagesize():获取页大小
+ *	int msync(void *start, size_t length, int flags):同步写入映射文件(close映射文件也
+ *	可以写入)
+ *
+ * 	start:映射内存的首地址
+ * 	length:映射文件的大小(映射内存为页的整数倍，当写入内存超过文件的大小将被忽略)
+ * 	prot:
+ * 		PROT_EXEC:映射内存可被执行
+ * 		PROT_READ:映射内存可被读取
+ * 		PROT_WRITE:映射内存可被写入
+ * 		PROT_NONE:映射内存不空读写
+ *  flags:
+ *  	MAP_SHARED:映射文件可被修改，以此可以实现进程共享
+ *  	MAP_PRIVATE:映射文件不可被修改
+ *  fd:文件描述符
+ *  offsize:映射文件的偏移量，0表示文件头
+ * */
+
+int main(){
+	int fd=open("/home/wu/hello",O_RDWR);
+	struct stat sb;
+	fstat(fd,&sb);
+	printf("%d\n",sb.st_size);
+	void* start=mmap(NULL,sb.st_size,PROT_WRITE,MAP_SHARED,fd,0);
+	if(start==MAP_FAILED)return 0;
+	printf("%s\n",start);
+	msync();
+	munmap(start,sb.st_size);
+	close(fd);
 	return 0;
 }
 
