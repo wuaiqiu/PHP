@@ -54,3 +54,5 @@ void getsDemo(){
  	std::cout<<"Hello world"<<endl;
  	std::cin>>a;
  }
+
+ 
