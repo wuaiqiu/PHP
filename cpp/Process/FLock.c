@@ -6,7 +6,7 @@
 #include <fcntl.h>
 
 /*
- * int dup (int fd):复制文件标识符,而fork出的子进程的文件标识符为同一个
+ * int dup (int fd):复制文件标识符,文件标识符号不同,而fork出的子进程的文件标识符号为同一个
  * int flock(int fd,int operation):锁定文件或解除锁定
  * 	 1.只能对整个文件上锁，而不能对文件的某一部分上锁
  *	 2.子进程继承父进程的锁(通过frok与dup复制文件)
@@ -69,8 +69,8 @@ void fun3(){
 }
 
 int main(){
-	//fun1();
-	//fun2();
+	fun1();
+	fun2();
 	fun3();
 	return 0;
 }
