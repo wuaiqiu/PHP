@@ -26,7 +26,7 @@ state：如果客户端的请求中包含这个参数，认证服务器的回应
 
 
 HTTP/1.1 302 Found
-Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA&state=STATE
+Location: https://client.example.com/cb?code=CODE&state=STATE
 ```
 
 >步骤3:客户端的后台服务器收到授权码，附上早先的重定向URI，向认证服务器申请令牌。
@@ -34,7 +34,7 @@ Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA&state=STATE
 ```
 grant_type：表示使用的授权模式，必选项，此处的值固定为"authorization_code"。
 code：表示上一步获得的授权码，必选项。
-redirect_uri：表示重定向URI，必选项，且必须与A步骤中的该参数值保持一致。
+redirect_uri：表示重定向URI，必选项，且必须与步骤1中的该参数值保持一致。
 client_id：表示客户端ID，必选项。
 
 
@@ -42,11 +42,11 @@ POST /token HTTP/1.1
 Host: open.weixin.qq.com
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA
+grant_type=authorization_code&code=CODE
 &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
 ```
 
->步骤4:认证服务器核对了授权码和重定向URI，确认无误后，向客户端发送访问令牌（access token）和更新令牌（refresh token）等
+>步骤4:认证服务器核对了授权码和重定向URI，确认无误后，向客户端的后台服务器发送访问令牌（access token）和更新令牌（refresh token）等
 
 ```
 access_token：表示访问令牌，必选项。
@@ -176,7 +176,7 @@ POST /token HTTP/1.1
 Host:open.weixin.qq.com
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=passord&client_id=CLIENT_ID&username=USERNAME&password=PASSWORD
+grant_type=password&client_id=CLIENT_ID&username=USERNAME&password=PASSWORD
 ```
 
 >步骤2:如果用户提供的认证信息正确，则认证服务器会返回一段application/json数据并包含access_token
