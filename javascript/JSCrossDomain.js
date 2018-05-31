@@ -24,7 +24,7 @@
 *
 *
 * (2).通过修改document.domain来跨子域
-* 
+*
 *   我们只要把http://www.example.com/a.html 和 http://example.com/b.html这两个页面的document.domain都设成相同的域
 *   名就可以了。但要注意的是，document.domain的设置是有限制的，我们只能把document.domain设置成自身或更高一级的父域，
 *   且主域必须相同。
@@ -52,4 +52,42 @@
 *           alert(ev.data);
 *      }
 * </script>
+ *
+ *  (4)CORS（Cross-origin resource sharing，跨域资源共享）是一个W3C标准。它允许浏览器向跨源服务器，发出XMLHttpRequest请求，
+ * 从而克服了AJAX只能同源使用的限制。
+ *
+ *  A.简单请求(HEAD,GET,POST;application/x-www-form-urlencoded,multipart/form-data,text/plain)
+ *  index.html
+ *  <script>
+ *   $.get("https://github.com/search", {q : "react"}, function(data) {
+ *       console.log(data);
+ *   });
+ *   $.ajax({
+ *        url: "https://github.com/search?q=react",
+ *        xhrFields: {
+ *            withCredentials: true //当需要携带cookies时
+ *          }
+ *   });
+ *  </script>
+ *
+ *  search.php
+ *   header("Access-Control-Allow-Origin: *");//接受任意域名的请求，当需要传送cookies时必须明确
+ *   header("Access-Control-Allow-Credentials: true");//表示是否允许发送Cookie，用于验证
+ *   header("Access-Control-Expose-Headers: Status");//获取其他响应字段
+ *   //默认可以获取:Cache-Control;Content-Language;Content-Type;Expires;Last-Modified;Pragma
+ *
+ *  B.非简单请求(PUT,DELETE;application/json)
+ *   index.html
+ *   <script>
+ *        var url = 'http://api.alice.com/cors';
+ *        var xhr = new XMLHttpRequest();
+ *        xhr.open('PUT', url, true);
+ *        xhr.setRequestHeader('X-Custom-Header', 'value');
+ *        xhr.send();
+ *   </script>
+ *
+ *   search.php
+ *   header("Access-Control-Allow-Origin: http://api.bob.com"); //指定域名跨域
+ *   header("Access-Control-Allow-Methods: PUT,DELETE,POST,GET"); //服务器支持的所有跨域请求的方法
+ *   header("Access-Control-Allow-Headers: X-customer-name");//表明服务器支持的所有头信息字段
 * */

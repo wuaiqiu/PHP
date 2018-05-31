@@ -37,7 +37,9 @@ composer create-project topthink/thinkphp mythink 2.2.*
 {
    //Acme为命名空间,src与vendor同级
    "autoload": {
-        "psr-4": {"Acme\\": "src/"}
+        "psr-4": {"Acme\\": "src/"},
+        "psr-0": {"Acme\\": ["src/","demo/"]},
+        "classmap": ["src/"]
     }
 }
 

@@ -366,3 +366,41 @@ int main(){
 	p.stu.show();
 	return 0;
 }
+
+
+/*
+ *  14.动态联编与静态联编
+ *	  a.静态联编是在编译阶段完成的，静态联编对函数的选择是基于对象的声明类型。
+ * 	  b.动态联编是在运行阶段完成的，动态联编对函数的选择是基于对象的实例类型。
+ * */
+
+class A{
+public:
+	void fun1(){
+		cout<<"A"<<endl;
+	}
+	virtual void fun2(){
+		cout<<"A"<<endl;
+	}
+};
+
+class B:public A{
+public:
+	void fun1(){
+		cout<<"B"<<endl;
+	}
+	void fun2(){
+		cout<<"B"<<endl;
+	}
+
+};
+
+int main(){
+	//静态联编
+	A* pa=new B();
+	pa->fun1(); //A
+	//动态联编
+	A* pb=new B();
+	pb->fun2(); //B
+	return 0;
+}
