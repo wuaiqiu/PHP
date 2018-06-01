@@ -21,6 +21,8 @@
  * 	 int pause():把程序的执行挂起直到有一个信号出现为止
  * 	 void (*signal(int sig, void (*handler)(int)))(int):设置信号处理方式(hander:处
  * 理函数;SIG_IGN:忽略处理;SIG_DFL:默认处理)
+ * 	 int sigaction(int sig,struct sigaction* act,struct sigaction* oact):设置新的信号
+ * 处理函数act， 同时保留该信号原有的信号处理函数oldact
  * 	 int sigemptyset(sigset_t* set):初始化信号集(清空)
  * 	 int sigfillset(sigset_t* set):初始化信号集(加入所有的信号)
  * 	 int sigaddset(sigset_t* set,int sig):添加一个信号至信号集
@@ -28,6 +30,14 @@
  * 	 int sigismember(sigset_t* set,int sig):判断信号集中是否包含信号sig
  * 	 int sigprocmask(int how,sigset_t* set,sigset_t* oldset):用于改变进程的当前阻塞信号集(
  * SIG_UNBLOCK:删除;SIG_BLOCK:追加;SIG_SETMASK:设置)
+ *
+ * 	 struct sigaction{
+ * 	 	void (*sa_handler)(int);  //处理函数
+ * 	 	sigset_t sa_mask; //屏蔽信号集，处理函数函数执行完后，才处理此信号
+ * 	 	int sa_flag; //信号处理的其他相关操作
+ * 	 	 //SA_RESETHAND:执行一次处理函数后，处理函数重置为缺省值SIG_DFL
+ * 	 	 //SA_NODEFER:当多次发送信号时，非阻塞执行处理函数
+ * 	};
  * */
 
 void fun1(){
@@ -61,6 +71,31 @@ void fun2(){
 	printf("the process is stoping...\n");
 	sigprocmask(SIG_UNBLOCK,&set,NULL);
 }
+
+
+void int_hander(int s) {
+	printf("Catch a signal sigint\n");
+	sleep(5);
+}
+
+int main(void) {
+	int i;
+	struct sigaction act, oact;
+	act.sa_handler = int_hander;
+	sigemptyset(&act.sa_mask); //清空此信号集
+	act.sa_flags = SA_NODEFER;
+	sigaction(SIGINT, &act, &oact);
+	while (1) {
+		for (i = 0; i < 5; i++) {
+			write(1, ".", 1);
+			sleep(1);
+		}
+		write(1, "\n", 1);
+	}
+	sigaction(SIGINT, &oact, NULL); //恢复成原始状态
+	return 0;
+}
+
 
 /*
  * 管道:

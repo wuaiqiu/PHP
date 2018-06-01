@@ -108,4 +108,31 @@
    	         *v1=2
    	         *v2=3
    	         */
+
+
+/*
+ * 函数处理:
+ *     call_user_func_array(callable,array):调用回调函数，并把数组作为回调函数的参数
+ *     call_user_func(callable[,mixed $parameter]):调用回调函数，并把参数列表作为回调函数的参数
+ *     forward_static_call_array(callable, array):调用静态回调函数，并把数组作为静态回调函数的参数
+ *     forward_static_call(callable[,mixed $parameter]):调用静态回调函数，并把参数列表作为静态回调函数的参数
+ *     function_exists(string):如果给定的函数已经被定义就返回TRUE
+ *     get_defined_functions():返回所有已定义函数的数组
+ *     register_shutdown_function(callable[,mixed $parameter]):注册一个callback，它会在脚本执行完成或者exit()后被调用。
+ * */
+
+class foo {
+    function bar($arg, $arg2) {
+        echo __METHOD__, " got $arg and $arg2".PHP_EOL;
+    }
+    public static function test($arg,$arg2){
+        echo __METHOD__, " got $arg and $arg2".PHP_EOL;
+    }
+}
+function down(){
+    echo "shutdwon..";
+}
+call_user_func_array(array(new foo, "bar"), array("three", "four"));
+forward_static_call_array(array('foo','test'),array("five","six"));
+register_shutdown_function("down");
 ?>

@@ -68,6 +68,14 @@ void fun3(){
 	printf("get lock, ret: %d\n", ret);
 }
 
+/*
+ *  fcntl(fd,F_DUPFD,0):复制fd文件描述符，类似于dup操作
+ *  fcntl(fd,F_GETFL,0):获取文件的flags(open的第二个参数)
+ *  fcntl(fd,F_SETFL,flags):设置文件的flags(O_APPEND,O_ASYNC,O_NONBLOCK)
+ *  fcntl(fd,F_GETFD,0):获取close-on-exec标志A(是否保持打开状态传递给子进程)
+ *  fcntl(fd,F_SETFD,close-on-exec):设置close-on-exec标志(0:表示传递，1表示不传递)
+ * */
+
 int main(){
 	fun1();
 	fun2();
