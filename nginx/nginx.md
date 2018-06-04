@@ -1,7 +1,8 @@
-		nginx
+# Nginx
 
-一.安装过程
+#### 一.安装过程
 
+```
 (1).安装nginx php-fpm
 pacman -S nginx
 pacman -S php-fpm
@@ -36,9 +37,7 @@ systemctl start nginx
 
 (5).配置优化
 
-```
 压缩优化
-
 gzip on;
 gzip_comp_level 4;  （0-9越大越耗时）
 gzip_types text/plain application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;

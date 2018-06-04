@@ -104,3 +104,31 @@ int main(){
 	delete a;
 	return 0;
 }
+
+
+/*
+ * 变长结构体
+ * 	 结构体最后使用0或1的长度数组，主要是为了方便的管理内存缓冲区，如果你直接使用指针而不使
+ * 用数组，那么，你在分配内存缓冲区时，就必须分配结构体一次，然后再分配结构体内的指针一次，
+ * 而此时分配的内存已经与结构体的内存不连续了，所以要分别管理即申请和释放，而如果使用数组，那
+ * 么只需要一次就可以全部分配出来，反过来，释放时也是一样，使用数组，一次释放，减少内存的碎片化
+ * */
+
+struct node{
+    int member1;
+    int member2[0];//变长数组
+};
+
+int main(void) {
+	 struct node *xiaobo1;
+	 printf("%d\n",sizeof(struct node));
+	 xiaobo1 = malloc(sizeof(struct node)+3*sizeof(int));//变长分配内存
+	 memset(xiaobo1,0,sizeof(*xiaobo1));
+	 (*xiaobo1).member1 = 1;
+	 (*xiaobo1).member2[0] = 30;
+	 (*xiaobo1).member2[1] = 31;
+	 (*xiaobo1).member2[2] = 32;
+	 printf("%d\n%d",sizeof(struct node),xiaobo1->member2[2]);
+	 free(xiaobo1);
+	 return 0;
+}
