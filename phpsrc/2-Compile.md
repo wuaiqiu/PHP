@@ -104,7 +104,7 @@ struct _zend_op {
     znode_op op2;   //操作数2
     znode_op result; //返回值
     uint32_t extended_value;
-    uint32_t lineno;
+    uint32_t lineno; //行号
     zend_uchar opcode;  //opcode指令号
     zend_uchar op1_type; //操作数1类型
     zend_uchar op2_type; //操作数2类型
@@ -134,7 +134,7 @@ typedef union _znode_op {
 
 **5.handler处理函数**
 
->handler为每条opcode对应的C语言编写的处理过程,所有opcode对应的处理过程定义在zend_vm_def.h中,opcode的处理过程有三种不同的提供形式：CALL、SWITCH、GOTO，默认方式为CALL
+>handler为每条opcode对应的C语言编写的处理过程,opcode的处理过程有三种不同的提供形式：CALL、SWITCH、GOTO，默认方式为CALL
 
 ```
 CALL:把每种opcode负责的工作封装成不同的function，然后执行器循环调用执行
@@ -172,15 +172,6 @@ handler=zend_opcode_handlers[opcode * 25 + zend_vm_decode[op->op1_type] * 5 + ze
 **6.抽象语法树->Opcodes**
 
 ```
-typedef struct _znode {
-	zend_uchar op_type; //操作数类型
-	zend_uchar flag;
-	union {
-		znode_op op;
-		zval constant; //节点的字面量
-	} u;
-} znode;
-
 void zend_compile_top_stmt(zend_ast *ast){
     ....
     if (ast->kind == ZEND_AST_STMT_LIST) { //第一次进来一定是这种类型
@@ -198,7 +189,6 @@ void zend_compile_top_stmt(zend_ast *ast){
 
 void zend_compile_stmt(zend_ast *ast){
     CG(zend_lineno) = ast->lineno;
-
     switch (ast->kind) {
         case ZEND_AST_ECHO:
             zend_compile_echo(ast);
@@ -228,7 +218,7 @@ echo $a,$b;
 ```
 
 ```
-//给变量编号(96根据zend_execute_data大小计算得出)
+//给变量编号(96是根据zend_execute_data大小计算得出)
 #define ZEND_CALL_FRAME_SLOT \
     ((int)((ZEND_MM_ALIGNED_SIZE(sizeof(zend_execute_data)) + ZEND_MM_ALIGNED_SIZE(sizeof(zval)) - 1) / ZEND_MM_ALIGNED_SIZE(sizeof(zval))))
 
@@ -260,7 +250,8 @@ static int lookup_cv(zend_op_array *op_array, zend_string* name){
 ```
 pass_two()主要有两个重要操作：
 
-1.将IS_CONST、IS_VAR、IS_TMP_VAR类型的操作数、返回值转化为内存偏移量，其中IS_CONST类型起始值为0，然后按照编号依次递增sizeof(zval)，而IS_VAR、IS_TMP_VAR唯一的不同时它的初始值接着IS_CV
+1.将IS_CONST、IS_VAR、IS_TMP_VAR类型的操作数、返回值转化为内存偏移量，其中IS_CONST(zend_op_array->literals)类型起始值为0，然后
+按照编号依次递增sizeof(zval)，而IS_VAR、IS_TMP_VAR(zend_op_array->vars)唯一的不同时它的初始值接着IS_CV
 2.另外一个重要操作就是设置各指令的处理handler
 ```
 

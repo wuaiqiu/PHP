@@ -254,3 +254,22 @@ unset($a)之后：
 >读写操作:与静态变量的访问一样，全局变量也是将原来的值转换为引用，然后在global导入的作用域内创建一个局部变量指向该引用
 
 ![](./img/12.png)
+
+<br>
+
+**11.常量***
+
+>常量存储在EG的zend_constants哈希表中，访问时也是根据常量名直接到哈希表中查找
+
+```
+typedef struct _zend_constant {
+    zval value;   //常量值
+    zend_string *name; //常量名
+    int flags;  //常量标识位
+    int module_number; //所属扩展、模块
+} zend_constant;
+
+#define CONST_CS                (1<<0)  //大小写敏感
+#define CONST_PERSISTENT        (1<<1)  //持久化的
+#define CONST_CT_SUBST          (1<<2)  //允许编译时替换
+```
