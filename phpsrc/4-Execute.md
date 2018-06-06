@@ -109,7 +109,7 @@ static zend_always_inline void i_init_execute_data(zend_execute_data *execute_da
     EX(return_value) = return_value;
     if (UNEXPECTED(EX(symbol_table) != NULL)) {
         ...
-        zend_attach_symbol_table(execute_data);//将全局变量添加到EG(symbol_table)
+        zend_attach_symbol_table(execute_data);//将本空间的局部变量添加到EG(symbol_table)
     }else{
         ...
     }
@@ -118,7 +118,7 @@ static zend_always_inline void i_init_execute_data(zend_execute_data *execute_da
 
 ![](img/3.png)
 
->zend_attach_symbol_table()的作用是把当前作用域下的变量添加到EG(symbol_table)哈希表中，也就是全局变量，函数中通过global关键词获取，EG(symbol_table)中的值间接的指向zend_execute_data中的局部变量
+>zend_attach_symbol_table()的作用是把当前作用域下的局部变量添加到EG(symbol_table)哈希表中，也是function的全局变量，函数中通过global关键词获取，EG(symbol_table)中的值间接的指向zend_execute_data中的局部变量
 
 ```
 //3.执行opcode

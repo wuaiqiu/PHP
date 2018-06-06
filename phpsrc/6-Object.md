@@ -184,55 +184,42 @@ ZEND_API void zend_objects_store_del(zend_object *object){
 
 <br>
 
-**4.继承**
+**4. 动态属性**
 
-(a).继承属性
-
->属性从父类复制到子类 。子类会将父类的公共、受保护的属性值数组全部合并到子类中，然后将全部属性的zend_property_info哈希表也合并到子类中
-
-![](./img/26.png)
-
-(b).继承常量
-
->常量的合并策略比较简单，如果父类与子类冲突时用子类的，不冲突时则将父类的常量合并到子类。
-
-(c).继承方法
-
->与属性一样，子类可以继承父类的公有、受保护的方法，方法的继承比较复杂，因为会有访问控制、抽象类、接口、Trait等多种限制条件。实现上与前面几种相同，即父类的function_table合并到子类的function_table中。
+>动态属性查找:动态创建的属性保存在zend_object->properties哈希表中，查找的时候首先按照普通属性在zend_class_entry.properties_info找，没有找到再去zend_object->properties继续查找
 
 
->如果父类是用户自定义的类，且继承的方法没有静态变量则不会硬拷贝，而是增加zend_function的引用计数(zend_op_array.refcount)。
+>动态属性创建
 
 ```
-子类重写了父类的方法的检查规则
-(1)抽象子类的抽象方法与抽象父类的抽象方法冲突: 无法重写，Fatal错误。
-(2)父类方法为final: Fatal错误，final成员方法不得被重写。
-(3)父子类方法静态属性不一致: 父类方法为非静态而子类的是静态(或相反)，Fatal错误。
-(4)抽象子类的抽象方法覆盖父类非抽象方法: Fatal错误。
-(5)子类方法限制父类方法访问权限: Fatal错误，不允许派生类限制父类方法的访问权限，如父类方法为public，
-而子类试图重写为protected/private。
-6)剩余检查情况: 除了上面5中情形下无法重写方法，剩下还有一步对函数参数的检查
-```
-
-<br>
-
-**5. 动态属性**
-
-```
-class my_class {
-    public $id = 123;
-    public function test($name, $value){
-        $this->$name = $value;
-    }
+ZEND_API void rebuild_object_properties(zend_object *zobj) {
+	if (!zobj->properties) {
+		zend_property_info *prop_info;
+		zend_class_entry *ce = zobj->ce;
+    //1.初始化zend_object(properties)
+		ALLOC_HASHTABLE(zobj->properties);
+    //2.当zend_class_entry有普通属性时，zend_object(properties)添加非静态属性
+	  if (ce->default_properties_count) {
+			ZEND_HASH_FOREACH_PTR(&ce->properties_info, prop_info) {
+				if ((prop_info->flags & ZEND_ACC_STATIC) == 0) {
+					_zend_hash_append_ind(zobj->properties, prop_info->name,
+						OBJ_PROP(zobj, prop_info->offset));
+				}
+			} ZEND_HASH_FOREACH_END();
+      //3.当zend_class_entry有父类时，zend_object(properties)添加指向父类非静态私有属性的指针
+			while (ce->parent && ce->parent->default_properties_count) {
+				ce = ce->parent;
+				ZEND_HASH_FOREACH_PTR(&ce->properties_info, prop_info) {
+					if (prop_info->ce == ce &&
+					    (prop_info->flags & ZEND_ACC_STATIC) == 0 &&
+					    (prop_info->flags & ZEND_ACC_PRIVATE) != 0) {
+						zval zv;
+						ZVAL_INDIRECT(&zv, OBJ_PROP(zobj, prop_info->offset));
+						zend_hash_add(zobj->properties, prop_info->name, &zv);
+					}
+				} ZEND_HASH_FOREACH_END();
+			}
+		}
+	}
 }
 ```
-
->非静态成员属性值在实例化时保存到了对象中，属性的操作按照编译时按顺序编好的序号操作，各对象对其非静态成员属性的操作互不干扰，而动态属性是在运行时创建的，动态创建的属性保存在zend_object->properties哈希表中
-
-
->属性查找:首先按照普通属性在zend_class_entry.properties_info找，没有找到再去zend_object->properties继续查找
-
-
->首次创建动态属性将通过rebuild_object_properties()初始化zend_object->properties哈希表，后面再创建动态属性直接插入此哈希表，rebuild_object_properties()过程并不仅仅是创建一个HashTable，还会将普通成员属性值插入到这个数组中，与动态属性不同，这里的插入并不是增加原zend_value的refcount，而是创建了一个IS_INDIRECT类型的zval，指向原属性值zval
-
-![](./img/27.png)
