@@ -244,3 +244,43 @@ int main(){
 	}
 	return 0;
 }
+
+
+
+/*
+ * 线程局部存储（Thread Local Storage，TLS）
+ * 	 int pthread_key_create(pthread_key_t *key,void (*destr_function) (void *)):
+ * 	 创建一个类型为pthread_key_t类型的变量
+ * 	 int pthread_setspecific(pthread_key_t key,void *pointer):存储值
+ * 	 void *pthread_getspecific (pthread_key_t key):取出值
+ * 	 int pthread_key_delete (pthread_key_t key):删除pthread_key_t类型的变量
+ * */
+
+pthread_key_t p_key;
+
+void func1() {
+      int *tmp = (int*)pthread_getspecific(p_key);
+      printf("%d is runing in fun1\n",*tmp);
+}
+
+void *thread_func(void *args)  {
+        pthread_setspecific(p_key,args);
+        int *tmp = (int*)pthread_getspecific(p_key);
+        printf("%d is runing in thread_fun\n",*tmp);
+        *tmp = (*tmp)*100;//修改私有变量的值
+        func1();
+        return (void*)0;
+}
+
+int main(void) {
+	pthread_t pa, pb;
+	int a=1;
+	int b=2;
+	pthread_key_create(&p_key,NULL);
+	pthread_create(&pa, NULL,thread_func,&a);
+	pthread_create(&pb, NULL,thread_func,&b);
+	pthread_join(pa, NULL);
+	pthread_join(pb, NULL);
+	pthread_key_delete(p_key);
+	return 0;
+}

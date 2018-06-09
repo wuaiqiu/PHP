@@ -24,15 +24,15 @@ Queue:消息队列，用来保存消息直到发送给消费者。
 
 Connection:网络连接，比如一个TCP连接。
 
-Channelz;信道，多路复用连接中的一条独立的双向数据流通道。信道是建立在真实的TCP连接内地虚拟连接，AMQP 命令都是通过信道发出
-去的，不管是发布消息、订阅队列还是接收消息，这些动作都是通过信道完成。因为对于操作系统来说建立和销毁 TCP 都是非常昂贵的开
-销，所以引入了信道的概念，以复用一条 TCP 连接。
+Channel:信道，多路复用连接中的一条独立的双向数据流通道。信道是建立在真实的TCP连接内的虚拟连接，AMQP命令都是通过信道发出
+去的，不管是发布消息、订阅队列还是接收消息，这些动作都是通过信道完成。因为对于操作系统来说建立和销毁TCP都是非常昂贵的开
+销，所以引入了信道的概念，以复用一条TCP连接。
 
-Consumerz:消息的消费者，表示一个从消息队列中取得消息的客户端应用程序。
+Consumer:消息的消费者，表示一个从消息队列中取得消息的客户端应用程序。
 
 Virtual Host:虚拟主机，表示一批交换器、消息队列和相关对象。虚拟主机是共享相同的身份认证和加密环境的独立服务器域。每个
 vhost 本质上就是一个 mini 版的 RabbitMQ 服务器，拥有自己的队列、交换器、绑定和权限机制。vhost 是 AMQP 概念的基础，必须在连
-接时指定，RabbitMQ 默认的 vhost 是 / 。
+接时指定，RabbitMQ默认的 vhost 是 / 。
 
 Broker:表示消息队列服务器实体。
 ```
@@ -65,7 +65,7 @@ fanout 交换器
 topic 交换器
 
 通过模式匹配分配消息的路由键属性，将路由键和某个模式进行匹配，此时队列需要绑定到一个模式上。它同样也会识别两个通配符：符
-号“#”和符号“*”。#匹配0个或多个字节，*匹配一个字节。
+号"#"和符号"*"。#匹配0个或多个字节，*匹配一个字节。
 ```
 
 <br>
@@ -123,16 +123,16 @@ topic 交换器
 #清除用户的权限信息
 >rabbitmqctl clear_permissions -p / {username}
 #给用户设置权限(配置权限，读权限，写权限)
->rabbitmqctl set_permissions -p / root “.*” “.*” “.*”
+>rabbitmqctl set_permissions -p / root ".*" ".*" ".*"
 ```
 
 ```
 vhost管理
 
 #添加vhost
->rabbitmqctl add vhost {name}
+>rabbitmqctl add_vhost {name}
 #删除vhost
->rabbitmqctl delete vhost {name}
+>rabbitmqctl delete_vhost {name}
 #列出vhost
 >rabbitmqctl list_vhosts
 ```
