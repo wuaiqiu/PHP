@@ -19,19 +19,50 @@ path.logs: /path/to/logs #日志存储地址
 
 #### 二.基础
 
+>http://ip:port/index/type/id
+
 名称|注释|SQL
 ---|---|---
 Index|索引|数据库
-Type|索引的数据类型|数据表
+Type|索引的数据类型(只能有一个)|数据表
 Document|文档数据|记录
 Field|文档的属性|字段
 Query DSL|查询语法|SQL
 
+<br>
 
->create
+#### 三.基本操作
+
+>创建索引
 
 ```
-POST accounts/person/1
+PUT weather
+```
+
+>删除索引
+
+```
+DELETE weather
+```
+
+>索引操作
+
+```
+POST weather/_close
+POST weather/_open
+```
+
+>新增数据
+
+```
+PUT accounts/person/1
+{
+  "name":"John",
+  "lastname":"Doe",
+  "job_description":"Systems administrator"
+}
+
+POST accounts/person
 {
   "name":"John",
   "lastname":"Doe",
@@ -39,13 +70,13 @@ POST accounts/person/1
 }
 ```
 
->read
+>查看数据
 
 ```
-GET accounts/person/1
+GET accounts/person/1?pretty=true
 ```
 
->update
+>更新数据
 
 ```
 POST accounts/person/1/_update
@@ -56,7 +87,16 @@ POST accounts/person/1/_update
 }
 ```
 
->delete
+```
+PUT accounts/person/1
+{
+    "name":"John",
+    "lastname":"Doe",
+    "job_description":"Linux specialist"
+}
+```
+
+>删除数据
 
 ```
 DELETE accounts/person/1
@@ -64,7 +104,7 @@ DELETE accounts/person/1
 DELETE accounts
 ```
 
->query
+>全文检索
 
 ```
 GET accounts/person/_search?q=john
@@ -74,6 +114,56 @@ GET accounts/person/_search
   "query":{
     "match": {
       "name": "john"
+    }
+  },
+  "from":2,
+  "size":1
+}
+```
+
+```
+#获取多个索引
+GET  aaaa,accounts/_search
+#获取所有索引
+GET _all/_search
+#获取以account开头的索引
+GET  account*/_search
+#获取以account开头，但不是accounts的索引
+GET a*,-accounts/_search
+#忽略不存在的索引，不报错
+GET  accounts,aaaa/_search?ignore_unavailable=true
+#获取以account开头的索引，当不存在时不报错(默认)
+GET  ad*/_search?allow_no_indices=true
+```
+
+<br>
+
+#### 四.设置中文分词
+
+```
+elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v5.5.1/elasticsearch-analysis-ik-5.5.1.zip
+
+PUT accounts
+{
+  "mappings": {
+    "person": {
+      "properties": {
+        "user": {
+          "type": "text",
+          "analyzer": "ik_max_word",
+          "search_analyzer": "ik_max_word"
+        },
+        "title": {
+          "type": "text",
+          "analyzer": "ik_max_word",
+          "search_analyzer": "ik_max_word"
+        },
+        "desc": {
+          "type": "text",
+          "analyzer": "ik_max_word",
+          "search_analyzer": "ik_max_word"
+        }
+      }
     }
   }
 }
