@@ -74,47 +74,64 @@ docker-compose exec web /bin/bash
 >docker-compose.yml
 
 ```
-#服务名
-web:
-  #指定Dockerfile文件的目录
-  build: .
-  #用于指定服务使用的镜像(不能与build一起使用)
-  image: ubuntu
-  #覆盖Dockerfile中的CMD命令
-  command: ls -l
-  #指定容器名称(则不能使用scale参数)
-  container_name: my-web-container
-  #通过文件添加环境变量
-  env_file: .env
-  #手动添加环境变量
-  environment:  
-    -RACK_ENV: development
-    -SHOW: 'true'
-  #对外暴露端口(在bridge模式下需要端口映射)
-  expose:
-    - "3000"
-    - "8000"
-  #指令用于向容器hosts添加IP到主机名的映射
-  extra_hosts:
-    - "somehost:162.242.195.82"
-    - "otherhost:50.31.209.229"
-  #用于连接到其他服务的容器
-  links:
-    - db
-    - db:database
-    - redis
-  #为服务容器指定网络模式
-  net: "bridge"
-  net: "none"
-  net: "container:[name or id]"
-  net: "host"
-  #对外暴露接口
-  ports:
-    - "3000"
-    - "3000-3005"
-    - "8000:8000"
-  #向容器添加卷
-  volumes:
-    - /var/lib/mysql
-    - cache:/tmp/cache
+version: '2'
+services:
+  #服务名
+  web:
+    #指定Dockerfile文件的目录
+    build: .
+    #用于指定服务使用的镜像(不能与build一起使用)
+    image: ubuntu
+    #覆盖Dockerfile中的CMD命令
+    command: ls -l
+    #指定容器名称(则不能使用scale参数)
+    container_name: my-web-container
+    #依赖启动
+    depends_on:
+     - db
+     - redis
+    #通过文件添加环境变量
+    env_file: .env
+    #手动添加环境变量
+    environment:  
+      -RACK_ENV: development
+      -SHOW: 'true'
+    #对外暴露端口(在bridge模式下需要端口映射)
+    expose:
+      - "3000"
+      - "8000"
+    #指令用于向容器hosts添加IP到主机名的映射
+    extra_hosts:
+      - "somehost:162.242.195.82"
+      - "otherhost:50.31.209.229"
+    #用于连接到其他服务的容器
+    links:
+      - db
+      - db:database
+      - service:alias
+    #为服务容器指定网络模式
+    network_mode: "bridge"
+    network_mode: "host"
+    network_mode: "none"
+    network_mode: "service:[service name]"
+    network_mode: "container:[container name/id]"
+    #加入网络
+    networks:
+     - front-tier
+    #对外映射端口
+    ports:
+      - "3000"
+      - "8000:8000"
+      - "host:container"
+    #向容器添加卷
+    volumes:
+      - /var/lib/mysql
+      - cache:/tmp/cache
+      - host:container
+#网络驱动
+networks:
+    front-tier:
+      driver: bridge
+    back-tier:
+      driver: bridge
 ```

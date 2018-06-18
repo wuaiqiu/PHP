@@ -1,6 +1,6 @@
 # etcd
 
->etcd是一个分布式的key-value存储系统，采用raft算法选举leader，保证集群数据不丢失
+>etcd是一个分布式的key-value存储系统，采用raft算法选举leader，保证集群数据不丢失，还可以用于共享配置和服务发现。
 
 **1.命令行管理**
 
@@ -279,7 +279,7 @@ X-Raft-Term: 2
 >http PUT http://127.0.0.1:2379/v2/keys/foo value==bar ttl==
 ```
 
->监听变化
+>监听变化(目前etcd只会保存最近1000个事件)
 
 ```
 >http http://127.0.0.1:2379/v2/keys/foo wait==true
