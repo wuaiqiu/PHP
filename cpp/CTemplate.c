@@ -95,31 +95,3 @@ int main(){
 	Student2<int> stu2;
 	return 0;
 }
-
-
-/*
- * 4.多态模板:父类模板参数列表，由子类进行传递
- * */
-
-template <typename T>
-class Person{
-public:
-	virtual void show(){
-		cout<<"This is Person"<<endl;
-	}
-	virtual ~Person(){}
-};
-
-template <typename X,typename Y>
-class Student:public Person<X>{
-public:
-	void show(){
-		cout<<"This is Student"<<endl;
-	}
-};
-
-int main(){
-	Person<int>* p=new Student<int,char>;
-	p->show();
-	return 0;
-}
