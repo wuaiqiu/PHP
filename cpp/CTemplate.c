@@ -8,8 +8,7 @@
  * 	 1.函数模板:用一个模板函数完成函数重载功能
  * 		a.作用域:仅对下面挨着的代码段有效
  * 		b.具体化:指定某个类型需要单独处理
- * 		c.实例化:生成指定类型的函数声明
- * 		d.调用顺序:普通函数>具体化>模板
+ * 		c.调用顺序:普通函数>具体化>模板
  *
  * 	 2.类模板:
  * 	 	a.可以设定默认值
@@ -25,16 +24,18 @@ struct Node{
 //函数模板<class T>或<typename T>
 template <typename T>
 void fun(T t){
-	cout<<t<<endl;
+	cout<<"Template"<<endl;
 }
 
 //函数模板具体化
 template<> void fun<Node>(Node node){
-	cout<<node.a<<endl;
+	cout<<"Node"<<endl;
 }
 
-//函数模板实例化
-template void fun<int>(int a);
+//普通函数
+void fun(int a){
+   	cout<<"Fun"<<endl;
+}
 
 //类模板
 template <typename T,typename Z=char>
@@ -48,9 +49,9 @@ public:
 
 int main(){
 	Node node={2};
-	fun(1);
-	fun('a');
-	fun(node);
+	fun(1);  //Fun
+	fun('a'); //Template
+	fun(node); //Node
 
 	//创建类模板对象
 	Person<int,char>* p=new Person<int,char>(1,'a');
