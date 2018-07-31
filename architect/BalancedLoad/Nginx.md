@@ -33,6 +33,8 @@ http{
 
 **二.Nginx+Keepalived**
 
+>Nginx可以解决真实服务器集群的高可用问题，但不能解决Nginx代理集群的单点故障问题
+
 ```
 Master Nginx调度器 (public 172.16.254.200  privite 192.168.0.48)
 Backup Nginx调度器 (public 172.16.254.200  privite 192.168.0.49)
