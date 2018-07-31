@@ -33,7 +33,7 @@ e.客户端必须知道每个服务实例的位置(URL)；
 f.支持多种消息格式：JSON，XML；
 ```
 
-(2).Thrift:是用来编写跨语言RPC的客户端和服务器的框架。Thrift提供了C风格的IDL来定义你的API，可以使用Thrift编译器来生成客户端的stub和服务端的skeleton。
+(2).RPC:Thrift是用来编写跨语言RPC的客户端和服务器的框架。Thrift提供了C风格的IDL来定义你的API，可以使用Thrift编译器来生成客户端的stub和服务端的skeleton。
 
 ```
 (1).Thrift方法可以有返回值，实现了请求-响应风格的交互；
