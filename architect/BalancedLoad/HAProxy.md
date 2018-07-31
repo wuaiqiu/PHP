@@ -34,3 +34,5 @@ backend my_webserver
     server  web01 192.168.0.18:80  check inter 2000 fall 3 weight 30  #定义的多个后端
     server  web02 192.168.0.19:80  check inter 2000 fall 3 weight 30   #定义的多个后端
 ```
+
+>HAProxy可以解决真实服务器集群的高可用问题，但不能解决HAProxy代理集群的单点故障问题
