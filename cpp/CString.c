@@ -1,9 +1,10 @@
 /*
  * 字符串
  *
- * 1.表示方式
- *		char str[]="Hello"; //字符数组它存放了一个字符串，末尾以'\0'结束，可以改变内容
- *		char* str="Hello";  //字符指针指向的是一个字符串常量，末尾以'\0'结束，不可以改变内容
+ * 1.表示方式(C++11需要加const)
+ *		const char str[]="Hello"; //字符数组它存放了一个字符串，末尾以'\0'结束，可以改变内容
+ *		const char* str="Hello";  //字符指针指向的是一个字符串常量，末尾以'\0'结束，不可以改变内容
+ *		auto str = "Hello"; //C++11新增类型
  *
  * 2.操作函数(string.h)
  *		int memcmp(void *s1,void *s2,size_t n):比较

@@ -71,20 +71,75 @@ int main() {
  * C++动态分配内存空间:new/delete(可以触发构造函数/析构函数，而malloc/free不会):
  * 	  a.申请单个空间:
  * 	 	int* p=new int(10);
- * 	 	if(p==NULL){
+ * 	 	if(p==nullptr){
  * 	 		cout<<"ERROR"<<endl;
  * 	 		return 0;
  * 	 	}
  * 	 	delete p;
- * 	 	p=NULL;
+ * 	 	p=nullptr;
  *
  * 	  b.申请数组空间:
  * 	 	char* p=new char[20];
- * 	 	if(p==NULL){
+ * 	 	if(p==nullptr){
  * 	 		cout<<"ERROR"<<endl;
  * 	 		return 0;
  * 	    }
  * 	    strcpy(p,"Hello");
  * 	    delete[] p;
- * 	    p=NULL;
+ * 	    p=nullptr;
+ *
+ * 	nullptr:出现的目的是为了替代NULL,在某种意义上来说，传统C++会把NULL、0视为同一种东西，
+ *这取决于编译器如何定义NULL，有些编译器会将NULL定义为((void*)0)，有些则会直接将其定义为 0。
  */	
+
+/*
+ * C++11智能指针
+ *	1.shared_ptr:它能够记录多少个shared_ptr共同指向一个对象，从而消除显示的调用delete，
+ * 当引用计数变为零的时候就会将对象自动删除
+ *	2.unique_ptr:一种独占的智能指针，它禁止其他智能指针与其共享同一个对象，从而保证代码的安全
+ *	3.weak_ptr:一种弱引用(shared_ptr就是一种强引用),弱引用不会引起引用计数增加
+ **/
+
+#include <iostream>
+#include <memory>
+
+int main()
+{
+    //1.创建传入参数中的对象，并返回这个对象类型的std::shared_ptr指针
+	auto pointer = make_shared<int>(10);
+	auto pointer2 = pointer; //引用计数+1
+	auto pointer3 = pointer; //引用计数+1
+	cout << pointer.use_count() <<endl; //3
+	cout << pointer2.use_count() <<endl; //3
+	cout << pointer3.use_count() <<endl; //3
+	pointer2.reset(); //去除pointer2的引用
+	cout << pointer.use_count() <<endl; //2
+	cout << pointer2.use_count() <<endl; //0
+	cout << pointer3.use_count() <<endl; //2
+    //2.离开作用域前，shared_ptr会被析构从而释放内存
+    return 0;
+}
+
+
+
+int main()
+{
+	//1.创建对象引用
+	std::unique_ptr<int> pointer = std::make_unique<int>(10);   
+	std::unique_ptr<int> pointer2 = pointer;  //非法操作
+	//2.离开作用域前，shared_ptr会被析构从而释放内存
+	return 0;
+}
+
+
+struct A{};
+struct B {
+    weak_ptr<A> pointer;
+};
+int main() {
+    auto a = std::make_shared<A>();
+    auto b = std::make_shared<B>();
+    b->pointer = a;
+    cout << a.use_count() << endl;  //1
+    cout << b.use_count() << endl;  //1
+}

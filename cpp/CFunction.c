@@ -57,3 +57,32 @@ int main(){
 inline void fun2(){
 	cout<<"fun2: Hello world !!!"<<endl;
 }
+
+/*
+ * C++11新特性:
+ *	1.Lambda表达式的基本语法
+ *		[捕获列表](参数列表) 异常属性 -> 返回类型 {
+ *			// 函数体
+ *		}
+ *   2.隐示捕获
+ *		[&] 引用捕获, 让编译器自行推导所有变量捕获列表
+ *		[=] 值捕获, 让编译器执行推导所有变量捕获列表
+ * 	3.支持auto参数(普通函数不行)与返回值
+ **/
+
+//a.值捕获:被捕获的变量在lambda表达式被创建时拷贝，而非调用时才拷贝
+int value_1 = 1;
+auto copy_value_1 = [value_1] {
+  return value_1;
+};
+value_1 = 100;
+auto stored_value_1 = copy_value_1();//1
+
+
+//b.引用捕获
+int value_1 = 1;
+auto copy_value_1 = [value_1] {
+  return value_1;
+};
+value_1 = 100;
+auto stored_value_1 = copy_value_1();//100

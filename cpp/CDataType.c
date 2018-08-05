@@ -18,9 +18,11 @@
  *
  *
  *3.变量
- *	  auto : 默认存储类型，动态数据区
+ *	  auto : 默认存储类型，动态数据区 ,C++11变成自动推导类型,但不能用于函数传参,可以用模板函数代替
+ * 还不能用于推导数组类型;
  *	  static : 静态数据区（只在本源文件起作用）
  *	  extern : 导出非静态全局变量与函数，注意只需声明即可,函数默认是extern属性
+ *	  register : C++11被弃用，可以使用但不再具备任何实际含义
  *
  *
  *4.类型转换
@@ -83,7 +85,7 @@ int main(){
 
 
 /*
- * C++新式类型转换(更加细致，更加安全)
+ * C++新式类型转换(更加细致，更加安全),C++11不在使用传统的类型转换
  * 	 1.static_cast(与传统的强制转换相同):
  * 	 	a.用于类层次结构中父子类之间指针或引用的转换。向上安全；向下不安全。
  * 	 	b.用于基本数据类型之间的转换，如把int转换成char。
@@ -109,3 +111,56 @@ int main(){
  *
  * 	 		Type A = reinterpret_cast<Type>(B)
  * */
+
+/*
+ * C++11右值引用
+ *	1.左值是可以出现=左侧者
+ *	2.右值是只能出现=右侧者
+ *	3.当右值赋值的过程中，执行拷贝内存与释放内存，而右值引用则直接移动内存
+ **/
+
+//a.移动语义:将左值转换成右值
+void process(int& i)
+{
+    cout << "右值引用"  << endl;
+}
+void process(int&& i)//
+{
+    cout << "左值引用"  << endl;
+}
+
+int main()
+{
+  int a = 0;
+  process(a); // 右值引用
+  process(move(a)); // 左值引用
+  return 0;
+}
+
+//b.完美转发:避免转发过程右值变成左值
+void process(int& i)
+{
+    cout << "右值引用"  << endl;
+}
+void process(int&& i)
+{
+    cout << "左值引用"  << endl;
+}
+void not_forward(int&& i) 
+{
+    cout << "非完美转发"  << endl;
+    process(i);
+}
+void per_forward(int&& i) 
+{
+	cout << "完美转发"  << endl;
+    process(forward<int>(i));
+}
+
+int main()
+{
+  int a = 0;
+  not_forward(move(a)); // 右值引用
+  per_forward(move(a)); // 左值引用
+  return 0;
+}

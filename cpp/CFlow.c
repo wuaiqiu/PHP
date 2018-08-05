@@ -52,3 +52,12 @@
  *	
  *(9)continue 用于跳过循环中的一个迭代。（带有或不带标签引用）只能用在循环中。
  */
+
+/*
+ * foreach(C++11)
+ **/
+
+int array[] = {1,2,3,4,5};
+for(auto &x : array) {
+    cout << x << endl;
+}

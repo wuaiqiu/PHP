@@ -184,9 +184,10 @@ int main(){
  *		c).子类可以指定调用父类的构造函数
  *	  c.析构函数的继承
  *	  	a).先执行子类的析构函数，在执行父类的析构函数
- *	  d.覆盖
+ *	  d.重定义(覆盖需要父类为虚函数)
  *	  	a).当子类出现与父类同名(只有同名即可)的成员，采用子类覆盖父类成员方式
  *	  	b).调用父类成员，可以使用类名作用域指定需要调用的成员
+ *		c).返回类型必须相同，参数列表可以相同，可以不同
  *	  e.静态成员，友元，构造函数，析构函数不能被继承
  *	  f.C++支持多继承
  *	  g.虚继承:解决复杂的继承链关系，如继承关系链为菱形时，子类调用祖父类的成员，会
@@ -404,3 +405,93 @@ int main(){
 	pb->fun2(); //B
 	return 0;
 }
+
+
+/*
+ * 15.C++11新增构造
+ *	1.委托构造:使得构造函数可以在同一个类中一个构造函数调用另一个构造函数，不能同时使用委派构造函数和初始化列表
+ *  	2.继承构造:将基类中的构造函数全继承到派生类
+ *	  a.派生类的构造默认与基类一样,若派生类出现与基类相同的构造参数列表时，先调用基类在调用派生类
+ *	  b.当派生类没有构造时，可以使用快速初始化成员变量(int d{3}) 
+ *	  c.基类的构造函数有默认值的不会被继承
+ **/
+
+class Base {
+public:
+    Base() {
+    	cout<<"Base1"<<endl;
+    }
+    //委托Base()构造函数
+    Base(int value) : Base() {
+    	cout<<"Base2"<<endl;
+    }
+};
+
+class Subclass : public Base {
+public:
+	int d{3};
+	//继承构造
+    using Base::Base;
+    Subclass(){
+    	this->d=4;
+    	cout<<"Subclass1"<<endl;
+    }
+};
+
+int main()
+{
+	Subclass str1(2); //Base1 Base2
+	cout<<str1.d<<endl; //3
+	Subclass str2; //Base1 Subclass
+	cout<<str2.d<<endl; //4
+	return 0;
+}
+
+
+/*
+ * 16.C++新增关键字
+ *   1.override:显式的告知编译器进行重载
+ *   2.final:为了防止类被继承以及虚函数被重载
+ *   3.delete:显式禁用默认函数
+ **/
+
+struct Base {
+    virtual void foo(int);
+    virtual void hello(int) final;
+};
+struct SubClass: Base {
+    void foo(int) override; //指定需要覆盖父类方法
+    void foo(float) override; // 保错, 编译器检查到父类没有此虚函数
+    void hello(int); //保错，hello不允许继承
+};
+
+(1).default关键字
+
+class Magic {
+public:
+    Magic() = default; // 显式声明使用编译器生成的构造
+    Magic(int magic_number);
+};
+
+等价于
+
+class Magic {
+public:
+    Magic();
+    Magic(int magic_number);
+};
+
+(2).delete关键字
+
+class Magic {
+public:
+    Magic() = delete; // 显式声明使用编译器生成的构造
+    Magic(int magic_number);
+};
+
+等价于
+
+class Magic {
+public:
+    Magic(int magic_number);
+};

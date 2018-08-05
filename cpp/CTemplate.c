@@ -9,6 +9,7 @@
  * 		a.作用域:仅对下面挨着的代码段有效
  * 		b.具体化:指定某个类型需要单独处理
  * 		c.调用顺序:普通函数>具体化>模板
+ *       d.C++11可以设定默认值
  *
  * 	 2.类模板:
  * 	 	a.可以设定默认值
@@ -25,6 +26,12 @@ struct Node{
 template <typename T>
 void fun(T t){
 	cout<<"Template"<<endl;
+}
+
+//带默认值的函数模板
+template<typename T = int, typename U = int>
+auto add(T x, U y){
+    return x+y
 }
 
 //函数模板具体化

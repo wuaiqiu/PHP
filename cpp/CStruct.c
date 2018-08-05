@@ -66,8 +66,7 @@ int main(){
 /*
  *  结构体与类的区别:
  *   1.默认的访问权限struct是public的，class是private的
- *   2.struct可以定义的时候用{}赋初值，但有构造函数时不可以
- *   3.struct更适合看成是一个数据结构的实现体，class更适合看成是一个对象的实现体
+ *   2.struct更适合看成是一个数据结构的实现体，class更适合看成是一个对象的实现体
  *
  *  结构体与类的联系:
  * 	 1.struct能继承
@@ -105,7 +104,6 @@ int main(){
 	return 0;
 }
 
-
 /*
  * 变长结构体
  * 	 结构体最后使用0或1的长度数组，主要是为了方便的管理内存缓冲区，如果你直接使用指针而不使
@@ -132,3 +130,23 @@ int main(void) {
 	 free(xiaobo1);
 	 return 0;
 }
+
+
+
+/*
+ * 初始化列表(C++11)
+ *	1.为对象的初始化与普通数组和结构体的初始化方法提供了统一的桥梁
+ *   2.初始化列表除了用在对象构造上，还能将其作为普通函数的形参
+ **/
+
+#include <initializer_list>
+
+class Magic {
+public:
+    Magic(std::initializer_list<int> list);
+};
+Magic magic = {1,2,3,4,5};
+
+
+void foo(std::initializer_list<int> list);
+foo({1,2,3});
