@@ -18,6 +18,8 @@ map<int, int> c1 = c|赋值构造
 
 ### 二.操作
 
+函数|详情
+--|--
 c.insert(pair<int, int>(6, 15))|插入
 c.emplace(pair<int, int>(7,60))|如果不存在元素则插入,如果存在则什么也不做
 c.erase(10)|指定下标删除
