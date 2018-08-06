@@ -1,9 +1,9 @@
 # Map(Multimap)
 
-1.根据元素的key值进行排序
-2.map每个元素的key只能出现一次,multimap每个元素的key可以能出现多次
-3.底层是红黑树
-4.无法使用迭代器改变元素的key(const key),但是可以改变元素的value
+1.根据元素的key值进行排序<br>
+2.map每个元素的key只能出现一次,multimap每个元素的key可以能出现多次<br>
+3.底层是红黑树<br>
+4.无法使用迭代器改变元素的key(const key),但是可以改变元素的value<br>
 
 ![](../../img/16.png)
 
