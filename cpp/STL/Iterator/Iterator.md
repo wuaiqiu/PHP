@@ -2,10 +2,10 @@
 
 ### 一.迭代器的种类
 
-1.单向迭代器:只能以累加操作符向前迭代(forward_list,unordered_set/map,unordered_multiset/map)
-2.双向迭代器:可以以累加或累减操作符向前或向后迭代(list,set,map,multiset,multimap)
-3.随机访问迭代器:不但具有双向迭代器的所有属性，还允许迭代器算术运算(vector,deque,array)
-4.输入型迭代器:write-read迭代器
+1.单向迭代器:只能以累加操作符向前迭代(forward_list,unordered_set/map,unordered_multiset/map)<br>
+2.双向迭代器:可以以累加或累减操作符向前或向后迭代(list,set,map,multiset,multimap)<br>
+3.随机访问迭代器:不但具有双向迭代器的所有属性，还允许迭代器算术运算(vector,deque,array)<br>
+4.输入型迭代器:write-read迭代器<br>
 5.输出型迭代器:read-only迭代器
 
 ![](../img/7.png)
