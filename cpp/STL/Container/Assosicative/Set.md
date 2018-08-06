@@ -1,8 +1,8 @@
 # Set(Multiset)
 
-1.根据元素的value值进行排序
-2.set每个元素只能出现一次,multiset每个元素可以出现多次
-3.底层是红黑树
+1.根据元素的value值进行排序<br>
+2.set每个元素只能出现一次,multiset每个元素可以出现多次<br>
+3.底层是红黑树<br>
 4.无法使用迭代器改变set/multiset改变元素值
 
 ![](../../img/14.png)
