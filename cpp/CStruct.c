@@ -140,13 +140,18 @@ int main(void) {
  **/
 
 #include <initializer_list>
-
 class Magic {
 public:
-    Magic(std::initializer_list<int> list);
+    Magic(initializer_list<int> list){
+		for(auto a : list)
+			cout<<a<<endl;
+	}
 };
 Magic magic = {1,2,3,4,5};
 
 
-void foo(std::initializer_list<int> list);
+void fun(initializer_list<int> list){
+	for(auto a : list)
+		cout<<a<<endl;
+}
 foo({1,2,3});
