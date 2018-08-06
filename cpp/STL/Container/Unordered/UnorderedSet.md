@@ -1,8 +1,8 @@
 # UnorderedSet(UnorderedMultiset)
 
-1.无序集合，底层HashTable
-2.有查找和删除，添加的优点
-3.unordered_set每个元素只能出现一次,unordered_multiset每个元素可以出现多次
+1.无序集合，底层HashTable<br>
+2.有查找和删除，添加的优点<br>
+3.unordered_set每个元素只能出现一次,unordered_multiset每个元素可以出现多次<br>
 4.空白格是set中的key与value的数据包
 
 ![](../../img/17.png)
