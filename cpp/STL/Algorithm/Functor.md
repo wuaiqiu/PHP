@@ -1,8 +1,8 @@
 # Functor
 
-1.仿函数只为算法服务
-2.声明一个类,重载它的operator()
-3.只有继承自binary_function(两个参数)或者unary_function(一个参数),声明的仿函数才可以融入STL
+1.仿函数只为算法服务<br>
+2.声明一个类,重载它的operator()<br>
+3.只有继承自binary_function(两个参数)或者unary_function(一个参数),声明的仿函数才可以融入STL<br>
 
 ### 一.仿函数类别
 
