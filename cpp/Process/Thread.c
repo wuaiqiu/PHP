@@ -139,8 +139,8 @@ void fun3(){
  * 信号量:
  *  int sem_init(sem_t* sem,int pshared,unsigned int val):初始化一个信号量(pshared:0为
  *  线程间共享;val:信号量初始值)
- *  int sem_wait(sem_t* sem):判断当前信号量是否等于0，若等于则阻塞，否则信号量减1(P操作)
- *  int sem_post(sem_t* sem):增加信号量的值(V操作)
+ *  int sem_wait(sem_t* sem):判断当前信号量是否等于0，若等于则阻塞，否则信号量减1(P在[Passing,通过]操作)
+ *  int sem_post(sem_t* sem):增加信号量的值(V[Release,释放]操作)
  *  int sem_destroy(sem_t* sem):释放信号量的资源
  * */
 
