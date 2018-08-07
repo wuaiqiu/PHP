@@ -3,9 +3,8 @@
 #include <unistd.h>
 
 /*
- *   int getcontext(ucontext_t* context):将当前的上下文保存到context
- *   void makecontext(ucontext_t* context, void (*fun)(),int argc,...):修改上下文context
- *   int setcontext(ucontext_t* context):改变当前的上下文为context
+ *   int getcontext(ucontext_t* context):实例化context
+ *   void makecontext(ucontext_t* context, void (*fun)(),int argc,...):绑定context
  *   int swapcontext(ucontext_t* scontext,ucontext_t* context):保存当前上下文scontext，
  *   并切换上下文context
  * */
