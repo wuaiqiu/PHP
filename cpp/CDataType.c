@@ -72,14 +72,14 @@ int main(){
  * 5.C++新式类型转换(更加细致，更加安全),C++11不在使用传统的类型转换
  * 	 1.static_cast:
  *	    a.编译时检查
- * 	    b.用于类层次结构中父子类之间指针或引用的转换
+ * 	    b.用于类层次结构中父子类之间指针或引用的转换,向下转不安全
  * 	    c.用于基本数据类型之间的转换
  * 	    d.把void指针与目标类型指针相互转换。
  *
  *	 2.dynamic_cast:
- *	    a.运行时检查
- *	    b.目标必须时一个有效的指针(引用)，一个左值，一个右值
- *	    c.在多态中使用，看似一个逆多态
+ *	    a.运行时检查，基本必须含有虚函数
+ *	    b.目标必须时一个有效的指针(引用)
+ *	    c.向下转安全
  *	   
  * 	 3.const_cast:
  *	    a.常量指针(引用)被转化成非常量的指针(引用)；
@@ -109,9 +109,12 @@ int main(){
 	//1.将Son指针转换成Father指针
 	Son* a = new Son;
 	Father* b = dynamic_cast<Father*>(a);
-	//2.报错，基类中不含虚函数
+	//2.d将会等于NULL
 	Father* c = new Father;
 	Son* d = dynamic_cast<Son*>(c);
+	//3.将Father指针转换成Son指针
+	Father* e = new Son;
+	Son* f = dynamic_cast<Son*>(a);
 	return 0;
 }
 
