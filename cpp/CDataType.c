@@ -75,12 +75,11 @@ int main(){
  * 	    b.用于类层次结构中父子类之间指针或引用的转换
  * 	    c.用于基本数据类型之间的转换
  * 	    d.把void指针与目标类型指针相互转换。
- * 	    e.向下转不报错
  *
  *	 2.dynamic_cast:
  *	    a.运行时检查
- *	    b.目标必须时一个有效的指针，一个左值，一个右值
- *	    c.向下转报错
+ *	    b.目标必须时一个有效的指针(引用)，一个左值，一个右值
+ *	    c.在多态中使用，看似一个逆多态
  *	   
  * 	 3.const_cast:
  *	    a.常量指针(引用)被转化成非常量的指针(引用)；
@@ -89,9 +88,6 @@ int main(){
  * 	    a.它可以将任何指针转换为任何其他指针类型。
  * 	    b.它可以把一个指针转换成一个整数，也可以把一个整数转换成一个指针。
  * */
-
-class Person{};
-class Student : public Person{};
 
 int main(){
 	//1.将char型数据转换成int型数据
@@ -103,19 +99,19 @@ int main(){
 	//3.将int型数据转换成const int型数据，但不能逆过来
 	int e = 10;
 	const int f = static_cast<const int>(e);
-	//4.将Student型数据转换成Person型数据
-	Student s;
-	Person p = static_cast<Person>(s);
+	//4.将Son指针转换成Father指针
+	Son* s = new Son;
+	Father* f = static_cast<Father*>(s);
 	return 0;
 }
 
 int main(){
-	//1.将Student型数据转换成Person型数据
-	Student* a = new Student;
-	Person* b = dynamic_cast<Person*>(a);
-	//2.报错
-	Person* c = new Person;
-	Student* d = dynamic_cast<Student*>(c);
+	//1.将Son指针转换成Father指针
+	Son* a = new Son;
+	Father* b = dynamic_cast<Father*>(a);
+	//2.报错，基类中不含虚函数
+	Father* c = new Father;
+	Son* d = dynamic_cast<Son*>(c);
 	return 0;
 }
 
