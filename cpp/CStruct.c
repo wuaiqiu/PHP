@@ -42,70 +42,21 @@ int main(){
 
 
 /*
- * 	C++结构体:
- * 	  1.声明结构体变量不需要struct
- * 	  2.结构体直接可以放函数定义
+ * 4.C++结构体:
+ *   1).声明结构体变量不需要struct
+ *   2).结构体直接可以放函数定义
+ * 5.结构体与类的区别:
+ *   1).默认的访问权限struct是public的，class是private的
+ *   2).struct更适合看成是一个数据结构的实现体，class更适合看成是一个对象的实现体
+ * 6.结构体与类的联系:
+ *    1).struct能继承
+ *    2).struct能实现多态
+ *    3).struct可以继承class，同样class也可以继承struct
  * */
-
-struct Student{
-	int age;
-	void fun(){
-	 cout<<"Hello"<<endl;
-	}
-private:
-	int sex;
-};
-
-int main(){
-	Student stu={1};
-	stu.fun();
-	return 0;
-}
 
 
 /*
- *  结构体与类的区别:
- *   1.默认的访问权限struct是public的，class是private的
- *   2.struct更适合看成是一个数据结构的实现体，class更适合看成是一个对象的实现体
- *
- *  结构体与类的联系:
- * 	 1.struct能继承
- * 	 2.struct能实现多态
- * 	 3.struct可以继承class，同样class也可以继承struct
- * */
-
-struct A{
-  A(){
-	  cout<<"This is A constructor"<<endl;
-  }
-  virtual void fun(){
-	  cout<<"This is A Fun"<<endl;
-  }
-  virtual ~A(){
-	  cout<<"This is A destory"<<endl;
-  }
-};
-struct B : A{
-	B(){
-		  cout<<"This is B constructor"<<endl;
-	  }
-	void fun(){
-		  cout<<"This is B Fun"<<endl;
-	 }
-	~B(){
-		cout<<"This is B destory"<<endl;
-	}
-};
-
-int main(){
-	A* a=new B;
-	a->fun();
-	delete a;
-	return 0;
-}
-
-/*
- * 变长结构体
+ * 7.变长结构体
  * 	 结构体最后使用0或1的长度数组，主要是为了方便的管理内存缓冲区，如果你直接使用指针而不使
  * 用数组，那么，你在分配内存缓冲区时，就必须分配结构体一次，然后再分配结构体内的指针一次，
  * 而此时分配的内存已经与结构体的内存不连续了，所以要分别管理即申请和释放，而如果使用数组，那
@@ -133,10 +84,10 @@ int main(void) {
 
 
 
-/*
- * 初始化列表(C++11)
- *	1.为对象的初始化与普通数组和结构体的初始化方法提供了统一的桥梁
- *   2.初始化列表除了用在对象构造上，还能将其作为普通函数的形参
+/* 
+ * 8.初始化列表(C++11)
+ *  1).为对象的初始化与普通数组和结构体的初始化方法提供了统一的桥梁
+ *  2).初始化列表除了用在对象构造上，还能将其作为普通函数的形参
  **/
 
 #include <initializer_list>
@@ -152,6 +103,6 @@ Magic magic = {1,2,3,4,5};
 
 void fun(initializer_list<int> list){
 	for(auto a : list)
-		cout<<a<<endl;
+	   cout<<a<<endl;
 }
 foo({1,2,3});
