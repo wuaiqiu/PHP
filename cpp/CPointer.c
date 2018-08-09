@@ -103,42 +103,41 @@ int main() {
 #include <iostream>
 #include <memory>
 
-int main()
-{
-    //1.创建传入参数中的对象，并返回这个对象类型的std::shared_ptr指针
-	auto pointer = make_shared<int>(10);
-	auto pointer2 = pointer; //引用计数+1
-	auto pointer3 = pointer; //引用计数+1
-	cout << pointer.use_count() <<endl; //3
-	cout << pointer2.use_count() <<endl; //3
-	cout << pointer3.use_count() <<endl; //3
-	pointer2.reset(); //去除pointer2的引用
-	cout << pointer.use_count() <<endl; //2
-	cout << pointer2.use_count() <<endl; //0
-	cout << pointer3.use_count() <<endl; //2
-    //2.离开作用域前，shared_ptr会被析构从而释放内存
+class Person{
+public:
+   void fun(){
+     cout<<"ok"<<endl;
+   }
+};
+
+int main(){
+     Person p;
+     //创建传入参数中的对象，并返回这个对象类型的shared_ptr
+     auto a=make_shared<Person>(p);
+     auto b=a;//引用计数+1
+     cout<<a.use_count()<<endl; //2
+     cout<<b.use_count()<<endl;//2
+     b.reset();//去除b的引用
+     cout<<a.use_count()<<endl;//1
+     cout<<b.use_count()<<endl;//0
+     a.get()->fun();//获取原来指针
+     return 0;
+}
+
+int main(){
+    Person p;
+    auto pointer = make_unique<Person>(p);   
+    auto pointer2 = pointer;  //非法操作
     return 0;
 }
-
-
-
-int main()
-{
-	//1.创建对象引用
-	std::unique_ptr<int> pointer = std::make_unique<int>(10);   
-	std::unique_ptr<int> pointer2 = pointer;  //非法操作
-	//2.离开作用域前，shared_ptr会被析构从而释放内存
-	return 0;
-}
-
 
 struct A{};
 struct B {
     weak_ptr<A> pointer;
 };
 int main() {
-    auto a = std::make_shared<A>();
-    auto b = std::make_shared<B>();
+    auto a = make_shared<A>();
+    auto b = make_shared<B>();
     b->pointer = a;
     cout << a.use_count() << endl;  //1
     cout << b.use_count() << endl;  //1
