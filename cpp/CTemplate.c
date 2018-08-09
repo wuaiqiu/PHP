@@ -5,45 +5,45 @@
 
 /*
  * C++模板
- * 	 1.函数模板:用一个模板函数完成函数重载功能
- * 		a.作用域:仅对下面挨着的代码段有效
- * 		b.具体化:指定某个类型需要单独处理
- * 		c.调用顺序:普通函数>具体化>模板
+ *    1.函数模板:用一个模板函数完成函数重载功能
+ * 	 a.作用域:仅对下面挨着的代码段有效
+ * 	 b.具体化:指定某个类型需要单独处理
+ * 	 c.调用顺序:普通函数>具体化>模板
  *       d.C++11可以设定默认值
- *
- * 	 2.类模板:
- * 	 	a.可以设定默认值
- * 	 	b.创建对象时，需要传递模板参数列表
- * 	 	c.作用域:仅对下面挨着的代码段有效
- *
  * */
 
-struct Node{
-	int a;
-};
-
-//函数模板<class T>或<typename T>
-template <typename T>
-void fun(T t){
-	cout<<"Template"<<endl;
+//函数模板
+template <typename T=double>
+void fun(T a){
+   cout<<"template"<<endl;
 }
-
-//带默认值的函数模板
-template<typename T = int, typename U = int>
-auto add(T x, U y){
-    return x+y
-}
-
 //函数模板具体化
-template<> void fun<Node>(Node node){
-	cout<<"Node"<<endl;
+template<> 
+void fun<char>(char a){
+   cout<<"char"<<endl;
 }
-
 //普通函数
 void fun(int a){
-   	cout<<"Fun"<<endl;
+   cout<<"int"<<endl;
 }
 
+int main(){
+   fun(1); //int
+   fun('a'); //char
+   fun(1.1); //template
+   return 0;
+}
+
+
+/*
+ *  2.类模板
+ *	 a.作用域:仅对下面挨着的代码段有效
+ * 	 b.可以设定默认值
+ *	 c.定义在外部的类名之前必须加上template的相关声明
+ * 	 d.创建对象时，需要传递模板参数列表
+ *	 e.特化与偏特化
+ **/
+ 
 //类模板
 template <typename T,typename Z=char>
 class Person{
@@ -55,50 +55,42 @@ public:
 };
 
 int main(){
-	Node node={2};
-	fun(1);  //Fun
-	fun('a'); //Template
-	fun(node); //Node
-
-	//创建类模板对象
-	Person<int,char>* p=new Person<int,char>(1,'a');
+	auto p = new Person<int>(1,'a');
 	return 0;
 }
 
 
-/*
- * 3.继承模板
- * 	  a.直接在定义子类时指定固定类型
- * 	  b.通过子类模板参数列表传递
- * */
-
+//普通类模板
 template <typename T>
-class Person{
+class Student{
 public:
-	Person(T t){
-		cout<<"Person: "<<t<<endl;
-	}
+  void info() {
+       printf("普通类模板\n");
+   }
 };
-
-//指定固定类型
-class Student1:public Person<int>{
+//特化类模板
+template <>
+class Student<char>{
 public:
-	Student1():Person<int>(1){
-		cout<<"Student: 1"<<endl;
-	}
+  void info() {
+       printf("特化类模板\n");
+   }
 };
-
-//通过子类模板参数列表传递
+//偏特化类模板
 template <typename T>
-class Student2:public Person<T>{
+class Student<T*>{
 public:
-	Student2():Person<T>(2){
-		cout<<"Student: 2"<<endl;
-	}
+  void info() {
+       printf("偏特化类模板\n");
+   }
 };
 
 int main(){
-	Student1 stu1;
-	Student2<int> stu2;
+	auto p1 = new Student<char*>();
+	auto p2 = new Student<char>();
+	auto p3 = new Student<int>();
+	p1->info();//偏特化类模板
+	p2->info();//特化类模板
+	p3->info();//普通类模板
 	return 0;
 }
