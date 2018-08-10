@@ -18,8 +18,7 @@ array<int,3\> arr1 = arr|赋值拷贝
 
 函数|详情
 --|--
-arr.size()|返回元素个数
-arr.max_size()|返回容器最大元素个数
+arr.size() 或 arr.max_size()|返回容器最大元素个数
 arr.empty()|容器是否为空
 arr[3] 或 arr.at(3)|返回下标为3的元素
 arr.front()|返回第一个元素
