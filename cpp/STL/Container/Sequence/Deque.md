@@ -10,7 +10,7 @@
 
 函数|详情
 --|--
-deque<int\> c|默认构造函数 创建一个空的deque
+deque<int\> c|默认构造
 deque<int\> c1(c)|拷贝构造
 deque<int\> c1 = c|赋值拷贝
 deque<int\> c (5,6)|指定元素个数与默认值
