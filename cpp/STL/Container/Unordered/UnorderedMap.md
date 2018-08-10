@@ -12,7 +12,9 @@
 函数|详情
 --|--
 unordered_map<int,int\> c1|默认构造
+unordered_map<int,int\> c2(c1)|拷贝构造
 unordered_map<int,int\> c2 = c1|赋值构造
+unordered_map<int,int\> c2 = {{1,2},{3,4}}|初始化
 
 <br>
 
@@ -20,19 +22,13 @@ unordered_map<int,int\> c2 = c1|赋值构造
 
 函数|详情
 --|--
-c1.insert(pair<int, int>(6, 15))|插入函数
-c1.emplace(pair<int, int>(6, 15))|如果不存在元素则插入,如果存在则什么也不做
+c1.insert({6,15})|插入
 c1.erase(6)|删除
 c1.clear()|清空
-c1.empty()|判断是否为空
 c1.size()|获取元素个数
-c1.max_size()|获取最大存储量
-c1.find(6)|通过给定key查找元素,返回迭代器
-c1.count(1)|返回匹配给定key元素的个数
-c1.bucket_count()|返回槽数
-c1.max_bucket_count()|返回最大槽数
-c1.bucket_size(3)|返回指定槽大小
-c1.bucket(pair<int, int>(6, 15))|返回元素所在槽的序号
+c1.empty()|判断容器是否为空
+c1[6] 或 c1.at(6)|返回指定位置元素
+c1.count(1)|元素key出现个数
 
 <br>
 
