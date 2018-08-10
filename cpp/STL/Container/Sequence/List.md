@@ -12,9 +12,9 @@
 --|--
 list<int\> l|默认构造
 list<int\> l1(l)|拷贝构造
-list<int\> l1 = l|拷贝赋值
-list<int\> l3(5,2)|指定元素个数及与默认值
-list<int\> l4(l1.begin(),l1.end())|指定赋值区域
+list<int\> l1 = l|赋值拷贝
+list<int\> l(5,2)|指定元素个数及与默认值
+list<int\> l = {1,2,3}|初始化
 
 <br>
 
@@ -22,23 +22,20 @@ list<int\> l4(l1.begin(),l1.end())|指定赋值区域
 
 函数|详情
 --|--
-l.push_front(1)|在起始端增加元素
-l.push_back(1)|在末尾增加一个元素
-l.insert(l.begin(),2)|在指定位置插入元素
-l.insert(l.begin(),5,1)|在指定位置插入5个1
-l.insert(l.begin(),l.begin(),l.end())|在指定位置插入区间
-l.pop_front()|删除第一个元素
-l.pop_back()|删除末尾的元素
-l.erase(l.begin())|删除指定下标位置的元素
-l.clear()|清空list
-l.front()|返回第一个元素
-l.back()返回最后一个元素
-l.empty()|判断是否为空
+l.push_front(1)|向头插入
+l.push_back(1)|向尾插入
+l.insert(l.begin(),2)|其他位置插入(只能++与--)
+l.pop_front()|头弹出
+l.pop_back()|尾弹出
+l.erase(l.begin())|移除其他位置元素
+l.clear()|清空
+l.front()|返回头元素
+l.back()|返回尾元素
 l.size()|返回元素个数
-l.max_size()|返回list最大容量
+l.empty()|判断容器是否为空
 l.unique()|去重
-l.reverse()|反转链表
-l.sort()|将链表排序，默认升序
+l.reverse()|反转
+l.sort()|排序
 
 <br>
 
