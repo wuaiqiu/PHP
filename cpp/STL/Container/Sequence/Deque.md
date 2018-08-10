@@ -12,9 +12,9 @@
 --|--
 deque<int\> c|默认构造函数 创建一个空的deque
 deque<int\> c1(c)|拷贝构造
-deque<int\> c2 = c1|赋值拷贝
-deque<int\> c3 (5,6)|指定元素个数与默认值
-deque<int\> c5({2,3,4,5}) 或 deque<int\> c6 = {2,3,4,5}|指定初始化列表
+deque<int\> c1 = c|赋值拷贝
+deque<int\> c (5,6)|指定元素个数与默认值
+deque<int\> c = {1,2,3}|初始化
 
 <br>
 
@@ -22,18 +22,17 @@ deque<int\> c5({2,3,4,5}) 或 deque<int\> c6 = {2,3,4,5}|指定初始化列表
 
 函数|详情
 --|--
-c.push_back(6)|向尾插入
 c.push_front(0)|向头插入
-c.insert(c.begin()+3, 10)|其他位置插入  
-c.pop_back()|尾弹出
+c.push_back(6)|向尾插入
+c.insert(c.begin()+3, 10)|其他位置插入
 c.pop_front()|头弹出
+c.pop_back()|尾弹出
 c.erase(c.begin()+3)|移除其他位置元素
-c.clear()|清空容器
+c.clear()|清空
 c.front()|返回头元素
 c.back()|返回尾元素
 c.at(1) 或 c[1]|返回指定位置元素
 c.size()|返回元素个数
-c.max_size()|返回容器最大容量
 c.empty()|判断容器是否为空
 
 <br>
