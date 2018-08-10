@@ -12,9 +12,9 @@
 函数|详情
 --|--
 set<int\> c|默认构造
-set<int\> c1 = {1,2,3,7,6,4,5}|初始化列表
-set<int\> c2(arr,arr+5)|数组转换
-set<int\> c3 = c1|赋值拷贝
+set<int\> c1(c)|拷贝构造
+set<int\> c1 =c|赋值拷贝
+set<int\> c1 = {1,2,3,7,6,4,5}|初始化
 
 <br>
 
@@ -23,13 +23,10 @@ set<int\> c3 = c1|赋值拷贝
 函数|详情
 --|--
 c.insert(10)|插入
-c.emplace(1)|如果不存在元素1 则插入1,如果存在则什么也不做
-c.erase(10)|指定元素删除
-c.clear()|容器清空
-c.empty()|判断是否为null
-c.size()|元素个数
-c.max_size()|容器最大容量
-c.find(40)|查看是否含有该元素,返回迭代器
+c.erase(10)|删除
+c.clear()|清空
+c.size()|返回元素个数
+c.empty()|判断容器是否为空
 c.count(1)|元素出现个数
 
 <br>
