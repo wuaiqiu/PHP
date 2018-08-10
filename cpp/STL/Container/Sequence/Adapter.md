@@ -34,8 +34,8 @@ class stack{
 
 ### 二.Queue
 
-1.默认底层是Deque
-2.运用的就是包含，包装Deque
+1.默认底层是Deque<br>
+2.运用的就是包含，包装Deque<br>
 3.先进先出
 
 ```
