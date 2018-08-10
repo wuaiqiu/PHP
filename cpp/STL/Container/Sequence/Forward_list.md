@@ -13,9 +13,9 @@
 --|--
 forward_list<int> l|默认构造
 forward_list<int> l1(l)|拷贝构造
-forward_list<int> l1 = l|拷贝赋值
-forward_list<int> l3(5,2)|指定大小与默认值
-forward_list<int> l4(l1.begin(),l1.end())|指定赋值区域
+forward_list<int> l1 = l|赋值拷贝
+forward_list<int> l(5,2)|指定大小与默认值
+forward_list<int> l = {1,2,3}|初始化
 
 <br>
 
@@ -23,17 +23,16 @@ forward_list<int> l4(l1.begin(),l1.end())|指定赋值区域
 
 函数|详情
 --|--
-l.push_front(0)|前段插入0
-l.insert_after(l.begin(), 0)|在指定位置后面插入一组数据
-l.insert_after(l.begin(), 11)|在指定位置之后插入元素
-l.pop_front()|弹出第一个元素
-l.erase_after(l.begin(),l.end())|删除指定位置
+l.push_front(0)|向头插入
+l.insert_after(l.begin(), 0)|其他位置插入(只能++)
+l.pop_front()|头弹出
+l.erase_after(l.begin())|移除其他位置元素
 l.clear()|清空
-l.front()|返回第一个元素
-l.empty()|返回forward_list是否为空
-l.max_size()|forward_list的最大容量
+l.front()|返回头元素
+l.empty()|判断容器是否为空
+l.unique()|去重
+l.reverse()|反转
 l.sort()|排序
-l.unique()|删除重复元素
 
 <br>
 
