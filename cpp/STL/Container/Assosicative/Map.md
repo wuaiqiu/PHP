@@ -11,8 +11,10 @@
 
 函数|详情
 --|--
-map<int, int> c|默认构造
-map<int, int> c1 = c|赋值构造
+map<int, int\> c|默认构造
+map<int, int\> c1(c)|拷贝构造
+map<int, int\> c1 = c|赋值构造
+map<int, int\> c = {{1,2},{3,4}}|初始化
 
 <br>
 
@@ -20,17 +22,12 @@ map<int, int> c1 = c|赋值构造
 
 函数|详情
 --|--
-c.insert(pair<int, int>(6, 15))|插入
-c.emplace(pair<int, int>(7,60))|如果不存在元素则插入,如果存在则什么也不做
-c.erase(10)|指定下标删除
-c.erase(c.begin())|指定元素删除
-c.clear()|容器清空
-c.empty()|判断是否为null
-c.size()|元素个数
-c.max_size()|容器最大容量
-c[10]|存在则直接返回该key对应的value ,如果不存在则想该位置插入默认值
-c.at(10)|key取value
-c.find(40)|查看是否含有该元素key,返回迭代器
+c.insert({6, 15})|插入
+c.erase(6)|删除
+c.clear()|清空
+c.size()|返回元素个数
+c.empty()|判断容器是否为空
+c[6] 或 c.at(6)|返回指定位置元素
 c.count(1)|元素key出现个数
 
 <br>
