@@ -15,8 +15,8 @@
 vector<int\> v|默认构造
 vector<int\> v1(v)|拷贝构造
 vector<int\> v1 = v|赋值拷贝
-vector<int\> v3(5,10)|指定元素个数及默认值
-vector<int\> v4(arr,arr+3)|与array间的转换
+vector<int\> v(5,10)|指定元素个数及默认值
+vector<int\> v = {1,2,3}|初始化
 
 <br>
 
@@ -24,19 +24,16 @@ vector<int\> v4(arr,arr+3)|与array间的转换
 
 函数|详情
 --|--
-v.push_back(1)|在尾端插入元素
-v.insert(v.begin(),3)|在头部的前面插入3
-v.insert(v.being(),2,5)|在头部的前面插入两个5
-v.pop_back()|删除最后一个元素
-v.erase(v.begin()+1)|删除指定下标元素
+v.push_back(1)|向尾插入
+v.insert(v.begin(),3)|其他位置插入
+v.pop_back()|尾弹出
+v.erase(v.begin()+1)|移除其他位置元素
 v.clear()|清空
+v.front()|返回头元素
+v.back()|返回尾元素
+v[1] 或 v.at(1)|返回指定位置元素
 v.size()|返回元素个数
-v.capacity()|实际内存大小
-v.max_size()|最大内存
 v.empty()|判断容器是否为空
-v.front()|返回第一个元素
-v.back()|返回最后一个元素
-v[1] 或 v.at(1)|返回下表为index的元素
 
 <br>
 
