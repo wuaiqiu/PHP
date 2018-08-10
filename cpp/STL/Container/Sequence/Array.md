@@ -8,9 +8,9 @@
 函数|详情
 --|--
 array<int,3\> arr|默认构造
-array<int,3\> arr = {1,2}|局部初始化
-array<int,3\> arr = {1,2,3}|完全初始化
+array<int,3\> arr1(arr)|拷贝构造
 array<int,3\> arr1 = arr|赋值拷贝
+array<int,3\> arr = {1,2}|初始化
 
 <br>
 
@@ -18,11 +18,11 @@ array<int,3\> arr1 = arr|赋值拷贝
 
 函数|详情
 --|--
-arr.size() 或 arr.max_size()|返回容器最大元素个数
-arr.empty()|容器是否为空
-arr[3] 或 arr.at(3)|返回下标为3的元素
-arr.front()|返回第一个元素
-arr.back()|返回最后一个元素
+arr.front()|返回头元素
+arr.back()|返回尾元素
+arr[3] 或 arr.at(3)|返回指定位置元素
+arr.size()|返回容器个数
+arr.empty()|判断容器是否为空
 
 <br>
 
