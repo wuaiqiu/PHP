@@ -22,30 +22,7 @@ Algorithm(Iterator itr,Iterator itr2,Cmp comp)
 
 ### 二.源码分析
 
->1.accumulate:累加,将指定区域内的value累加起来
-
-```
-//默认累加算法
-template<typename _InputIterator, typename _Tp>
-inline _Tp  accumulate(_InputIterator __first, _InputIterator __last, _Tp __init)
-{
-    for (; __first != __last; ++__first)
-        __init = __init + *__first;
-    return __init;
-}
-
-//自定义累加算法
-template<typename _InputIterator, typename _Tp, typename _BinaryOperation>
-inline _Tp  accumulate(_InputIterator __first, _InputIterator __last, _Tp __init,
-           _BinaryOperation __binary_op)
-{
-      for (; __first != __last; ++__first)
-          __init = __binary_op(__init, *__first);
-      return __init;
-}
-```
-
->2.for_each:遍历
+>1.for_each:遍历
 
 ```
 template <class Inputerator, class Function>
@@ -59,7 +36,20 @@ Function for_each(Inputerator first, Inputerator last, Function f)
 }
 ```
 
->3.replace:替换函数
+```
+template <typename T>
+struct functor : public unary_function<T,void>
+{
+	void operator()(const T &a) const{
+		 cout<<a<<endl
+	}
+};
+
+vector<int> arr = {1,2,3};
+for_each(arr.begin(),arr.end(),functor<int>());
+```
+
+>2.replace:替换函数
 
 ```
 //范围内所有等于old_value者都一new_value取代
@@ -83,19 +73,26 @@ void replace_if(ForwardIterator first, ForwardIterator last, Predicate pred, con
             *first = new_value;
     }
 }
-
-//范围内所有等于old_value者都以new_value放置新区域
-template <class Inputerator, class Outputerator, class T>
-Outputerator replace_copy(ForwardIterator first, ForwardIterator last, Outputerator result, const T & old_value, const T& new_value)
-{
-    for( ; first != last; ++first, ++result)
-    {
-        *result = *first == old_value ? new_value : *first;
-    }
-}
 ```
 
->4.count:计数(map/set,unordered_set/map由于是关联式容器,有自己的count函数)
+```
+template <typename T>
+struct functor : public unary_function<T,bool>
+{
+	bool operator()(const T &a) const{
+		 if( a == 2 )
+       return true;
+    else
+       return false;
+	}
+};
+
+vector<int> arr = {1,2,3};
+replace(arr.begin(),arr.end(),2,4);
+replace_if(arr.begin(),arr.end(),functor<int>(),4);
+```
+
+>3.count:计数(map/set,unordered_set/map由于是关联式容器,有自己的count函数)
 
 ```
 //满足要求值累计+1
@@ -123,53 +120,19 @@ count_if(Inputerator first, Inputerator last, Predicate pred)
 }
 ```
 
->5.find:查找(map/set,unordered_set/map由于是关联式容器,有自己的find函数)
-
 ```
-//指定值查询
-template <class Inputerator, class T>
-Inputerator find_if(Inputerator first, Inputerator last,  const T& value)
+template <typename T>
+struct functor : public unary_function<T,bool>
 {
-    while(first != last && *first != value)
-        ++first;
-    return first;
-}
+	bool operator()(const T &a) const{
+		 if( a == 2 )
+       return true;
+    else
+       return false;
+	}
+};
 
-//条件查询
-template <class Inputerator, class Predicate>
-Inputerator find_if(Inputerator first, Inputerator last, Predicate pred)
-{
-    while(first != last && !pred(*first))
-        ++first;
-    return first;
-}
-```
-
->6.binary_search:查看元素是否在指定区间内
-
-```
-template <class Inputerator, class T>
-bool binary_search(Inputerator first, Inputerator last, const T& val)
-{
-    first = std::lower_bound(first,last,val);
-    return (first != last && !(val < *first));
-}
-```
-
->7.sort:排序(list和forward_list有成员sort函数,set/map自动排序)
-
-```
-//自然排序
-template<typename _RandomAccessIterator>
-inline void sort(_RandomAccessIterator __first, _RandomAccessIterator __last)
-{
-    std::__sort(__first, __last, __gnu_cxx::__ops::__iter_less_iter());
-}
-
-//条件排序
-template<typename _RandomAccessIterator, typename _Compare>
-inline void sort(_RandomAccessIterator __first, _RandomAccessIterator __last,_Compare __comp)
-{
-    std::__sort(__first, __last, __gnu_cxx::__ops::__iter_comp_iter(__comp));
-}
+vector<int> arr = {1,2,3,2};
+count(arr.begin(),arr.end(),2);
+count_if(arr.begin(),arr.end(),functor<int>());
 ```

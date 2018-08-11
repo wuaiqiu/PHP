@@ -31,15 +31,24 @@ arr.empty()|判断容器是否为空
 >1.[]与at区别
 
 ```
-//直接返回
-reference operator[](size_type _n) noexecpt{
-   return _AT_Type::S_ref(_M_elems,_n);
+template<typename _Tp, size_t _Nm>
+struct __array_traits{
+    typedef _Tp _Type[_Nm];
+
+    static constexpr _Tp& _S_ref(const _Type& __t, size_t __n) noexcept
+    { return const_cast<_Tp&>(__t[__n]); }
 }
 
+typedef __array_traits<_Tp, _Nm> _AT_Type;
+
+//直接返回
+reference operator[](size_type __n) noexcept
+{ return _AT_Type::_S_ref(_M_elems, __n); }
+
 //先检查，在返回
-reference at(size_type _n){
-   if(_n >= _Nm)
-      std::_throw_out_of_range_fmt(...);
-    return _AT_Type::S_ref(_M_elems,_n);   
+reference at(size_type __n){
+	if (__n >= _Nm)
+	  __throw_out_of_range_fmt(__N("array::at: __n (which is %zu) >= _Nm (which is %zu)"),__n, _Nm);
+	return _AT_Type::_S_ref(_M_elems, __n);
 }
 ```
