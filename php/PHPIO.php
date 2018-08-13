@@ -221,4 +221,41 @@
    	    准备在loadFun2中加载文件
    	    这是LoadClass的move方法
    	 */
+
+
+//--------------------------Output Control------------------------//
+
+/*
+ *  Output Control
+ *
+ *  1.bool ob_start():打开输出缓冲.当输出缓冲激活后,脚本将不会输出内容
+ * (除http标头外),相反需要输出的内容被存储在内部缓冲区中
+ *  2.string ob_get_contents():只是得到输出缓冲区的内容,但不清除它
+ *  3.int ob_get_length():此函数将返回输出缓中冲区内容的长度
+ *  4.int ob_get_level():返回输出缓冲机制的嵌套级别
+ *  5.array ob_get_status(true):得到所有输出缓冲区的状态
+ *  6.void ob_flush():输出并清除缓冲区中的内容
+ *  7.string ob_get_flush():以字符串形式返回内容,并关闭输出缓冲区
+ *  8.void ob_clean():清空输出缓冲区
+ *  9.bool ob_end_clean():清空缓冲区并关闭输出缓冲
+ * */
+
+
+//Level 0
+ob_start();
+echo "Hello ";
+
+//Level 1
+ob_start();
+echo "Hello World".ob_get_level();
+$out2 = ob_get_contents();
+ob_end_clean();
+
+//Back to level 0
+echo "Galaxy".ob_get_level();
+$out1 = ob_get_contents();
+ob_end_clean();
+
+//Just output
+var_dump($out1, $out2);
 ?>
