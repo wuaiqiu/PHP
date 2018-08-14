@@ -94,3 +94,16 @@ int main(){
 	p3->info();//普通类模板
 	return 0;
 }
+
+/*
+ * 3.声明为嵌套类型
+ **/
+template <typename T>
+struct Student{
+  typedef T value_type;
+}
+
+//声明为嵌套类型而非静态成员
+typename Student<int>::value_type a;
+等价于
+int a;
