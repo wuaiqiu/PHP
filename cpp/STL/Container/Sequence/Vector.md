@@ -41,77 +41,87 @@ v.empty()|判断容器是否为空
 
 >1.vector结构
 
-![](../../img/9.png)
-
-```
-template<typename _Tp, typename _Alloc>
-struct _Vector_base{
-    struct _Vector_impl : public _Tp_alloc_type{
-          pointer _M_start; //指向数组元素开始
-          pointer _M_finish;//指向数组元素结束
-          pointer _M_end_of_storage; //指向数组的结尾
-     }_M_impl;
-    //申请内存        
-    pointer _M_allocate(size_t __n){
-          typedef __gnu_cxx::__alloc_traits<_Tp_alloc_type> _Tr;
-          return __n != 0 ? _Tr::allocate(_M_impl, __n) : 0;
-    }
-    //释放内存
-    void _M_deallocate(pointer __p, size_t __n){
-          typedef __gnu_cxx::__alloc_traits<_Tp_alloc_type> _Tr;
-          if (__p)
-              _Tr::deallocate(_M_impl, __p, __n);
-     }
-}
-```
-
 ![](../../img/10.png)
 
->2.push_back
+```
+//Alloc是STL的空间配置器,默认是第二级配置器
+template <class _Tp, class _Alloc = __STL_DEFAULT_ALLOCATOR(_Tp)>
+class vector : protected _Vector_base<_Tp, _Alloc> 
+{
+protected:
+  _Tp* _M_start;//表示目前使用空间的头
+  _Tp* _M_finish;//表示目前使用空间的尾
+  _Tp* _M_end_of_storage;//表示目前可用空间的尾  
+ 
+public:
+  typedef _Tp value_type;
+  typedef value_type* pointer;
+  typedef const value_type* const_pointer;
+  typedef value_type* iterator;//vector容器的迭代器是普通指针
+  typedef const value_type* const_iterator;
+  
+  //指向已使用空间头的迭代器
+  iterator begin() { return _M_start; }
+  const_iterator begin() const { return _M_start; }
+  //指向已使用空间尾的迭代器
+  iterator end() { return _M_finish; }
+  const_iterator end() const { return _M_finish; }
+};
+```
+
+>2.成员函数
 
 ```
-void push_back(const value_type& __x){
-    if (this->_M_impl._M_finish != this->_M_impl._M_end_of_storage){
-        //如果内存够用，直接插入
-        _Alloc_traits::construct(this->_M_impl, this->_M_impl._M_finish,__x);
-        ++this->_M_impl._M_finish;
-    } else {
-        //如果内存不够用
-      　_M_emplace_back_aux(__x);
+//已使用空间大小
+size_type size() const { return size_type(end() - begin());}
+
+//判断容器是否为空
+bool empty() const { return begin() == end(); }
+
+//返回指定位置的元素
+reference operator[](size_type __n) { return *(begin() + __n); }
+const_reference operator[](size_type __n) const { return *(begin() + __n); }
+
+//访问指定元素，并且进行越界检查
+reference at(size_type __n){ _M_range_check(__n); return (*this)[__n]; }
+const_reference at(size_type __n) const{ _M_range_check(__n); return (*this)[__n]; }
+void _M_range_check(size_type __n) const {
+    if (__n >= this->size())
+      __stl_throw_range_error("vector");
+}
+
+//返回第一个元素
+reference front() { return *begin(); }
+const_reference front() const { return *begin(); }
+
+//返回容器最后一个元素
+reference back() { return *(end() - 1); }
+const_reference back() const { return *(end() - 1); }
+
+//在最尾端插入元素
+void push_back(const _Tp& __x) {
+    if (_M_finish != _M_end_of_storage) {//若有可用的内存空间
+      construct(_M_finish, __x);//构造对象
+      ++_M_finish;
     }
+    else//若没有可用的内存空间,调用以下函数，把x插入到指定位置
+      _M_insert_aux(end(), __x);
 }
 
-void  _M_emplace_back_aux(_Args&&... __args){
-    //申请一段新的内存,将新的start指针指向新内存的起始位置，初始化finish指针
-    pointer __new_start(this->_M_allocate(__len));
-    pointer __new_finish(__new_start);
-    //移动数据并将finish指针指向新内存的尾端
-    __new_finish  = std::__uninitialized_move_if_noexcept_a (this->_M_impl._M_start,this->_M_impl._M_finish,__new_start, _M_get_Tp_allocator());
-    ++__new_finish;
-    //销毁旧内存
-    std::_Destroy(this->_M_impl._M_start, this->_M_impl._M_finish,_M_get_Tp_allocator());
-    _M_deallocate(this->_M_impl._M_start, this->_M_impl._M_end_of_storage - this->_M_impl._M_start);
-    this->_M_impl._M_start = __new_start;
-    this->_M_impl._M_finish = __new_finish;
-    this->_M_impl._M_end_of_storage = __new_start + __len;
-}
-```
-
->3.其他函数
-
-```
-//返回它的start指针
-iterator begin() _GLIBCXX_NOEXCEPT  {
-  return iterator(this->_M_impl._M_start);
+//取出最尾端元素
+void pop_back() {
+   --_M_finish;
+   destroy(_M_finish);//析构对象
 }
 
-//返回finish指针
-const_iterator end() const _GLIBCXX_NOEXCEPT {
-  return const_iterator(this->_M_impl._M_finish);
-}
+//清空容器
+void clear() { erase(begin(), end()); }
 
-//返回start-finish
-size_type capacity() const _GLIBCXX_NOEXCEPT {
-  return size_type(this->_M_impl._M_end_of_storage - this->_M_impl._M_start);
+//擦除两个迭代器区间的元素
+iterator erase(iterator __first, iterator __last) {
+    iterator __i = copy(__last, _M_finish, __first);//将__last与_M_finish之间的数据移至__first
+    destroy(__i, _M_finish);//析构对象
+    _M_finish = _M_finish - (__last - __first);//调整finish的所指的位置
+    return __first;
 }
 ```
