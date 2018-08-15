@@ -43,54 +43,110 @@ l.sort()|排序
 
 >1.list结构
 
-![](../../img/6.png)
+![](../../img/5.png)
 
 ```
+//以下是list链表节点的数据结构
 struct _List_node_base{
     _List_node_base* _M_next; //指向下一个节点
     _List_node_base* _M_prev; //指向前一个节点
 }
-
 struct _List_node : public _List_node_base{
     _Tp _M_data; //节点数据
-    _Tp* _M_valptr() {
-      return std::__addressof(_M_data);
-    }
-    _Tp const* _M_valptr() const {
-      return std::__addressof(_M_data);
-    }
+};
+
+
+//以下是链表List_iterator_base的迭代器
+struct _List_iterator_base {
+  typedef size_t                     size_type;
+  typedef ptrdiff_t                  difference_type;
+  //list迭代器的类型是双向迭代器bidirectional_iterator
+  typedef bidirectional_iterator_tag iterator_category;
+  //定义指向链表节点的指针
+  _List_node_base* _M_node;
+};  
+
+
+//以下是双向链表list类的定义,分配器_Alloc默认为第二级配置器
+template <class _Tp, class _Alloc = __STL_DEFAULT_ALLOCATOR(_Tp) >
+class list : protected _List_base<_Tp, _Alloc> { 
+public:
+  typedef _List_node<_Tp> _Node;
+protected:
+  //定义指向链表节点指针
+  _List_node<_Tp>* _M_node;
 };
 ```
 
-![](../../img/5.png)
+>2.成员函数
 
 ```
-//空白节点为头节点
-iterator begin() _GLIBCXX_NOEXCEPT {
-  return iterator(this->_M_impl._M_node._M_next);
+//以下是迭代器的定义
+iterator begin()             { return (_Node*)(_M_node->_M_next); }
+const_iterator begin() const { return (_Node*)(_M_node->_M_next); }
+iterator end()             { return _M_node; }
+const_iterator end() const { return _M_node; }
+
+
+//判断链表是否为空链表
+bool empty() const { return _M_node->_M_next == _M_node; }
+
+
+//返回链表的大小
+size_type size() const {
+  size_type __result = 0; 
+ //返回两个迭代器之间的距离
+ distance(begin(), end(), __result);
+ //返回链表的元素个数
+ return __result;
 }
 
-iterator end() _GLIBCXX_NOEXCEPT {
-  return iterator(this->_M_impl._M_node);
+
+//返回第一个节点数据的引用
+reference front() { return *begin(); }
+const_reference front() const { return *begin(); }
+//返回最后一个节点数据的引用
+reference back() { return *(--end()); }
+const_reference back() const { return *(--end()); }
+
+  
+//在链表头插入节点
+void push_front(const _Tp& __x) { insert(begin(), __x); }
+void push_front() {insert(begin());}
+//在链表尾插入节点
+void push_back(const _Tp& __x) { insert(end(), __x); }
+void push_back() {insert(end());}
+
+ 
+//取出第一个数据节点
+void pop_front() { erase(begin()); }
+
+
+//在指定的位置插入初始值为x的节点
+iterator insert(iterator __position, const _Tp& __x) {
+  //首先创建一个初始值为x的节点，并返回该节点的地址
+  _Node* __tmp = _M_create_node(__x); 
+  //调整节点指针，把新节点插入到指定位置
+  __tmp->_M_next = __position._M_node;
+  __tmp->_M_prev = __position._M_node->_M_prev;
+  __position._M_node->_M_prev->_M_next = __tmp;
+  __position._M_node->_M_prev = __tmp;
+  //返回新节点地址
+  return __tmp;
 }
 
-//其他操作
-reference operator*() const {
-    return (*node).data;
-}
 
-pointer operator->() const {
-    return &(operator*());
+//在指定位置position删除节点，并返回直接后继节点的地址
+iterator erase(iterator __position) {
+    //调整前驱和后继节点的位置
+    _List_node_base* __next_node = __position._M_node->_M_next;
+    _List_node_base* __prev_node = __position._M_node->_M_prev;
+    _Node* __n = (_Node*) __position._M_node;
+    __prev_node->_M_next = __next_node;
+    __next_node->_M_prev = __prev_node;
+    _Destroy(&__n->_M_data);
+    _M_put_node(__n);
+    return iterator((_Node*) __next_node);
 }
-
-_Self& operator++() {
-    node = (link_type)((*node).next);
-	  return *this;
-}
-
-_Self operator++(int) {
-	self __tmp = *this;
-	++*this;
-	return __tmp;
-}
+};
 ```
