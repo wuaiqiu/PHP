@@ -119,6 +119,7 @@ int main(){
  *	  CPerson* p4=new CPerson(p);
  *     c.默认拷贝构造函数只实现了浅拷贝(不会对对象中的对象进行拷贝)
  *     d.构造拷贝与赋值拷贝的区别是否有新对象产生
+ *     e.explicit关键字禁止单参数构造函数隐式转换
  *
  * 7.友元函数(类)
  *    a.使用关键字friend
@@ -152,6 +153,23 @@ int main(){
 	return 0;
 }
 
+class Student
+{  
+public: 
+    Student(int size)  
+    {            
+        cout<<"size:"<<size<<endl;
+    }
+    explicit Student(char a)
+    {
+    	cout<<"char:"<<a<<endl;
+    }
+};  
+  
+//默认可以隐式转换
+Student stu1 = 10; //size: 10
+//禁止隐式转换
+Student stu2 = 'a'; //error
 
 /*
  * 8.继承
