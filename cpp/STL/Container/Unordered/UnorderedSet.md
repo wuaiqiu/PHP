@@ -42,7 +42,7 @@ template<class _Value,
 	class _Alloc = std::allocator<_Value> >
 class unordered_set{
   //底层是基于hash table的
-  typedef __uset_hashtable<_Value, _Hash, _Pred, _Alloc>  _Hashtable;
+  typedef hashtable<_Value, _Hash, _Pred, _Alloc>  _Hashtable;
   _Hashtable _M_ht;
 
 public:
