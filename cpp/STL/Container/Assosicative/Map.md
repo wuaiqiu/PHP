@@ -34,23 +34,71 @@ c.count(1)|元素key出现个数
 
 ### 三.源码分析
 
+>1.map结构
+
 ```
-template <typename _Key, typename _Tp, typename _Compare = std::less<_Key>,typename _Alloc = std::allocator<std::pair<const _Key, _Tp> > >
+//pair定义
+template <class _T1, class _T2>
+struct pair {
+  typedef _T1 first_type;
+  typedef _T2 second_type;
+   //pair的两个成员变量,其属性是public
+  _T1 first;
+  _T2 second;
+  //以下是构造函数
+  pair() : first(_T1()), second(_T2()) {}
+  pair(const _T1& __a, const _T2& __b) : first(__a), second(__b) {}
+};
+
+//map定义
+template <class _Key, class _Tp, class _Compare, class _Alloc>
 class map {
-    public:
-      typedef _Key					key_type; // Key
-      typedef std::pair<const _Key, _Tp>		value_type; //(key+value的数据包)
-      typedef _Compare			key_compare; // key的比较函数
-      typedef _Alloc				allocator_type; // 分配器
-    private:
-      typedef _Rb_tree<key_type, value_type, _Select1st<value_type>,key_compare, _Pair_alloc_type> _Rep_type;
-      _Rep_type _M_t;//红黑树
-    public:
-      //读写迭代器
-      typedef typename _Rep_type::iterator		 iterator;
-      //插入元素(Multimap为_M_insert_equal)
-      std::pair<iterator, bool> insert(const value_type& __x){
-        return _M_t._M_insert_unique(__x);
-      }
+public:
+  typedef _Key                  key_type;//键值key类型
+  typedef _Tp                   data_type;//数据(实值)value类型
+  typedef _Tp                   mapped_type;
+  typedef pair<const _Key, _Tp> value_type;//元素型别,包含(键值/实值),const保证键值key不被修改
+  typedef _Compare              key_compare;//键值key比较函数
+
+private:
+	//底层机制是RB-Tree
+  typedef _Rb_tree<key_type, value_type, _Select1st<value_type>, key_compare, _Alloc> _Rep_type;
+  _Rep_type _M_t;
+public:
+  //指针/引用/迭代器保持原样
+  typedef typename _Rep_type::pointer pointer;
+  typedef typename _Rep_type::const_pointer const_pointer;
+  typedef typename _Rep_type::reference reference;
+  typedef typename _Rep_type::const_reference const_reference;
+  typedef typename _Rep_type::iterator iterator;
+  typedef typename _Rep_type::const_iterator const_iterator;
+  typedef typename _Rep_type::reverse_iterator reverse_iterator;
+  typedef typename _Rep_type::const_reverse_iterator const_reverse_iterator;
+  typedef typename _Rep_type::size_type size_type;
+  typedef typename _Rep_type::difference_type difference_type;
+  typedef typename _Rep_type::allocator_type allocator_type;
 }
+```
+
+>2.map成员函数
+
+```
+//判断是否为空
+bool empty() const { return _M_t.empty(); }
+
+//节点数量
+size_type size() const { return _M_t.size(); }
+
+//插入元素节点,调用RB-Tree的insert_unique(__x),不能插入相同键值的元素
+pair<iterator,bool> insert(const value_type& __x) { return _M_t.insert_unique(__x); }
+    
+//在指定位置擦除元素
+void erase(iterator __position) { _M_t.erase(__position); }
+```
+
+>3.multimap成员函数
+
+```
+//插入元素节点,调用RB-Tree的insert-equal(),插入元素的键值key允许重复
+iterator insert(const value_type& __x) { return _M_t.insert_equal(__x); }
 ```
