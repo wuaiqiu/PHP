@@ -38,20 +38,76 @@ l.sort()|排序
 
 ### 三.源码分析
 
-![](../../img/12.png)
+![](../../img/13.png)
+
+>1.forward_list结构
 
 ```
+//节点结构
 struct _Fwd_list_node_base{
     _Fwd_list_node_base* _M_next = nullptr; //指向下一个节点
-}
+    __gnu_cxx::__aligned_buffer<_Tp> _M_storage;
+   _Tp* _M_valptr() noexcept { return _M_storage._M_ptr(); }
+};
+
+//迭代器结构
+template<typename _Tp>
+struct _Fwd_list_iterator{
+    typedef _Tp                        value_type;
+    typedef _Tp*                       pointer;
+    typedef _Tp&                       reference;
+    typedef ptrdiff_t                  difference_type;
+    //单向迭代器
+    typedef std::forward_iterator_tag  iterator_category;
+};
 
 template<typename _Tp, typename _Alloc>
 struct _Fwd_list_base{
     protected:
       struct _Fwd_list_impl : public _Node_alloc_type {
-	       _Fwd_list_node_base _M_head; //指向头结点(蓝色元素)
-      }
+	   _Fwd_list_node_base _M_head; //指向头结点(蓝色元素)
+      }_M_impl;
 }
+
+//forward_list结构
+template<typename _Tp, typename _Alloc = allocator<_Tp> >
+class forward_list : private _Fwd_list_base<_Tp, _Alloc>
+{
+public:
+   typedef _Tp                                          value_type;
+   typedef typename _Alloc_traits::pointer              pointer;
+   typedef typename _Alloc_traits::const_pointer        const_pointer;
+   typedef value_type&				        reference;
+   typedef const value_type&				const_reference;
+   typedef _Fwd_list_iterator<_Tp>                      iterator;
+   typedef _Fwd_list_const_iterator<_Tp>                const_iterator;
+   typedef std::size_t                                  size_type;
+   typedef std::ptrdiff_t                               difference_type;
+   typedef _Alloc                                       allocator_type;
+};
 ```
 
-![](../../img/13.png)
+>2.成员函数
+
+```
+//判断是否为空
+bool empty() const noexcept { return this->_M_impl._M_head._M_next == 0; }
+
+//返回首元素
+reference front() {
+    _Node* __front = static_cast<_Node*>(this->_M_impl._M_head._M_next);
+    return *__front->_M_valptr();
+}
+
+//头插入
+void push_front(const _Tp& __val) { this->_M_insert_after(cbefore_begin(), __val); }
+
+//头弹出   
+void pop_front() { this->_M_erase_after(&this->_M_impl._M_head); }
+
+//插入
+iterator insert_after(const_iterator __pos, const _Tp& __val) { return iterator(this->_M_insert_after(__pos, __val)); }
+
+//删除
+iterator erase_after(const_iterator __pos) { return iterator(this->_M_erase_after(const_cast<_Node_base*> (__pos._M_node))); }
+```
