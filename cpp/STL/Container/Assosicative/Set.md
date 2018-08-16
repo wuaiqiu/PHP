@@ -33,26 +33,67 @@ c.count(1)|元素出现个数
 
 ### 三.源码分析
 
-![](../../img/15.png)
+>1.set结构
 
 ```
-template<typename _Key, typename _Compare = std::less<_Key>,typename _Alloc = std::allocator<_Key> >
-class set{
-  public:
-      typedef _Key     key_type;          // Key
-      typedef _Key     value_type;        //(key+value的数据包)
-      typedef _Compare key_compare;       // key的比较函数
-      typedef _Alloc   allocator_type;    // 分配器
-  private:
-      typedef _Rb_tree<key_type, value_type, _Identity<value_type>,key_compare, _Key_alloc_type> _Rep_type;
-      _Rep_type _M_t;//红黑树
-  public:
-      //只读迭代器
-      typedef typename _Rep_type::const_iterator	 iterator;
-      //插入元素(Multiset为_M_insert_equal)
-      std::pair<iterator, bool> insert(const value_type& __x){
-          std::pair<typename _Rep_type::iterator, bool> __p = _M_t._M_insert_unique(__x);
-          return std::pair<iterator, bool>(__p.first, __p.second);
-      }
+template <class _Key, class _Compare, class _Alloc>
+class set {
+public:
+  //在set中key就是value, value同时也是key 
+  typedef _Key     key_type;
+  typedef _Key     value_type;
+  //以下key_compare和value_compare使用相同的比较函数 
+  typedef _Compare key_compare;
+  typedef _Compare value_compare;
+private:
+	//set的底层机制是采用RB-Tree数据结构
+  typedef _Rb_tree<key_type, value_type, _Identity<value_type>, key_compare, _Alloc> _Rep_type;
+  _Rep_type _M_t;
+public:
+  //指针/引用/迭代器全为只读
+  typedef typename _Rep_type::const_pointer pointer;
+  typedef typename _Rep_type::const_pointer const_pointer;
+  typedef typename _Rep_type::const_reference reference;
+  typedef typename _Rep_type::const_reference const_reference;
+  typedef typename _Rep_type::const_iterator iterator;
+  typedef typename _Rep_type::const_iterator const_iterator;
+  typedef typename _Rep_type::const_reverse_iterator reverse_iterator;
+  typedef typename _Rep_type::const_reverse_iterator const_reverse_iterator;
+  typedef typename _Rep_type::size_type size_type;
+  typedef typename _Rep_type::difference_type difference_type;
+  typedef typename _Rep_type::allocator_type allocator_type;
+}
+```
+
+>2.set成员函数
+
+```
+//判断是否为空
+bool empty() const { return _M_t.empty(); }
+
+//根据返回值的情况,判断是否插入该元素,pair.second为true则表示已插入该元素 
+pair<iterator,bool> insert(const value_type& __x) { 
+   pair<typename _Rep_type::iterator, bool> __p = _M_t.insert_unique(__x); 
+   return pair<iterator, bool>(__p.first, __p.second);
+}
+
+//擦除指定位置的元素
+void erase(iterator __position) { 
+   typedef typename _Rep_type::iterator _Rep_iterator;
+   _M_t.erase((_Rep_iterator&)__position); 
+}
+
+//返回指定元素的个数
+size_type count(const key_type& __x) const {
+   return _M_t.find(__x) == _M_t.end() ? 0 : 1;
+}
+```
+
+>3.multiset成员函数
+
+```
+//插入数据节点
+iterator insert(const value_type& __x) { 
+  return _M_t.insert_equal(__x);
 }
 ```
