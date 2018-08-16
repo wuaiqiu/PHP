@@ -112,6 +112,48 @@ struct less_equal : public binary_function<_Tp,_Tp,bool>
 };
 ```
 
+>4.其他
+
+```
+//证同函数
+template <class _Tp>
+struct _Identity : public unary_function<_Tp,_Tp> {
+  const _Tp& operator()(const _Tp& __x) const { return __x; }
+};
+template <class _Tp> struct identity : public _Identity<_Tp> {};
+
+//1.选择函数:选择pair元素的第一个参数，忽略第二个参数
+template <class _Pair>
+struct _Select1st : public unary_function<_Pair, typename _Pair::first_type> {
+  const typename _Pair::first_type& operator()(const _Pair& __x) const {
+    return __x.first;
+  }
+};
+template <class _Pair> struct select1st : public _Select1st<_Pair> {};
+//2.选择函数:选择pair元素的第二个参数，忽略第一个参数
+template <class _Pair>
+struct _Select2nd : public unary_function<_Pair, typename _Pair::second_type>
+{
+  const typename _Pair::second_type& operator()(const _Pair& __x) const {
+    return __x.second;
+  }
+};
+template <class _Pair> struct select2nd : public _Select2nd<_Pair> {};
+
+//1.投射函数:投射出第一个参数，忽略第二个参数
+template <class _Arg1, class _Arg2>
+struct _Project1st : public binary_function<_Arg1, _Arg2, _Arg1> {
+  _Arg1 operator()(const _Arg1& __x, const _Arg2&) const { return __x; }
+};
+template <class _Arg1, class _Arg2> struct project1st : public _Project1st<_Arg1, _Arg2> {};
+//2.投射函数:投射出第二个参数，忽略第一个参数
+template <class _Arg1, class _Arg2>
+struct _Project2nd : public binary_function<_Arg1, _Arg2, _Arg2> {
+  _Arg2 operator()(const _Arg1&, const _Arg2& __y) const { return __y; }
+};
+template <class _Arg1, class _Arg2> struct project2nd : public _Project2nd<_Arg1, _Arg2> {};
+```
+
 <br>
 
 ### 二.源码分析
