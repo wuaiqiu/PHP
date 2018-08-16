@@ -190,12 +190,12 @@ iterator erase(iterator __pos) {
     iterator __next = __pos;
     ++__next;
     difference_type __index = __pos - _M_start;//擦除点之前元素个数
-    if (size_type(__index) < (this->size() >> 1)) {//若擦除点之前的元素个数较少
-      copy_backward(_M_start, __pos, __next);//向后移动擦除点之前的元素
+    if (size_type(__index) < (this->size() >> 1)) {//若擦除点与头元素距离近
+      copy_backward(_M_start, __pos, __next);//从__pos到_M_start倒序复制到__next中
       pop_front();
     }
     else {
-      copy(__next, _M_finish, __pos);//否则，向前移动擦除点之后的元素
+      copy(__next, _M_finish, __pos);//从__next到_M_finish顺序复制到__pos中
       pop_back();
     }
     return _M_start + __index;
