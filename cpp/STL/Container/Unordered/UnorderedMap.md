@@ -42,7 +42,7 @@ template<class _Key, class _Tp,
 	   class _Pred = std::equal_to<_Key>,
 	   class _Alloc = std::allocator<std::pair<const _Key, _Tp> > >
 class unordered_map{
-      typedef __umap_hashtable<_Key, _Tp, _Hash, _Pred, _Alloc>  _Hashtable;
+      typedef hashtable<_Key, _Tp, _Hash, _Pred, _Alloc>  _Hashtable;
       _Hashtable _M_ht;
 
     public:
