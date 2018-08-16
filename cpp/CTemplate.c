@@ -97,7 +97,7 @@ int main(){
 
 /*
  * 3.声明为嵌套类型
- * 4.using定义类型
+ * 4.using定义别名
  **/
 template <typename T>
 struct Student{
@@ -109,7 +109,7 @@ typename Student<int>::value_type a;
 等价于
 int a;
 
-//定义类型
+//定义别名
 using a = Student<int>::value_type;
 等价于
-Student<int>::value_type a;
+typedef Student<int>::value_type a;
