@@ -142,7 +142,7 @@ pair<iterator, bool> insert_unique(const _Value& __v)
 }
 
 //插入节点,节点值可以与当前RB-Tree节点值相等
-iterator :insert_equal(const _Value& __v)
+iterator insert_equal(const _Value& __v)
 {
   _Link_type __y = _M_header;
   _Link_type __x = _M_root();//从根节点开始
