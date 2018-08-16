@@ -9,39 +9,106 @@
 >1.算数类
 
 ```
-template<typename _Tp>
-struct plus : public binary_function<_Tp, _Tp, _Tp>
+//加法操作
+template <class _Tp>
+struct plus : public binary_function<_Tp,_Tp,_Tp> {
+  _Tp operator()(const _Tp& __x, const _Tp& __y) const { return __x + __y; }
+};
+
+//减法操作
+template <class _Tp>
+struct minus : public binary_function<_Tp,_Tp,_Tp> {
+  _Tp operator()(const _Tp& __x, const _Tp& __y) const { return __x - __y; }
+};
+
+//乘法操作
+template <class _Tp>
+struct multiplies : public binary_function<_Tp,_Tp,_Tp> {
+  _Tp operator()(const _Tp& __x, const _Tp& __y) const { return __x * __y; }
+};
+
+//除法操作
+template <class _Tp>
+struct divides : public binary_function<_Tp,_Tp,_Tp> {
+  _Tp operator()(const _Tp& __x, const _Tp& __y) const { return __x / __y; }
+};
+
+//取模运算
+template <class _Tp>
+struct modulus : public binary_function<_Tp,_Tp,_Tp>
 {
-  _Tp operator()(const _Tp& __x, const _Tp& __y) const
-  {
-    return __x + __y;
-  }
+  _Tp operator()(const _Tp& __x, const _Tp& __y) const { return __x % __y; }
 };
 ```
 
 >2.逻辑运算类
 
 ```
-template<typename _Tp>
-struct logical_and : public binary_function<_Tp, _Tp, bool>
+//与
+template <class _Tp>
+struct logical_and : public binary_function<_Tp,_Tp,bool>
 {
-  bool  operator()(const _Tp& __x, const _Tp& __y) const
-  {
-    return __x && __y;
-  }
+  bool operator()(const _Tp& __x, const _Tp& __y) const { return __x && __y; }
+};
+
+//或
+template <class _Tp>
+struct logical_or : public binary_function<_Tp,_Tp,bool>
+{
+  bool operator()(const _Tp& __x, const _Tp& __y) const { return __x || __y; }
+};
+
+//非
+template <class _Tp>
+struct logical_not : public unary_function<_Tp,bool>
+{
+  bool operator()(const _Tp& __x) const { return !__x; }
 };
 ```
 
 >3.相对关系类
 
 ```
-template<typename _Tp>
-struct equal_to : public binary_function<_Tp, _Tp, bool>
+//等于
+template <class _Tp>
+struct equal_to : public binary_function<_Tp,_Tp,bool>
 {
-  bool  operator()(const _Tp& __x, const _Tp& __y) const
-  {
-    return __x == __y;
-  }
+  bool operator()(const _Tp& __x, const _Tp& __y) const { return __x == __y; }
+};
+
+//不等于
+template <class _Tp>
+struct not_equal_to : public binary_function<_Tp,_Tp,bool>
+{
+  bool operator()(const _Tp& __x, const _Tp& __y) const { return __x != __y; }
+};
+
+//大于
+template <class _Tp>
+struct greater : public binary_function<_Tp,_Tp,bool>
+{
+  bool operator()(const _Tp& __x, const _Tp& __y) const { return __x > __y; }
+};
+
+//小于
+template <class _Tp>
+struct less : public binary_function<_Tp,_Tp,bool>
+{
+  bool operator()(const _Tp& __x, const _Tp& __y) const { return __x < __y; }
+};
+
+//大于等于
+template <class _Tp>
+struct greater_equal : public binary_function<_Tp,_Tp,bool>
+{
+  bool operator()(const _Tp& __x, const _Tp& __y) const { return __x >= __y; }
+};
+
+//小于等于
+template <class _Tp>
+struct less_equal : public binary_function<_Tp,_Tp,bool>
+{
+  bool operator()(const _Tp& __x, const _Tp& __y) const { return __x <= __y; }
 };
 ```
 
