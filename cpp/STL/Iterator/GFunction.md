@@ -1,72 +1,15 @@
 # GFunction
 
-1.construct函数在已分配内存上构造对象<br>
-2.destroy函数在已分配内存上析构对象<br>
+### 1.操作
 
->a.construct/destroy
-
-```
-//a.只接受指针
-template <class _T1>
-inline void _Construct(_T1* __p) {
-  new ((void*) __p) _T1();
-}
-//b.接受一个指针和一个初值
-template <class _T1, class _T2>
-inline void _Construct(_T1* __p, const _T2& __value) {
-  new ((void*) __p) _T1(__value);
-}
+函数|详情
+--|--
+uninitialized_copy(a,b,c)|将a与b之间的数据复制到c
+uninitialized_fill(a,b,c)|将c填充a与b区间
+uninitalized_fiil_n(a,n,c)|将c填充a后面n个区间 
 
 
-
-//a.接受一个指针
-template <class _Tp>
-inline void _Destroy(_Tp* __pointer) {
-  __pointer->~_Tp();
-}
-//b.接受两个迭代器first和last
-template <class _ForwardIterator>
-inline void _Destroy(_ForwardIterator __first, _ForwardIterator __last) {
-  __destroy(__first, __last, __VALUE_TYPE(__first));
-}
-//利用__type_traits判断元素的数值型别是否有trivial destructor
-template <class _ForwardIterator, class _Tp>
-inline void  __destroy(_ForwardIterator __first, _ForwardIterator __last, _Tp*) {
-  typedef typename __type_traits<_Tp>::has_trivial_destructor _Trivial_destructor;
-  __destroy_aux(__first, __last, _Trivial_destructor());
-}
-//若元素型别是有trivial destructor(默认析构)
-template <class _ForwardIterator> 
-inline void __destroy_aux(_ForwardIterator, _ForwardIterator, __true_type) {}
-//若元素型别不具有trivial destructor(自定义析构)
-template <class _ForwardIterator>
-void __destroy_aux(_ForwardIterator __first, _ForwardIterator __last, __false_type) {
-  for ( ; __first != __last; ++__first)
-    destroy(&*__first);//析构每个元素对象
-}
-
-
-
-//对外接口
-template <class _T1>
-inline void construct(_T1* __p) {
-  _Construct(__p);
-}
-template <class _T1, class _T2>
-inline void construct(_T1* __p, const _T2& __value) {
-  _Construct(__p, __value);
-}
-template <class _Tp>
-inline void destroy(_Tp* __pointer) {
-  _Destroy(__pointer);
-}
-template <class _ForwardIterator>
-inline void destroy(_ForwardIterator __first, _ForwardIterator __last) {
-  _Destroy(__first, __last);
-}
-```
-
->b.uninitialized_copy/uninitialized_fill/uninitialized_fill_n
+### 2.源码分析
 
 ```
 //a.将__first与__last之间的数据复制到__result
