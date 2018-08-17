@@ -16,6 +16,8 @@ allocator<int\> alloc1 = alloc|赋值拷贝
 函数|详情
 --|--
 alloc.allocate(1)|分配一个int空间,返回指针
+alloc.construct(p)|初始化int对象
+alloc.destory(p)|销毁int对象
 alloc.deallocate(p,1)|销毁一个int空间
 
 <br>
