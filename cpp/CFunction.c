@@ -72,7 +72,7 @@ inline void fun2(){
 
 //a.值捕获:被捕获的变量在lambda表达式被创建时拷贝，而非调用时才拷贝
 int value_1 = 1;
-auto copy_value_1 = [value_1] {
+auto copy_value_1 = [value_1]() {
   return value_1;
 };
 value_1 = 100;
@@ -81,8 +81,44 @@ auto stored_value_1 = copy_value_1();//1
 
 //b.引用捕获
 int value_1 = 1;
-auto copy_value_1 = [value_1] {
+auto copy_value_1 = [&value_1]() {
   return value_1;
 };
 value_1 = 100;
 auto stored_value_1 = copy_value_1();//100
+
+
+/*
+ * 1.function是可调用对象的包装器
+ * 2.bind是用来提前绑定函数调用的参数的
+ * 3.placeholders::_n表示占位符
+ **/ 
+
+int fun1(int para) {
+    return para;
+}
+
+struct Student{
+    int fun2(int para){
+	return para;
+    }
+};
+
+void fun3(int a,int b,int c){
+  cout<<a<<" "<<b<<" "<<c<<endl;
+}
+
+int main() {
+    //function<返回值(参数列表)>
+    function<int(int)> a = fun1;
+    cout << a(10) << endl; //10
+    function<int(int)> b = [](int para){ return para};
+    cout << b(10) <<endl; //10
+    function<int(Student&,int)> c = &Student::fun2;
+    Student s;
+    cout<< c(s,10) <<endl;;
+    //bind(function,args)
+    auto d = bind(fun3,1,placeholders::_1,3);
+    d(2);
+    return 0;
+}
