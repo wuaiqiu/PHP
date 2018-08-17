@@ -137,7 +137,7 @@ auto b=find_if(arr.begin(),arr.end(),functor<int>());
 cout<<*a<<"  "<<*b<<endl;
 ```
 
-#### 2.修改序列操作
+#### b.修改序列操作
 
 >1.replace替换函数
 
@@ -277,7 +277,7 @@ remove(arr.begin(),arr.end(),2);
 remove_if(arr.begin(),arr.end(),functor<int>());
 ```
 
-#### 3.最大/最小值
+#### c.最大/最小值
 
 >1.返回区间最大值/最小值
 
