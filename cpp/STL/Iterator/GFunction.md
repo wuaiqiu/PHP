@@ -11,7 +11,6 @@ template <class _T1>
 inline void _Construct(_T1* __p) {
   new ((void*) __p) _T1();
 }
-
 //b.接受一个指针和一个初值
 template <class _T1, class _T2>
 inline void _Construct(_T1* __p, const _T2& __value) {
@@ -25,7 +24,6 @@ template <class _Tp>
 inline void _Destroy(_Tp* __pointer) {
   __pointer->~_Tp();
 }
-
 //b.接受两个迭代器first和last
 template <class _ForwardIterator>
 inline void _Destroy(_ForwardIterator __first, _ForwardIterator __last) {
@@ -105,7 +103,7 @@ inline _ForwardIter __uninitialized_copy_aux(_InputIter __first, _InputIter __la
                          _ForwardIter __result, __true_type) {
 	return copy(__first, __last, __result);
 }
-//copy函数
+//copy算法
 template<class InputIterator, class OutputIterator>
 OutputIterator copy (InputIterator first, InputIterator last, OutputIterator result) {
   while (first!=last) {
@@ -147,7 +145,7 @@ inline void __uninitialized_fill_aux(_ForwardIter __first, _ForwardIter __last,
                          const _Tp& __x, __true_type) {
 	fill(__first, __last, __x);
 }
-//fill函数
+//fill算法
 template <class ForwardIterator, class T>
 void fill (ForwardIterator first, ForwardIterator last, const T& val){
   while (first != last) {
@@ -187,7 +185,7 @@ inline _ForwardIter __uninitialized_fill_n_aux(_ForwardIter __first, _Size __n,
                            const _Tp& __x, __true_type) {
 	return fill_n(__first, __n, __x);
 }
-//fill_n函数
+//fill_n算法
 template <class OutputIterator, class Size, class T>
 OutputIterator fill_n (OutputIterator first, Size n, const T& val) {
   while (n>0) {
