@@ -15,7 +15,7 @@
  *	 译阶段会执行类型检查。
  *	  c.存储方式不同:const常量在程序运行过程中只有一份拷贝，而define定义的常量在内存中有若
  *	 干个拷贝。
- *
+ *      constexpr关键字:指明该变量或函数返回为一个常量表达式
  *
  *3.变量
  *	  auto : 默认存储类型，动态数据区 ,C++11变成自动推导类型,不能用于推导数组元素类型;
@@ -33,12 +33,19 @@ void func()
    cout<<"This is func"<<endl;
 }
 
+constexpr int func1()
+{
+   return 1;
+}
+
 //1.cpp
 int main(){
 	extern int num;
 	extern void func();
 	cout<<"num: "<<num<<endl;
 	func();
+	//constexpr指明func1()返回一个常量表达式
+	int arr[func1()];
 	return 0;
 }
 
