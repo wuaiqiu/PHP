@@ -4,8 +4,6 @@
 
 ```
 <p>{{ message }}</p>
-<!--原样输出-->
-<p>{{{message}}}</p>
 
  new Vue({
         el: '#box',
@@ -63,7 +61,7 @@ new Vue({
     el:"#box",
     data:{
         isUsed:true,
-        classObject: {
+        Object: {
             class1:true
         },
         activeClass:{
@@ -173,13 +171,14 @@ new Vue({
 
 <br>
 
-(6)**v-on**
+(5)**v-on**
 
 ```
 #绑定事件
 <button v-on:click="fun">点击</button>
 <button @click="fun">点击</button>
 <button v-on:click="fun1('hello')">点击</button>
+<button v-on:click="fun2('hello',$event)">点击</button>
 
 new Vue({
       el:"button",
@@ -187,12 +186,15 @@ new Vue({
           message:"apple",
       },
        methods:{
-         fun:function () {
-            console.log("ok");
+         fun:function (event) {
+            console.log("ok",event);
           },
-          fun1:function(str){
-                console.log(str);
-           }
+         fun1:function(str){
+              console.log(str);
+          },
+	 fun2:function(str,event){
+              console.log(str,event);
+          }
        }
 });
 
@@ -213,7 +215,7 @@ new Vue({
 
 <br>
 
-(7)**过滤器**
+(6)**过滤器**
 
 ```
 <p> {{ message | capitalize }}</p>
@@ -249,7 +251,7 @@ new Vue({
 
 <br>
 
-(8)**条件语句**
+(7)**条件语句**
 
 ```
 <p v-if="seen">现在你看到我了</p>
@@ -285,11 +287,20 @@ new Vue({
            type:'A'
        }
 });
+
+#渲染结果将不包含<template>元素,v-show不支持<template>元素
+<div id="app">
+    <template v-if="seen">
+        <h1>Title</h1>
+        <p>Paragraph 1</p>
+        <p>Paragraph 2</p>
+    </template>
+</div>
 ```
 
 <br>
 
-(9)**循环语句**
+(8)**循环语句**
 
 ```
 #数组迭代
@@ -333,6 +344,43 @@ new Vue({
 <ul>
     <li v-for="n in 10">{{ n }}</li>
 </ul>
+
+#注意事项
+1.Vue不能检测以下变动的数组：
+ 当你利用索引直接设置一个项时，例如：vm.items[indexOfItem] = newValue
+ 当你修改数组的长度时，例如：vm.items.length = newLength
+ vm.$set(vm.items, indexOfItem, newValue)
+ vm.items.splice(newLength)
+
+2.Vue不能检测对象属性的添加或删除：
+ 1.当你添加或删除某个对象属性时，例如：vm.userProfile.age = 27
+ vm.$set(vm.userProfile, 'age', 27)
+```
+
+<br>
+
+(9)**侦听属性**
+
+```
+#随着监听属性的的改变而触发
+<div id="app">
+    <p>小写字符串: {{ message }}</p>
+    <p>大写字符串: {{ upperMessage }}</p>
+</div>
+
+var vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'abc',
+            upperMessage: 'ABC'
+        },
+        watch: {
+            message: function (val,old){
+                console.log(old);
+                this.upperMessage = val.toUpperCase();
+            }
+        }
+});
 ```
 
 <br>
@@ -357,6 +405,24 @@ new Vue({
             }
         }
 })
+
+#计算属性默认只有getter,不过在需要时你也可以提供一个setter
+new Vue({
+        el: '#app',
+        data: {
+            message: 'abc'
+        },
+        computed: {
+            upperMessage: {
+                get:function () {
+                    return this.message.toUpperCase();
+                },
+                set:function (value) {
+                    this.message = value;
+                }
+            }
+        }
+});
 ```
 
 <br>
@@ -369,9 +435,15 @@ new Vue({
     <runoob></runoob>
 </div>
 
-//注册
+//注册:component中可以拥有vue实例的所有选项(除了el)
 Vue.component('runoob', {
-       template: '<h1>自定义组件!</h1>'
+       template: '<h1>{{message}}自定义组件!</h1>',
+       #一个组件的data选项必须是一个函数,因此每个实例可以维护一份被返回对象的独立的拷贝
+       data:function () {
+   	 return {
+      	   message: 'Hello'
+	 }
+       }
 })
 new Vue({
         el: '#app'
@@ -429,6 +501,67 @@ Vue.component('child', {
 });
 new Vue({
        el: '#app'
+});
+
+#通过事件向父级组件发送消息(注意$event是访问被抛出的这个值)
+<div id="app" :style="{color: font}">
+    <runoob @change-color="change($event)"></runoob>
+</div>
+
+Vue.component('runoob', {
+    template: `<h1>自定义组件!<button @click="$emit('change-color','blue')">green</button></h1>`
+});
+new Vue({
+     el: '#app',
+     data:{
+         font:'red'
+      },
+      methods:{
+          'change':function (event) {
+          this.font=event;
+        }
+     }
+});
+
+#slot插槽
+1.slot插槽内可以包含任何模板代码,包括HTML;如果没有包含一个<slot>元素,则任何传入它的内容都会被抛弃
+<div id="app">
+    <runoob>Hello Vue</runoob>
+</div>
+
+Vue.component('runoob', {
+    template: `<h1><slot>默认内容</slot></h1>`
+});
+
+new Vue({
+    el: '#app'
+});
+
+2.slot命名:保留一个未命名插槽,这个插槽是默认插槽,它会作为所有未匹配到插槽的内容的slot
+<div id="app">
+    <runoob>
+        <h1 slot="header">Here might be a page title</h1>
+        <p>A paragraph for the main content.</p>
+        <p>And another one.</p>
+        <p slot="footer">Here's some contact info</p>
+    </runoob>
+</div>
+
+Vue.component('runoob', {
+    template: `<div class="container">
+                    <header>
+                        <slot name="header"></slot>
+                    </header>
+                    <main>
+                        <slot></slot>
+                    </main>
+                    <footer>
+                        <slot name="footer"></slot>
+                    </footer>
+                </div>`
+});
+new Vue({
+    el: '#app'
 });
 ```
 
@@ -595,4 +728,94 @@ Vue.directive('color', function (el,binding) {
         }
     });
 </script>
+```
+
+<br>
+
+**(14).mixin**
+
+```
+#1.选项合并:数据对象在内部会进行浅合并 (一层属性深度)，在和组件的数据发生冲突时以组件数据优先
+var mixin = {
+  data: function () {
+    return {
+      message: 'hello',
+      foo: 'abc'
+    }
+  }
+}
+
+new Vue({
+  mixins: [mixin],
+  data: function () {
+    return {
+      message: 'goodbye',
+      bar: 'def'
+    }
+  },
+  created: function () {
+    console.log(this.$data)
+    //{ message: "goodbye", foo: "abc", bar: "def" }
+  }
+})
+
+#2.钩子函数合并:同名钩子函数将混合为一个数组,因此都将被调用。另外,混入对象的钩子将在组件自身钩子之前调用。
+var mixin = {
+  created: function () {
+    console.log('混入对象的钩子被调用')
+  }
+}
+
+new Vue({
+  mixins: [mixin],
+  created: function () {
+    console.log('组件钩子被调用')
+  }
+})
+// "混入对象的钩子被调用"
+// "组件钩子被调用"
+
+#3.特殊选项合并:值为对象的选项,例如 methods,components和directives,将被混合为同一个对象。
+#两个对象键名冲突时，取组件对象的键值对。
+var mixin = {
+  methods: {
+    foo: function () {
+      console.log('foo')
+    },
+    conflicting: function () {
+      console.log('from mixin')
+    }
+  }
+}
+
+var vm = new Vue({
+  mixins: [mixin],
+  methods: {
+    bar: function () {
+      console.log('bar')
+    },
+    conflicting: function () {
+      console.log('from self')
+    }
+  }
+})
+
+vm.foo() //"foo"
+vm.bar() //"bar"
+vm.conflicting() //"from self"
+
+#4.全局混入
+Vue.mixin({
+  created: function () {
+    var myOption = this.$options.myOption
+    if (myOption) {
+      console.log(myOption)
+    }
+  }
+})
+
+new Vue({
+  myOption: 'hello!'
+})
+//"hello!"
 ```
