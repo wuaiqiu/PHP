@@ -69,3 +69,37 @@ Vue.http.interceptors.push(function(request) {
   };
 });
 ```
+
+<br>
+
+### (4).Restful
+
+```
+  var resource = this.$resource('someItem{/id}');
+
+  // GET someItem/1
+  resource.get({id: 1}).then(response => {
+    this.item = response.body;
+  });
+
+  // POST someItem/1
+  resource.save({id: 1}, {item: this.item}).then(response => {
+    // success callback
+  }, response => {
+    // error callback
+  });
+  
+  // PUT someItem/1
+  resource.update({id: 1}, {item: this.item}).then(response => {
+    // success callback
+  }, response => {
+    // error callback
+  });
+  
+  // DELETE someItem/1
+  resource.delete({id: 1}).then(response => {
+    // success callback
+  }, response => {
+    // error callback
+  });
+```
