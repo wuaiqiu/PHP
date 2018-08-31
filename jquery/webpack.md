@@ -25,11 +25,47 @@ document.querySelector("#root").appendChild(greeter.a());
 console.log(greeter.b.a);
 ```
 
->webpack main.js bundle.js --watch
+>webpack main.js -o bundle.js --watch
+
+<br>
+ 
+**(2)配置文件(webpack.config.js)**
+
+entry属性指定一个入口起点(或多个入口起点)。默认值为./src
+    字符串(从一个文件解析依赖):entry: 'file.js'
+    数组(从多个互不依赖文件解析依赖):entry: ['file1.js','file2.js']
+    对象(从多个文件解析依赖生成多个output文件):entry: {file1:'file1.js',file2:'file2.js'}
+    
+output属性告诉webpack在哪里输出它所创建的bundles,以及如何命名这些文件,默认值为./dist
+    filename用于输出文件的文件名。可以使用占位符[name][hash]来确保每个文件具有唯一的名称
+    path用于目标输出目录的绝对路径
+    publicPath适用于插件在生产环境中自动地更新文件内部的URL指向
+    
+module.rules属性让webpack能够去处理那些非JavaScript文件(webpack自身只理解JavaScript)
+    test属性用于标识出应该被对应的loader进行转换的某个或某些文件
+    use属性表示进行转换时,应该使用哪个loader
+       
+plugins属性可以使用从打包优化和压缩,一直到重新定义环境中的变量的插件
+
+mode属性可以启用相应模式下的webpack内置的优化
+    development:开发模式
+    production:生产模式(默认)
+
+```
+module.exports = {
+  mode:'development',#开发模式
+  entry:  __dirname + "/app/main.js",#入口文件
+  output: {
+    path: __dirname + "/public", #打包后的文件存放的地方
+    filename: "bundle-[hash].js" #打包后输出文件的文件名
+  },
+  devtool: 'eval-source-map',#用于调试;cheap-module-eval-source-map推荐在大型项目使用
+}
+```
 
 <br>
 
-**(2)处理ES6,React**
+**(3)处理ES6,React**
 
 npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react
 
@@ -54,7 +90,7 @@ module.exports = {
 
 <br>
 
-**(3)打包CSS**
+**(4)打包CSS**
 
 npm install --save-dev style-loader css-loader
 
@@ -82,7 +118,7 @@ module.exports = {
 
 <br>
 
-**(4)处理SASS**
+**(5)处理SASS**
 
 npm install --save-dev style-loader css-loader sass-loader node-sass
 
@@ -109,7 +145,7 @@ module.exports = {
 
 <br>
 
-**(5)插件**
+**(6)插件**
 
 ***HtmlWebpackPlugin(生成模板)***
 
@@ -182,20 +218,5 @@ module.exports = {
             dry: false
         })
     ]
-}
-```
-
-<br>
-
-**(6)配置文件(webpack.config.js)**
-
-```
-module.exports = {
-  entry:  __dirname + "/app/main.js",#唯一入口文件
-  output: {
-    path: __dirname + "/public", #打包后的文件存放的地方
-    filename: "bundle-[hash].js"        #打包后输出文件的文件名
-  },
-   devtool: 'eval-source-map',#用于调试;cheap-module-eval-source-map推荐在大型项目使用
 }
 ```
