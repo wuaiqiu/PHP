@@ -1,4 +1,4 @@
-# 全排列
+# 全排列I
 
 
 给定一个没有重复数字的序列，返回其所有可能的全排列。
@@ -37,6 +37,9 @@ void Permutaion(vector<vector<int>> &ret,vector<int> &arr,int n){
     }
 }
 ```
+
+# 全排列I
+
 
 给定一个可包含重复数字的序列，返回所有不重复的全排列。
 
@@ -89,7 +92,8 @@ void Permutaion(vector<vector<int>> &ret,vector<int> &arr,int n){
 }
 ```
 
-全排列的非递归算法
+# 全排列的非递归算法
+
 
 #### 分析
 
