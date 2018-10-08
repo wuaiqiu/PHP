@@ -15,7 +15,8 @@ c.可以得出[0...begin]为0，[begin...current]为1，[current...end]未知，
 ```
 1).A[current]==2，则A[current]与A[end]交换，end--；
 2).A[current]==1，则current++；
-3).A[current]==0，若begin==current，则begin++，current++；若begin!=current，则A[current]与A[begin]交换，begin++，current++。
+3).A[current]==0，若begin==current，则begin++，current++；若begin!=current，则A[current]与A[begin]交换，
+begin++，current++。
 ```
 
 #### 源码
