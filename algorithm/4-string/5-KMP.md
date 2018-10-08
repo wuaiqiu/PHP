@@ -24,7 +24,8 @@ b.next[j]求法，查找出pattern前j-1中最大的(前缀==后缀)字符个数
 ```
 1).初始化next[0]=-1。
 2).若next[j]=k，pattern[j]=pattern[k]，则next[j+1]=next[j]+1。
-3).若next[j]=k，pattern[j]!=pattern[k]，则记h=next[k],如果p[h]==p[j]，则next[j+1]=h+1，否则重复此过程。
+3).若next[j]=k，pattern[j]!=pattern[k]，则记h=next[k],如果pattern[h]==pattern[j]，则next[j+1]=h+1，
+否则重复此过程。
 ```
 
 #### 源码
