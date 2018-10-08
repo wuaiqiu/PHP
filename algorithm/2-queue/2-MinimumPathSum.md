@@ -21,21 +21,21 @@ int calculate(int graph[16][16]){
 	queue<int> q;
 	q.push(0);
 	while(!q.empty()){
-		int current = q.front();
-		q.pop();
-		for(int i=1;i<16;i++){
-			if(graph[current][i]==1){
-				if(step[i]==0||step[i]>current+1){
-					//下一结点step为零(没有访问过)或step>当前结点step+1(其它结点访问过但不是最短路径)
-					step[i]=current+1;
-					path[i]=path[current];
-					q.push(i);
-				}else if(step[i]==current+1){
-					//下一个结点step=当前结点step+1(其它结点访问过且是最短路径)
-					path[i]+=path[current];
-				}
-			}
-		}
+	    int current = q.front();
+	    q.pop();
+	    for(int i=1;i<16;i++){
+		if(graph[current][i]==1){
+		   if(step[i]==0||step[i]>current+1){
+			 //下一结点step为零(没有访问过)或step>当前结点step+1(其它结点访问过但不是最短路径)
+			 step[i]=current+1;
+			 path[i]=path[current];
+			 q.push(i);
+		   }else if(step[i]==current+1){
+			 //下一个结点step=当前结点step+1(其它结点访问过且是最短路径)
+			 path[i]+=path[current];
+			 }
+		   }
+	    }
 	}
 	//返回T结点的最短路径条数
 	return path[15];
