@@ -39,6 +39,6 @@ int count(BitNode* root) {
 int largestBSTSubtree(BitNode* root) {
     if (!root) return 0;
     if (isValid(root, INT_MIN, INT_MAX)) return count(root);
-    return max(largestBSTSubtree(root->lchild), largestBSTSubtree(root->rchild));
+    else return max(largestBSTSubtree(root->lchild), largestBSTSubtree(root->rchild));
 }
 ```
