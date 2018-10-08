@@ -11,7 +11,7 @@ b.若元素之间有序，则可以使用二分查找确定元素是否在数组
 
 ```cpp
 int binarySearch(vector<int> &array, int target) {
-    int from = 0, to = static_cast<int>(array.size()), mid;
+    int from = 0, to = static_cast<int>(array.size()-1), mid;
     while (from <= to) {
         mid = (from + to) / 2;
         if (array[mid] == target) {
