@@ -222,7 +222,29 @@ $?  所有时间戳比目标文件晚的依赖文件，以空格分开
 
 <br>
 
-**四.GDB调试工具**
+**四.CMake配置工具**
+
+>CMake是一个比Make工具更高级的编译配置工具，是一个跨平台的、开源的构建系统。CMake允许开发者编写一种平台无关的CMakeList.txt文件来定制整个编译流程，然后再根据目标用户的平台进一步生成所需的本地化Makefile和工程文件，如：为Unix平台生成Makefile文件(使用GCC编译)，为Windows MSVC生成projects/workspaces(使用VS IDE编译)或Makefile文件(使用nmake编译)。
+
+CMakeLists.txt
+
+```
+#CMake最低版本号要求
+cmake_minimum_required(VERSION 3.12)
+#项目信息
+project(Demo)
+#将src目录下的源文件名保存到path变量中
+aux_source_directory(./src path)
+#添加当前目录下的math子目录(含有CMakeLists.txt)
+add_subdirectory(math)
+#将名为main.cpp的源文件编译成一个名称为demo的可执行文件
+add_executable(Demo main.cpp)
+add_executable(Demo ${path})
+```
+
+<br>
+
+**五.GDB调试工具**
 
 ```
 #1.编写源程序4.c
@@ -267,7 +289,7 @@ gdb 4
 
 <br>
 
-**五.头文件**
+**六.头文件**
 
 >头文件:一般写类的声明（包括类里面的成员变量和成员方法的声明）、函数原型、#define常数等
 

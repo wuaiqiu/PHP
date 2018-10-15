@@ -2,18 +2,18 @@
  * C++类
  *
  *   1.成员变量
- * 	 a.普通成员变量:类内进行初始化
- * 	 b.成员常量:类内进行初始化
- * 	 c.静态成员变量:类外进行初始化
+ * 	 a.普通变量:类内进行初始化
+ * 	 b.常量:类内进行初始化
+ * 	 c.静态变量:类外进行初始化
  *
  *   2.成员函数:类内进行初始化，类外进行初始化(常用)
- *	 a.普通成员函数
+ *	 a.普通函数
  * 	 b.常函数
  *	   1).构造函数与析构函数不能是常函数
  *	   2).可以使用成员变量，但不可以修改
  *	   3).常对象只能调用常函数，不能调用普通函数，非常对象既可以调用常函数又
  *	可以调用普通函数
- *	 c.静态成员函数:不能使用this，只能访问静态成员，非静态函数可以访问一切
+ *	 c.静态函数:不能使用this，只能访问静态成员，非静态函数可以访问一切
  *
  *   3.访问修饰符
  *   	a.private:类内可见(默认)
@@ -21,43 +21,43 @@
  *   	c.public:全部可见
  */
 
-class Person{
-public:
-	int a;	//普通成员变量
-	const int b=1;	//成员常量
-	static int c;	//静态成员变量
-	void fun1();	//普通成员函数
-	void fun2 const();	//常函数
-	static void fun3(Person& p);//静态成员函数
-};
-int Person::c=12;
-void Person::fun1(){
-	this->a=3;
-}
-void Person::fun2 const(){
-	cout<<this->b<<endl;
-}
-static void Person::fun3(Person& p){
-	cout<<p.a<<endl;
-}
+ class Person{
+ public:
+     int a;	//普通变量
+     const int b=1;	//常量
+     static int c;	//静态变量
+     void fun1();	//普通函数
+     void fun2() const;	//常函数
+     static void fun3(Person& p);//静态函数
+ };
+ int Person::c=12;
+ void Person::fun1(){
+     this->a=3;
+ }
+ void Person::fun2() const{
+ cout<<this->b<<endl;
+ }
+ void Person::fun3(Person& p){
+     cout<<p.a<<endl;
+ }
 
-int main(){
-	Person p;
-	cout<<p.a<<endl;	//访问普通成员变量
-	cout<<p.b<<endl;	//访问成员常量
-	cout<<Person::c<<endl;	//访问静态成员变量
-	p.fun1();	//访问普通成员函数
-	p.fun2();	//访问常函数
-	Person::fun3();	//访问静态成员函数
-	return 0;
-}
+ int main(){
+     Person p;
+     cout<<p.a<<endl;	//访问普通变量
+     cout<<p.b<<endl;	//访问常量
+     cout<<Person::c<<endl;	//访问静态变量
+     p.fun1();	//访问普通函数
+     p.fun2();	//访问常函数
+     Person::fun3(p);	//访问静态函数
+     return 0;
+ }
 
 
 /*
  *   4.构造函数
  *	a.可以有多个构造函数，无返回值
  *	b.构造函数调用时期:栈区普通对象声明;堆区指针对象进行new
- *	c.初始化列表:按成员变量声明逆序进行初始化，优先级比默认参数低
+ *	c.初始化列表:按成员变量声明顺序进行初始化，优先级比形参高
  *
  *   5.析构函数(当类中有指向其他对象的指针则需要自定义析构函数，否则造成内存泄漏)
  *	a.只有一个析构函数，没有参数，无返回值
@@ -65,10 +65,10 @@ int main(){
  *	c.自定义析构函数还是调用了默认的析构函数
  *
  *	内存泄漏(memory leak):是指程序在申请内存后，无法释放已申请的内存空间，一次内存
- *  泄漏似乎不会有大的影响，但内存泄漏堆积后的后果就是内存溢出。 
+ *  泄漏似乎不会有大的影响，但内存泄漏堆积后的后果就是内存溢出。
  *	内存溢出(out of memory):指程序申请内存时，没有足够的内存供申请者使用，或者说，给
  *  了你一块存储int类型数据的存储空间，但是你却存储long类型的数据，那么结果就是内存不
- *  够用，此时就会报错OOM,即所谓的内存溢出。 
+ *  够用，此时就会报错OOM,即所谓的内存溢出。
  */
 
 class Person{
@@ -78,10 +78,10 @@ public:
 	Person(); //构造函数
 	~Person(); //析构函数
 };
-Person::Person(int a,int b):b(2),c(b){ 
+Person::Person(int a,int b):b(2),c(b){
 	this->a=a;
 }
-Person::Person():b(2),c(b){ 
+Person::Person():b(2),c(b){
 	this->a=11;
 }
 Person::~Person(){
@@ -112,14 +112,14 @@ int main(){
  * 6.拷贝构造函数
  *    a.本质上是一个构造函数，只是参数为对象的常引用
  *    b.使用方式:
- *	  CPerson p;
- *	  CPerson p1(p);
- * 	  CPerson p2=p;
- *	  CPerson p3=CPerson(p);
- *	  CPerson* p4=new CPerson(p);
- *     c.默认拷贝构造函数只实现了浅拷贝(不会对对象中的对象进行拷贝)
- *     d.构造拷贝与赋值拷贝的区别是否有新对象产生
- *     e.explicit关键字禁止单参数构造函数隐式转换
+ *	   CPerson p;
+ *	   CPerson p1(p);
+ * 	   CPerson p2=p;
+ *	   CPerson p3=CPerson(p);
+ *	   CPerson* p4=new CPerson(p);
+ *    c.默认拷贝构造函数只实现了浅拷贝(不会对对象中的对象进行拷贝)
+ *    d.构造拷贝与赋值拷贝的区别是否有新对象产生
+ *    e.explicit关键字禁止单参数构造函数隐式转换
  *
  * 7.友元函数(类)
  *    a.使用关键字friend
@@ -135,7 +135,7 @@ public:
 	friend int getAge(Person &p); //友元函数
 };
 Person::Person(){
-	
+
 }
 Person::Person(const Person &p){
 	this->a=p.a;
@@ -154,18 +154,18 @@ int main(){
 }
 
 class Student
-{  
-public: 
-    Student(int size)  
-    {            
+{
+public:
+    Student(int size)
+    {
         cout<<"size:"<<size<<endl;
     }
     explicit Student(char a)
     {
     	cout<<"char:"<<a<<endl;
     }
-};  
-  
+};
+
 //默认可以隐式转换
 Student stu1 = 10; //size: 10
 //禁止隐式转换
@@ -179,13 +179,13 @@ Student stu2 = 'a'; //error
  *    	private:父类中所有控制限定符在子类都为private，默认为private
  *    b.构造函数的继承
  *    	a).先执行父类的构造函数，在执行子类的构造函数
- *	b).调用父类有参构造函数，需要在子类的初始化参数列表中初始化
- *	c).子类可以调用指定父类的构造函数
+ *	    b).调用父类有参构造函数，需要在子类的初始化参数列表中初始化
+ *	    c).子类可以调用指定父类的构造函数
  *    c.析构函数的继承
- *	 a).先执行子类的析构函数，在执行父类的析构函数
+ *	    a).先执行子类的析构函数，在执行父类的析构函数
  *    d.重定义
- *	 a).当子类出现与父类同名(只有同名即可)的成员，采用子类重定义父类成员方式
- *	 b).调用父类成员，可以使用类名作用域指定需要调用的成员
+ *	    a).当子类出现与父类同名(只有同名即可)的成员，采用子类重定义父类成员方式
+ *	    b).调用父类成员，可以使用类名作用域指定需要调用的成员
  *    e.静态成员，友元，构造函数，析构函数不能被继承
  *    f.C++支持多继承
  *    g.虚继承:解决复杂的继承链关系，如继承关系链为菱形时，子类调用祖父类的成员，会
@@ -236,7 +236,7 @@ Student::~Student(){
 
 int main(){
 	//Person => Student => Student destroy => Person destory
-	Student stu; 
+	Student stu;
 	//Person1 => Student1 => Student destroy => Person destory
 	Student stu1(1);
 	stu.show(1);//Student(1)
@@ -262,20 +262,24 @@ int main(){
 
 class Person{
 public:
-	void show(int a);
-	~Person();
+	vitrual void show(int a);
+	vitrual ~Person();
 };
 void Person::show(int a){
 	cout<<"Person("<<a<<")"<<endl;
-} 
+}
 Person::~Person(){
 	cout<<"Person is destroy"<<endl;
 }
 
 class Student : public Person{
 public:
+	void show(int a);
 	~Student();
 };
+void Student::show(int a){
+	cout<<"Student("<<a<<")"<<endl;
+}
 Student::~Student(){
 	cout<<"Student is destroy"<<endl;
 }
@@ -328,9 +332,7 @@ int main(){
 /*
  * 11.C++11新增构造
  *	1).委托构造:使得构造函数可以在同一个类中一个构造函数调用另一个构造函数，不能同时使用委派构造函数和初始化列表
- *  	2).继承构造:将基类中的构造函数全继承到派生类
- *	  a.派生类的构造默认与基类一样,即派生类不需要构造函数
- *	  b.基类的构造函数有默认值的不会被继承
+ *  2).继承构造:将基类中的构造函数全继承到派生类，派生类的构造默认与基类一样,即派生类不需要构造函数
  **/
 
 class Base {

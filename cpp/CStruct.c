@@ -17,13 +17,18 @@
  *
  *	 union student a={"wu",20}; //a.类型名
  *	 union student* p=&a; //p->类型名  ===  (*p).类型名  === a.类型名
- *		a.共用体任何时候只有一个成员存在
- *		b.共用体长度为最长成员的长度
+ *	 a.共用体任何时候只有一个成员存在
+ *	 b.共用体长度为最长成员的长度
  *
  *
- * 3.typedof类型别名
- *		typedof 类型名 类型新名
+ * 3.typedef类型别名
+ *		typedef 类型名 类型新名
  *
+ * define和别名typedef的区别
+ *  a.执行时间不同，typedef在编译阶段有效，typedef有类型检查的功能；define是宏
+ *定义，发生在预处理阶段，不进行类型检查。
+ *  b.作用域不同，define没有作用域的限制，只要是之前预定义过的宏，在以后的程序中都
+ *可以使用。而typedef有自己的作用域。
  * */
 
 struct Student{
@@ -49,9 +54,9 @@ int main(){
  *   1).默认的访问权限struct是public的，class是private的
  *   2).struct更适合看成是一个数据结构的实现体，class更适合看成是一个对象的实现体
  * 6.结构体与类的联系:
- *    1).struct能继承
- *    2).struct能实现多态
- *    3).struct可以继承class，同样class也可以继承struct
+ *   1).struct能继承
+ *   2).struct能实现多态
+ *   3).struct可以继承class，同样class也可以继承struct
  * */
 
 
@@ -84,7 +89,7 @@ int main(void) {
 
 
 
-/* 
+/*
  * 8.初始化列表(C++11)
  *  1).为对象的初始化与普通数组和结构体的初始化方法提供了统一的桥梁
  *  2).初始化列表除了用在对象构造上，还能将其作为普通函数的形参

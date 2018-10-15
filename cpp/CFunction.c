@@ -40,6 +40,8 @@ void fun(int a,int b){
  * 	接递归函数
  *		d.在类内部定义的函数会默认声明为inline函数,若在类外定义需要
  *	用inline作显式声明
+ *	  e.宏定义在预处理阶段进行文本替换，inline函数在编译阶段进行替换；
+ *  inline函数有类型检查，相比宏定义比较安全
  * */
 
 inline void fun(){
@@ -92,7 +94,7 @@ auto stored_value_1 = copy_value_1();//100
  * 1.function是可调用对象的包装器
  * 2.bind是用来提前绑定函数调用的参数的
  * 3.placeholders::_n表示占位符
- **/ 
+ **/
 
 int fun1(int para) {
     return para;

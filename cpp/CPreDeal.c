@@ -39,9 +39,23 @@
 
 
 /*
- * C++新增预处理:
+ * 4.C++新增预处理:
  * 		#pragma once:保证头文件只被include一次
  * */
 
 #pragma once
 	void fun();
+
+/*
+ * 5.##是一个连接符号，用于把参数连在一起
+ *   #是把跟在后面的参数转换成一个字符串
+ * */
+
+#define STR(s)      #s
+#define CONS(a,b)   a##b
+
+int main(){
+    cout<<STR(hello)<<endl; //hello
+    cout<<CONS(1,2)<<endl; //12
+    return 0;
+}

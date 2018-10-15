@@ -20,11 +20,11 @@ int main() {
 	 FILE *pf = fopen ("unexist.txt", "rb");
 	 if (pf == NULL){
 		fprintf(stderr, "错误号: %d\n", errno);
-	     perror("通过perror输出错误\n");
-	     fprintf(stderr, "打开文件错误: %s\n", strerror(errno));
-	     return EXIT_FAILURE;
+	  perror("通过perror输出错误\n");
+	  fprintf(stderr, "打开文件错误: %s\n", strerror(errno));
+	  return EXIT_FAILURE;
 	 }else{
-	      fclose (pf);
+	  fclose (pf);
 	 }
 	 return EXIT_SUCCESS;
 }
@@ -55,7 +55,6 @@ int main(){
 /*
  *C++11:
  *  noexcept关键字:表示其修饰的函数不会抛出异常,若抛出了异常直接终止程序的运行
- *
  **/
 
 void Throw() { throw 1; }
