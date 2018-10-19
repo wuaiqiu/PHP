@@ -13,7 +13,7 @@
 3 4 1 2 1 0
 ```
 
-#### 源码
+### 源码
 
 ```cpp
 void Cantor(vector<int> &arr, vector<int> &ret) {

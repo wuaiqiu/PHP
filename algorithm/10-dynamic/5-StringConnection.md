@@ -3,7 +3,7 @@
 
 输入三个字符串s1，s2和s3，判断第三个字符串s3是否由前两个字符串s1和s2交错而成，即不改变s1和s2中各个字符原有的相对顺序，例如s1="aabcc",s2="dbbca",s3="aadbbcbcac"时，则输出true，但如果s3="accabdbbca"，则输出false；
 
-#### 分析
+### 分析
 
 为了算法表述方便，从1开始数（构成[0...i]×[0....j]的矩阵）:令dp[i,j]表示s3[1...i+j]是否由s1[1...i]和s2[1...j]的字符组成，即dp[i,j]取值范围为true/false;
 
@@ -13,7 +13,7 @@
 3).其它情况，dp[i][j]为false。
 ```
 
-#### 源码
+### 源码
 
 ```cpp
 bool IsInterlace(string &s1, string &s2, string &s3) {

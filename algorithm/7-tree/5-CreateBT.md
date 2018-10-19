@@ -15,7 +15,7 @@
 后序:3 2 5 6 4 1
 ```
 
-#### 源码
+### 源码
 
 ```cpp
 struct BitNode{
@@ -41,7 +41,7 @@ void createTree(BitNode* &T){
 2.利用先序与中序构造二叉树。
 
 
-#### 分析
+### 分析
 
 a.算法思想:
 
@@ -55,7 +55,7 @@ a.算法思想:
 4).递归确定中序遍历序列HMZ和前序遍历序列MHZ的子树结构。
 ```
 
-#### 源码
+### 源码
 
 ```cpp
 BitNode* build(vector<int> pre,vector<int> in,int preL,int preR,int inL,int inR){
@@ -91,7 +91,7 @@ BitNode* createTree(vector<int> &pre, vector<int> &in) {
 3.利用后序与中序构造二叉树。
 
 
-#### 分析
+### 分析
 
 a.算法思想:
 
@@ -105,7 +105,7 @@ a.算法思想:
 4).递归确定中序遍历序列HMZ和后序遍历序列HZM的子树结构。
 ```
 
-#### 源码
+### 源码
 
 ```cpp
 BitNode* build(vector<int> post,vector<int> in,int postL,int postR,int inL,int inR){

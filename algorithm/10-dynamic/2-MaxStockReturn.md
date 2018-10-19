@@ -13,7 +13,7 @@
 5
 ```
 
-#### 分析
+### 分析
 
 若在第i天卖出，则应该在A[0...i-1]中的最小值买入。则设第i天的收益为p[i]，则状态方程为:
 
@@ -21,7 +21,7 @@
 p[i]=A[i]-min(A[0...i-1])
 ```
 
-#### 源码
+### 源码
 
 ```cpp
 int MaxProfit(vector<int> &prices) {
@@ -52,7 +52,7 @@ k=3
 7
 ```
 
-#### 分析
+### 分析
 
 a.dp[k][i]表示最多k次交易在第i天的最大收益。
 
@@ -62,7 +62,7 @@ b.在第i天，有两种选择：要么卖出股票(dp[k][i]=dp[k-1][j]+prices[i
 dp[k][i]=max(dp[k][i-1],dp[k-1][j]+prices[i]-prices[j])
 ```
 
-#### 源码
+### 源码
 
 ```cpp
 int MaxProfit(vector<int> &prices, int K) {

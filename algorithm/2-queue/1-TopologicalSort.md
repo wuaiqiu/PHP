@@ -14,13 +14,13 @@ n=2
 [0,1]
 ```
 
-#### 分析
+### 分析
 
 a.拓扑排序的本质是不断输出入度为0的点，该算法可用于判断图中是否存在环。
 
 b.可以用队列保存入度为0的点，避免每次遍历所有点。
 
-####  源码
+###  源码
 
 ```cpp
 vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites) {

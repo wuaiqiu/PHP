@@ -5,7 +5,7 @@
 
 ![](../img/64.png)
 
-#### 分析
+### 分析
 
 a.当在第0列（行）上的最短路径为dp(i,0)=chess[0][0]+....+chess[i][0]或dp(0,j)=chess[0][0]+....+chess[0][j]
 
@@ -24,7 +24,7 @@ dp(j)=chess[0][0]+....+chess[0][j]
 dp(j)=min(dp(j),dp(j-1))+chess[i][j]
 ```
 
-#### 源码
+### 源码
 
 ```cpp
 int MinPath(vector<vector<int>> &chess) {
@@ -55,7 +55,7 @@ int MinPath(vector<vector<int>> &chess) {
 
 给定m*n的矩阵，在左上角放一个机器人，它每次只能往右和下走，直到右下角，其中有些格子是禁止机器人通过的(可以通过为true，不能通过为false)，求所有路径和。
 
-#### 分析
+### 分析
 
 dp[i][j]表示从起点到(i,j)的路径条数，如果(i,j)被占用，则dp[i][j]=0，如果(i,j)不被占用，则dp[i][j]=dp[i-1][j]+dp[i][j-1]。
 
@@ -64,7 +64,7 @@ dp(j)=1
 dp(j)=dp(j)+dp(j-1)
 ```
 
-#### 源码
+### 源码
 
 ```cpp
 int PathNumber(vector<vector<bool>> &chess) {
@@ -97,6 +97,6 @@ int PathNumber(vector<vector<bool>> &chess) {
 
 ![](../img/65.png)
 
-#### 分析
+### 分析
 
 ![](../img/66.png)

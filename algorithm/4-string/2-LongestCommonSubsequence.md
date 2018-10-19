@@ -14,7 +14,7 @@ adfc
 adf
 ```
 
-#### 分析
+### 分析
 
 a.LCS可以描述两端文字之间的"相似度"，即它们的雷同程度，从而能够用来辨别抄袭。
 
@@ -30,11 +30,14 @@ b.LCS解法:
 LCS(Xm,Yn)=max{LCS(Xm-1,Yn),LCS(Xm,Yn-1)};
 ```
 
-c.最长递增子序列(LongestIncreasingSubsequence,LCS):找出给定数组最长且单调递增的子序列。如给定数组A={5,6,7,1,2,8},排序后A'={1,2,5,6,7,8}，则只需要求A，A'的LCS即可。
+c.最长递增子序列(LongestIncreasingSubsequence,LIS):找出给定数组最长且单调递增的子序列。如给定数组A={5,6,7,1,2,8},排序后A'={1,2,5,6,7,8}，则只需要求A，A'的LCS即可。
+
+d.最长公共子串(LongestCommonSubstring)：最长公共子串要求连续，所以当xm=yn时，则LCS(Xm,Yn)=LCS(Xm-1,Yn-1)+xm;当xm!=yn时，则LCS(Xm,Yn)=0;
+
 
 ![](../img/2.png)
 
-#### 源码
+### 源码
 
 ```cpp
 string LCS(const char* str1,const char* str2){

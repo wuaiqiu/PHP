@@ -13,11 +13,11 @@
 1->2->3
 ```
 
-#### 分析
+### 分析
 
 a.若p->next的值和p的值相等，则将p->next->next赋值给p，删除p->next，重复上述过程，直到链表尾端。
 
-#### 源码
+### 源码
 
 ```cpp
 struct ListNode {
@@ -61,11 +61,11 @@ ListNode* deleteDuplicates(ListNode* head) {
 1->2->5
 ```
 
-#### 分析
+### 分析
 
 a.此时需要记录prev父指针，便于删除所有重复的结点。
 
-#### 源码
+### 源码
 
 ```cpp
 struct ListNode {

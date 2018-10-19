@@ -5,11 +5,11 @@
 
 ![](../img/1.png)
 
-#### 分析
+### 分析
 
 a.利用BFS遍历所有结点，当结点没有访问过或者被其它结点访问过但不是最短路径则将此节点入队。
 
-#### 源码
+### 源码
 
 ```cpp
 int calculate(int graph[16][16]){
@@ -25,12 +25,12 @@ int calculate(int graph[16][16]){
 	    q.pop();
 	    for(int i=1;i<16;i++){
 		if(graph[current][i]==1){
-		   if(step[i]==0||step[i]>current+1){
+		   if(step[i]==0||step[i]>step[current]+1){
 			 //下一结点step为零(没有访问过)或step>当前结点step+1(其它结点访问过但不是最短路径)
-			 step[i]=current+1;
+			 step[i]=step[current]+1;
 			 path[i]=path[current];
 			 q.push(i);
-		   }else if(step[i]==current+1){
+		   }else if(step[i]==step[current]+1){
 			 //下一个结点step=当前结点step+1(其它结点访问过且是最短路径)
 			 path[i]+=path[current];
 			 }

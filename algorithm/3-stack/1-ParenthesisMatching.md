@@ -13,7 +13,7 @@
 false
 ```
 
-#### 分析
+### 分析
 
 a.从前向后扫描字符串，遇到左括号x，就压栈x。
 
@@ -21,7 +21,7 @@ b.遇到右括号y:如果发现栈顶元素x和该括号y匹配，则栈顶元�
 
 c.扫描完成后，如果栈恰好为空，则返回true，否则返回false。
 
-#### 源码
+### 源码
 
 ```cpp
 bool isValid(string s) {
@@ -82,7 +82,7 @@ bool isValid(string s) {
 2
 ```
 
-#### 分析
+### 分析
 
 a.设起始匹配位置start=-1，最大匹配长度ret=0;
 
@@ -90,7 +90,7 @@ b.如果c为左括号，则将i压栈。
 
 c.如果c为右括号:如果栈为空，表示没有匹配的左括号，start=i；如果栈不为空出栈，此时栈为空则ret=max(i-start,ret),此时栈不为空则ret=max(ret,i-stack.top())。
 
-#### 源码
+### 源码
 
 ```cpp
 int longestValidParentheses(string s) {

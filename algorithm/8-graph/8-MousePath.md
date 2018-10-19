@@ -5,11 +5,11 @@
 
 ![](../img/56.png)
 
-#### 分析
+### 分析
 
 假定当前位于(i,j)处，则依次计算(i-1,j)，(i+1,j)，(i,j-1)，(i,j+1)4个相邻位置，如果相邻位置不是墙，则可以通过。
 
-#### 源码
+### 源码
 
 ```cpp
 bool search(vector<vector<int>> &chess, int i, int j, vector<pair<int, int>> &path, vector<vector<bool>> &visit) {
