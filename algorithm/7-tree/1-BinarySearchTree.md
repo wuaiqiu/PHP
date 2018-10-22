@@ -40,7 +40,7 @@ BitNode* searchBST(BitNode* &T, int key, BitNode* &parent) {
 	else {
 		parent = T;
 		return searchBST(T->rchild, key, parent);
-	} //key的值比当前节点的值小时
+	} //key的值比当前节点的值大时
 }
 
 //插入树（构建树），当节点不存在时就插入

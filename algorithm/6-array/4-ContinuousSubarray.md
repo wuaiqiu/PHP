@@ -120,7 +120,7 @@ int MaxSequence(vector<int> &arr) {
     //记录长度数组
     vector<int> p(arr.size(), 1);
     int ret = 1;
-    for (size_t i = 0; i < arr.size(); i++) {
+    for (size_t i = 1; i < arr.size(); i++) {
         //当连续时
         if (arr[i] - arr[i - 1] == 1) {
             p[i] += p[i - 1];
