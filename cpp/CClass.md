@@ -1,10 +1,10 @@
 # Class内存模型
 
-#### 一.简单类模式
+### 一.简单类模式
 
 源代码:
 
-```
+```cpp
 class Base
 {
     int a;
@@ -25,11 +25,11 @@ public:
 
 <br>
 
-#### 二.单继承
+### 二.单继承
 
 源代码:
 
-```
+```cpp
 class DerivedClass: public Base
 {
     int c;
@@ -50,11 +50,11 @@ public:
 
 <br>
 
-#### 三.多态
+### 三.多态
 
 基类源代码:
 
-```
+```cpp
 class Base
 {
     int a;
@@ -82,7 +82,7 @@ $vftable
 
 子类源代码:
 
-```
+```cpp
 class DerivedClass: public Base
 {
     int c;
@@ -112,11 +112,11 @@ $vftable
 
 <br>
 
-#### 四.多继承
+### 四.多继承
 
 继承源代码:
 
-```
+```cpp
 class Base
 {
     int a;
@@ -218,15 +218,15 @@ $vftable
 --|--
 0|DerivedDerivedClass@VirtualFunction
 
->它并列地排布着继承而来的两个父类DerivedClass1与DerivedClass2，还有自身的成员变量e,这里有两份虚表了，分别针对DerivedClass1与DerivedClass2,两分base成员变量
+>它并列地排布着继承而来的两个父类DerivedClass1与DerivedClass2，还有自身的成员变量e,这里有两份虚表了，分别针对DerivedClass1与DerivedClass2,两份base成员变量。因此在调用同名变量时需要加类限定词。
 
 <br>
 
-#### 五.虚继承
+### 五.虚继承
 
 虚继承源代码:
 
-```
+```cpp
 class Base
 {
     int a;

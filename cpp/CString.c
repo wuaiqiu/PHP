@@ -9,10 +9,10 @@
  *		int memcmp(void *s1,void *s2,size_t n):比较
  *		int strcmp(const char *str1, const char *str2):比较
  *		int strncmp(const char *str1, const char *str2, size_t n):比较
- *	  void memcpy(void *dest,void *src ,int n):拷贝
- *	  char *strcpy(char *dest, const char *src):拷贝
- *	  char *strncpy(char *dest, const char *src, size_t n):拷贝
- *	  void *memmove(void *dest,const void *src,size_t n):移动，解决内存重叠问题
+ *	    void memcpy(void *dest,void *src ,int n):拷贝
+ *	    char *strcpy(char *dest, const char *src):拷贝
+ *	    char *strncpy(char *dest, const char *src, size_t n):拷贝
+ *	    void *memmove(void *dest,const void *src,size_t n):移动，解决内存重叠问题
  *		void *memset(void *s ,int c, size_t n):设置
  *		char *strcat(char *dest, const char *src):追加
  *		char *strncat(char *dest, const char *src, size_t n):追加

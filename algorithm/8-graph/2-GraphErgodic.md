@@ -8,32 +8,35 @@
 ![](../img/46.png)
 
 ```cpp
-int visited[5] = { 0, 0, 0, 0, 0 }; //0表示没有访问，1表示访问过
-int queue[5]; //初始化一个队列
-int first = 0, final = 0; //列队的头，尾指针
-//循环遍历
+//链表节点定义
+struct ArcNode {
+    int index; //下标
+    ArcNode *next; //下一节点
+};
+struct Graph {
+    ArcNode list[5];
+    int vexnum, arcnum;
+};
+
+//广度遍历
 void BFS(Graph &G, int i) {
+    queue<int> q;//初始化一个队列
+    q.push(i); //进队
+    vector<int> visited(5, 0);//0表示没有访问，1表示访问过
+    visited[i] = 1;//i被访问过
     ArcNode *temp = nullptr;
-    queue[final++] = i; //进队
-    visited[i]=1;
-    while (final != first) {
-        int v = queue[first++]; //出队
+    while (!q.empty()) {
+        int v = q.front();
+        q.pop();//出队
         cout << v << "-->";
         temp = G.list[v].next;
         while (temp) {
-            if (!visited[temp->index]){
-                queue[final++] = temp->index; //进队
-                visited[temp->index]=1;
+            if (!visited[temp->index]) {
+                q.push(temp->index); //进队
+                visited[temp->index] = 1; //标记已经访问过
             }
             temp = temp->next;
         }
-    }
-}
-//广度遍历
-void BFSTraverse(Graph &G) {
-    for (int i = 0; i < G.vexnum; i++) { //防止非连通
-        if (!visited[i])
-            BFS(G, i);
     }
 }
 ```
@@ -43,24 +46,26 @@ void BFSTraverse(Graph &G) {
 ![](../img/45.png)
 
 ```cpp
-int visited[5] = { 0, 0, 0, 0, 0 }; //0表示没有访问，1表示访问过
-//递归遍历
-void DFS(Graph &G, int i) {
+//链表节点定义
+struct ArcNode {
+    int index; //下标
+    ArcNode *next; //下一节点
+};
+struct Graph {
+    ArcNode list[5];
+    int vexnum, arcnum;
+};
+
+//深度遍历
+void DFS(Graph &G, int i, vector<int> &visited) {
     ArcNode *temp = nullptr;
     visited[i] = 1;
     cout << i << "-->";
     temp = G.list[i].next;
     while (temp) {
         if (!visited[temp->index])
-            DFS(G, temp->index);
+            DFS(G, temp->index, visited);
         temp = temp->next;
-    }
-}
-//深度遍历
-void DFSTraverse(Graph &G) {
-    for (int i = 0; i < G.vexnum; i++) { //防止非连通
-        if (!visited[i])
-            DFS(G, i);
     }
 }
 ```

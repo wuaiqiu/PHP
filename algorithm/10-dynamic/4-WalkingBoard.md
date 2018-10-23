@@ -20,8 +20,8 @@ dp[i][j]=min(dp[i-1][j],dp[i][j-1])+chess[i][j]
 c.以每一行为单位计算每一列的值，下一行的值由上一行决定，可以简化为滚动数组(dp(j)表示dp[i-1][j],dp(j-1)表示dp[i][j-1])
 
 ```
-dp(j)=chess[0][0]+....+chess[0][j]
-dp(j)=min(dp(j),dp(j-1))+chess[i][j]
+i=0时:dp(j)=chess[0][0]+....+chess[0][j]
+i>0时:dp(j)=min(dp(j),dp(j-1))+chess[i][j]
 ```
 
 ### 源码
@@ -57,11 +57,11 @@ int MinPath(vector<vector<int>> &chess) {
 
 ### 分析
 
-dp[i][j]表示从起点到(i,j)的路径条数，如果(i,j)被占用，则dp[i][j]=0，如果(i,j)不被占用，则dp[i][j]=dp[i-1][j]+dp[i][j-1]。
+dp[i][j]表示从起点到(i,j)的路径条数，如果(i,j)被占用，则dp[i][j]=0，如果(i,j)不被占用，则dp[i][j]=dp[i-1][j]+dp[i][j-1]。同理滚动数组为:
 
 ```
-dp(j)=1
-dp(j)=dp(j)+dp(j-1)
+i=0时:dp(j)=1
+i>0时:dp(j)=dp(j)+dp(j-1)
 ```
 
 ### 源码

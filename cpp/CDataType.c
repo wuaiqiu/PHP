@@ -137,30 +137,30 @@ int main(){
  * 6.C++11右值引用
  *	1.左值是可以出现=左侧者
  *	2.右值是只能出现=右侧者
- *	3.当右值赋值的过程中，执行拷贝内存与释放内存，而右值引用则直接移动内存
+ *	3.当左值引用的过程中，执行拷贝内存与释放内存，而右值引用则直接移动内存
  **/
 
 //a.移动语义:将左值转换成右值
 void process(int& i){
-    cout << "右值引用"  << endl;
+    cout << "左值引用"  << endl;
 }
 void process(int&& i){
-    cout << "左值引用"  << endl;
+    cout << "右值引用"  << endl;
 }
 
 int main(){
   int a = 0;
-  process(a); // 右值引用
-  process(move(a)); // 左值引用
+  process(a); // 左值引用
+  process(move(a)); // 右值引用
   return 0;
 }
 
 //b.完美转发:避免转发过程右值变成左值
 void process(int& i){
-    cout << "右值引用"  << endl;
+    cout << "左值引用"  << endl;
 }
 void process(int&& i){
-    cout << "左值引用"  << endl;
+    cout << "右值引用"  << endl;
 }
 void not_forward(int&& i){
     cout << "非完美转发"  << endl;
@@ -173,7 +173,7 @@ void per_forward(int&& i){
 
 int main(){
   int a = 0;
-  not_forward(move(a)); // 右值引用
-  per_forward(move(a)); // 左值引用
+  not_forward(move(a)); // 左值引用
+  per_forward(move(a)); // 右值引用
   return 0;
 }

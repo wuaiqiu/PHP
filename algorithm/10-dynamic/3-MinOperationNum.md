@@ -12,7 +12,7 @@
 ### 源码
 
 ```cpp
-//设dp[i]表示从1到i的最小操作步数，pre[i]表示i的前驱，n表示终点
+//设dp[i]表示从1到i的最小操作步数，pre[i]表示i的前驱(用于记录路径)，n表示终点
 int calcCount(vector<int> &dp, vector<int> &pre, int n) {
     if (n == 1) return 0; //递归结束条件
     if (n % 2 == 1) {//奇数

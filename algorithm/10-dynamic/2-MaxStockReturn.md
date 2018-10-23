@@ -15,7 +15,7 @@
 
 ### 分析
 
-若在第i天卖出，则应该在A[0...i-1]中的最小值买入。则设第i天的收益为p[i]，则状态方程为:
+若在第i天卖出，则应该在A[0...i-1]中的最小值买入。则设第i天的收益为p[i]，则状态转移方程为:
 
 ```
 p[i]=A[i]-min(A[0...i-1])
@@ -70,12 +70,9 @@ int MaxProfit(vector<int> &prices, int K) {
     vector<vector<int>> dp(K + 1, vector<int>(prices.size(), 0));
     //进行k次交易(1<=k<=3)
     for (int k = 1; k <= K; k++) {
-        for (int i = 0; i < prices.size(); i++) {
-            //当什么都不做时
-            dp[k][i] = dp[k][i - 1];
-            //当卖出股票时
+        for (int i = 1; i < prices.size(); i++) {
             for (int j = 0; j < i; j++)
-                dp[k][i] = max(dp[k][i], dp[k - 1][j] + prices[i] - prices[j]);
+                dp[k][i] = max(dp[k][i-1], dp[k - 1][j] + prices[i] - prices[j]);
         }
     }
     //返回dp数组最后一个元素即为所求
