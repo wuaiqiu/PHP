@@ -5,7 +5,7 @@
 
 ### 分析
 
-记Pattern[0...j]在Text[0...i]中出现次数为dp[i][j]，若Pattern[j]!=Text[i]，则dp[i][j]=dp[i-1][j]；若Pattern[j]==Text[i]，则dp[i][j]=dp[i-1][j-1]或者dp[i][j]=dp[i-1,j]:
+记Pattern[0...j]在Text[0...i]中出现次数为dp[i][j]，若Pattern[j]!=Text[i]，则dp[i][j]=dp[i-1][j]；若Pattern[j]==Text[i]，则dp[i][j]=dp[i-1][j-1]或dp[i][j]=dp[i-1][j]:
 
 ![](../img/67.png)
 
@@ -25,9 +25,9 @@ int DistinctSubsequence(string &text, string &pattern) {
     //求出text从0到text.size()之间的字符串的dp数组
     for (int i = 0; i < text.size(); i++) {
         //从后向前遍历
-        for (int j = pattern.size() - 2; j >= 0; j--) {
+        for (int j = 1; j < pattern.size(); j++) {
             if (text[i] == pattern[j])
-                dp[j + 1] = dp[j + 1] + dp[j];
+                dp[j] = dp[j - 1] + dp[j];
         }
     }
     return dp.back();

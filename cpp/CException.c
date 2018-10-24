@@ -7,11 +7,11 @@
  *
  * 1.全局变量错误码 						errno
  * 2.自定义输出错误 						perror("发生了错误")
- * 3.输出详细信息的指针(string.h) 		char* strerror(errno)
+ * 3.输出详细信息的指针(string.h) 			char* strerror(errno)
  *
  *
  * 断言(assert.h)
- * 	void assert(int expression):如果expression为FALSE，assert会在标准错误stderr上显示错误
+ * 	void assert(int expression):,他是宏定义，如果expression为FALSE，assert会在标准错误stderr上显示错误
  * 消息，并中止程序执行。
  * */
 

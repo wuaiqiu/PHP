@@ -32,9 +32,6 @@ int Jump(vector<int> &arr) {
         //求下一个区间
         i = j + 1;
         j = j2;
-        //覆盖区间为非正正整数时，无法跳到末尾
-        if (j < i)
-            return -1;
     }
     return step;
 }

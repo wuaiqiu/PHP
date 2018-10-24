@@ -3,9 +3,8 @@
 
 **一.gcc编译流程**
 
-```
-#1.c
-
+```cpp
+//1.c
 #include <stdio.h>
 int main(){
 	int a,b,sum;
@@ -49,9 +48,8 @@ gcc 1.o -o 1
 
 >静态库:这类库的名字一般是libxxx.a；利用静态函数库编译成的文件比较大，因为整个函数库的所有数据都会被整合进目标代码中，他的优点就显而易见了，即编译后的执行程序不需要外部的函数库支持，因为所有使用的函数都已经被编译进去了。当然这也会成为他的缺点，因为如果静态函数库改变了，那么你的程序必须重新编译。
 
-```
-#1.创建源文件pro.c
-
+```cpp
+//1.创建源文件pro.c
 #include <stdio.h>
 int pro(int arg){
     printf("hello:%d",arg);
@@ -60,20 +58,17 @@ int pro(int arg){
 ```
 
 ```
-#2.编译pro.c为目标文件
-
+//2.编译pro.c为目标文件
 gcc -c pro.c -o pro.o
 ```
 
 ```
-#3.利用归档命令ar建立静态链接库libfoo.a
-
+//3.利用归档命令ar建立静态链接库libfoo.a
 ar crv libfoo.a pro.o
 ```
 
-```
-#4.创建一个源文件2.c,此文件包含pro函数原型
-
+```cpp
+//4.创建一个源文件2.c,此文件包含pro函数原型
 int pro(int);
 int main(){
     pro(2);
@@ -82,16 +77,14 @@ int main(){
 ```
 
 ```
-#5.链接文件
-
+//5.链接文件
 gcc 2.c -o 2 -L. -lfoo
 ```
 
 >动态库:这类库的名字一般是libxxx.so;相对于静态函数库，动态函数库在编译的时候并没有被编译进目标代码中，你的程序执行到相关函数时才调用该函数库里的相应函数，因此动态函数库所产生的可执行文件比较小。由于函数库没有被整合进你的程序，而是程序运行时动态的申请并调用，所以程序的运行环境中必须提供相应的库。动态函数库的改变并不影响你的程序，所以动态函数库的升级比较方便。
 
-```
-#1.创建源文件pro.c
-
+```cpp
+//1.创建源文件pro.c
 #include <stdio.h>
 int pro(int arg){
     printf("hello:%d",arg);
@@ -100,17 +93,15 @@ int pro(int arg){
 ```
 
 ```
-#2.建立动态链接库libfoo.so
-
+//2.建立动态链接库libfoo.so
 gcc -fpic -shared pro.c -o libfoo.so
 
 -fpic:表示编译为位置独立的代码
 -shared:指定生成动态链接库
 ```
 
-```
-#3.创建一个源文件2.c,此文件包含pro函数原型
-
+```cpp
+//3.创建一个源文件2.c,此文件包含pro函数原型
 int pro(int);
 int main(){
     pro(2);
@@ -119,12 +110,8 @@ int main(){
 ```
 
 ```
-#4.将libfoo.so放到/lib或/usr/lib下
-```
-
-```
-#5.链接文件
-
+//4.将libfoo.so放到/lib或/usr/lib下
+//5.链接文件
 gcc 2.c -o 2 -lfoo
 ```
 
@@ -186,7 +173,7 @@ clean:
 #4.执行make
 
 make
-make clean:如果不指定clean，则默认执行第一条3（即make 3）
+make clean:如果不指定clean，则默认执行第一条
 ```
 
 >makefile中的变量
@@ -224,7 +211,7 @@ $?  所有时间戳比目标文件晚的依赖文件，以空格分开
 
 **四.CMake配置工具**
 
->CMake是一个比Make工具更高级的编译配置工具，是一个跨平台的、开源的构建系统。CMake允许开发者编写一种平台无关的CMakeList.txt文件来定制整个编译流程，然后再根据目标用户的平台进一步生成所需的本地化Makefile和工程文件，如：为Unix平台生成Makefile文件(使用GCC编译)，为Windows MSVC生成projects/workspaces(使用VS IDE编译)或Makefile文件(使用nmake编译)。
+>CMake是一个比Make工具更高级的编译配置工具，是一个跨平台的、开源的构建系统。CMake允许开发者编写一种平台无关的CMakeList.txt文件来定制整个编译流程，然后再根据目标用户的平台进一步生成所需的本地化Makefile工程文件，如：为Unix平台生成Makefile文件(使用GCC编译)，为Windows MSVC生成projects/workspaces(使用VS IDE编译)或Makefile文件(使用nmake编译)。
 
 CMakeLists.txt
 
@@ -294,16 +281,14 @@ gdb 4
 >头文件:一般写类的声明（包括类里面的成员变量和成员方法的声明）、函数原型、#define常数等
 
 ```
-test.h
-
+//test.h
 #ifndef TEST_H_
 #define TEST_H_
 	int sum(int,int);
 #endif
 
 
-test.c
-
+//test.c
 #include "test.h"
 int sum(int a,int b){
 	return a+b;
@@ -311,8 +296,7 @@ int sum(int a,int b){
 ```
 
 ```
-#编写主程序5.c
-
+//编写主程序5.c
 #include <stdio.h>
 #include "test.h"
 

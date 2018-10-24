@@ -48,7 +48,8 @@ int main(){
 
 /*
  * 4.C++结构体:
- *   1).声明结构体变量不需要struct
+ *   1).声明结构体变量不需要struct(编译器首先将搜索全局标识符表(全局变量或函数)，
+ *若结构体名未找到，则在类标识符内搜索，因此若有同名的结构体则会覆盖此结构体)
  *   2).结构体直接可以放函数定义
  * 5.结构体与类的区别:
  *   1).默认的访问权限struct是public的，class是private的
@@ -59,6 +60,16 @@ int main(){
  *   3).struct可以继承class，同样class也可以继承struct
  * */
 
+struct Student {
+};
+//定义后"Student"只代表此函数
+void Student() {} 
+
+int main() {
+    Student();
+    struct Student me;//这时需要加上struct
+    return 0;
+}
 
 /*
  * 7.变长结构体

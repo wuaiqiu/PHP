@@ -3,7 +3,8 @@
 /*
  * 输入/输出(stdio.h)
  *
- * 1.scanf/printf函数
+ * 1.scanf/printf有格式输入/输出函数
+ *   fscanf/fprintf
  *		%d  --->  int short
  *		%ld	--->  long
  *		%f  --->  float
@@ -17,29 +18,46 @@
  *	   %md  --->  用零来填充
  *	   %%   --->  输出%
  *
+ * 2.getchar/putchar无格式输入/输出字符函数
+ *	 fgetc/fputc
  *
- * 2.getchar/putchar字符函数
- *
- *
- * 3.fgets/fputs字符串函数
- *
+ * 3.fgets/fputs无格式输入/输出字符串函数
+ *   
  * */
 
-void getcharDemo(){
-	char str[64],ch;
-	int i=0,j=0;
-	while((ch=getchar())!='\n'){
-		str[i++]=ch;
-	}
-	while(str[j]!='\0'){
-		putchar(str[j++]);
-	}
+//遇到空格和换行时结束
+void scanfDemo() {
+    char str[10];
+    scanf("%s", str);
+    printf("%s", str);
+}
+//遇到空格和换行时结束
+void fscanfDemo() {
+    char str[10];
+    fscanf(stdin, "%s", str);
+    fprintf(stdout, "%s", str);
 }
 
-void getsDemo(){
-	char str[64];
-	fgets(str,64,stdin);
-	fputs(str,stdout);
+
+//读取一个字符，获取失败返回EOF
+void getcharDemo() {
+    char a;
+    a = getchar();
+    putchar(a);
+}
+//读取一个字符，获取失败返回EOF
+void fgetcDemo() {
+    char a;
+    a = fgetc(stdin);
+    fputc(a, stdout);
+}
+
+
+//遇到换行时结束
+void fgetsDemo() {
+    char str[10];
+    fgets(str, 64, stdin);
+    fputs(str, stdout);
 }
 
 

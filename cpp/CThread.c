@@ -18,20 +18,20 @@ using namespace std;
  *   bool joinable():判断线程是否为分离线程
  * */
 void deal1(){
-	this_thread::sleep_for(chrono::seconds(5));
-	printf("%lu: This is Thread1 stoping\n",this_thread::get_id());
+    this_thread::sleep_for(chrono::seconds(5));
+    cout<<"Deal1:"<<this_thread::get_id()<<endl;
 }
 
 void deal2(){
-	printf("%lu: This is Thread2 stoping\n",this_thread::get_id());
+    cout<<"Deal2:"<<this_thread::get_id()<<endl;
 }
 
 int  main(){
-	thread t1(deal1);
-	thread t2(deal2);
-	t1.join();
-	t2.join();
-	return 0;
+    thread t1(deal1);
+    thread t2(deal2);
+    t1.join();
+    t2.join();
+    return 0;
 }
 
 
