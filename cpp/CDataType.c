@@ -55,7 +55,7 @@ int main(){
 
 
 /*
- *5.C++引用变量(给已定义的变量取一个别名，而typedef是给类型取一个别名):
+ *5.C++左值引用(给已定义的变量取一个别名，而typedef是给类型取一个别名):
  *	  a.基本变量引用(定义时必须初始化):
  *			int a=12;
  *			int &b=a;
@@ -80,68 +80,10 @@ int main(){
 
 
 /*
- * 6.C++新式类型转换(更加细致，更加安全),C++11不在使用传统的类型转换
- * 	 1).static_cast:
- *	    a.编译时检查
- * 	    b.用于类层次结构中父子类之间指针或引用的转换,向下转不安全
- * 	    c.用于基本数据类型之间的转换
- * 	    d.把void指针与目标类型指针相互转换。
+ * 6.C++11右值引用(左值是可以出现=左侧者；右值是只能出现=右侧者，通常为表达式)
  *
- *	 2).dynamic_cast:
- *	    a.运行时检查，基本必须含有虚函数
- *	    b.目标必须时一个有效的指针(引用)
- *	    c.向下转安全
- *
- * 	 3).const_cast:
- *	    a.常量指针(引用)被转化成非常量的指针(引用)；
- *
- * 	 4).reinterpret_cast:
- * 	    a.它可以将任何指针转换为任何其他指针类型。
- * 	    b.它可以把一个指针转换成一个整数，也可以把一个整数转换成一个指针。
- * */
-
-int main(){
-	//1.将char型数据转换成int型数据
-	char a = 'a';
-	int b = static_cast<int>(a);
-	//2.将double指针转换成void指针
-	double* c = new double;
-	void* d = static_cast<void*>(c);
-	//3.将int型数据转换成const int型数据，但不能逆过来
-	int e = 10;
-	const int f = static_cast<const int>(e);
-	//4.将Son指针转换成Father指针
-	Son* s = new Son;
-	Father* f = static_cast<Father*>(s);
-	return 0;
-}
-
-int main(){
-	//1.将Son指针转换成Father指针
-	Son* a = new Son;
-	Father* b = dynamic_cast<Father*>(a);
-	//2.d将会等于NULL
-	Father* c = new Father;
-	Son* d = dynamic_cast<Son*>(c);
-	//3.将Father指针转换成Son指针
-	Father* e = new Son;
-	Son* f = dynamic_cast<Son*>(a);
-	return 0;
-}
-
-int main(){
-	//1.将const Student型数据转换成Student型数据
-	const Student* a = new Student;
-	Student* b = const_cast<Student*>(a);
-	return 0;
-}
-
-
-/*
- * 7.C++11右值引用
- *	1).左值是可以出现=左侧者
- *	2).右值是只能出现=右侧者
- *	3).当左值引用的过程中，执行拷贝内存与释放内存，而右值引用则直接移动内存
+ *	
+ *.当左值引用的参数传递过程中，执行拷贝内存与释放内存，而右值引用的参数传递则直接移动内存
  **/
 
 //a.移动语义:将左值转换成右值
@@ -180,4 +122,66 @@ int main(){
   not_forward(move(a)); // 左值引用
   per_forward(move(a)); // 右值引用
   return 0;
+}
+
+
+/*
+ * 7.C++新式类型转换(更加细致，更加安全),C++11不在使用传统的类型转换
+ * 	 1).static_cast:
+ *	    a.编译时检查
+ * 	    b.用于类层次结构中父子类之间指针(引用)的转换,向下转不安全
+ * 	    c.用于基本数据类型之间的转换
+ * 	    d.把void指针与目标类型指针相互转换
+ * 		e.将non-const对象转换为const对象
+ *
+ *	 2).dynamic_cast:
+ *	    a.运行时检查
+ *	    b.目标必须时一个有效的指针(引用)
+ *	    c.向下转安全，指针返回NULL，引用返回error
+ *
+ * 	 3).const_cast:
+ *	    a.常量指针(引用)被转化成非常量的指针(引用)；
+ *
+ * 	 4).reinterpret_cast:
+ * 	    a.它可以将任何指针转换为任何其他指针类型。
+ * 	    b.它可以把一个指针转换成一个整数，也可以把一个整数转换成一个指针。
+ * */
+
+int main(){
+    //1.将Son指针转换成Father指针(安全)
+    auto s1 = new Son;
+    auto f1 = static_cast<Father*>(s1);
+    //2.将Father指针转换成Son指针(不安全)
+    auto f2 = new Father;
+    auto s2 = static_cast<Son*>(f2);
+    //3.将char型数据转换成int型数据
+    char a = 'a';
+    int b = static_cast<int>(a);
+    //4.将double指针转换成void指针
+    auto c = new double;
+    auto d = static_cast<void*>(c);
+    //5.将non-const型数据转换成const型数据
+    int e = 10;
+    const int f = static_cast<const int>(e);
+    return 0;
+}
+
+int main(){
+	//1.将Son指针转换成Father指针
+	Son* a = new Son;
+	Father* b = dynamic_cast<Father*>(a);
+	//2.d将会等于NULL
+	Father* c = new Father;
+	Son* d = dynamic_cast<Son*>(c);
+	//3.将Father指针转换成Son指针
+	Father* e = new Son;
+	Son* f = dynamic_cast<Son*>(a);
+	return 0;
+}
+
+int main(){
+	//1.将const Student型数据转换成Student型数据
+	const Student* a = new Student;
+	Student* b = const_cast<Student*>(a);
+	return 0;
 }

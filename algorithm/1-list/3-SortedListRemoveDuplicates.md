@@ -15,7 +15,7 @@
 
 ### 分析
 
-a.若p->next的值和p的值相等，则将p->next->next赋值给p，删除p->next，重复上述过程，直到链表尾端。
+a.若p->next的值和p的值相等，则将p->next->next赋值给p->next，删除p->next，重复上述过程，直到链表尾端。
 
 ### 源码
 

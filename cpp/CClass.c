@@ -21,36 +21,38 @@
  *   	c.public:全部可见
  */
 
- class Person{
- public:
-     int a;	//普通变量
-     const int b=1;	//常量
-     static int c;	//静态变量
-     void fun1();	//普通函数
-     void fun2() const;	//常函数
-     static void fun3(Person& p);//静态函数
- };
- int Person::c=12;
- void Person::fun1(){
-     this->a=3;
- }
- void Person::fun2() const{
- 	cout<<this->b<<endl;
- }
- void Person::fun3(Person& p){
-     cout<<p.a<<endl;
- }
+class Person{
+public:
+    int a=1;	//普通变量
+    const int b=2;	//常量
+    static int c;	//静态变量
+    void fun1();	//普通函数
+    void fun2() const;	//常函数
+    static void fun3();//静态函数
+};
 
- int main(){
-     Person p;
-     cout<<p.a<<endl;	//访问普通变量
-     cout<<p.b<<endl;	//访问常量
-     cout<<Person::c<<endl;	//访问静态变量
-     p.fun1();	//访问普通函数
-     p.fun2();	//访问常函数
-     Person::fun3(p);	//访问静态函数
-     return 0;
- }
+int Person::c=3;
+
+void Person::fun1(){
+    cout<<"This is fun1"<<endl;
+}
+void Person::fun2() const{
+    cout<<"This is fun2"<<endl;
+}
+void Person::fun3(){
+    cout<<"This is fun3"<<endl;
+}
+
+int main(){
+    Person p;
+    cout<<p.a<<endl;	//访问普通变量
+    cout<<p.b<<endl;	//访问常量
+    cout<<Person::c<<endl;	//访问静态变量
+    p.fun1();	//访问普通函数
+    p.fun2();	//访问常函数
+    Person::fun3();	//访问静态函数
+    return 0;
+}
 
 
 /*
@@ -73,38 +75,41 @@
 
 class Person{
 public:
-	int a,b,c;
-	Person(int a,int b=3); //构造函数
-	Person(); //构造函数
-	~Person(); //析构函数
+    int a,b,c;
+    Person(); //构造函数
+    Person(int a); //构造函数
+    ~Person(); //析构函数
 };
-Person::Person(int a,int b):b(2),c(b){
-	this->a=a;
+
+Person::Person():a(1),b(a+1),c(b+1){
+
 }
-Person::Person():b(2),c(b){
-	this->a=11;
+Person::Person(int p):a(1),b(a+1),c(b+1){
+    this->a=p;
 }
 Person::~Person(){
-	cout<<"This is ～Person"<<endl;
+    cout<<"This is ～Person"<<endl;
 }
 
 int main(){
-	//a.栈区普通对象作用区域
-	{
-		Person p1(10); //1.实例化(栈区普通对象)
-		cout<<p1.a<<endl;
-		cout<<p1.b<<endl;
-		cout<<p1.c<<endl;
-	}
+    //a.栈区普通对象作用区域
+    {
+        Person p1(10); //1.实例化(栈区普通对象)
+        cout<<p1.a<<endl; //10
+        cout<<p1.b<<endl; //2
+        cout<<p1.c<<endl; //3
+    }
 
-	//b.堆区指针对象进行delete
-	Person* p2=new Person; //2.实例化(堆区指针对象)
-	cout<<p2->a<<endl;
-	delete p2;
+    //b.堆区指针对象进行delete
+    auto p2=new Person; //2.实例化(堆区指针对象)
+    cout<<p2->a<<endl; //1
+    cout<<p2->b<<endl; //2
+    cout<<p2->c<<endl; //3
+    delete p2;
 
-	//c.临时对象(只作用于一条语句，当它赋值给一个对象，则控制权移交)
-	cout<<Person(10).a<<endl;
-	return 0;
+    //c.临时对象(只作用于一条语句，当它赋值给一个对象，则控制权移交)
+    cout<<Person(10).a<<endl; //10
+    return 0;
 }
 
 
@@ -122,46 +127,54 @@ int main(){
  *    e.explicit关键字禁止单参数构造函数隐式转换
  *
  * 7.友元函数(类)
- *    a.使用关键字friend
- *    b.友元函数不是类的成员函数
+ *    a.使用关键字friend，其声明可以放在类的私有部分，也可放在共有部分
+ *    b.友元函数不是类的成员函数，友元函数的定义在类体外实现，不需要加类限定
  *    c.友元函数可以访问类中的所有成员，但是没有this
  * */
 
 class Person{
+private:
+    int a;
 public:
-	int a;
-	Person(); //默认构造函数
-	Person(const Person &p); //拷贝构造函数
-	friend int getAge(Person &p); //友元函数
+    Person(); //默认构造函数
+    Person(const Person &p); //拷贝构造函数
+    friend int getAge(Person &p); //友元函数
+    friend class Student; //友元类
 };
-Person::Person(){
+
+Person::Person():a(1){
 
 }
 Person::Person(const Person &p){
-	this->a=p.a;
+    this->a=p.a;
 }
 int getAge(Person &p){
-	cout<<p.a<<endl;
+    return p.a;
 }
+
+class Student{
+public:
+    int getAge(Person &p){
+        return p.a;
+    }
+};
 
 int main(){
-	Person p1; //普通对象
-	p1.a=13;
-	getAge(p1); //调用友元函数
-	Person p2=p1; //构造拷贝
-	p2=p1; //赋值拷贝
-	return 0;
+    Person p1; //普通对象
+    Student s; //友元类
+    cout<<getAge(p1)<<endl; //调用友元函数
+    Person p2(p1); //构造拷贝对象
+    cout<<s.getAge(p2)<<endl;//调用友元函数
+    return 0;
 }
 
-class Student
-{
+class Student{
 public:
-    Student(int size)
-    {
+    Student(int size) {
         cout<<"size:"<<size<<endl;
     }
-    explicit Student(char a)
-    {
+
+    explicit Student(char a) {
     	cout<<"char:"<<a<<endl;
     }
 };
@@ -197,6 +210,7 @@ public:
 	void show(int a,int b);
 	~Person();
 };
+
 Person::Person(){
 	cout<<"Person"<<endl;
 }
@@ -217,15 +231,15 @@ public:
 	void show(int a);
 	~Student();
 };
+
 Student::Student(){
 	cout<<"Student"<<endl;
 }
 Student::Student(int a):Person(a){
 	cout<<"Student1"<<endl;
 }
-int Student::show(int a){
+void Student::show(int a){
 	cout<<"Student("<<a<<")"<<endl;
-	return 0;
 }
 Student::~Student(){
 	cout<<"Student destroy"<<endl;
@@ -265,6 +279,7 @@ public:
 	vitrual void show(int a);
 	vitrual ~Person();
 };
+
 void Person::show(int a){
 	cout<<"Person("<<a<<")"<<endl;
 }
@@ -277,6 +292,7 @@ public:
 	void show(int a);
 	~Student();
 };
+
 void Student::show(int a){
 	cout<<"Student("<<a<<")"<<endl;
 }
@@ -306,6 +322,7 @@ public:
 	virtual void fun()=0; //纯虚函数
 	virtual ~Person()=0;//纯虚函数
 };
+
 Person::~Person(){
 	cout<<"Person is destroy"<<endl;
 }
@@ -315,6 +332,7 @@ public:
 	void fun();
 	~Student();
 };
+
 void Student::fun(){
 	cout<<"I am Student"<<endl;
 }
@@ -340,6 +358,7 @@ public:
     Base();
     Base(int value);
 };
+
 Base::Base(){
     cout<<"Base1"<<endl;
 }
