@@ -3,8 +3,8 @@
 /*
  * 输入/输出(stdio.h)
  *
- * 1.scanf/printf有格式输入/输出函数
- *   fscanf/fprintf
+ * 1.scanf/printf(标准流)有格式输入/输出函数
+ *   fscanf/fprintf(指定流)有格式输入/输出函数
  *		%d  --->  int short
  *		%ld	--->  long
  *		%f  --->  float
@@ -18,11 +18,10 @@
  *	   %md  --->  用零来填充
  *	   %%   --->  输出%
  *
- * 2.getchar/putchar无格式输入/输出字符函数
- *	 fgetc/fputc
+ * 2.getchar/putchar(标准流)无格式输入/输出字符函数
+ *	 fgetc/fputc(指定流)无格式输入/输出字符函数
  *
- * 3.fgets/fputs无格式输入/输出字符串函数
- *   
+ * 3.fgets/fputs(指定流)无格式输入/输出字符串函数
  * */
 
 //遇到空格和换行时结束

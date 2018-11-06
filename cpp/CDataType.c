@@ -80,10 +80,29 @@ int main(){
 
 
 /*
- * 6.C++11右值引用(左值是可以出现=左侧者；右值是只能出现=右侧者，通常为表达式)
+ * 6.C++11右值引用(给定义的表达式，常量值等[只能出现表达式的右边]取一个别名)
+ *    a.基本变量引用(定义时必须初始化):
+ *			int&& a=12;
+ *	  b.数组变量引用(定义时必须初始化):
+ *			int (&&a)[2]={};
+ *			int (&&b)[2][3]={};
+ *	  c.结构体引用(定义时必须初始化):
+ *			Node &&a={};
+ *	  d.指针引用(定义时必须初始化):
+ *			int* &&b=new int;
+ *	  e.做函数参数
+ *			void fun(int &&b){}
+ *	  f.做函数返回值
+ *			int&& fun(int &&b){
+ *				return forward<int>(b);
+ *			}
  *
- *	
- *.当左值引用的参数传递过程中，执行拷贝内存与释放内存，而右值引用的参数传递则直接移动内存
+ *  移动语义(move):将左值(右值)引用转化成右值引用
+ *
+ *  完美转发(forward):保持某值的特性，常用于模板中
+ *
+ *  注意:右值的出现是避免某些情况下的临时对象产生和拷贝，如string a="123"，首先构造临时对象"123"，
+ *  在进行复制操作复制给a，之后销毁临时对象"123"，而string&& a="123"则直接将临时对象"123"赋值给a
  **/
 
 //a.移动语义:将左值转换成右值
@@ -167,16 +186,17 @@ int main(){
 }
 
 int main(){
-	//1.将Son指针转换成Father指针
-	Son* a = new Son;
-	Father* b = dynamic_cast<Father*>(a);
-	//2.d将会等于NULL
-	Father* c = new Father;
-	Son* d = dynamic_cast<Son*>(c);
-	//3.将Father指针转换成Son指针
-	Father* e = new Son;
-	Son* f = dynamic_cast<Son*>(a);
-	return 0;
+    //1.将Son指针转换成Father指针
+    auto s1 = new Son;
+    auto f1 = dynamic_cast<Father*>(s1);
+    //2.将Father指针转换成Son指针，返回null
+    auto f2 = new Father;
+    auto s2 = dynamic_cast<Son*>(f2);
+    //3.将Father引用转换成Son引用，报错std::bad_cast
+    Father f;
+    Father& f3=f;
+    auto s3=dynamic_cast<Son&>(f3);
+    return 0;
 }
 
 int main(){

@@ -32,7 +32,7 @@
  * 后期一般要强制转换的
  *    空指针:指向的值为NULL,是一个无指向的指针
  *
- * 	6.动态分配内存空间(stdlib.h)
+ * 	 6.动态分配内存空间(stdlib.h)
  *		char* p=(char*)malloc(20);  //申请空间
  *		if(p==NULL){		//判断是否成功
  *			printf("ERROR");
