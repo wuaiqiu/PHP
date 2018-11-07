@@ -20,8 +20,23 @@
  *	 a.共用体任何时候只有一个成员存在
  *	 b.共用体长度为最长成员的长度
  *
+ * 3.枚举
+ *  enum 枚举名{
+ *      枚举量,
+ *      枚举量=2,
+ *      ...
+ *  }
  *
- * 3.typedef类型别名
+ *  enum Week w1=Monday;
+ *  enum Week w2=static_cast<enum Week>(2);
+ *  a.枚举量默认下标分别为0-6，可以自定义指定，可以存在相同下标
+ *  b.只能将定义的枚举量赋值给该种枚举变量
+ *  c.枚举量可以赋给非枚举变量，如int a=Monday(即为int a=0)
+ *  d.枚举变量只能进行赋值运算，不能进行算术运算
+ *  e.C++11枚举类型:同一作用域下两个不同的枚举类型，不能含有相同的枚举量
+ * 
+ * 
+ * 4.typedef类型别名
  *		typedef 类型名 类型新名
  *
  * define和别名typedef的区别
@@ -55,9 +70,8 @@ int main(){
  *   1).默认的访问权限struct是public的，class是private的
  *   2).struct更适合看成是一个数据结构的实现体，class更适合看成是一个对象的实现体
  * 6.结构体与类的联系:
- *   1).struct能继承
- *   2).struct能实现多态
- *   3).struct可以继承class，同样class也可以继承struct
+ *   1).struct能继承,多态
+ *   2).struct可以继承class，同样class也可以继承struct
  * */
 
 struct Student {

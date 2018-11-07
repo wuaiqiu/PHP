@@ -18,11 +18,11 @@
 
 实例1：
 
-```
+```cpp
 struct A{
-char a;
-int b;
-short c;
+    char a;
+    int b;
+    short c;
 };
 ```
 
@@ -38,12 +38,12 @@ short c;
 
 实例2:
 
-```
+```cpp
 #pragma pack (2)
 struct B{
-char a;
-int b;
-short c;
+    char a;
+    int b;
+    short c;
 };
 #pragma pack ()
 ```
