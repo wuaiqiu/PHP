@@ -14,20 +14,14 @@
  *	pid_t wait(int* status):等待子进程中断或结束,status为子进程状态
  *	pid_t waitpid(pid_t pid,int* status,int options):等待指定的子进程中断或结束
  *	WIFEXITED(status):如果子进程正常结束，它就返回真；否则返回假。
- *	WEXITSTATUS(status):如果WIFEXITED(status)为真，则可以用该宏取得子进程
- * exit()返回的结束代码。
+ *	WEXITSTATUS(status):如果WIFEXITED(status)为真，则可以用该宏取得子进程exit()返回的结束代码。
  *	WIFSIGNALED(status):如果子进程因为一个捕获的信号而终止，它就返回真；否则返回假。
- *	WTERMSIG(status):如果WIFSIGNALED(status)为真，则可以用该宏获得导致子进程终止的信号
- * 代码。
+ *	WTERMSIG(status):如果WIFSIGNALED(status)为真，则可以用该宏获得导致子进程终止的信号代码。
  *	WIFSTOPPED(status):如果当前子进程被暂停了，则返回真；否则返回假。
- *	WSTOPSIG(status):如果WIFSTOPPED(status)为真，则可以使用该宏获得导致子进程暂停的信号
- * 代码。
+ *	WSTOPSIG(status):如果WIFSTOPPED(status)为真，则可以使用该宏获得导致子进程暂停的信号代码。
  * 	void exit(int status):正常程序退出
  * */
 
-/*
- * fork
- * */
 void fun1(){
 	char* message;
 	int status;
