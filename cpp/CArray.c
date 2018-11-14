@@ -25,4 +25,8 @@
  *		a[0][0]的首地址 	a,&a[0][0],p
  *		a[i][j]的首地址		*(a+i)+j,&a[i][j],a[i]+j,*(p+i)+j
  *
+ *  3.作为函数参数相当于数组指针
+ *      void fun(int a[])
+ *      void fun(int a[10])
+ *      void fun(int* a)
  * */

@@ -1,9 +1,9 @@
 /*
  * 字符串
  *
- * 1.表示方式(C++11需要加const)
- *		const char str[]="Hello"; //字符数组它存放了一个字符串，末尾以'\0'结束，可以改变内容
- *		const char* str="Hello";  //字符指针指向的是一个字符串常量，末尾以'\0'结束，不可以改变内容
+ * 1.表示方式
+ *		char str[]="Hello"; //字符指针指向的栈区，末尾以'\0'结束，可以改变内容
+ *		char* str="Hello";  //字符指针指向的只读全局区，末尾以'\0'结束，不可以改变内容(c++11建议使用const char*)
  *
  * 2.操作函数(string.h)
  *		int memcmp(void *s1,void *s2,size_t n):比较
@@ -16,7 +16,7 @@
  *		void *memset(void *s ,int c, size_t n):设置
  *		char *strcat(char *dest, const char *src):追加
  *		char *strncat(char *dest, const char *src, size_t n):追加
- *		size_t strlen(const char *str):计算长度
+ *		size_t strlen(const char *str):计算长度，遇见'\0'才结束
  *
  * 3.str与mem区别:
  *	  a.复制的内容不同:strcpy只能复制字符串，而memcpy可以复制任意内容
