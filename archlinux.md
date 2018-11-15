@@ -174,7 +174,7 @@ sudo pacman -S wps-office  ttf-wps-fonts
 sudo pacman -S netease-cloud-music
 sudo pacman -S shadowsocks-qt5
 sudo pacman -S steam steam-native-runtime primusrun %command%
-sudo pacman -S clion clion-cmake clion-gdb clion-jre
+sudo pacman -S clion clion-cmake clion-gdb clion-jre valgrind
 sudo pacman -S fcitx-sogoupinyin fcitx-im  fcitx-configtool
 vim /etc/environment
 GTK_IM_MODULE=fcitx

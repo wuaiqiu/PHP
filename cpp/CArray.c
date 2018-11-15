@@ -20,13 +20,23 @@
  *
  *
  *  2.指针与数组
- * 		a[0]的首地址  		a,&a[0],p
- * 		a[i]的首地址		a+i,&a[i],p+i
- *		a[0][0]的首地址 	a,&a[0][0],p
- *		a[i][j]的首地址		*(a+i)+j,&a[i][j],a[i]+j,*(p+i)+j
+ *    一维数组(&a == a == &a[0]):
+ *      a数组的地址             &a
+ * 		a[0]元素的地址          a,&a[0]
+ * 		a[i]元素的地址          a+i,&a[i]
+ *	  二维数组(&a == a == a[0] == &a[0][0]):
+ *      a数组的地址             &a
+ *      a数组第0行子数组的地址	a,a[0]
+ *      a数组第i行子数组的地址  a+i,a[i]
+ *      a[0][0]元素的地址 	    &a[0][0]
+ *		a[i][j]元素的地址		*(a+i)+j,&a[i][j],a[i]+j
  *
  *  3.作为函数参数相当于数组指针
- *      void fun(int a[])
- *      void fun(int a[10])
- *      void fun(int* a)
+ *      void fun(int a[]) sizeof(a)=4
+ *      void fun(int a[10]) sizeof(a)=4
+ *      void fun(int* a) sizeof(a)=4
+ *
+ *  4.typedef定义数组数据类型
+ *      typedef int A[8];
+ *      A a={1,2,3,4}; 
  * */
