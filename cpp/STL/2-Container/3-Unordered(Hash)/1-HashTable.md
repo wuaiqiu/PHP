@@ -6,7 +6,7 @@
 
 >1.hashtable结构
 
-```
+```cpp
 //hashtable中链表的节点结构,类似于单链表的节点结构
 template <class _Val>
 struct _Hashtable_node {
@@ -124,7 +124,7 @@ private:
 
 >2.hashtable成员函数
 
-```
+```cpp
 //返回hashtable元素的个数
 size_type size() const { return _M_num_elements; }
 

@@ -35,7 +35,7 @@ c1.count(1)|返回给定元素的个数
 
 >1.unordered_set结构
 
-```
+```cpp
 template<class _Value,
 	class _Hash = hash<_Value>,
 	class _Pred = std::equal_to<_Value>,
@@ -64,7 +64,7 @@ public:
 
 >2.unordered_set成员函数
 
-```
+```cpp
 //返回元素个数
 size_type size() const { return _M_ht.size(); }
 
@@ -86,7 +86,7 @@ size_type erase(const key_type& __key) {return _M_ht.erase(__key); }
 
 >3.unordered_multiset成员函数
 
-```
+```cpp
 //插入元素
 iterator insert(const value_type& __obj){ return _M_ht.insert_equal(__obj); }
 ```

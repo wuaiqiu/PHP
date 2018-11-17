@@ -36,7 +36,7 @@ c1.count(1)|元素key出现个数
 
 >1.unordered_map结构
 
-```
+```cpp
 template<class _Key, class _Tp,
 	   class _Hash = hash<_Key>,
 	   class _Pred = std::equal_to<_Key>,
@@ -65,7 +65,7 @@ class unordered_map{
 
 >2.ordered_map成员函数
 
-```
+```cpp
 //返回 hash_map 容器中元素的个数.
 size_type size() const { return _M_ht.size(); }
   
@@ -81,7 +81,7 @@ size_type erase(const key_type& __key) {return _M_ht.erase(__key); }
 
 >3.ordered_multimap成员函数
 
-```
+```cpp
 //插入元素
 iterator insert(const value_type& __obj) { return _M_ht.insert_equal(__obj); }
 ```

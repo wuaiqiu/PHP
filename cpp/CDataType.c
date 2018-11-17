@@ -5,7 +5,7 @@
  * [unsigned] short(2字节)  [unsigned] int(4字节)  [unsigned] long(8字节) long long(8字节)
  * float(4字节)  double(8字节)  long double(16字节)
  * char(1字节)
- * bool(1字节)
+ * bool(1字节,true(1),false(0))
  *
  *
  *2.常量

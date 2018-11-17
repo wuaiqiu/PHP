@@ -23,8 +23,11 @@ deque<int\> c = {1,2,3}|初始化
 函数|详情
 --|--
 c.push_front(0)|向头插入
+c.emplace_front(0)|构造并向头插入
 c.push_back(6)|向尾插入
+c.emplace_back(6)|构造并向尾插入
 c.insert(c.begin()+3, 10)|其他位置插入
+c.emplace(c.beign()+3,10)|构造并向其他位置插入
 c.pop_front()|头弹出
 c.pop_back()|尾弹出
 c.erase(c.begin()+3)|移除其他位置元素
@@ -34,6 +37,17 @@ c.back()|返回尾元素
 c.at(1) 或 c[1]|返回指定位置元素
 c.size()|返回元素个数
 c.empty()|判断容器是否为空
+c1.swap(c2)|c1与c2交换
+
+
+```cpp
+deque<int> arr = {1,2,3,4};
+cout<<"arr.front():"<<arr.front()<<endl; //1
+cout<<"arr.back():"<<arr.back()<<endl; //4
+cout<<"arr.at(5):"<<arr.at(2)<<endl; //3
+cout<<"arr.size():"<<arr.size()<<endl; //4
+cout<<"arr.empty():"<<arr.empty()<<endl; //0
+```
 
 <br>
 
@@ -43,25 +57,22 @@ c.empty()|判断容器是否为空
 
 ![](../../img/3.png)
 
-```
+```cpp
 template<typename _Tp, typename _Ref, typename _Ptr>
 struct _Deque_iterator{
-    typedef random_access_iterator_tag iterator_category;
-    typedef _Deque_iterator _Self;
-    typedef _Tp value_type;
-    typedef _Ptr pointer;
-    typedef _Ref reference;
-    typedef size_t size_type;
-    typedef ptrdiff_t difference_type;
-    typedef _Tp**_Map_pointer;
-    
     _Tp* _M_cur; //指向当前元素
     _Tp* _M_first; //指向当前buffer内的第一个元素
     _Tp* _M_last; //指向当前buffer的最后一个元素
     _Tp** _M_node; //指向当前buffer的指针
     
-    reference operator*() const  { return *_M_cur;}
-    pointer operator->() const {return _M_cur;}
+
+    //切换到正确的元素位置
+    void _M_set_node(_Map_pointer __new_node) {
+       _M_node = __new_node;//指向新的节点
+       _M_first = *__new_node;//指向新节点的头部
+       _M_last = _M_first + difference_type(_S_buffer_size());//指向新节点的尾部
+    }
+    
     //前缀自增++操作符重载
     _Self& operator++() {
        ++_M_cur;		//普通自增操作，移至下一个元素
@@ -77,6 +88,7 @@ struct _Deque_iterator{
        ++*this;//上一步骤已经重载过的前缀++
        return __tmp;
     }
+    
     //前缀自减--操作符重载
     _Self& operator--() {
       if (_M_cur == _M_first) {  //若是当前缓冲区的第一个元素
@@ -92,15 +104,9 @@ struct _Deque_iterator{
        --*this;		 //迭代器自减操作
        return __tmp;
     }
-    //切换到正确的元素位置
-   void _M_set_node(_Map_pointer __new_node) {
-     _M_node = __new_node;//指向新的节点
-     _M_first = *__new_node;//指向新节点的头部
-     _M_last = _M_first + difference_type(_S_buffer_size());//指向新节点的尾部
-  }
 }
 
-template<typename _Tp, typename _Alloc>
+template<typename _Tp>
 class _Deque_base{
 protected:
     _Tp** _M_map; //表示内存的指针的连续内存
@@ -109,13 +115,9 @@ protected:
     iterator _M_finish;//表示_M_map指向内存结束点的迭代器
 }
 
-//deque容器的定义,配置器默认为第二级配置器
-template <class _Tp, class _Alloc = __STL_DEFAULT_ALLOCATOR(_Tp) >
-class deque : protected _Deque_base<_Tp, _Alloc> {
-public:            
-  typedef typename _Base::iterator       iterator;
-  typedef typename _Base::const_iterator const_iterator;
-
+//deque容器的定义
+template <class _Tp>
+class deque : protected _Deque_base<_Tp> {
 protected:
   using _Base::_M_map;//指向中控器map
   using _Base::_M_map_size;//map内指针的个数
@@ -126,7 +128,7 @@ protected:
 
 >2.成员函数
 
-```
+```cpp
 //在容器尾部加数据
 void push_back(const value_type& __t) {
    //若当前缓冲区存在可用空间

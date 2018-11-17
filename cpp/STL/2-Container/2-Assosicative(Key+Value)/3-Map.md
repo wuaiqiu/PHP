@@ -36,7 +36,7 @@ c.count(1)|元素key出现个数
 
 >1.map结构
 
-```
+```cpp
 //pair定义
 template <class _T1, class _T2>
 struct pair {
@@ -82,7 +82,7 @@ public:
 
 >2.map成员函数
 
-```
+```cpp
 //判断是否为空
 bool empty() const { return _M_t.empty(); }
 
@@ -98,7 +98,7 @@ void erase(iterator __position) { _M_t.erase(__position); }
 
 >3.multimap成员函数
 
-```
+```cpp
 //插入元素节点,调用RB-Tree的insert-equal(),插入元素的键值key允许重复
 iterator insert(const value_type& __x) { return _M_t.insert_equal(__x); }
 ```

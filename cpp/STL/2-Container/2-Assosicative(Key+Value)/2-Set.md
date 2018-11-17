@@ -35,7 +35,7 @@ c.count(1)|元素出现个数
 
 >1.set结构
 
-```
+```cpp
 template <class _Key, class _Compare, class _Alloc>
 class set {
 public:
@@ -67,7 +67,7 @@ public:
 
 >2.set成员函数
 
-```
+```cpp
 //判断是否为空
 bool empty() const { return _M_t.empty(); }
 
@@ -91,7 +91,7 @@ size_type count(const key_type& __x) const {
 
 >3.multiset成员函数
 
-```
+```cpp
 //插入数据节点
 iterator insert(const value_type& __x) { 
   return _M_t.insert_equal(__x);

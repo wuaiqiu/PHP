@@ -25,7 +25,9 @@ vector<int\> v = {1,2,3}|初始化
 函数|详情
 --|--
 v.push_back(1)|向尾插入
+v.emplace_back(1)|构造并向尾插入
 v.insert(v.begin(),3)|其他位置插入
+v.emplace(v.begin(),1)|构造并向其他位置插入
 v.pop_back()|尾弹出
 v.erase(v.begin()+1)|移除其他位置元素
 v.clear()|清空
@@ -34,6 +36,26 @@ v.back()|返回尾元素
 v[1] 或 v.at(1)|返回指定位置元素
 v.size()|返回元素个数
 v.empty()|判断容器是否为空
+v.data()|返回数组指针
+v1.swap(v2)|v1与v2交换
+
+
+```cpp
+vector<int> arr = {1,2,3,4};
+cout<<"arr.front():"<<arr.front()<<endl; //1
+cout<<"arr.back():"<<arr.back()<<endl; //4
+cout<<"arr.at(5):"<<arr.at(2)<<endl; //3
+cout<<"arr.size():"<<arr.size()<<endl; //4
+cout<<"arr.empty():"<<arr.empty()<<endl; //0
+cout<<"arr.data():"<<arr.data()<<endl; //0x5621dfb38e70
+
+
+vector<Person> person;
+//临时对象构造--->复制构造
+person.insert(person.begin(),Person("Hello"));
+//直接构造
+person.emplace(person.begin(),"Hello");
+```
 
 <br>
 
@@ -43,10 +65,9 @@ v.empty()|判断容器是否为空
 
 ![](../../img/10.png)
 
-```
-//Alloc是STL的空间配置器,默认是第二级配置器
-template <class _Tp, class _Alloc = __STL_DEFAULT_ALLOCATOR(_Tp)>
-class vector : protected _Vector_base<_Tp, _Alloc> 
+```cpp
+template <class _Tp>
+class vector : protected _Vector_base<_Tp> 
 {
 protected:
   _Tp* _M_start;//表示目前使用空间的头
@@ -54,12 +75,6 @@ protected:
   _Tp* _M_end_of_storage;//表示目前可用空间的尾  
  
 public:
-  typedef _Tp value_type;
-  typedef value_type* pointer;
-  typedef const value_type* const_pointer;
-  typedef value_type* iterator;//vector容器的迭代器是普通指针
-  typedef const value_type* const_iterator;
-  
   //指向已使用空间头的迭代器
   iterator begin() { return _M_start; }
   const_iterator begin() const { return _M_start; }
@@ -71,7 +86,7 @@ public:
 
 >2.成员函数
 
-```
+```cpp
 //已使用空间大小
 size_type size() const { return size_type(end() - begin());}
 
@@ -85,10 +100,6 @@ const_reference operator[](size_type __n) const { return *(begin() + __n); }
 //访问指定元素，并且进行越界检查
 reference at(size_type __n){ _M_range_check(__n); return (*this)[__n]; }
 const_reference at(size_type __n) const{ _M_range_check(__n); return (*this)[__n]; }
-void _M_range_check(size_type __n) const {
-    if (__n >= this->size())
-      __stl_throw_range_error("vector");
-}
 
 //返回第一个元素
 reference front() { return *begin(); }

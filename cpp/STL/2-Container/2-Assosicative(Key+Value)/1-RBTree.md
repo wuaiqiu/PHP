@@ -1,20 +1,9 @@
 # RB-Tree
 
-```
-1.RB-Tree实现机制有一定的技巧,定义了一个指向根节点的节点指针header,header的左子节
-点指向RB-Tree的最小节点,header的右子节点指向RB-Tree的最大节点.
-
-2.RB-Tree是一棵二叉查找树,并且具备有以下性质:
-	(1)每个节点或是红色的,或是黑色的.
-	(2)根节点是黑色的.
-	(3)每个叶节点(NULL)是黑色的.
-	(4)如果一个节点是红色的,则它的两个孩子节点都是黑色的.
-	(5)对每个节点,从该节点到其所有后代叶节点的简单路径上.均包含相同数目的黑色节点.
-```
 
 >1.RB-Tree结构
 
-```
+```cpp
 typedef bool _Rb_tree_Color_type;//节点颜色类型，非红即黑
 const _Rb_tree_Color_type _S_rb_tree_red = false;//红色为0
 const _Rb_tree_Color_type _S_rb_tree_black = true;//黑色为1
@@ -31,7 +20,6 @@ struct _Rb_tree_node_base
   _Base_ptr _M_right;//指向右孩子节点
 };
 
-
 //RB-Tree节点结构
 template <class _Value>
 struct _Rb_tree_node : public _Rb_tree_node_base
@@ -39,7 +27,6 @@ struct _Rb_tree_node : public _Rb_tree_node_base
   typedef _Rb_tree_node<_Value>* _Link_type;//节点指针
   _Value _M_value_field;//节点数据域
 };
-
 
 //RB-Tree的迭代器iterator基本结构
 struct _Rb_tree_base_iterator
@@ -49,7 +36,6 @@ struct _Rb_tree_base_iterator
   typedef ptrdiff_t difference_type;
   _Base_ptr _M_node;//节点指针
 };
-
 
 //RB-Tree的迭代器iterator结构
 template <class _Value, class _Ref, class _Ptr>
@@ -64,7 +50,6 @@ struct _Rb_tree_iterator : public _Rb_tree_base_iterator
   typedef _Rb_tree_iterator<_Value, _Ref, _Ptr>      _Self;
   typedef _Rb_tree_node<_Value>* _Link_type;//节点指针
 };
-
 
 //RB-Tree基本结构
 template <class _Tp, class _Alloc>
@@ -108,7 +93,7 @@ public:
 
 >2.成员函数
 
-```
+```cpp
 //RB-Tree是否为空
 bool empty() const { return _M_node_count == 0; }
 

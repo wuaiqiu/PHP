@@ -6,7 +6,7 @@
 2.运用的就是包含，包装Deque<br>
 3.先进后出
 
-```
+```cpp
 template<typename _Tp, typename _Sequence = deque<_Tp> >
 class stack{
   protected:
@@ -38,7 +38,7 @@ class stack{
 2.运用的就是包含，包装Deque<br>
 3.先进先出
 
-```
+```cpp
 template<typename _Tp, typename _Sequence = deque<_Tp> >
 class queue{
   protected:
