@@ -4,11 +4,34 @@
 2.声明一个类,重载它的operator()<br>
 3.只有继承自binary_function(两个参数)或者unary_function(一个参数),声明的仿函数才可以融入STL<br>
 
-### 一.仿函数类别
+### 一.源码分析
+
+>这两个父类可能在某些算法中的仿函数适配器会用到，所以需要继承这两个类
+
+```cpp
+template<typename _Arg1, typename _Arg2, typename _Result>
+struct binary_function
+{
+    typedef _Arg1     first_argument_type;
+    typedef _Arg2     second_argument_type;
+    typedef _Result     result_type;
+};
+
+template<typename _Arg, typename _Result>
+struct unary_function
+{
+     typedef _Arg     argument_type;
+     typedef _Result     result_type;  
+};
+```
+
+<br>
+
+### 二.仿函数类别
 
 >1.算数类
 
-```
+```cpp
 //加法操作
 template <class _Tp>
 struct plus : public binary_function<_Tp,_Tp,_Tp> {
@@ -43,7 +66,7 @@ struct modulus : public binary_function<_Tp,_Tp,_Tp>
 
 >2.逻辑运算类
 
-```
+```cpp
 //与
 template <class _Tp>
 struct logical_and : public binary_function<_Tp,_Tp,bool>
@@ -68,7 +91,7 @@ struct logical_not : public unary_function<_Tp,bool>
 
 >3.相对关系类
 
-```
+```cpp
 //等于
 template <class _Tp>
 struct equal_to : public binary_function<_Tp,_Tp,bool>
@@ -114,7 +137,7 @@ struct less_equal : public binary_function<_Tp,_Tp,bool>
 
 >4.其他
 
-```
+```cpp
 //证同函数
 template <class _Tp>
 struct _Identity : public unary_function<_Tp,_Tp> {
@@ -152,27 +175,4 @@ struct _Project2nd : public binary_function<_Arg1, _Arg2, _Arg2> {
   _Arg2 operator()(const _Arg1&, const _Arg2& __y) const { return __y; }
 };
 template <class _Arg1, class _Arg2> struct project2nd : public _Project2nd<_Arg1, _Arg2> {};
-```
-
-<br>
-
-### 二.源码分析
-
->这两个父类可能在某些算法中的仿函数适配器会用到，所以需要继承这两个类
-
-```
-template<typename _Arg1, typename _Arg2, typename _Result>
-struct binary_function
-{
-    typedef _Arg1     first_argument_type;
-    typedef _Arg2     second_argument_type;
-    typedef _Result     result_type;
-};
-
-template<typename _Arg, typename _Result>
-struct unary_function
-{
-     typedef _Arg     argument_type;
-     typedef _Result     result_type;  
-};
 ```

@@ -27,3 +27,20 @@
  * 4.内存重叠:拷贝的目的地址在源地址范围内。所谓内存重叠就是拷贝的目的地址和源地址有重叠。
  *
  * */
+
+/*
+*  5.C++中的string
+*    str.insert(str.begin(),'a'):插入字符
+*    str.push_back('a'):向后插入字符
+*    str.erase(str.begin(),str.begin()+1):删除字符串
+*    str.clear():清空字符串
+*    str.replace(str.begin(),str.end(),'d','e'):替换字符
+*    str[1]，str.at(1):获取指定位置的字符
+*    str.front()，str.back():返回str首字符，尾字符
+*    str.size()，str.length():返回字符数量
+*    str.empty():判断字符串是否为空
+*    str+="Hello"，str.append("Hello"):追加字符串
+*    str.substr(from,count):返回从from开始后count个数的子字符串
+*    str.c_str()，str.data():将内容以const char*形式返回
+*    str.copy(arr,count,pos):将str以pos开始后count个数复制到arr字符数组中
+* */

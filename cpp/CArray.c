@@ -7,8 +7,6 @@
  *		int arr2[2][3];
  *		arr2[1][1]=1;
  *
- *		arr={0};//错误,不可以先声明在统一赋值
- *
  *		int arr[5]={1,2,3,4,5}; //声明并赋值
  *		int arr2[2][3]={{1,2,3},{4,5,6}};
  *
@@ -31,12 +29,38 @@
  *      a[0][0]元素的地址 	    &a[0][0]
  *		a[i][j]元素的地址		*(a+i)+j,&a[i][j],a[i]+j
  *
- *  3.作为函数参数相当于数组指针
- *      void fun(int a[]) sizeof(a)=4
- *      void fun(int a[10]) sizeof(a)=4
- *      void fun(int* a) sizeof(a)=4
+ *  3.函数参数==>数组指针
+ *     void fun1(int arr[]){
+ *         cout<<sizeof(arr)<<endl;
+ *         cout<<arr[1]<<endl;
+ *         cout<<*(arr+1)<<endl;
+ *     }
+ *
+ *     void fun2(int* arr){
+ *         cout<<sizeof(arr)<<endl;
+ *         cout<<arr[1]<<endl;
+ *         cout<<*(arr+1)<<endl;
+ *     }
+ *     
+ *     void fun3(int arr[][2]){
+ *         cout<<sizeof(arr)<<endl;
+ *         cout<<arr[1][1]<<endl;
+ *         cout<<*(*(arr+1)+1)<<endl;
+ *     }
+ *
+ *     void fun2(int (*arr)[2]){
+ *          cout<<sizeof(arr)<<endl;
+ *          cout<<arr[1][1]<<endl;
+ *          cout<<*(*(arr+1)+1)<<endl;
+ *     }  
  *
  *  4.typedef定义数组数据类型
- *      typedef int A[8];
- *      A a={1,2,3,4}; 
+ *      typedef int A[4]; //一维数组
+ *      typedef int (*B)[4]; //二维数组
+ *      A a={1,2,3,4};
+ *      B b=&a;
+ *      int (*c)[4]=&a;
+ *      cout<<*(a+1)<<endl; //2
+ *      cout<<*(*b+1)<<endl; //2
+ *      cout<<*(*c+1)<<endl; //2
  * */

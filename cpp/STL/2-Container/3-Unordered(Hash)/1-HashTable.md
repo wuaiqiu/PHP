@@ -14,57 +14,7 @@ struct _Hashtable_node {
   _Val _M_val;//节点元素值
 };
 
-
-//hashtable迭代器定义
-template <class _Val, class _Key, class _HashFcn,
-          class _ExtractKey, class _EqualKey, class _Alloc>
-struct _Hashtable_iterator {
-  //内嵌类型别名
-  typedef hashtable<_Val,_Key,_HashFcn,_ExtractKey,
-          _EqualKey,_Alloc>  _Hashtable;
-  typedef _Hashtable_iterator<_Val, _Key, _HashFcn, 
-          _ExtractKey, _EqualKey, _Alloc>  iterator;
-  typedef _Hashtable_const_iterator<_Val, _Key, _HashFcn, 
-          _ExtractKey, _EqualKey, _Alloc>  const_iterator;
-  typedef _Hashtable_node<_Val> _Node;
-  
-  typedef forward_iterator_tag iterator_category;//采用正向迭代器
-  typedef _Val value_type;
-  typedef ptrdiff_t difference_type;
-  typedef size_t size_type;
-  typedef _Val& reference;
-  typedef _Val* pointer;
-
-  _Node* _M_cur;//当前迭代器所指位置
-  _Hashtable* _M_ht;//hashtable的位置
-};
-
-
-//const iterator的定义,基本和上面相同
-template <class _Val, class _Key, class _HashFcn,
-          class _ExtractKey, class _EqualKey, class _Alloc>
-struct _Hashtable_const_iterator {
-  typedef hashtable<_Val,_Key,_HashFcn,_ExtractKey,
-          _EqualKey,_Alloc>  _Hashtable;
-  typedef _Hashtable_iterator<_Val,_Key,_HashFcn, 
-          _ExtractKey,_EqualKey,_Alloc>  iterator;
-  typedef _Hashtable_const_iterator<_Val, _Key, _HashFcn, 
-          _ExtractKey, _EqualKey, _Alloc>  const_iterator;
-  typedef _Hashtable_node<_Val> _Node;
-
-  typedef forward_iterator_tag iterator_category;
-  typedef _Val value_type;
-  typedef ptrdiff_t difference_type;
-  typedef size_t size_type;
-  typedef const _Val& reference;
-  typedef const _Val* pointer;
-
-  const _Node* _M_cur;
-  const _Hashtable* _M_ht;
-};
-
-
-//定义28个素数用作hashtable的大小 
+//定义28个素数用作hashtable的buckets大小 
 enum { __stl_num_primes = 28 };
 //28个素数集合
 static const unsigned long __stl_prime_list[__stl_num_primes] =
@@ -93,7 +43,7 @@ inline unsigned long __stl_next_prime(unsigned long __n)
  *Key:节点的键值类型 
  *HashFcn:hash function的类型 
  *ExtractKey:从节点中取出键值的方法(函数或仿函数) 
- *EqualKey:判断键值是否相同的方法(函数或仿函数) 
+ *EqualKey:判断键值是否相同的方法(函数或仿函数，比较为<：true，>=：false) 
  *Alloc:空间配置器
  **/ 
 template <class _Val, class _Key, class _HashFcn,
@@ -105,20 +55,13 @@ public:
   typedef _HashFcn hasher;
   typedef _EqualKey key_equal;
 
-  typedef size_t            size_type;
-  typedef ptrdiff_t         difference_type;
-  typedef value_type*       pointer;
-  typedef const value_type* const_pointer;
-  typedef value_type&       reference;
-  typedef const value_type& const_reference;
-
 //以下是hash table的成员变量
 private:
   hasher                _M_hash;
   key_equal             _M_equals;
   _ExtractKey           _M_get_key;
   vector<_Node*,_Alloc> _M_buckets;//用vector维护buckets
-  size_type             _M_num_elements;//hashtable中list节点个数
+  size_type             _M_num_elements;//hashtable中节点个数
 };
 ```
 

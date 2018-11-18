@@ -3,7 +3,7 @@
 1.无序集合，底层HashTable<br>
 2.有查找和删除，添加的优点<br>
 3.unordered_map每个元素key只能出现一次,unordered_multimap每个元素key可以出现多次<br>
-4.空白格是map中的key与value的数据包
+4.无法使用迭代器改变unordered_set/multiset改变key值
 
 ![](../../img/17.png)
 
@@ -23,12 +23,22 @@ unordered_map<int,int\> c2 = {{1,2},{3,4}}|初始化
 函数|详情
 --|--
 c1.insert({6,15})|插入
-c1.erase(6)|删除
+c1.erase(6)|删除key
 c1.clear()|清空
 c1.size()|获取元素个数
 c1.empty()|判断容器是否为空
-c1[6] 或 c1.at(6)|返回指定位置元素
+c1[6] 或 c1.at(6)|返回指定key元素
 c1.count(1)|元素key出现个数
+c1.swap(c2)|c1与c2交换
+c1.find(2)|返回key为2的迭代器
+
+
+```cpp
+unordered_map<int,char> map = {{1,'a'},{2,'b'},{3,'c'}};
+cout<<"map.count(1):"<<map.count(1)<<endl; //1
+cout<<"map.empty():"<<map.empty()<<endl; //0
+cout<<"map.find(2):"<<map.find(2)->second<<endl; //b
+```
 
 <br>
 
@@ -47,13 +57,7 @@ class unordered_map{
       _Hashtable _M_ht;
 
     public:
-      typedef typename _Hashtable::key_type	key_type;
-      typedef typename _Hashtable::value_type	value_type;
-      typedef typename _Hashtable::hasher	hasher;
-      typedef typename _Hashtable::key_equal	key_equal;
-      typedef typename _Hashtable::size_type		size_type;
-      typedef typename _Hashtable::difference_type	difference_type;
-      //指针/引用/迭代器保持原样
+      //指针/引用迭代器保持原样
       typedef typename _Hashtable::pointer		pointer;
       typedef typename _Hashtable::const_pointer	const_pointer;
       typedef typename _Hashtable::reference		reference;

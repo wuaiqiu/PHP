@@ -3,7 +3,7 @@
 1.无序集合，底层HashTable<br>
 2.有查找和删除，添加的优点<br>
 3.unordered_set每个元素只能出现一次,unordered_multiset每个元素可以出现多次<br>
-4.空白格是set中的key与value的数据包
+4.无法使用迭代器改变unordered_set/multiset改变元素值
 
 ![](../../img/17.png)
 
@@ -23,11 +23,22 @@ unordered_set<int\> c2 = {{1,2},{3,4}}|初始化
 函数|详情
 --|--
 c1.insert(1)|插入
+c1.emplace(10)|构造并插入
 c1.erase(1)|删除
 c1.clear()|清空
 c1.size()|获取元素个数
 c1.empty()|判断容器是否为空
 c1.count(1)|返回给定元素的个数
+c1.swap(c2)|c1与c2交换
+c1.find(2)|返回元素为2的迭代器
+
+
+```cpp
+unordered_set<int> set = {2,1,3,4};
+cout<<"set.count(1):"<<set.count(1)<<endl; //1
+cout<<"set.empty():"<<set.empty()<<endl; //0
+cout<<"set.find(2):"<<*(set.find(2))<<endl; //2
+```
 
 <br>
 
@@ -46,13 +57,7 @@ class unordered_set{
   _Hashtable _M_ht;
 
 public:
-  typedef typename _Hashtable::key_type	key_type;
-  typedef typename _Hashtable::value_type	value_type;
-  typedef typename _Hashtable::hasher	hasher;
-  typedef typename _Hashtable::key_equal	key_equal;
-  typedef typename _Hashtable::size_type		size_type;
-  typedef typename _Hashtable::difference_type	difference_type;
-  //指针/引用/迭代器全为只读
+  //指针/引用迭代器全为只读
   typedef typename _Hashtable::const_pointer		pointer;
   typedef typename _Hashtable::const_pointer	const_pointer;
   typedef typename _Hashtable::const_reference		reference;

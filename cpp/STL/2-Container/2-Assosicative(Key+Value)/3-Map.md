@@ -18,17 +18,42 @@ map<int, int\> c = {{1,2},{3,4}}|初始化
 
 <br>
 
+函数|详情
+--|--
+pair<int, char\> p|默认构造
+pair<int, char\> p1(p)|拷贝构造
+pair<int, char\> p1 = p|赋值构造
+pair<int, char\> p = {1,'a'}|初始化
+pair<int, char\> p =make_pair(1,'a')|移动语义赋值
+
+<br>
+
 ### 二.操作
 
 函数|详情
 --|--
 c.insert({6, 15})|插入
-c.erase(6)|删除
+c.emplace(6,15)|构造并插入
+c.erase(6)|删除key
 c.clear()|清空
 c.size()|返回元素个数
 c.empty()|判断容器是否为空
-c[6] 或 c.at(6)|返回指定位置元素
+c[6] 或 c.at(6)|返回指定key的元素
 c.count(1)|元素key出现个数
+c1.swap(c2)|c1与c2交换
+c.find(2)|返回key为2的迭代器
+c.lower_bound(2)|返回大于或等于2的第一个key的迭代器
+c.upper_bound(2)|返回大于2的第一个key素的迭代器
+
+
+```cpp
+map<int,char> map = {{1,'a'},{2,'b'},{3,'c'}};
+cout<<"map.count(1):"<<map.count(1)<<endl; //1
+cout<<"map.empty():"<<map.empty()<<endl; //0
+cout<<"map.find(2):"<<map.find(2)->second<<endl; //b
+cout<<"map.lower_bound(2):"<<map.lower_bound(2)->second<<endl; //b
+cout<<"map.upper_bound(2):"<<map.upper_bound(2)->second<<endl; //c
+```
 
 <br>
 
@@ -65,7 +90,7 @@ private:
   typedef _Rb_tree<key_type, value_type, _Select1st<value_type>, key_compare, _Alloc> _Rep_type;
   _Rep_type _M_t;
 public:
-  //指针/引用/迭代器保持原样
+  //指针/引用迭代器保持原样
   typedef typename _Rep_type::pointer pointer;
   typedef typename _Rep_type::const_pointer const_pointer;
   typedef typename _Rep_type::reference reference;

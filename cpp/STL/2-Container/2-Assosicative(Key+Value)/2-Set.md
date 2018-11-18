@@ -23,11 +23,26 @@ set<int\> c1 = {1,2,3,7,6,4,5}|初始化
 函数|详情
 --|--
 c.insert(10)|插入
+c.emplace(10)|构造并插入
 c.erase(10)|删除
 c.clear()|清空
 c.size()|返回元素个数
 c.empty()|判断容器是否为空
 c.count(1)|元素出现个数
+c1.swap(c2)|c1与c2交换
+c.find(2)|返回元素为2的迭代器
+c.lower_bound(2)|返回大于或等于2的第一个元素的迭代器
+c.upper_bound(2)|返回大于2的第一个元素的迭代器
+
+
+```cpp
+set<int> set = {2,1,3,4};
+cout<<"set.count(1):"<<set.count(1)<<endl; //1
+cout<<"set.empty():"<<set.empty()<<endl; //0
+cout<<"set.find(2):"<<*(set.find(2))<<endl; //2
+cout<<"set.lower_bound(2):"<<*(set.lower_bound(2))<<endl; //2
+cout<<"set.upper_bound(2):"<<*(set.upper_bound(2))<<endl; //3
+```
 
 <br>
 
@@ -50,7 +65,7 @@ private:
   typedef _Rb_tree<key_type, value_type, _Identity<value_type>, key_compare, _Alloc> _Rep_type;
   _Rep_type _M_t;
 public:
-  //指针/引用/迭代器全为只读
+  //指针/引用迭代器全为只读
   typedef typename _Rep_type::const_pointer pointer;
   typedef typename _Rep_type::const_pointer const_pointer;
   typedef typename _Rep_type::const_reference reference;
