@@ -175,6 +175,11 @@ sudo pacman -S netease-cloud-music
 sudo pacman -S shadowsocks-qt5
 sudo pacman -S steam steam-native-runtime primusrun %command%
 sudo pacman -S clion clion-cmake clion-gdb clion-jre valgrind
+sudo pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-ext-oracle
+sudo gpasswd -a minshengwu vboxusers
+sudo pacman -S nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
 sudo pacman -S fcitx-sogoupinyin fcitx-im  fcitx-configtool
 vim /etc/environment
 GTK_IM_MODULE=fcitx
