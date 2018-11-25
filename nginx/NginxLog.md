@@ -10,43 +10,31 @@ log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
 access_log  logs/access.log main;
 ```
 
-### error_log(错误日志)
+### error_log(错误日志,ngx_http_core_module)
 
 ```
 语法: error_log file [level]
 默认: error_log logs/error.log error
-上下文:	main, http, server, location
+上下文: main, http, server, location
 ```
 
 1).常见的错误日志级别有:debug , info , notice , warn , error , crit , alert , emerg
 
-### log_format(访问日志格式)
+### log_format(访问日志格式,ngx_http_log_module)
 
 ```
 语法: log_format name string ...
 默认: log_format mian "..."
-上下文:	http
+上下文: http
 ```
 
-变量名|描述
---|--
-$remote_addr|记录访问网站的客户端地址
-$remote_user|远程客户端用户名
-$time_local|记录访问时间与时区
-$request|用户的http请求行
-$status|http状态码
-$body_bytes_sent|服务器发送给客户端的响应body字节数
-$http_referer|记录此次请求是从哪个连接访问过来的
-$http_user_agent|记录客户端访问信息
-$http_x_forwarded_for|当前端有代理服务器时，设置web节点记录客户端地址的配置
-
-### access_log(访问日志)
+### access_log(访问日志,ngx_http_log_module)
 
 ```
 语法: access_log path [format [buffer=size] [gzip[=level]] [flush=time]]
       access_log off
 默认: access_log logs/access.log combined
-上下文:	http, server, location, if in location
+上下文: http, server, location, if in location
 ```
 
 选项|描述

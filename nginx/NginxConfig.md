@@ -14,9 +14,70 @@ nginx -t -c /etc/nginx/nginx.conf
 nginx -s reload|reopen|stop|quit
 ```
 
+```
+#发起100个请求，同时并发10个
+ab -n 100 -c 10 https://www.baidu.com/
+
+
+#服务器版本
+Server Software:        BWS/1.1
+#服务器Host
+Server Hostname:        www.baidu.com
+#服务器端口
+Server Port:            443
+#加密协议
+SSL/TLS Protocol:       TLSv1.2,ECDHE-RSA-AES128-GCM-SHA256,2048,128
+
+#访问路径
+Document Path:          /
+#页面响应体的字节数
+Document Length:        227 bytes
+
+#并发数
+Concurrency Level:      10
+#完成请求的总时间
+Time taken for tests:   1.220 seconds
+#总请求数
+Complete requests:      100
+#失败的请求数
+Failed requests:        0
+#从服务器接收的字节总数
+Total transferred:      89300 bytes
+#从服务器接受响应体的字节总数
+HTML transferred:       22700 bytes
+#服务器单位时间内能处理的最大请求数
+Requests per second:    81.94 [#/sec] (mean)
+#用户平均请求等待时间
+Time per request:       122.034 [ms] (mean)
+#服务器平均请求处理时间
+Time per request:       12.203 [ms] (mean, across all concurrent requests)
+#网络传输速率
+Transfer rate:          71.46 [Kbytes/sec] received
+
+#网络上消耗的时间的分解
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       59   79  13.6     76     114
+Processing:    19   26   4.5     25      42
+Waiting:       19   26   4.5     25      42
+Total:         81  105  17.2    101     148
+
+#每个请求处理时间的分布情况，50%的处理时间在101ms内
+Percentage of the requests served within a certain time (ms)
+  50%    101
+  66%    105
+  75%    114
+  80%    123
+  90%    132
+  95%    144
+  98%    146
+  99%    148
+ 100%    148 (longest request)
+```
+
 <br>
 
-### 二.配置文件 
+### 二.默认配置文件 
 
 ```
 #运行用户
