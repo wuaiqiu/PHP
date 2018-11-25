@@ -19,7 +19,7 @@ Host: www.example.com
 响应行\r\n(协议版本 状态码 状态文字)
 响应头\r\n(格式为 key: value)
 空行
-响应体(可选，发送内容)
+响应体(可选，响应内容)
 
 HTTP/1.1 200 OK
 Date: Mon, 27 Jul 2009 12:28:53 GMT

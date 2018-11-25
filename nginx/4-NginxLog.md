@@ -10,7 +10,7 @@ log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
 access_log  logs/access.log main;
 ```
 
-### error_log(错误日志,ngx_http_core_module)
+### error_log(错误日志,ngx_core_module)
 
 ```
 语法: error_log file [level]

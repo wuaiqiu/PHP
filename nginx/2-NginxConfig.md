@@ -143,3 +143,83 @@ http {
     }
 }
 ```
+
+### user(定义运行用户,ngx_core_module)
+
+```
+语法: user user [group]
+默认值: user nobody nobody
+上下文: main
+```
+
+### worker_processes(定义工作进程数目,ngx_core_module)
+
+```
+语法: worker_processes number | auto
+默认值: worker_processes 1
+上下文: main
+```
+
+### worker_cpu_affinity(指定CPU核心数,ngx_core_module)
+
+```
+语法: worker_cpu_affinity cpumask ...
+      worker_cpu_affinity auto [cpumask]
+默认值: —
+上下文: main
+```
+
+<br>
+
+```
+#开启4个工作进程
+worker_processes    4;
+#为每个进程指定CPU核心
+worker_cpu_affinity 0001 0010 0100 1000;
+```
+
+### events(工作进程处理连接设置,ngx_core_module)
+
+```
+语法: events { ... }
+默认值: —
+上下文: main
+```
+
+### use(IO模型设置,ngx_core_module)
+
+```
+语法: use method
+默认值: —
+上下文: events
+```
+
+### worker_connections(工作进程最大连接数,ngx_core_module)
+
+```
+语法: worker_connections number
+默认值: worker_connections 512
+上下文: events
+```
+
+### pid(设置pid路径,ngx_core_module)
+
+```
+语法: pid file
+默认值: pid logs/nginx.pid
+上下文: main
+```
+
+### include(包含配置文件,ngx_core_module)
+
+```
+语法: include file | mask
+默认值: —
+上下文: any
+```
+
+## 三.通用配置文件
+
+```
+
+```

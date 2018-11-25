@@ -177,9 +177,11 @@ sudo pacman -S steam steam-native-runtime primusrun %command%
 sudo pacman -S clion clion-cmake clion-gdb clion-jre valgrind
 sudo pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-ext-oracle
 sudo gpasswd -a minshengwu vboxusers
-sudo pacman -S nginx apache-tools
-sudo systemctl enable nginx
-sudo systemctl start nginx
+gpg --recv-key 25451EB088460026195BD62CB550E09EA0E98066
+yaourt -S openresty
+echo "export PATH=/opt/openresty/bin:$PATH" >> .bashrc
+sudo systemctl enable openresty
+sudo systemctl start openresry
 sudo pacman -S fcitx-sogoupinyin fcitx-im  fcitx-configtool
 vim /etc/environment
 GTK_IM_MODULE=fcitx
