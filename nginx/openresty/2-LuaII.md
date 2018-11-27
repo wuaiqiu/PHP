@@ -284,11 +284,10 @@ Rectangle = {area = 0, length = 0, breadth = 0}
 -- 构造方法 new
 function Rectangle:new (o,length,breadth)
     local o = o or {}
-    setmetatable(o, self)
-    self.__index = self
+    setmetatable(o, {__index=self})
     self.length = length or 0
     self.breadth = breadth or 0
-    self.area = length*breadth;
+    self.area = self.length*self.breadth
     return o
 end
 -- 成员方法 printArea
@@ -311,13 +310,12 @@ obj:printArea()   -- 矩形面积为 200
 Square = Rectangle:new()
 -- 子类构造方法 new
 function Square:new(o,length,breadth)
-    local o = o or Rectangle:new (o,length,breadth)
-    setmetatable(o, self)
-    self.__index = self
+    o = o or Rectangle:new (o,length,breadth)
+    setmetatable(o, {__index=self})
     return o
 end
 -- 重写父类成员方法 printArea
-function Rectangle:printArea ()
+function Square:printArea ()
     print("正方形面积为 ",self.area)
 end
 
@@ -331,13 +329,15 @@ sub:printArea()   -- 正方形面积为 200
 
 ## 五.Lua文件I/O
 
-### 简单模式
+### IO表调用方式
 
->拥有一个当前输入文件和一个当前输出文件，并且提供针对这些文件相关的操作
 
 ```lua
 -- 以只读方式打开文件
 file = io.open("a.txt", "r")
+-- 检测是否一个可用的文件句柄
+-- "file":为一个打开的文件句柄，"closed file":为一个已关闭的文件句柄，nil:表示不是一个文件句柄
+print(io.type(file))
 -- 设置默认输入文件
 io.input(file)
 -- 输出文件第一行
@@ -354,11 +354,15 @@ io.write("Hi Lua")
 io.flush()
 -- 关闭打开的文件
 io.close(file)
+
+
+-- 以只读方式打开文件，读取每行，结束后自动关闭文件
+for line in io.lines("a.txt") do
+    print(line)
+end
 ```
 
-### 完全模式
-
->使用外部的文件句柄来实现。它以一种面对对象的形式，将所有的文件操作定义为文件句柄的方法
+### 文件句柄调用方式
 
 ```lua
 -- 以只读方式打开文件
@@ -374,6 +378,15 @@ file:write("Hi Lua")
 -- 向文件写入缓冲中的所有数据
 file:flush()
 -- 关闭打开的文件
+file:close()
+
+
+-- 以只读方式打开文件，读取每行，结束后不关闭文件
+file = io.open("a.txt", "r")
+for line in file:lines()
+do
+    print(line)
+end
 file:close()
 ```
 
@@ -420,4 +433,117 @@ end
 conn:close()
 --关闭数据库环境
 env:close()   
+```
+
+## 七.Lua与C相互调用
+
+头文件|描述
+--|--
+lua.h|Lua基础函数库，lua_前缀
+lauxlib.h|Lua辅助库，luaL_前缀
+lualib.h|Lua其它标准库
+
+
+1).所有C与Lua之间的数据交换都通过虚拟栈来完成<br>
+2).虚拟栈用索引来访问栈中的元素。栈底为1，栈顶为-1
+
+### C调用Lua
+
+```lua
+width = 10
+height = 20
+
+function add(x, y)
+    return x+y
+end
+```
+
+<br>
+
+```cpp
+#include <stdio.h>
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+
+int main(){
+    //创建一个新的lua_State状态机(用于内存管理)
+    lua_State *L = luaL_newstate();
+    //将lua标准库加载到进lua_State状态机
+    luaL_openlibs(L);
+    //从文件中加载lua代码并编译，编译成功后的程序块被压入栈中
+    if(luaL_loadfile(L,"Test.lua") || lua_pcall(L,0,0,0)){
+        //输出栈顶的错误信息(以字符串输出)
+        printf("error %s\n", lua_tostring(L,-1));
+        return -1;
+    }
+    //将Lua文件的全局变量的值压入栈
+    lua_getglobal(L,"width");
+    lua_getglobal(L,"height");
+    //依次打印栈中的数据(以整型输出)
+    printf("width = %d\n",lua_tointeger(L,-2));
+    printf("height = %d\n",lua_tointeger(L,-1));
+    //弹出栈顶2个元素
+    lua_pop(L, 2);
+    //将Lua文件的全局函数压入栈
+    lua_getglobal(L,"add");
+    //依次压人两个参数
+    lua_pushnumber(L, 30);
+    lua_pushnumber(L, 40);
+    //调用栈中的add，指定传入参数为2个，返回值数目为1个，错误信息放在栈顶
+    //当函数调用完毕后，所有的参数以及函数本身都会出栈，而函数的返回值这时则被压栈
+    if(lua_pcall(L, 2, 1, 0)!= 0){
+        //输出栈顶的错误信息(以字符串输出)
+        printf("error %s\n", lua_tostring(L,-1));
+        return -1;
+    }
+    //执行后的结果(以整型输出)
+    printf("add = %f \n", lua_tonumber(L, -1));
+    //销毁lua_State状态机
+    lua_close(L);
+    return 0;
+}
+```
+
+### Lua调用C
+
+```cpp
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+
+//C函数必须遵循:typedef int (*) (lua_State *)
+static int add(lua_State *L){
+    //检查函数的第n个参数是否是一个数字，并返回这个数字
+    int a = luaL_checknumber(L, 1);
+    int b = luaL_checknumber(L, 2);
+    //将结果压入栈
+    lua_pushnumber(L, a+b);
+    return 1;
+}
+
+//声明了模块中所有C函数列表，每一项映射了C函数在lua中的命名
+static const struct luaL_Reg func [] = {
+        {"add", add},
+        //列表必须用{NULL, NULL}结束
+        {NULL, NULL}
+};
+
+//入口函数:其函数名必须为luaopen_xxx，其中xxx表示library名称
+int luaopen_mylib(lua_State *L){
+    //注册func数组中的C函数
+    luaL_newlib(L, func);
+    return 1;
+}
+```
+
+```
+gcc -shared -fpic -o mylib.so mylib.c -llua
+```
+
+<br>
+
+```lua
+lib=require("mylib")
+print(lib.add(1, 2))
 ```

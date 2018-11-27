@@ -20,7 +20,7 @@ print("Hello Lua")
 nil|空类型，对于全局变量与table中的元素可以充当删除作用
 boolean|布尔类型，true(真)和false(假)。注意在lua中只有false与nil被认为false，其它一律被认为true
 number|数值类型
-string|字符串类型，字符串行可以用一对双引号或单引号表示，字符串块可以用一对双方括号表示
+string|字符串类型，字符串行可以用一对双引号("")或单引号('')表示，字符串块可以用一对双方括号([[]])表示
 table|表类型，类似关联数组，默认索引以1开始。支持自动增长
 function|函数类型
 thread|协程类型
@@ -36,8 +36,35 @@ print(type(nil))                --nil
 
 1).Lua是动态脚本语言。<br>
 2).Lua运算符:算术运算符[+(加) -(减) *(乘) /(除) %(取余) ^(幂) -(负)]，关系运算符[=(等于) ~=(不等于) >(大于) <(小于) >=(大于等于) <=(小于等于)]，逻辑运算符[and(与) or(或) not(非)]。<br>
-3).全局变量:不用local修饰符表示的变量，默认值为nil。<br>
+3).全局变量:不用local修饰符表示的变量，默认值为nil。Lua将所用的全局环境存放在_G(Table类型)中。<br>
 4).局部变量:用local修饰符表示的变量，默认值为nil。<br>
+
+```lua
+-- 直接在_G表中声明_G[index]=value，绕过metatable元方法
+declare = function(index, value)
+    -- 绕过metatable元方法
+    rawset(_G, index, value or 0)
+end
+
+-- 改变_G表的metatable的元方法
+setmetatable(_G,
+    {__newindex = function (_, n)
+        print("attempt to write to undeclared variable: " ..n)
+    end,
+    __index = function(_, n)
+        print("attempt to read undeclared variable: "..n)
+    end}
+)
+-- 声明全局变量a
+declare("a")
+-- 设置全局变量a
+a = 1
+print(a)  -- 1
+-- 删除全局变量a
+a = nil
+print(a)  -- attempt to read undeclared variable: a
+```
+
 5).支持单值赋值与多值赋值，在多值赋值中，若变量个数>值的个数则按变量个数补足nil。若变量个数<值的个数则多余的值会被忽略。<br>
 
 ```lua
@@ -83,7 +110,7 @@ end
 ```
 
 1).数值for循环:变量i从from到to之间以step递增执行循环体statement，step默认值为1。<br>
-2).泛型for循环:key是数组索引值，value是对应索引的数组元素值。ipairs是Lua提供的一个迭代器函数，用来迭代数组。
+2).泛型for循环:key是数组索引值，value是对应索引的数组元素值。ipairs迭代器用来迭代索引数组，当中途遇到nil元素会停止迭代。pairs迭代器用来迭代关联数组，当中途遇到nil元素不会停止迭代。
 
 ### if条件
 
@@ -311,6 +338,7 @@ end
 
 函数名|描述
 --|--
+\#table|返回table元素个数
 table.concat(table[,sep[,start[,end]]])|将table中元素从start到end以sep分隔符隔开的字符串输出
 table.insert(table,[pos,]value)|插入pos位置的元素(省略pos表示数组末尾)
 table.remove(table[,pos])|删除pos位置的元素(省略pos表示数组末尾)

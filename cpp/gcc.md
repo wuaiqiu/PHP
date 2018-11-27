@@ -227,6 +227,10 @@ add_subdirectory(math)
 #将名为main.cpp的源文件编译成一个名称为demo的可执行文件
 add_executable(Demo main.cpp)
 add_executable(Demo ${path})
+#添加第三方库文件
+find_package(Lua REQUIRED)
+include_directories(${LUA_INCLUDE_DIR})
+target_link_libraries(Demo ${LUA_LIBRARIES})
 ```
 
 <br>
