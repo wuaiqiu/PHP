@@ -204,16 +204,12 @@ location @bar {
 ```
 
 ```lua
-local table = {
-    "hello, ",
-    {"world: ", true, " or ", false,{": ", nil}}
-    }
-ngx.print(table)
+ngx.print("Hello World")
 ```
 
 ### ngx.exit
 
->终止向下执行
+>中断当前操作
 
 ```
 语法：ngx.exit(status)
@@ -226,8 +222,8 @@ ngx.exit(ngx.HTTP_OK)
 ngx.say("This is our own content")
 ```
 
-1).当status>=200的时候，直接停止当前请求的后续操作，并且返回状态码。当status==0的时候，跳过此次代码片段，并且继续执行下面的。<br>
-2).ngx.eof()：关闭结束输出流。
+1).ngx.exit():立即中断当前http请求，后续lua代码将不会再执行<br>
+2).ngx.eof():立即中断当前http请求，后续的lua代码将继续执行
 
 ## 二.请求操作
 

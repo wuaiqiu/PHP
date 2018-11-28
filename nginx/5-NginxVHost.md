@@ -121,12 +121,33 @@ root=>http://localhost/local_path/request/index.html
 alias=>http://localhost/local_path/index.html
 ```
 
-### index(网站主索引,ngx_http_index_module)
+### index(内部跳转,ngx_http_index_module)
 
 ```
 语法: index file ...
-默认值:	index index.html
+默认值:	index index.html index.htm
 上下文:	http, server, location
+```
+
+1).只会作用于那些URI以/结尾的请求。<br>
+2).依次寻找index.htm和index.html这两个文件。如果index.htm文件存在，则直接发起"内部跳转"到/index.htm这个新的地址。若不存在继续匹配下一个。
+
+```lua
+location / {
+    root /var/www/;
+    index index.html;
+}
+
+location /index.html {
+    set $a 32;
+    echo "a = $a";
+}
+
+
+--[[
+    curl 'http://localhost:8080/'
+    a = 32
+]]
 ```
 
 ### try_files(按顺序检查文件是否存在,ngx_http_core_module)
@@ -144,6 +165,8 @@ alias=>http://localhost/local_path/index.html
 默认值:	autoindex off
 上下文:	http, server, location
 ```
+
+1).只会作用于那些URI以/结尾的请求。
 
 ### autoindex_exact_size(显示文件大小,ngx_http_autoindex_module)
 

@@ -72,12 +72,53 @@ permanent|返回301永久重定向，浏览器地址栏会显示跳转后的URL�
 上下文: server, location, if
 ```
 
+### uninitialized_variable_warn(关闭使用未初始化变量的警告,ngx_http_rewrite_module)
+
+```
+语法: uninitialized_variable_warn on | off
+默认值: uninitialized_variable_warn on
+上下文: http, server, location, if
+```
+
 ### set(设置变量,ngx_http_rewrite_module)
 
 ```
 语法: set $variable value
 默认值: —
 上下文: server, location, if
+```
+
+1).nginx中set的变量名对配置的全局范围可见，但其值不可以在不同的请求中共享。
+
+```lua
+location /foo {
+    -- error.log中会有warn警告，可以用uninitialized_variable_warn关闭
+    echo "foo = [$foo]";
+}
+location /bar {
+    set $foo 32;
+    echo "foo = [$foo]";
+}
+
+
+--[[
+    curl 'http://localhost:8080/bar'
+    foo = [32]
+    
+    curl 'http://localhost:8080/foo'
+    foo = []
+]]
+```
+
+2).nginx变量支持"变量插值"。支持使用花括号将变量名围起来。
+
+```lua
+-- $a = hello
+set $a hello;
+-- $b = hello , hello
+set $b "$a, $a";
+-- helloworld
+echo "${a}world"
 ```
 
 ### 客户端变量
@@ -90,10 +131,10 @@ $content_length|请求头中的Content-length字段
 $content_type|请求头中的Content-Type字段
 $cookie_COOKIE|请求头中的cookie中COOKIE的值
 $http_HEADER|请求头中的HEADER字段(HEADER转为小写，-变为_，例如：$http_user_agent)
-$uri($document_uri)|请求中的当前URI(不带请求参数)
-$request_uri|请求中的当前URI(带请求参数)
-$args($query_string)|这个变量等于GET请求中的所有参数
-$arg_PARAMETER|这个变量值为GET请求中变量名PARAMETER参数的值
+$uri($document_uri)|请求中的当前URI(不带请求参数，经过url解码)
+$request_uri|请求中的当前URI(带请求参数，未经过url解码)
+$args($query_string)|这个变量等于GET请求中的所有参数(未经过url解码)
+$arg_PARAMETER|这个变量值为GET请求中变量名PARAMETER参数的值，参数不存在返回空字符串(未经过url解码)
 $is_args|如果请求中有参数，值为"?"，否则为空字符串
 $remote_addr|客户端的IP地址
 $binary_remote_addr|客户端的IP地址(二进制)

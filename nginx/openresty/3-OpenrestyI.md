@@ -47,7 +47,7 @@ location /foo {
 
 ### rewrite_by_lua（_file）
 
->这个指令更多的是为了替代HttpRewriteModule的rewrite指令来使用的，优先级低于rewrite指令
+>与rewrite指令功能类似，但在rewrite阶段的最后执行
 
 ```
 语法：rewrite_by_lua <lua-script-str>
@@ -70,7 +70,7 @@ location /foo {
 
 ### access_by_lua（_file）
 
->这个指令用在验证通过或者需要验证的时候
+>这个指令用在验证通过或者需要验证的时候，在access阶段的最后执行
 
 ```
 语法：access_by_lua <lua-script-str>
@@ -171,4 +171,22 @@ location /t {
          ngx.arg[1] = nil
     ';
 }
+```
+
+1).nginx在加载配置时，只会编译Lua代码而不会去执行它，只有在运行时才会执行代码。<br>
+2).nginx处理请求一共可划分为11个阶段，其中常见主要的是rewrite 、access、content 三个阶段。
+
+阶段|相应模块(指令)
+--|--
+rewrite|ngx_rewrite(set、rewrite)，ngx_lua(set_by_lua)，ngx_lua(rewrite_by_lua,rewrite阶段末尾)
+access|ngx_access(deny、alllow)，ngx_lua(access_by_lua,access 阶段末尾)
+content|ngx_echo(echo)，ngx_lua(content_by_lua)，ngx_proxy(proxy_pass)
+
+3).rewrite阶段与access阶段中不同模块的指令可以同时使用，而content阶段只能有一个模块下的指令存在。具体哪一个模块的指令是不确定的。
+
+```lua
+echo hello;
+content_by_lua 'ngx.say("world")';
+
+-- 输出: world
 ```
