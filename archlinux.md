@@ -92,8 +92,8 @@ hwclock --systohc --utc
 ```
 vim /etc/hostname 设置ArchLinux
 vim /etc/hosts
-127.0.0.1 localhost ArchLinux
-::1 localhost ArchLinux
+127.0.0.1 localhost ArchLinux static.io php.io phpmyadmin.io
+::1 localhost ArchLinux static.io php.io phpmyadmin.io
 0.0.0.0 account.jetbrains.com
 104.16.248.1 doub.io
 111.230.82.224 store.steampowered.com
@@ -169,14 +169,25 @@ gesture pinch out 2 xdotool key super+Up
 ```
 yaourt -S aur/ttf-consolas-with-yahei
 sudo pacman -S papirus-icon-theme arc-gtk-theme gnome-shell-extension-dash-to-dock gnome-shell-extension-gsconnect
-sudo pacman -S google-chrome firefox firefox-i18-zh-cn
-sudo pacman -S wps-office  ttf-wps-fonts
-sudo pacman -S netease-cloud-music
-sudo pacman -S shadowsocks-qt5
+sudo pacman -S google-chrome firefox firefox-i18-zh-cn wps-office  ttf-wps-fonts netease-cloud-music shadowsocks-qt5
+sudo pacman -S docker docker-compose docker-machine
+sudo gpasswd -a minshengwu docker
+sudo systemctl enable docker
+sudo systemctl start docker
 sudo pacman -S steam steam-native-runtime primusrun %command%
 sudo pacman -S clion clion-cmake clion-gdb clion-jre valgrind
 sudo pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso virtualbox-ext-oracle
 sudo gpasswd -a minshengwu vboxusers
+sudo pacman -S php php-fpm mariadb phpmyadmin
+(修改php.ini的display_errors=On,修改php.ini的extensions:bz2,curl,gd,mysqli,pdo_mysql,zip)
+(添加$cfg['TempDir'] = '/tmp/phpmyadmin';到/etc/webapps/phpmyadmin/config.inc.php，设置$cfg['blowfish_secret'])
+sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+sudo systemctl enable mariadb
+sudo systemctl start mariadb
+sudo mysql_secure_installation
+sudo systemctl restart mariadb
+sudo systemctl enable php-fpm
+sudo systemctl start php-fpm
 gpg --recv-key 25451EB088460026195BD62CB550E09EA0E98066
 yaourt -S openresty
 echo "export PATH=/opt/openresty/bin:$PATH" >> .bashrc

@@ -1,35 +1,22 @@
-# docker
+# Docker
 
-**一.安装**
 
-```
-pacman -S docker
-systemctl start docker.service
-systemctl enable docker.service
-sudo docker info
-```
+## 一.简介
 
-<br>
-
-**二.简介**
+docker可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的Linux机器上。
 
 ```
-Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。
-
-Docker 镜像(Images)		Docker 镜像是用于创建 Docker 容器的模板。
-Docker 容器(Container)	容器是独立运行的一个或一组应用。
-Docker 客户端(Client)		Docker 客户端通过命令行或者其他工具使用
-Docker 仓库(Registry)		Docker 仓库用来保存镜像，可以理解为代码控制中的代码仓库。
-					     Docker Hub(https://hub.docker.com) 提供了庞大的镜像集合供使用。
+Docker镜像(Images):Docker镜像是用于创建Docker容器的模板。
+Docker容器(Container):容器是独立运行的一个或一组应用。
+Docker客户端(Client):Docker客户端通过命令行或者其他工具使用。
+Docker仓库(Registry):Docker仓库用来保存镜像，可以理解为代码控制中的代码仓库。
 
 Client --操作--> Server ---创建--> Container  <--实例化--  Images
 ```
 
-<br>
+## 二.操作
 
-**三.操作**
-
-(1)容器生命周期管理
+### 1.容器生命周期管理
 
 ```
 #运行一个容器并指定卷映射，随机端口，容器名称
@@ -39,7 +26,7 @@ docker run -dP -v localhost:container --name mynginx nginx
 docker run -dp localhost:container -v localhost:container --name mynginx nginx
 
 #连接容器(常用于bridge模式下)
-docker run -dP --link redis:redis nginx
+docker run -dP --link redis:myalias --name mynginx nginx
 
 #操作容器
 docker start mynginx
@@ -52,7 +39,7 @@ docker rm mynginx
 docker exec -it mynginx /bin/bash
 ```
 
-(2)容器操作
+### 2.容器操作
 
 ```
 #查看后台运行的容器(a:所有容器)
@@ -66,7 +53,7 @@ docker inspect mynginx
 docker logs --tail 10 mynignx
 ```
 
-(3)容器rootfs命令
+### 3.容器rootfs命令
 
 ```
 #复制宿主机文件到容器中
@@ -80,7 +67,7 @@ docker export -o mynginx.tar mynginx
 docker import -i mynginx.tar
 ```
 
-(4)镜像仓库
+### 4.镜像仓库
 
 ```
 #登录docker仓库
@@ -99,7 +86,7 @@ docker push registry.cn-hangzhou.aliyuncs.com/wuaiqiu/myapache:v1
 docker logout registry.cn-hangzhou.aliyuncs.com
 ```
 
-(5)本地镜像管理
+### 5.本地镜像管理
 
 ```
 #列出本地镜像
@@ -122,9 +109,7 @@ docker save -o my_ubuntu_v3.tar runoob/ubuntu:v3
 docker load -i ubuntu.tar
 ```
 
-<br>
-
-**四.Dockerfile**
+## 三.Dockerfile文件
 
 ```
 #第一行必须指令基于的基础镜像
@@ -136,7 +121,7 @@ MAINTAINER docker_user docker_user@mail.com
 #指定环境变量
 ENV PATH /usr/local/postgres-$PG_MAJOR/bin:$PATH
 
-#将本地文件夹挂载到container中(宿主机目录随机生成，指定容器目录)
+#将本地文件夹挂载到container中(宿主机目录随机生成，或用-v指定容器目录)
 VOLUME ["/tmp"]
 
 #镜像的构造指令(一般用于安装软件，构建只读层，只能叠加因此通常一句完成，shell风格)

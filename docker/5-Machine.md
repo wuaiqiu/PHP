@@ -1,8 +1,8 @@
-# docker-machine
+# Docker-Machine
 
->Docker Machine用于一键部署Docker，使用它可以自动的创建主机并在主机上安装Docker。通过Docker Machine创建了主机之后，可以使用它提供的一系列命令管理这些主机
+docker-machine用于一键部署docker，使用它可以自动的创建虚拟机并在主机上安装运行docker。通过docker-machine创建了主机之后，可以使用它提供的一系列命令管理这些虚拟机。
 
-**1.命令**
+## 一.命令
 
 ```
 #创建并启动host(driver指定驱动)

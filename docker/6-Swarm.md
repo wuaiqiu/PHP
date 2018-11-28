@@ -1,8 +1,8 @@
-# docker-swarm
+# Docker-Swarm
 
->Docker Swarm为Docker容器提供了原生的集群，它将多个Docker引擎的资源汇聚在一起，并提供Docker标准的API，使Docker可以轻松扩展到多台主机，除加入集群与离开集群指令外，全部有manager执行
+docker-swarm为docker容器提供了原生的集群，它将多个docker引擎的资源汇聚在一起，并提供docker标准的API，使docker可以轻松扩展到多台主机，除加入集群与离开集群指令外，全部有manager执行
 
->集群管理
+## 集群管理
 
 ```
 #swarm集群初始化(--advertise-addr <MANAGER-IP>:指定网卡IP)
@@ -18,7 +18,7 @@ docker swarm join-token manager
 docker swarm leave
 ```
 
->节点管理
+## 节点管理
 
 ```
 #查看swarm所有节点
@@ -40,7 +40,7 @@ docker node rm node_name
 docker node ps
 ```
 
->服务管理
+## 服务管理
 
 ```
 #创建服务并随机部署在集群上，指定服务个数，并使用跨主机网络overlay

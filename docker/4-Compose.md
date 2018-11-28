@@ -1,10 +1,10 @@
-# docker-compose
+# Docker-Compose
 
->Compose是用来编排和管理多容器服务的工具
+docker-compose是用来编排和管理多容器服务的工具。
 
-**1.命令**
+## 一.命令
 
->全局配置
+### 全局配置
 
 ```
 -f:用于指定Compose的配置文件
@@ -12,7 +12,7 @@
 -v:显示版本号
 ```
 
->docker服务操作
+### 服务操作
 
 ```
 #下载服务所有的所需镜像
@@ -67,11 +67,9 @@ docker-compose top web
 docker-compose exec web /bin/bash
 ```
 
-<br>
+## 二.配置文件
 
-**2.配置文件**
-
->docker-compose.yml
+### docker-compose.yml
 
 ```
 version: '2'

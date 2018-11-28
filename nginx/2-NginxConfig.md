@@ -217,3 +217,79 @@ worker_cpu_affinity 0001 0010 0100 1000;
 默认值: —
 上下文: any
 ```
+
+<br>
+
+### 三.通用设置
+
+```
+worker_processes  4;
+worker_cpu_affinity auto;
+error_log  logs/error.log error;
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    sendfile        on;
+    tcp_nopush 	    on;
+    keepalive_timeout  65;
+
+    gzip  on;
+    gzip_comp_level 4;
+    
+    autoindex on;
+    autoindex_exact_size on;
+    autoindex_localtime on;
+
+    server {
+        listen       80;
+        server_name  static.io;
+	    charset utf-8;
+	    access_log  logs/static.access.log  main;
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+     }
+    server {
+	    listen  80;
+	    server_name php.io;
+	    charset utf-8;
+	    access_log logs/php.access.log main;	
+	    root /home/minshengwu/www;
+	    location / {
+	        index index.php index.html index.htm;
+	    }
+	    location ~ \.php$ {
+	        fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+	        fastcgi_index index.php;
+	        include fastcgi.conf;
+	    }
+    }
+    server {
+	    listen  80;
+	    server_name phpmyadmin.io;
+	    charset utf-8;
+	    access_log logs/phpmyadmin.access.log main;	
+	    root /usr/share/webapps/phpMyAdmin;
+	    location / {
+	        index index.php index.html index.htm;
+	    }
+	    location ~ \.php$ {
+	        fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+	        fastcgi_index index.php;
+	        include fastcgi.conf;
+    	}
+    }
+}
+```
