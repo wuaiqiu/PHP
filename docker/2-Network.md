@@ -28,6 +28,10 @@ docker run -d --name mynginx --network none nginx
 
 docker的默认模式，当docker服务启动时，docker会在宿主机上建立一个虚拟网桥docker0，宿主机上启动的容器会连接到这个虚拟网桥上。docker会在一个可用网段(一般是172.17.0.0/16这个网段)中为docker0分配一个IP地址(一般是172.17.0.1)，而每创建一个使用bridge网络模式的新的容器，docker就会在上面的网段中选择一个尚未分配的IP地址分配给容器的eth0网卡(不同容器需要用link参数通信)。
 
+```
+docker run -d --name mynginx --network isolated_nw nginx
+```
+
 ## 五.用户自定义
 
 ### 1.bridge网络
